@@ -1,0 +1,226 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(/Pingfah/fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+.box {
+    padding: 80px 0 0 260px;
+}
+
+.package-box {
+    width: 100%;
+    min-height: 870px;
+    padding: 36px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.package-box input[type="date"]{
+    margin-left: 8px;
+    width: 200px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.package-box table{
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.package-box tr{
+    height: 50px;
+}
+
+.package-box table th,
+.package-box table td {
+    border: 1px solid #ddd;
+    padding: 0 16px;
+}
+
+.package-box table td{
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.package-box table td:last-child,.package-box table th:last-child{
+    width: 130px;
+}
+
+.package-box table th {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: rgb(131, 120, 47, 0.7);
+}
+
+.package-box .status_received{
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    background-color:#B1D78A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    cursor: default;
+}
+
+.package-box .status_pending{
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: rgb(170, 170, 170);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    cursor: default;
+}
+
+.package-box .received-btn{
+    margin: 0 4px;
+    width: 80px;
+    height: 40px;
+    background-color: rgb(82, 185, 82);
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.package-box .del-btn{
+    margin: 0 4px;
+    width: 80px;
+    height: 40px;
+    background-color: rgb(255, 70, 70);
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.package-box .edit-btn:hover, .package-box .del-btn:hover{
+    filter: brightness(0.9);
+}
+
+.package-box input[type="text"]{
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.package-box #addPackage {
+    display: none;
+    margin-top: 16px;
+}
+
+.package-box #addPackage form {
+    display: flex;
+}
+
+.package-box #addPackage form p{
+    margin-bottom: 8px;
+}
+
+.package-box #addPackage form input{
+    width: 250px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.package-box #addPackage form button[type="submit"] {
+    width: 100px;
+    height: 36px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.package-box #addPackage form button[type="submit"]:hover {
+    background-color: rgb(131, 120, 47, 1);
+}
+
+hr{
+    margin: 32px 0;
+    opacity: 0.5;
+}
+
+.package-box button{
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pagination {
+    padding: 32px 0;
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}

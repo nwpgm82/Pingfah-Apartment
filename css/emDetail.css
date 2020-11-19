@@ -1,0 +1,239 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(../fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+.box {
+    padding: 80px 0 0 260px;
+}
+
+.emDetail-box {
+    width: 100%;
+    min-height: 800px;
+    padding: 36px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.emDetail-box h2 {
+    margin-bottom: 16px;
+}
+
+.emDetail-box .row {
+    display: flex;
+}
+
+.emDetail-box .col-1 {
+    flex: 0 0 auto;
+    width: 8.333333%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-2 {
+    flex: 0 0 auto;
+    width: 16.666667%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-3 {
+    flex: 0 0 auto;
+    width: 25%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-4 {
+    flex: 0 0 auto;
+    width: 33.333333%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-5 {
+    flex: 0 0 auto;
+    width: 41.666667%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-6 {
+    flex: 0 0 auto;
+    width: 50%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-7 {
+    flex: 0 0 auto;
+    width: 58.333333%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-8 {
+    flex: 0 0 auto;
+    width: 66.666667%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-9 {
+    flex: 0 0 auto;
+    width: 75%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-10 {
+    flex: 0 0 auto;
+    width: 83.333333%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-11 {
+    flex: 0 0 auto;
+    width: 91.666667%;
+    padding-right: 8px;
+}
+
+.emDetail-box .col-12 {
+    flex: 0 0 auto;
+    width: 100%;
+    padding-right: 8px;
+}
+
+.emDetail-box select {
+    margin-top: 8px;
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.emDetail-box input[type="text"],
+.emDetail-box input[type="date"],
+.emDetail-box input[type="email"],
+.emDetail-box input[type="tel"],
+.emDetail-box input[type="password"] {
+    margin-top: 8px;
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.emDetail-box .profile-box{
+    width: 160px;
+    height: 160px;
+    border-radius: 4px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    overflow: hidden;
+    position: relative;
+}
+
+.emDetail-box .profile{
+    max-width: 160px;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+}
+
+.emDetail-box textarea {
+    margin-top: 8px;
+    width: 100%;
+    height: 80px;
+    padding: 8px 12px;
+    resize: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    outline: none;
+    transition: 0.3s;
+}
+
+.emDetail-box select:hover,
+.emDetail-box input[type="text"]:hover,
+.emDetail-box input[type="date"]:hover,
+.emDetail-box select:focus,
+.emDetail-box input[type="text"]:focus,
+.emDetail-box input[type="date"]:focus,
+.emDetail-box textarea:hover,
+.emDetail-box textarea:focus {
+    border: 1px solid rgb(131, 120, 47,1);
+}
+
+.emDetail-box button {
+    width: 80px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.emDetail-box button:hover{
+    background-color: rgb(131, 120, 47, 1);
+}
+
+.emDetail-box .img-box{
+    margin-top: 8px;
+    width: 100%;
+    height: 500px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.emDetail-box img{
+    max-width: 100%;
+    display: block;
+    margin: auto;
+    object-fit: cover;
+}
+
+.emDetail-box .img-box img{
+    height: 500px;
+}
+
+.emDetail-box .edit-btn{
+    background-color: darkturquoise;
+}
+
+.emDetail-box .cancel-btn{
+    background-color: rgb(255, 70, 70);
+}
+
+.emDetail-box .del-btn{
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: rgb(255, 70, 70);
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}

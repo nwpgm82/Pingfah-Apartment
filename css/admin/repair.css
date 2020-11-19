@@ -1,0 +1,178 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(/Pingfah/fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+.box {
+    padding: 80px 0 0 260px;
+}
+
+.repair-box {
+    width: 100%;
+    min-height: 870px;
+    padding: 36px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.repair-box input[type="date"] {
+    margin-left: 8px;
+    width: 200px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.repair-box button {
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.repair-box button:hover {
+    filter: brightness(0.9);
+}
+
+.repair-box .del-btn {
+    background-color: #FF4646;
+}
+
+.repair-box table {
+    width: 100%;
+    overflow: hidden;
+    border-collapse: collapse;
+    border-radius: 4px;
+    table-layout: fixed;
+}
+
+.repair-box table th {
+    cursor: pointer;
+}
+
+.repair-box table tr {
+    height: 50px;
+    cursor: pointer;
+}
+
+.repair-box table th,
+.repair-box table td {
+    height: 60px;
+    border: 1px solid #ddd;
+    padding: 0 16px;
+    white-space: nowrap;
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.repair-box label,
+.repair-box table th {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.repair-box table th {
+    color: #fff;
+    background-color: rgb(131, 120, 47, 0.7);
+}
+
+.repair-box table .flex-more {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 8px;
+    justify-content: center;
+    padding: 8px;
+}
+
+.repair-box table .pending-status {
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: rgb(170, 170, 170);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    cursor: default;
+    opacity: 0.8;
+}
+
+.repair-box table .inprogress-status {
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #8ac5d7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    cursor: default;
+    opacity: 0.8;
+}
+
+.repair-box table .success-status {
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #B1D78A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    cursor: default;
+    opacity: 0.8;
+}
+
+hr {
+    margin: 32px 0;
+    opacity: 0.5;
+}
+
+.pagination {
+    padding: 32px 0;
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}

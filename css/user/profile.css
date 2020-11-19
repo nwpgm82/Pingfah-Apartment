@@ -1,0 +1,260 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(/Pingfah/fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}   
+
+html,
+body {
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+.profile {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    border-radius: 4px;
+    padding: 36px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.profile h2 {
+    margin-bottom: 16px;
+}
+
+.profile h3 {
+    margin-top: 24px;
+}
+
+.profile .row {
+    display: flex;
+}
+
+.profile .col-1 {
+    flex: 0 0 auto;
+    width: 8.333333%;
+}
+
+.profile .col-2 {
+    flex: 0 0 auto;
+    width: 16.666667%;
+}
+
+.profile .col-3 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+
+.profile .col-4 {
+    flex: 0 0 auto;
+    width: 33.333333%;
+}
+
+.profile .col-5 {
+    flex: 0 0 auto;
+    width: 41.666667%;
+}
+
+.profile .col-6 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+
+.profile .col-7 {
+    flex: 0 0 auto;
+    width: 58.333333%;
+}
+
+.profile .col-8 {
+    flex: 0 0 auto;
+    width: 66.666667%;
+}
+
+.profile .col-9 {
+    flex: 0 0 auto;
+    width: 75%;
+}
+
+.profile .col-10 {
+    flex: 0 0 auto;
+    width: 83.333333%;
+}
+
+.profile .col-11 {
+    flex: 0 0 auto;
+    width: 91.666667%;
+}
+
+.profile .col-12 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.profile p {
+    margin: 16px 0 8px 0;
+}
+
+.profile select {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile .select-box,
+.profile .input-box {
+    padding-right: 16px;
+}
+
+.profile input {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.profile textarea {
+    width: 100%;
+    height: 80px;
+    padding: 8px 12px;
+    resize: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    outline: none;
+    transition: 0.3s;
+}
+
+.profile select:hover,
+.profile input:hover,
+.profile select:focus,
+.profile input:focus,
+.profile textarea:hover,
+.profile textarea:focus {
+    border: 1px solid rgb(131, 120, 47, 1);
+}
+
+.profile .accept-btn {
+    width: 80px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 1);
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile .accept-btn:hover {
+    filter: brightness(0.9);
+}
+
+.profile input[type="file"] {
+    width: 20%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.profile .grid {
+    margin-top: 16px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 16px;
+}
+
+.profile .card {
+    margin-top: 16px;
+    width: 100%;
+    height: 300px;
+    border-radius: 4px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+}
+
+@media screen and (max-width: 1199px) {
+    .profile {
+        min-height: 100%;
+        padding: 24px;
+    }
+
+    .profile table {
+        width: 100%;
+    }
+
+    .profile .select-box,
+    .profile .input-box {
+        padding-right: 6px;
+    }
+
+    .profile input,
+    .profile select {
+        padding: 0 8px;
+    }
+
+    .roomform-box input[type="file"] {
+        width: 50%;
+    }
+
+    .profile p {
+        font-size: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .box {
+        padding: 60px 0 0 200px;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .profile .row {
+        display: block;
+    }
+
+    .profile .col-1,
+    .profile .col-2,
+    .profile .col-3,
+    .profile .col-4,
+    .profile .col-5,
+    .profile .col-6,
+    .profile .col-7,
+    .profile .col-8,
+    .profile .col-9,
+    .profile .col-10,
+    .profile .col-11,
+    .profile .col-12 {
+        width: 100%;
+    }
+
+    .profile .grid{
+        display: block;
+    }
+}

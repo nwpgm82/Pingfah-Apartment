@@ -1,0 +1,93 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(/Pingfah/fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+.box {
+    padding: 80px 0 0 260px;
+}
+
+.addcost-box {
+    width: fit-content;
+    min-height: fit-content;
+    padding: 36px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.addcost-box form{
+    padding-top: 32px;
+}
+
+
+.addcost-box form select {
+    margin-top: 8px;
+    width: 100px;
+    height: 40px;
+    border-radius: 4px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.addcost-box form input {
+    margin-top: 8px;
+    width: 180px;
+    height: 40px;
+    border-radius: 4px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.addcost-box form .grid {
+    padding-top: 32px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 16px;
+    align-items: flex-end;
+}
+
+.addcost-box form .flex {
+    padding-top: 32px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.addcost-box form .flex p,.addcost-box form .flex h3{
+    padding: 8px 0;
+}
+
+.addcost-box form button {
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.addcost-box form .grid button:hover {
+    background-color: rgb(131, 120, 47, 1);
+}

@@ -1,0 +1,88 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(../fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+body{
+    background: url("../img/tool/bg.png");
+}
+
+.box{
+    width: 1400px;
+    margin: auto;
+    padding: 32px;
+}
+
+.box .roomPage{
+    width: 100%;
+}
+
+.hr{
+    margin: 16px auto;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.7);
+    opacity: 0.5;
+}
+
+.box .roomPage .grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding-top: 32px;
+}
+
+.box .roomPage .grid .card{
+    width: 100%;
+    height: 250px;
+    border-radius: 4px;
+    background: url("../img/tool/bg2.png");
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.box .roomPage .grid .card h3{
+    color: #b3994c;
+    font-weight: bold;
+}
+
+.box .roomPage .grid .card img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.box .roomPage .grid .card .detail{
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    line-height: 40px;
+}
+
+.box .roomPage .grid .card button{
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.box .roomPage .grid .card button:hover{
+    background-color: rgb(131, 120, 47, 1);
+}

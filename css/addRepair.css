@@ -1,0 +1,116 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(../fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+.box {
+    padding: 80px 0 0 260px;
+}
+
+.addRepair-box {
+    width: fit-content;
+    min-height: fit-content;
+    padding: 36px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.addRepair-box select{
+    width: 100px;
+    height: 40px;
+    border-radius: 4px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.addRepair-box p {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.addRepair-box .flex-detail {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 16px;
+    width: 100%;
+    margin-top: 32px;
+}
+
+.addRepair-box input{
+    width: 48%;
+    height: 36px;
+    padding: 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.addRepair-box input[type="date"] {
+    margin-top: 8px;
+    width: 200px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.addRepair-box .flex-detail input, .addRepair-box .flex-detail select{
+    margin-top: 8px;
+    width: 200px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.addRepair-box textarea{
+    margin-top: 8px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    resize: none;
+    transition: 0.3s;
+}
+
+.addRepair-box button{
+    width: 80px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    background-color:  rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.addRepair-box button:hover{
+    background-color:  rgb(131, 120, 47, 1);
+}
