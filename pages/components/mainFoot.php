@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/mainFoot.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="foot">
+        <div class="detail-box">
+            <div>
+                <img src="../img/main_logo.png" alt="">
+            </div>
+            <div class="flex">
+                <div>
+                    <h3>ADDRESS</h3>
+                    <div class="fhr"></div>
+                    <div style="padding-top:20px;">
+                        <p>หอพักบ้านพิงฟ้า เชียงใหม่ 140/40 หมู่ที่ 2 ต.หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="flex">
+                <div class="menu">
+                    <h3>Explore</h3>
+                    <div class="fhr"></div>
+                    <div style="padding-top:20px;">
+                        <div>
+                            <a href="#main">
+                                <p>หน้าหลัก</p>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#main2">
+                                <p>ประเภทห้องพัก</p>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#services">
+                                <p>แกลอรี่</p>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#gallery">
+                                <p>ติดต่อเรา</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="menu">
+                    <h3>CONTACT US</h3>
+                    <div class="fhr"></div>
+                    <div style="padding-top:20px;">
+                        <div>
+                            <strong><p>เจ้าของหอพัก :</p></strong>
+                            <p>098-9132002</p>
+                        </div>
+                        <div style="padding-top:16px;">
+                            <strong><p>แม่บ้าน :</p></strong>
+                            <p>087-5777192</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
