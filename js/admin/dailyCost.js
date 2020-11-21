@@ -10,8 +10,8 @@ function searchCode(){
     location.assign(`/Pingfah/pages/admin/dailyCost/index.php?Code=${z}`) 
 }
 
-// function delDailyCost(room,code){
-//     if(confirm('คุณต้องการลบรายการชำระเงินนี้ใช่หรือไม่ ?')){
-//         location.href = `../../pages/admin/dailyCost/function/delDailyCost?room_id=${room}&code=${code}`
-//     }
-// }
+function delDailyCost(id){
+    if(confirm('คุณต้องการลบรายการชำระเงินนี้ใช่หรือไม่ ?')){
+        location.href = `/Pingfah/pages/admin/dailyCost/function/delDailyCost.php?id=${id}`
+    }
+}

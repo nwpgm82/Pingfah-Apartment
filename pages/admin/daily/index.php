@@ -109,7 +109,7 @@ if($_SESSION['level'] == 'admin'){
                                 ?>
                                 <div id="btn<?php echo $num; ?>">
                                     <button onclick="selectRoom(<?php echo $num; ?>)">เลือกห้อง</button>
-                                    <button class="del-btn">ลบ</button>
+                                    <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
                                 </div>
                                 <div id="select<?php echo $num; ?>" style="display:none;">
                                     <select name="" id="room_select<?php echo $num; ?>">
@@ -129,7 +129,7 @@ if($_SESSION['level'] == 'admin'){
                                 }else{
                                 ?>
                                 <button type="button" class="confirmed-btn">ยืนยัน</button>
-                                <button class="del-btn">ลบ</button>
+                                <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
                                 <?php } ?>
                             </td>
                         </tr>

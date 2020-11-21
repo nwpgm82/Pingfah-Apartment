@@ -9,9 +9,10 @@ if($_SESSION['level'] == 'admin'){
   $result = $conn->query($search);
   $row = $result->fetch_assoc();
   $pic_location = $row["$pic"];
-  $delete_location = "../../../images/roommember/$room/${num}/$pic_location";
+  $delete_location = "../../../images/roommember/$room/$num/$pic_location";
   $sql = "UPDATE roommember SET $pic = NULL WHERE room_member = '$room' ";
-  if ($conn->query($sql) === TRUE && unlink($delete_location) === TRUE) {
+  if ($conn->query($sql) === TRUE) {
+    unlink($delete_location);
     echo "<script>";
     echo "alert('ลบรูปภาพสำเร็จ');";
     echo "window.location.assign('../room_id.php?ID=$room'); ";

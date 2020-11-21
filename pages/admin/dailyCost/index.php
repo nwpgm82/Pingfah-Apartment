@@ -92,12 +92,11 @@ if($_SESSION['level'] == 'admin'){
                         <td><?php echo $row['code']; ?></td>
                         <td><?php echo number_format($row['price_total']); ?></td>
                         <td>
-                            <div class="status-success">
-                                <p><?php echo $row['daily_status']; ?></p>
-                            </div>
+                            <button class="status-success"><?php echo $row['daily_status']; ?></button>
+                            <button type="button" onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
                         </td>
                     </tr>
-                    <?php } ?>
+                    <?php $num++; } ?>
                 </table>
                 <?php
                     ///////pagination

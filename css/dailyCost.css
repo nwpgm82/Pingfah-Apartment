@@ -107,19 +107,16 @@ hr{
     width: 20px;
 }
 
+.dailycost-box table td:last-child{
+    width: 100px;
+}
+
 .dailycost-box table td p {
     font-size: 16px;
     font-weight: 500;
 }
 
 .dailycost-box table .status-success{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: auto;
-    height: 40px;
-    border-radius: 4px;
-    border: none;
     background-color: #B1D78A;
     cursor: default;
 }

@@ -29,8 +29,8 @@ function confirmRoom(code, num) {
 
 }
 
-function del(code) {
+function del(id) {
     if (confirm('คุณต้องการลบรายการจองห้องพักใช่หรือไม่?')) {
-        location.href = `../../pages/admin/daily/function/delDaily.php?code=${code}`
+        location.href = `/Pingfah/pages/admin/daily/function/delDaily.php?id=${id}`
     }
 }

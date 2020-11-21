@@ -2,8 +2,8 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include("../../../connection.php");
-    $code = $_REQUEST['code'];
-    $sql = "DELETE FROM daily WHERE code = '$code'";
+    $id = $_REQUEST['id'];
+    $sql = "DELETE FROM daily WHERE daily_id = '$id'";
     if ($conn->query($sql) === TRUE) {
         echo "<script>";
         echo "alert('ลบรายการเช่าห้องพักเรียบร้อยแล้ว');";

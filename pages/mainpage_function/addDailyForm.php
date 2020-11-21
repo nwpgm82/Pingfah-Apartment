@@ -74,8 +74,8 @@ if(isset($_POST['accept_daily'])){
                             <p style='color:#000'><strong>เลขบัตรประชาชน :</strong> $id_card</p>
                             <p style='color:#000'><strong>อีเมล :</strong> $email</p>
                             <p style='color:#000'><strong>เบอร์โทรศัพท์ :</strong> $tel</p>
-                            <p style='color:#000'><strong>ประเภทห้องพัก :</strong> $room_type</p>
-                            <p style='color:#000'><strong>จำนวน :</strong> $room_count</p>
+                            <p style='color:#000'><strong>ประเภทห้องพัก :</strong> ห้อง$room_type</p>
+                            <p style='color:#000'><strong>จำนวน :</strong> $room_count ห้อง</p>
                             <p style='color:#000'><strong>วันที่เข้าพัก :</strong> $check_in_show <strong>ถึง</strong> $check_out_show</p>
                             <p style='color:#000'><strong>*** ลูกค้าสามารถเข้าพักได้หลัง 12:00 น. เท่านั้น ***</strong></p>
                             <h3 style='text-align:center;color:#000'><strong>เลขที่ในการจอง :</strong> $code</h3>
@@ -92,8 +92,8 @@ if(isset($_POST['accept_daily'])){
         if($email_receiver){
             $mail->msgHTML($email_content);
             for($i = 1 ; $i <= $room_count ; $i++){
-                if(mysqli_query($conn, $sql)){
-    
+                if($conn->query($sql) === TRUE){
+                    echo $room_count .$i;
                 }else{
                     echo "Error: " .$conn->error .$i;
                 }
