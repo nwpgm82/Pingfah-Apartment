@@ -35,9 +35,13 @@
             <div class="grid">
                 <?php
                     if(isset($check_in) || isset($check_out)){
-                        $countAir = mysqli_query($conn,"SELECT COUNT(*) AS total FROM roomlist WHERE room_type = 'แอร์' AND come = '' AND ((check_in NOT BETWEEN '$check_in' AND '$check_out') OR (check_out NOT BETWEEN '$check_in' AND '$check_out') OR ('$check_in' NOT BETWEEN check_in AND check_out) OR ('$check_out' NOT BETWEEN check_in AND check_out ))");
-                        $data= mysqli_fetch_assoc($countAir);  
-                        $total_int = intval($data['total']);
+                        $countAir = mysqli_query($conn,"SELECT COUNT(*) AS airtotal FROM daily WHERE room_type = 'แอร์' AND ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))");
+                        $airdata= mysqli_fetch_assoc($countAir);
+                        $airtotal_int = intval($airdata['airtotal']);
+                        $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = 'แอร์' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
+                        $roomdata= mysqli_fetch_assoc($countroom);  
+                        $roomtotal_int = intval($roomdata['roomtotal']);
+                        $total_int = $roomtotal_int - $airtotal_int;
                         if($total_int != 0){
                             $sql = "SELECT * FROM roomdetail WHERE type = 'แอร์'";
                             $result = $conn->query($sql);
@@ -52,7 +56,7 @@
                             <p>- รายวัน : <?php echo number_format($row['daily_price']); ?> บาท</p>
                         </div>
                         <div style="display: flex;justify-content: space-between;">
-                        <p>จำนวน : <?php echo $data['total']?></p>
+                        <p>จำนวน : <?php echo $total_int; ?></p>
                             <a href="dailyForm.php?room_type=<?php echo $row['type']; ?>&check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out; ?>"><button>จองห้องพัก</button></a>
                         </div>
                     </div>
@@ -60,9 +64,13 @@
                 <?php }} ?>
                 <?php
                     if(isset($check_in) || isset($check_out)){
-                        $countFan = mysqli_query($conn,"SELECT COUNT(*) AS total FROM roomlist WHERE room_type = 'พัดลม' AND come = '' AND ((check_in NOT BETWEEN '$check_in' AND '$check_out') OR (check_out NOT BETWEEN '$check_in' AND '$check_out') OR ('$check_in' NOT BETWEEN check_in AND check_out) OR ('$check_out' NOT BETWEEN check_in AND check_out ))");
-                        $data2= mysqli_fetch_assoc($countFan);  
-                        $total_int2 = intval($data2['total']);
+                        $countFan = mysqli_query($conn,"SELECT COUNT(*) AS fantotal FROM daily WHERE room_type = 'พัดลม' AND ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))");
+                        $fandata= mysqli_fetch_assoc($countFan);
+                        $fantotal_int = intval($fandata['fantotal']);
+                        $countroom2 = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal2 FROM roomlist WHERE room_type = 'พัดลม' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
+                        $roomdata2= mysqli_fetch_assoc($countroom2);  
+                        $roomtotal_int2 = intval($roomdata2['roomtotal2']);
+                        $total_int2 = $roomtotal_int2 - $fantotal_int;
                         if($total_int2 != 0){
                             $sql2 = "SELECT * FROM roomdetail WHERE type = 'พัดลม'";
                             $result2 = $conn->query($sql2);
@@ -77,7 +85,7 @@
                             <p>- รายวัน <?php echo number_format($row2['daily_price']); ?> บาท</p>
                         </div>
                         <div style="display: flex;justify-content: space-between;">
-                        <p>จำนวน : <?php echo $data2['total']?></p>
+                        <p>จำนวน : <?php echo $total_int2; ?></p>
                             <a href="dailyForm.php?room_type=<?php echo $row2['type']; ?>&check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out; ?>"><button>จองห้องพัก</button></a>
                         </div>
                     </div>

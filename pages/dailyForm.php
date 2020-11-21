@@ -4,6 +4,14 @@
     @$get_checkin = $_REQUEST['check_in'];
     @$get_checkout = $_REQUEST['check_out'];
     $room_type = $_REQUEST['room_type'];
+    $count = mysqli_query($conn,"SELECT COUNT(*) AS total FROM daily WHERE room_type = '$room_type' AND ((check_in BETWEEN '$get_checkin' AND '$get_checkout') OR (check_out BETWEEN '$get_checkin' AND '$get_checkout') OR ('$get_checkin' BETWEEN check_in AND check_out) OR ('$get_checkout' BETWEEN check_in AND check_out ))");
+    $data= mysqli_fetch_assoc($count);
+    $typetotal_int = intval($data['total']);
+    $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = '$room_type' AND room_status = 'ว่าง'");
+    $roomdata= mysqli_fetch_assoc($countroom);  
+    $roomtotal_int = intval($roomdata['roomtotal']);
+    $total_int = $roomtotal_int - $typetotal_int;
+    // echo $total_int;
     function DateThai($strDate)
     {
         $strYear = date("Y",strtotime($strDate))+543;
@@ -35,25 +43,25 @@
                 <div class="row">
                     <div class="col-4">
                         <p>ชื่อ</p>
-                        <input type="text" name="firstname">
+                        <input type="text" name="firstname" required>
                     </div>
                     <div class="col-4">
                         <p>นามสกุล</p>
-                        <input type="text" name="lastname">
+                        <input type="text" name="lastname" required>
                     </div>
                     <div class="col-4">
                         <p>เลขบัตรประชาชน / Passport</p>
-                        <input type="text" name="id_card">
+                        <input type="text" name="id_card" required>
                     </div>
                 </div>
                 <div class="row">
                 <div class="col-4">
                         <p>อีเมล</p>
-                        <input type="email" name="email">
+                        <input type="email" name="email" required>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <p>เบอร์โทรศัพท์</p>
-                        <input type="tel" name="tel">
+                        <input type="tel" name="tel" required>
                     </div>
                     <div class="col-2">
                         <p>เช็คอิน</p>
@@ -62,6 +70,10 @@
                     <div class="col-2">
                         <p>เช็คเอ้าท์</p>
                         <input type="text" name="check_out_input" value="<?php echo DateThai($get_checkout); ?>" readonly>
+                    </div>
+                    <div class="col-1">
+                        <p>จำนวนห้อง</p>
+                        <input type="number" name="room_count" min="1" max="<?php echo $total_int; ?>" required>
                     </div>
                 </div>
                 <div style="padding-top:64px;display:flex;justify-content:center;">

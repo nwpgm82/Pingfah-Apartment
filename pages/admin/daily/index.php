@@ -82,6 +82,7 @@ if($_SESSION['level'] == 'admin'){
                             <th>อีเมล</th>
                             <th>เบอร์โทรศัพท์</th>
                             <th>ประเภทห้อง</th>
+                            <th>จำนวนห้อง</th>
                             <th>เช็คอิน</th>
                             <th>เช็คเอ้าท์</th>
                             <th>เลขในการจอง</th>
@@ -89,6 +90,7 @@ if($_SESSION['level'] == 'admin'){
                         </tr>
                         <?php
                         while($row = $result->fetch_assoc()) {
+                            $roomtype = $row['room_type'];
                         ?>
                         <tr>
                             <td><?php echo $num; ?></td>
@@ -97,14 +99,38 @@ if($_SESSION['level'] == 'admin'){
                             <td><?php echo $row['email']; ?></td>
                             <td><?php echo $row['tel']; ?></td>
                             <td><?php echo $row['room_type']; ?></td>
+                            <td><?php echo $row['room_count']; ?></td>
                             <td><?php if(isset($row['check_in'])){ echo DateThai($row['check_in']); } ?></td>
                             <td><?php if(isset($row['check_out'])){ echo DateThai($row['check_out']); } ?></td>
                             <td><?php echo $row['code']; ?></td>
                             <td>
-                                <div class="confirmed-btn">
-                                    <p>ยืนยัน</p>
+                                <?php
+                                if($row['daily_status'] != 'เข้าพักแล้ว'){
+                                ?>
+                                <div id="btn<?php echo $num; ?>">
+                                    <button onclick="selectRoom(<?php echo $num; ?>)">เลือกห้อง</button>
+                                    <button class="del-btn">ลบ</button>
                                 </div>
-                                <!-- <button class="del-btn">ลบ</button> -->
+                                <div id="select<?php echo $num; ?>" style="display:none;">
+                                    <select name="" id="room_select<?php echo $num; ?>">
+                                        <option value="">---</option>
+                                        <?php
+                                            $room = "SELECT * FROM roomlist WHERE room_type = '$roomtype' AND room_status = 'ว่าง'";
+                                            $result2 = $conn->query($room);
+                                            if ($result2->num_rows > 0) {
+                                                while($select = $result2->fetch_assoc()) {
+                                        ?>
+                                        <option value="<?php echo $select['room_id']; ?>"><?php echo $select['room_id']; ?></option>
+                                        <?php } } ?>
+                                    </select>
+                                    <button onclick="confirmRoom('<?php echo $row['code']; ?>',<?php echo $num; ?>)">ยืนยัน</button>
+                                </div>
+                                <?php 
+                                }else{
+                                ?>
+                                <button type="button" class="confirmed-btn">ยืนยัน</button>
+                                <button class="del-btn">ลบ</button>
+                                <?php } ?>
                             </td>
                         </tr>
                         <?php $num++; } ?>

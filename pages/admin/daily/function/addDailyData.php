@@ -2,7 +2,7 @@
 session_start();
 if($_SESSION['level'] == "admin"){
     include('../../../connection.php');
-    $code = $_REQUEST['Code'];
+    $code = $_REQUEST['code'];
     $room_select = $_REQUEST['room_select'];
     $searchData = "SELECT * FROM daily WHERE code = '$code'";
     $result = mysqli_query($conn, $searchData)or die ("Error in query: $searchData " . mysqli_error());
@@ -21,7 +21,7 @@ if($_SESSION['level'] == "admin"){
     echo $total_price;
     $costData = "INSERT INTO dailycost (room_id, check_in, check_out, price_total, daily_status, code) VALUES ('$room_select', '$check_in', '$check_out', $total_price, 'ชำระเงินแล้ว', '$code')";
     $roomData = "INSERT INTO roommember (room_member, firstname, lastname, id_card, phone, email) VALUES ('$room_select', '$firstname', '$lastname', '$id_card', '$tel', '$email')";
-    $daily = "UPDATE daily SET daily_status = 'เข้าพักแล้ว' WHERE code = '$code'";
+    $daily = "UPDATE daily SET daily_status = 'เข้าพักแล้ว' WHERE code = '$code' AND daily_status IS NULL LIMIT 1";
     $roomlist = "UPDATE roomlist SET room_status = 'เช่ารายวัน', check_in = '$check_in', check_out = '$check_out' WHERE room_id = '$room_select'";
     if ($conn->query($costData) === TRUE && $conn->query($roomData) === TRUE && $conn->query($daily) === TRUE && $conn->query($roomlist) === TRUE) {
         echo "<script>";

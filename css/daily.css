@@ -89,15 +89,21 @@ hr{
 }
 
 .daily-box .confirmed-btn{
-    width: 100%;
-    height: 40px;
-    border-radius: 4px;
-    color: #fff;
     background-color: #c6c6c6;
     cursor: default;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
+}
+
+.daily-box .confirmed-btn:hover{
+    background-color: #c6c6c6;
+}
+
+.daily-box .come-btn{
+    background-color: rgb(82, 185, 82);
+}
+
+.daily-box .come-btn:hover{
+    background-color:  rgb(74, 165, 74);
 }
 
 .daily-box table {
