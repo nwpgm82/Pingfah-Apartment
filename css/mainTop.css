@@ -22,6 +22,7 @@
     align-items: center;
     animation-name: menu;
     animation-duration: 1.5s;
+    list-style: none;
 }
 
 .topbar ul a {

@@ -31,7 +31,11 @@
                 </div>
             </form>
             <div class="hr"></div>
-            <h3>ผลลัพธ์การค้นหา</h3>
+            <?php 
+            if(isset($check_in) || isset($check_out)){
+                echo "<h3>ผลลัพธ์การค้นหา</h3>";
+            }
+            ?>
             <div class="grid">
                 <?php
                     if(isset($check_in) || isset($check_out)){

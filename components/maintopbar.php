@@ -24,9 +24,7 @@
             <a href="#contact">
                 <li>ติดต่อเรา</li>
             </a>
-            <a href="/Pingfah/pages/login.php">
-                <li><img src="/Pingfah/img/tool/login-btn.png" alt=""></li>
-            </a>
+            <a href="/Pingfah/pages/login.php"><img src="/Pingfah/img/tool/login-btn.png" alt=""></a>
         </ul>
     </div>
 </body>
