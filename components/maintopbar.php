@@ -15,7 +15,7 @@
             <a href="/Pingfah/index.php">
                 <li>หน้าหลัก</li>
             </a>
-            <a href="pages/roomList.php">
+            <a href="/Pingfah/pages/roomList.php">
                 <li>ประเภทห้องพัก</li>
             </a>
             <a href="#gallery">
