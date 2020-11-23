@@ -61,16 +61,12 @@ if($_SESSION['level'] == 'admin'){
         if(move_uploaded_file($_FILES['pic_idcard']['tmp_name'], $target) && move_uploaded_file($_FILES['pic_home']['tmp_name'], $target2)){
           $sql = "INSERT INTO roommember (room_member, name_title, firstname, lastname, nickname, id_card, phone, email, id_line, birthday, age, race, nationality, job, address, pic_idcard, pic_home) VALUES ('$id', '$name_title', '$firstname', '$lastname', '$nickname', '$id_card', '$phone', '$email', '$line', '$birthday', '$age', '$race', '$nationality', '$job', '$address', '$pic_idcard', '$pic_home')";
           $roomlist = "UPDATE roomlist SET room_status = 'ไม่ว่าง',come = '$date' WHERE room_id = '$id' ";
-          if ($conn->query($sql) === TRUE  ) {  
+          $insertUser = "INSERT INTO login (username, password, level) VALUES ('$id', md5('$id_card'),'guest')";
+          if ($conn->query($sql) === TRUE && $conn->query($roomlist) === TRUE && $conn->query($insertUser) === TRUE) {  
             echo "<script>";
             echo "alert('เพิ่มข้อมูลสำเร็จ');";
             echo "window.location ='room_id.php?ID=$id'; ";
             echo "</script>";
-            if ($conn->query($roomlist) === TRUE) {
-              echo "New record updated successfully";
-            } else {
-              echo "Error: " .$roomlist . "<br>" . $conn->error;
-            }
           } else {
           echo "Error: " . $sql . "<br>" . $conn->error;
           }

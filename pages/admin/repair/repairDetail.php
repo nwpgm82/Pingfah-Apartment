@@ -2,7 +2,7 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../components/sidebar.php');
+    include('../../../components/sidebar.php');
     $room_id = $_REQUEST['room_id'];
     $appliance = $_REQUEST['repairappliance'];
     $category = $_REQUEST['repaircategory'];

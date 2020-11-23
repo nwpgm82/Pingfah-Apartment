@@ -1,6 +1,6 @@
 <?php
     include("connection.php");
-    include("components/maintopbar.php");
+    include("../components/maintopbar.php");
     @$check_in = $_REQUEST['check_in'];
     @$check_out = $_REQUEST['check_out'];
 ?>
@@ -35,9 +35,16 @@
             <div class="grid">
                 <?php
                     if(isset($check_in) || isset($check_out)){
-                        $countAir = mysqli_query($conn,"SELECT COUNT(*) AS airtotal FROM daily WHERE room_type = 'แอร์' AND ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))");
-                        $airdata= mysqli_fetch_assoc($countAir);
-                        $airtotal_int = intval($airdata['airtotal']);
+                        $countAir = "SELECT * FROM daily WHERE room_type = 'แอร์' AND ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))";
+                        $airresult = $conn->query($countAir);
+                        $airtotal_int = 0;
+                        if ($airresult->num_rows > 0) {
+                            while($air = $airresult->fetch_assoc()) {
+                                $airtotal_int += $air['room_count'];
+                            }
+                        }else{
+                            $airtotal_int = 0;
+                        }
                         $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = 'แอร์' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
                         $roomdata= mysqli_fetch_assoc($countroom);  
                         $roomtotal_int = intval($roomdata['roomtotal']);
@@ -64,9 +71,16 @@
                 <?php }} ?>
                 <?php
                     if(isset($check_in) || isset($check_out)){
-                        $countFan = mysqli_query($conn,"SELECT COUNT(*) AS fantotal FROM daily WHERE room_type = 'พัดลม' AND ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))");
-                        $fandata= mysqli_fetch_assoc($countFan);
-                        $fantotal_int = intval($fandata['fantotal']);
+                        $countFan = "SELECT * FROM daily WHERE room_type = 'พัดลม' AND ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))";
+                        $fanresult = $conn->query($countFan);
+                        $fantotal_int = 0;
+                        if ($fanresult->num_rows > 0) {
+                            while($fan = $fanresult->fetch_assoc()) {
+                                $fantotal_int += $fan['room_count'];
+                            }
+                        }else{
+                            $fantotal_int = 0;
+                        }
                         $countroom2 = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal2 FROM roomlist WHERE room_type = 'พัดลม' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
                         $roomdata2= mysqli_fetch_assoc($countroom2);  
                         $roomtotal_int2 = intval($roomdata2['roomtotal2']);

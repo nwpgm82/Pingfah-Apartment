@@ -22,7 +22,7 @@ if(isset($_POST['accept_daily'])){
         // $result = $conn->query($searchfreeroom);
         // $row = $result->fetch_assoc();
         // $room_select = $row['room_id'];
-        $sql = "INSERT INTO daily (firstname, lastname, id_card, email, tel, room_type,room_count, code, check_in, check_out) VALUES ('$firstname', '$lastname', '$id_card', '$email', '$tel', '$room_type', '1', '$code', '$check_in', '$check_out')";
+        $sql = "INSERT INTO daily (firstname, lastname, id_card, email, tel, room_type,room_count, code, check_in, check_out) VALUES ('$firstname', '$lastname', '$id_card', '$email', '$tel', '$room_type', '$room_count', '$code', '$check_in', '$check_out')";
         // $sql2 = "INSERT INTO roommember (room_member, firstname, lastname, id_card, phone, email) VALUE ('$room_select', '$firstname','$lastname','$id_card','$tel','$email') LIMIT 1";
         // $update = "UPDATE roomlist SET room_status = 'เช่ารายวัน', check_in = '$check_in', check_out = '$check_out' WHERE room_id = '$room_select'";
         ///////////////////// อีเมล ////////////////////////
@@ -91,17 +91,10 @@ if(isset($_POST['accept_daily'])){
         //  ถ้ามี email ผู้รับ
         if($email_receiver){
             $mail->msgHTML($email_content);
-            for($i = 1 ; $i <= $room_count ; $i++){
-                if($conn->query($sql) === TRUE){
-                    echo $room_count .$i;
-                }else{
-                    echo "Error: " .$conn->error .$i;
-                }
-            }
-            if ($mail->send()) {
+            if ($mail->send() && $conn->query($sql) === TRUE) {
                 echo "<script>";
                 echo "alert('จองห้องเรียบร้อยแล้ว กรุณาดูคำสั่งในการจองได้ในอีเมล์');";
-                echo "location.href = '../index.php'";
+                echo "location.href = '../../index.php'";
                 echo "</script>";
             } else {
                 echo $mail->ErrorInfo; // ข้อความ รายละเอียดการ error

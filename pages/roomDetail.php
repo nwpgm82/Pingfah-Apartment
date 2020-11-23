@@ -1,6 +1,6 @@
 <?php
 include('connection.php');
-include('components/maintopbar.php');
+include('../components/maintopbar.php');
 $room_type = $_REQUEST['room_type'];
 ?>
 <!DOCTYPE html>

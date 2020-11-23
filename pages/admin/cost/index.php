@@ -2,7 +2,7 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../components/sidebar.php');
+    include('../../../components/sidebar.php');
     $date = @$_REQUEST['Date'];
     $check = @$_REQUEST['Status'];
     function DateThai($strDate){

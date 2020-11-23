@@ -1,8 +1,8 @@
 <?php
 session_start();
 if($_SESSION['level'] == 'admin'){
-    include('../../components/sidebar.php'); 
     include('../../connection.php');
+    include('../../../components/sidebar.php'); 
     $room_id = $_REQUEST["ID"]; 
     $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
     $check_result = $conn->query($check_status);

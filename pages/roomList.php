@@ -1,6 +1,6 @@
 <?php
 include('connection.php');
-include('components/maintopbar.php');
+include('../components/maintopbar.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

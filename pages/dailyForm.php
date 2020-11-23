@@ -1,17 +1,23 @@
 <?php
     include('connection.php');
-    include('components/maintopbar.php');
+    include('../components/maintopbar.php');
     @$get_checkin = $_REQUEST['check_in'];
     @$get_checkout = $_REQUEST['check_out'];
     $room_type = $_REQUEST['room_type'];
-    $count = mysqli_query($conn,"SELECT COUNT(*) AS total FROM daily WHERE room_type = '$room_type' AND ((check_in BETWEEN '$get_checkin' AND '$get_checkout') OR (check_out BETWEEN '$get_checkin' AND '$get_checkout') OR ('$get_checkin' BETWEEN check_in AND check_out) OR ('$get_checkout' BETWEEN check_in AND check_out ))");
-    $data= mysqli_fetch_assoc($count);
-    $typetotal_int = intval($data['total']);
-    $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = '$room_type' AND room_status = 'ว่าง'");
+    $count = "SELECT * FROM daily WHERE room_type = '$room_type' AND ((check_in BETWEEN '$get_checkin' AND '$get_checkout') OR (check_out BETWEEN '$get_checkin' AND '$get_checkout') OR ('$get_checkin' BETWEEN check_in AND check_out) OR ('$get_checkout' BETWEEN check_in AND check_out ))";
+    $countresult = $conn->query($count);
+    $typetotal_int = 0;
+    if ($countresult->num_rows > 0) {
+        while($data = $countresult->fetch_assoc()) {
+            $typetotal_int += $data["room_count"];
+        }
+    } else {
+        $typetotal_int = 0;
+    }
+    $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = '$room_type' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
     $roomdata= mysqli_fetch_assoc($countroom);  
     $roomtotal_int = intval($roomdata['roomtotal']);
     $total_int = $roomtotal_int - $typetotal_int;
-    // echo $total_int;
     function DateThai($strDate)
     {
         $strYear = date("Y",strtotime($strDate))+543;
@@ -21,7 +27,6 @@
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    // if($check_in && $check_out && $room_type != null){
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,8 +43,11 @@
         <div class="dailyForm">
             <h2>แบบฟอร์มจองห้องพัก</h2>
             <div class="hr"></div>
-            <h3>ประเภทห้องพัก : <label style="color: #b3994c;font-weight: bold;">ห้อง<?php echo $room_type; ?></label></h3>
-            <form action="mainpage_function/addDailyForm.php?room_type=<?php echo $room_type; ?>&check_in=<?php echo $get_checkin; ?>&check_out=<?php echo $get_checkout; ?>" method="POST" onsubmit="return confirm('คุณต้องการจองห้องพักใช่หรือไม่ ?');">
+            <h3>ประเภทห้องพัก : <label style="color: #b3994c;font-weight: bold;">ห้อง<?php echo $room_type; ?></label>
+            </h3>
+            <form
+                action="mainpage_function/addDailyForm.php?room_type=<?php echo $room_type; ?>&check_in=<?php echo $get_checkin; ?>&check_out=<?php echo $get_checkout; ?>"
+                method="POST" onsubmit="return confirm('คุณต้องการจองห้องพักใช่หรือไม่ ?');">
                 <div class="row">
                     <div class="col-4">
                         <p>ชื่อ</p>
@@ -55,7 +63,7 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-4">
+                    <div class="col-4">
                         <p>อีเมล</p>
                         <input type="email" name="email" required>
                     </div>
@@ -69,7 +77,8 @@
                     </div>
                     <div class="col-2">
                         <p>เช็คเอ้าท์</p>
-                        <input type="text" name="check_out_input" value="<?php echo DateThai($get_checkout); ?>" readonly>
+                        <input type="text" name="check_out_input" value="<?php echo DateThai($get_checkout); ?>"
+                            readonly>
                     </div>
                     <div class="col-1">
                         <p>จำนวนห้อง</p>
@@ -82,14 +91,6 @@
             </form>
         </div>
     </div>
-    <!-- <script>
-        var el = document.getElementById('myCoolForm');
-    </script> -->
 </body>
 
 </html>
-<?php
-    // }else{
-    //     Header("Location: checkRoom.php"); 
-    // }
-?>

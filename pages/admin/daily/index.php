@@ -2,7 +2,7 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../components/sidebar.php');
+    include('../../../components/sidebar.php');
     $check_in = @$_REQUEST['check_in'];
     $check_out = @$_REQUEST['check_out'];
     $code = @$_REQUEST['Code'];

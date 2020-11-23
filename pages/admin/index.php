@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if($_SESSION['level'] == 'admin'){
-    include('../components/sidebar.php');
+    include('../../components/sidebar.php');
     include('../connection.php');
 ?>
 <!DOCTYPE html>

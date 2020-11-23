@@ -2,7 +2,7 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../components/sidebar.php');
+    include('../../../components/sidebar.php');
     $type = $_REQUEST['type'];
     $sql = "SELECT * FROM roomdetail WHERE type = '$type'";
     $result = $conn->query($sql);

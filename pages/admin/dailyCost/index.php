@@ -2,7 +2,7 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include("../../connection.php");
-    include("../../components/sidebar.php");
+    include("../../../components/sidebar.php");
     $check_in = @$_REQUEST['check_in'];
     $check_out = @$_REQUEST['check_out'];
     $code = @$_REQUEST['Code'];
@@ -90,7 +90,7 @@ if($_SESSION['level'] == 'admin'){
                         <td><?php echo $row['room_id']; ?></td>
                         <td><?php echo DateThai($row['check_in']) ." ~ " .DateThai($row['check_out']); ?></td>
                         <td><?php echo $row['code']; ?></td>
-                        <td><?php echo number_format($row['price_total']); ?></td>
+                        <td><?php echo $row['price_total']; ?></td>
                         <td>
                             <button class="status-success"><?php echo $row['daily_status']; ?></button>
                             <button type="button" onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
