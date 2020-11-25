@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2020 at 06:00 PM
+-- Generation Time: Nov 25, 2020 at 08:52 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -67,9 +67,8 @@ CREATE TABLE `daily` (
 --
 
 INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `room_type`, `code`, `check_in`, `check_out`, `daily_status`, `room_count`) VALUES
-(7, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'แอร์', 'g53wzqyn2fq', '2020-11-23', '2020-11-25', 'เข้าพักแล้ว', 1),
-(8, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'แอร์', 'g53wzqyn2fq', '2020-11-23', '2020-11-25', NULL, 1),
-(9, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'แอร์', 'g53wzqyn2fq', '2020-11-23', '2020-11-25', NULL, 1);
+(13, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'แอร์', 'nw68y0ftqpx', '2020-11-25', '2020-11-26', 'เข้าพักแล้ว', 3),
+(14, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'พัดลม', 'nrogk56n2rj', '2020-11-24', '2020-11-26', 'เข้าพักแล้ว', 3);
 
 -- --------------------------------------------------------
 
@@ -80,6 +79,11 @@ INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `t
 CREATE TABLE `dailycost` (
   `dailycost_id` int(11) NOT NULL,
   `room_id` varchar(200) NOT NULL,
+  `firstname` varchar(200) NOT NULL,
+  `lastname` varchar(200) NOT NULL,
+  `id_card` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `tel` varchar(200) NOT NULL,
   `check_in` varchar(200) NOT NULL,
   `check_out` varchar(200) NOT NULL,
   `price_total` float(11,2) NOT NULL,
@@ -91,8 +95,9 @@ CREATE TABLE `dailycost` (
 -- Dumping data for table `dailycost`
 --
 
-INSERT INTO `dailycost` (`dailycost_id`, `room_id`, `check_in`, `check_out`, `price_total`, `daily_status`, `code`) VALUES
-(6, '201', '2020-11-23', '2020-11-25', 700.00, 'ชำระเงินแล้ว', 'g53wzqyn2fq');
+INSERT INTO `dailycost` (`dailycost_id`, `room_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `check_in`, `check_out`, `price_total`, `daily_status`, `code`) VALUES
+(12, '201, 203, 204', 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '2020-11-25', '2020-11-26', 1050.00, 'ชำระเงินแล้ว', 'nw68y0ftqpx'),
+(13, '206, 207, 306', 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '2020-11-24', '2020-11-26', 750.00, 'ชำระเงินแล้ว', 'nrogk56n2rj');
 
 -- --------------------------------------------------------
 
@@ -129,6 +134,17 @@ CREATE TABLE `employee` (
 
 INSERT INTO `employee` (`id`, `title_name`, `firstname`, `lastname`, `nickname`, `position`, `id_card`, `tel`, `email`, `id_line`, `birthday`, `age`, `race`, `nationality`, `address`, `pic_idcard`, `pic_home`, `profile_img`, `username`, `password`) VALUES
 (18, 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', 'พนักงาน', '1509966011521', '0956722914', 'blackfrostier@gmail.com', 'blackfrostier', '1998-12-21', '21', 'ไทย', 'ไทย', '140/40 หมู่ 2 ต. หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', '404365.jpg', '404570.jpg', '115774657_3345395698845713_2446905765721859802_o.jpg', 'nwpgm82', 'ef16b5fe40a49934ad40c0b059090b14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gallery`
+--
+
+CREATE TABLE `gallery` (
+  `gallery_id` int(11) NOT NULL,
+  `gallery_name` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -234,20 +250,20 @@ CREATE TABLE `roomlist` (
 --
 
 INSERT INTO `roomlist` (`room_id`, `room_type`, `room_status`, `come`, `check_in`, `check_out`) VALUES
-('201', 'แอร์', 'ว่าง', '', '', ''),
+('201', 'แอร์', 'เช่ารายวัน', '', '2020-11-25', '2020-11-26'),
 ('202', 'แอร์', 'ว่าง', '', '', ''),
-('203', 'แอร์', 'ว่าง', '', '', ''),
-('204', 'แอร์', 'ว่าง', '', '', ''),
+('203', 'แอร์', 'เช่ารายวัน', '', '2020-11-25', '2020-11-26'),
+('204', 'แอร์', 'เช่ารายวัน', '', '2020-11-25', '2020-11-26'),
 ('205', 'แอร์', 'ว่าง', '', '', ''),
-('206', 'พัดลม', 'ว่าง', '', '', ''),
-('207', 'พัดลม', 'ว่าง', '', '', ''),
+('206', 'พัดลม', 'เช่ารายวัน', '', '2020-11-24', '2020-11-26'),
+('207', 'พัดลม', 'เช่ารายวัน', '', '2020-11-24', '2020-11-26'),
 ('208', 'แอร์', 'ว่าง', '', '', ''),
 ('301', 'แอร์', 'ว่าง', '', '', ''),
 ('302', 'แอร์', 'ว่าง', '', '', ''),
 ('303', 'แอร์', 'ว่าง', '', '', ''),
 ('304', 'แอร์', 'ว่าง', '', '', ''),
 ('305', 'แอร์', 'ว่าง', '', '', ''),
-('306', 'พัดลม', 'ว่าง', '', '', ''),
+('306', 'พัดลม', 'เช่ารายวัน', '', '2020-11-24', '2020-11-26'),
 ('307', 'แอร์', 'ว่าง', '', '', ''),
 ('308', 'แอร์', 'ว่าง', '', '', '');
 
@@ -293,6 +309,18 @@ CREATE TABLE `roommember` (
   `id_line2` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `roommember`
+--
+
+INSERT INTO `roommember` (`room_member`, `name_title`, `firstname`, `lastname`, `nickname`, `id_card`, `phone`, `email`, `birthday`, `age`, `race`, `nationality`, `job`, `address`, `pic_idcard`, `pic_home`, `id_line`, `name_title2`, `firstname2`, `lastname2`, `nickname2`, `id_card2`, `phone2`, `email2`, `birthday2`, `age2`, `race2`, `nationality2`, `job2`, `address2`, `pic_idcard2`, `pic_home2`, `id_line2`) VALUES
+('201', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('203', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('204', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('206', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('207', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('306', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, '');
+
 -- --------------------------------------------------------
 
 --
@@ -337,6 +365,12 @@ ALTER TABLE `dailycost`
 --
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gallery`
+--
+ALTER TABLE `gallery`
+  ADD PRIMARY KEY (`gallery_id`);
 
 --
 -- Indexes for table `login`
@@ -388,19 +422,25 @@ ALTER TABLE `cost`
 -- AUTO_INCREMENT for table `daily`
 --
 ALTER TABLE `daily`
-  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `dailycost`
 --
 ALTER TABLE `dailycost`
-  MODIFY `dailycost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `dailycost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `gallery`
+--
+ALTER TABLE `gallery`
+  MODIFY `gallery_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `package`
