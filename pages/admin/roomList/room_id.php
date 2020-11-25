@@ -38,6 +38,7 @@ if($_SESSION['level'] == 'admin'){
                     <form action='room_member_add_DB.php?ID=<?php echo $room_id; ?>' method='POST' id="form"
                         enctype="multipart/form-data">
                         <h3>ห้อง <?php echo $room_id; ?></h3>
+                        <div class="hr"></div>
                         <div class="row">
                             <div class="col-2 select-box">
                                 <p>คำนำหน้าชื่อ</p>
@@ -184,7 +185,7 @@ if($_SESSION['level'] == 'admin'){
                                 </div>
                             </div>
                         </div>
-                        <hr />
+                        <div class="hr" style="margin: 32px 0;"></div>
                         <?php if($row != null){ ?>
                         <div style="display:flex;justify-content:flex-end;">
                             <button type="button" onclick="navigation()">คนที่ 2</button>
@@ -224,6 +225,7 @@ if($_SESSION['level'] == 'admin'){
                     <form action='room_member_add_DB.php?ID=<?php echo $room_id; ?>' method='POST' id="form"
                         enctype="multipart/form-data">
                         <h3>ห้อง <?php echo $room_id; ?></h3>
+                        <div class="hr"></div>
                         <div class="row">
                             <div class="col-2 select-box">
                                 <p>คำนำหน้าชื่อ</p>
@@ -382,7 +384,7 @@ if($_SESSION['level'] == 'admin'){
                             <button type="submit" name='formSubmit2'>ยืนยัน</button>
                             <button type="button" class="delData" onclick="cancelEditData(2)">ยกเลิก</button>
                         </div>
-                        <hr />
+                        <div class="hr" style="margin: 32px 0;"></div>
                         <div style="padding-top:32px;display:flex;justify-content:flex-end">
                             <button type="button" class="delData"
                                 onclick="delData(<?php echo $room_id; ?>)">ลบข้อมูล</button>
@@ -411,6 +413,7 @@ if($_SESSION['level'] == 'admin'){
                 <form action='room_member_add_DB.php?ID=<?php echo $room_id; ?>' method='POST' id="form"
                     enctype="multipart/form-data">
                     <h3>ห้อง <?php echo $room_id; ?></h3>
+                    <div class="hr"></div>
                     <div class="row">
                         <div class="col-2 input-box">
                             <label>เช็คอิน</label>
@@ -479,7 +482,7 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <?php } ?>
                 </form>
-                <hr />
+                <div class="hr" style="margin: 32px 0;"></div>
                 <div style="padding-top:32px;display:flex;justify-content:flex-end">
                     <button type="button" class="delData" onclick="delData(<?php echo $room_id; ?>)">ลบข้อมูล</button>
                 </div>

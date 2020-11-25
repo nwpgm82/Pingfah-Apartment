@@ -25,6 +25,12 @@
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
+.hr {
+    margin: 16px auto 0px auto;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.7);
+    opacity: 0.5;
+}
+
 .detail-box .roomDetail {
     display: flex;
     justify-content: space-between;

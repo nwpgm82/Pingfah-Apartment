@@ -17,7 +17,7 @@ if($_SESSION['level'] == 'admin'){
     if($row2 != null){
         extract($row2);
     }
-    $sql2 = "INSERT INTO dailycost (room_id, check_in, check_out, price_total, daily_status,code) VALUES ('$room_str','$check_in','$check_out',($daily_price*$room_count),'ชำระเงินแล้ว','$code')";
+    $sql2 = "INSERT INTO dailycost (room_id, firstname, lastname, id_card, email, tel, check_in, check_out, price_total, daily_status,code) VALUES ('$room_str', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$check_in','$check_out',($daily_price*$room_count),'ชำระเงินแล้ว','$code')";
     $update2 = "UPDATE daily SET daily_status = 'เข้าพักแล้ว' WHERE daily_id = $daily_id";
     for($i = 0 ; $i < sizeof($room) ; $i++){
         $sql = "INSERT INTO roommember (room_member, firstname, lastname, id_card, phone, email) VALUES ('$room[$i]','$firstname','$lastname','$id_card','$tel','$email')";
@@ -40,6 +40,8 @@ if($_SESSION['level'] == 'admin'){
         echo "</br>";
         exit();
     }
+}else{
+    Header("Location: ../../../login.php");
 }
 
 ?>

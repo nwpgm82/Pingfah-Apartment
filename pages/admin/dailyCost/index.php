@@ -49,7 +49,7 @@ if($_SESSION['level'] == 'admin'){
                         <a href="index.php"><button type="button">ยกเลิกการกรอง</button></a>
                     </div>
                 </div>
-                <hr />
+                <div class="hr"></div>
                 <?php
                 $perpage = 10;
                 if(isset($_GET['page'])){
@@ -76,9 +76,11 @@ if($_SESSION['level'] == 'admin'){
                 <table>
                     <tr>
                         <th>ลำดับ</th>
-                        <th>เลขห้อง</th>
+                        <th>เลขห้องที่จอง</th>
+                        <th>ชื่อผู้จอง</th>
+                        <th>เบอร์โทรศัพท์</th>
                         <th>วันที่เข้าพัก</th>
-                        <th>เลขในการจอง</th>
+                        <th>เลขที่ในการจอง</th>
                         <th>ราคารวม</th>
                         <th>สถานะการชำระเงิน</th>
                     </tr>
@@ -88,19 +90,22 @@ if($_SESSION['level'] == 'admin'){
                     <tr>
                         <td><?php echo $num; ?></td>
                         <td><?php echo $row['room_id']; ?></td>
-                        <td><?php echo DateThai($row['check_in']) ." ~ " .DateThai($row['check_out']); ?></td>
+                        <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
+                        <td><?php echo $row['tel']; ?></td>
+                        <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?></td>
                         <td><?php echo $row['code']; ?></td>
                         <td><?php echo $row['price_total']; ?></td>
                         <td>
                             <button class="status-success"><?php echo $row['daily_status']; ?></button>
-                            <button type="button" onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
+                            <a href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
+                            <button type="button" class="del" onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
                         </td>
                     </tr>
                     <?php $num++; } ?>
                 </table>
                 <?php
                     ///////pagination
-                    $sql2 = "SELECT * FROM cost";
+                    $sql2 = "SELECT * FROM dailycost";
                     $query2 = mysqli_query($conn, $sql2);
                     $total_record = mysqli_num_rows($query2);
                     $total_page = ceil($total_record / $perpage);

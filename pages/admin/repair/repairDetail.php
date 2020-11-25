@@ -29,6 +29,7 @@ if($_SESSION['level'] == 'admin'){
         <div style="padding:24px;">
             <div class="repairDetail-box">
                 <h3>รายละเอียดความเสียหาย</h3>
+                <div class="hr"></div>
                 <div style="margin-top: 32px;">
                         <p>เลขห้อง</p>
                         <input type="text" value="<?php echo $row['room_id']; ?>" disabled>

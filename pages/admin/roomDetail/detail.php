@@ -25,6 +25,7 @@ if($_SESSION['level'] == 'admin'){
         <div class="box">
             <div class="detail-box">
                 <h3>ห้อง<?php echo $row['type']; ?></h3>
+                <div class="hr"></div>
                 <form action="function/addData.php?type=<?php echo $type; ?>" method="POST"
                     enctype="multipart/form-data">
                     <div class="roomDetail">
@@ -165,6 +166,7 @@ if($_SESSION['level'] == 'admin'){
                             </div>
                         </div>
                     </div>
+                    <div class="hr"></div>
                     <div id="edit" style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
                         <button type="button" class="edit-btn" onclick="edit()">แก้ไข</button>
                     </div>

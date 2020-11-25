@@ -20,6 +20,7 @@ if($_SESSION['level'] == 'admin'){
         <div style="padding:24px;">
             <div class="addRepair-box">
                 <h3>รายละเอียดความเสียหาย</h3>
+                <div class="hr"></div>
                 <form action="../repair/function/repairAccept.php" method="POST">
                     <div style="margin-top: 32px;">
                         <p>เลขห้อง</p>

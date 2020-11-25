@@ -19,7 +19,11 @@ if($_SESSION['level'] == 'admin'){
         <div style="padding:24px;">
             <div class="home-box">
                 <h3>Overview</h3>
+                <div class="hr"></div>
                 <div class="grid">
+                    <div class="chart-container">
+                        <canvas id="graphCanvas2"></canvas>
+                    </div>
                     <div class="chart-container">
                         <canvas id="graphCanvas"></canvas>
                     </div>

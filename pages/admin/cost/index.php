@@ -34,7 +34,7 @@ if($_SESSION['level'] == 'admin'){
                     <input type="month" id="cost_date" value="<?php if(isset($date)){ echo $date; }else{ echo ""; } ?>"
                         onchange="searchDate(value)">
                 </div>
-                <hr />
+                <div class="hr"></div>
                 <h3>รายการชำระเงินทั้งหมด</h3>
                 <?php
                 $perpage = 5;
@@ -156,7 +156,7 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
                 </div>
-                <div style='margin:32px 0'>0 results</div>
+                <div style='margin:32px 0'>ไม่มีรายการชำระเงินรายเดือน</div>
                 <?php
                     }
                 }else if(isset($date) && !isset($check)){
@@ -272,7 +272,7 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
                 </div>
-                <div style='margin:32px 0'>0 results</div>
+                <div style='margin:32px 0'>ไม่มีรายการชำระเงินรายเดือน</div>
                 <?php
                 }}else if(isset($check) && !isset($date)){
                     if($check == "success"){
@@ -390,7 +390,7 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
                 </div>
-                <div style='margin:32px 0'>0 results</div>
+                <div style='margin:32px 0'>ไม่มีรายการชำระเงินรายเดือน</div>
                 <?php
                     }
                 }else if(isset($date) && isset($check)){
@@ -509,7 +509,7 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
                 </div>
-                <div style='margin:32px 0'>0 results</div>
+                <div style='margin:32px 0'>ไม่มีรายการชำระเงินรายเดือน</div>
                 <?php
                     }
                 }else{

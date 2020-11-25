@@ -31,9 +31,10 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="daily-box">
+            <h3>ค้นหารายการเช่ารายวัน</h3>
                 <div class="search">
                     <div style="padding-right:16px;">
-                        <label>ประจำวันที่</label>
+                        <label>ค้นหาตามวันที่</label>
                         <input type="date" id="check_in" value="<?php echo $check_in; ?>" required>
                         <label>~</label>
                         <input type="date" id="check_out" value="<?php echo $check_out; ?>" required>
@@ -48,8 +49,7 @@ if($_SESSION['level'] == 'admin'){
                         <a href="index.php"><button type="button">ยกเลิกการกรอง</button></a>
                     </div>
                 </div>
-
-                <hr />
+                <div class="hr"></div>
                 <div>
                     <?php
                     $perpage = 10;
@@ -77,15 +77,12 @@ if($_SESSION['level'] == 'admin'){
                     <table>
                         <tr>
                             <th>ลำดับ</th>
-                            <th>ชื่อ</th>
-                            <th>เลขบัตรประชาชน/Passport</th>
-                            <th>อีเมล</th>
+                            <th>ชื่อผู้เช่า</th>
                             <th>เบอร์โทรศัพท์</th>
                             <th>ประเภทห้อง</th>
                             <th>จำนวนห้อง</th>
-                            <th>เช็คอิน</th>
-                            <th>เช็คเอ้าท์</th>
-                            <th>เลขในการจอง</th>
+                            <th>วันที่เข้าพัก</th>
+                            <th>เลขที่ในการจอง</th>
                             <th>เพิ่มเติม</th>
                         </tr>
                         <?php
@@ -95,20 +92,18 @@ if($_SESSION['level'] == 'admin'){
                         <tr>
                             <td><?php echo $num; ?></td>
                             <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
-                            <td><?php echo $row['id_card']; ?></td>
-                            <td><?php echo $row['email']; ?></td>
                             <td><?php echo $row['tel']; ?></td>
                             <td><?php echo $row['room_type']; ?></td>
                             <td><?php echo $row['room_count']; ?></td>
-                            <td><?php if(isset($row['check_in'])){ echo DateThai($row['check_in']); } ?></td>
-                            <td><?php if(isset($row['check_out'])){ echo DateThai($row['check_out']); } ?></td>
+                            <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?></td>
                             <td><?php echo $row['code']; ?></td>
                             <td>
                                 <?php
                                 if($row['daily_status'] != 'เข้าพักแล้ว'){
                                 ?>
                                 <div id="btn<?php echo $num; ?>">
-                                    <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button>เลือกห้อง</button></a>
+                                    <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button class="select_room">เลือกห้อง</button></a>
+                                    <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
                                     <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
                                 </div>
                                 <div id="select<?php echo $num; ?>" style="display:none;">
@@ -128,7 +123,8 @@ if($_SESSION['level'] == 'admin'){
                                 <?php 
                                 }else{
                                 ?>
-                                <button type="button" class="confirmed-btn">ยืนยัน</button>
+                                <button type="button" class="confirmed-btn">เข้าพักแล้ว</button>
+                                <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
                                 <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
                                 <?php } ?>
                             </td>

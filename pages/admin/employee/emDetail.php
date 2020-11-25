@@ -19,6 +19,7 @@ if($_SESSION['level'] == 'admin'){
         <div style="padding:24px;">
             <div class="emDetail-box">
                 <h3>รายละเอียดพนักงาน</h3>
+                <div class="hr"></div>
                 <?php
                 $user = $_REQUEST["username"]; 
                 $sql = "SELECT * FROM employee WHERE username = '$user'";
@@ -190,7 +191,7 @@ if($_SESSION['level'] == 'admin'){
                                     </div>
                                 </div>
                             </div>
-                            <div style="padding-top:32px;display:flex;justify-content:center;">
+                            <div style="padding-top:64px;display:flex;justify-content:center;">
                                 <button type="button" id="edit_data" class="edit-btn" onclick="edit()">แก้ไข</button>
                                 <div id="option" style="display:none;">
                                     <button type="submit" name="accept_edit">ยืนยัน</button>

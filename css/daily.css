@@ -25,7 +25,14 @@
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
+.hr {
+    margin: 32px 0;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.7);
+    opacity: 0.5;
+}
+
 .daily-box .search{
+    padding-top: 32px;
     display: flex;
 }
 
@@ -55,6 +62,14 @@
     transition: 0.3s;
 }
 
+.daily-box .select_room{
+    background-color:  darkturquoise;
+}
+
+.daily-box .select_room:hover{
+    background-color:   rgb(0, 165, 165);
+}
+
 .daily-box .search button{
     margin: 0 8px;
 }
@@ -72,11 +87,6 @@
     background-color:rgb(216, 40, 40);
 }
 
-hr{
-    margin: 32px 0;
-    opacity: 0.5;
-}
-
 .daily-box select{
     width: auto;
     height: 40px;
@@ -89,13 +99,13 @@ hr{
 }
 
 .daily-box .confirmed-btn{
-    background-color: #c6c6c6;
+    background-color: #B1D78A;
     cursor: default;
     
 }
 
 .daily-box .confirmed-btn:hover{
-    background-color: #c6c6c6;
+    background-color: #B1D78A;
 }
 
 .daily-box .come-btn{
@@ -142,6 +152,11 @@ hr{
 .daily-box table td:first-child{
     width: 20px;
     text-align: center;
+}
+
+.daily-box table td:last-child{
+    width: 170px;
+    text-align: right;
 }
 
 .daily-box table td p {

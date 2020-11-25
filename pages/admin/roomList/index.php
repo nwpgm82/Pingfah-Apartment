@@ -29,6 +29,8 @@ if($_SESSION['level'] == 'admin'){
     <div class="box" id="roomList">
         <div style="padding:24px;">
             <div class="roomList-box">
+                <h3>รายการห้องพักทั้งหมด</h3>
+                <div class="hr"></div>
                 <?php
                     $perpage = 8;
                     if(isset($_GET['page'])){

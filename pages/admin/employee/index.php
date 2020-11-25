@@ -19,6 +19,7 @@ if($_SESSION['level'] == 'admin'){
         <div style="padding:24px;">
             <div class="employee-box">
                 <h3>รายชื่อพนักงาน</h3>
+                <div class="hr"></div>
                 <?php
                 $perpage = 5;
                 if (isset($_GET['page'])) {

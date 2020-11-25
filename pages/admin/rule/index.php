@@ -20,6 +20,7 @@ if($_SESSION['level'] == 'admin'){
         <div style="padding:24px;">
             <div class="rule-box">
                 <h3>กฎระเบียบหอพัก " บ้านพิงฟ้า "</h3>
+                <div class="hr"></div>
                 <form action="../rule/function/ruleAccept.php" method="POST">
                     <textarea id="rule_detail" name="rule_detail" disabled><?php
                     $sql = "SELECT * FROM rule";
