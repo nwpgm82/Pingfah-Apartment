@@ -49,6 +49,16 @@ function showGraph() {
         let barGraph = new Chart(graphTarget, {
             type: 'bar',
             data: chartdata,
+            options: {
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
         })
     })
 }
@@ -94,11 +104,30 @@ function showGraph2() {
                 data: price
             }]
         };
+        options = {
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        offsetGridLines: true
+                    }
+                }]
+            }
+        };
 
         let graphTarget = $('#graphCanvas2');
         let barGraph = new Chart(graphTarget, {
             type: 'bar',
             data: chartdata,
+            options: {
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
         })
     })
 }
