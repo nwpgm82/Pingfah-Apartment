@@ -52,8 +52,7 @@
                         </div>
                     </div>
                     <div>
-                    <form method="POST">
-                    <h3>รายการห้องที่ว่าง</h3>
+                        <h3>รายการห้องที่ว่าง</h3>
                         <h3>จำนวนห้องที่ต้องเลือกคงเหลือ <label id="count"></label></h3>
                         <div style="padding-top:32px;">
                             <?php
@@ -71,13 +70,11 @@
                             }
                             ?>
                         </div>
-                        <input type="text" id="str" name="str">
-                        <button name="send">++</button>
-                    </form>
-                        
                     </div>
                 </div>
-
+                <div style="padding-top:32px;display:flex;justify-content:center;">
+                    <button type="button" onclick="accept_select(<?php echo $daily_id; ?>)">ยืนยัน</button>
+                </div>
             </div>
         </div>
     </div>
@@ -85,7 +82,19 @@
     var room_arr = []
     var num = <?php echo $room_count;?>;
     document.getElementById("count").innerHTML = num;
-    
+
+    function accept_select(id) {
+        if (num == 0) {
+            if (confirm('คุณต้องการยืนยันการเลือกห้องใช่หรือไม่ ?')) {
+                let str = JSON.stringify(room_arr)
+                console.log(str)
+                location.href = `function/addSelectRoom.php?daily_id=${id}&room_select=${str}`
+            }
+        }else{
+            alert("กรุณาเลือกห้องให้ครบ")
+        }
+    }
+
     function count(room) {
         let room_select = document.getElementById(`room${room}`)
         if (room_select.style.backgroundColor != "grey") {
@@ -94,11 +103,11 @@
                 room_select.style.backgroundColor = "grey"
                 room_arr.push(room)
                 console.log(room_arr)
-                document.getElementById("str").value = JSON.stringify(room_arr)
+
             } else {
                 alert("ไม่สามารถเลือกห้องได้")
             }
-        }else{
+        } else {
             room_select.style.backgroundColor = ""
             num = num + 1
         }
@@ -106,13 +115,6 @@
         document.getElementById("count").innerHTML = num;
     }
     </script>
-    <?php
-    if(isset($_POST['send'])){
-        $dd = json_decode($_POST['str'], true);
-        var_dump($dd);
-        // echo count($dd);
-    }           
-    ?>
 </body>
 
 </html>

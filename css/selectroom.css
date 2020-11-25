@@ -31,7 +31,7 @@
     grid-template-columns: 1fr 1fr;
 }
 
-.selectroom-box .grid button{
+.selectroom-box button{
     width: auto;
     height: 40px;
     margin: 8px;

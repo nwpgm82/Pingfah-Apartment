@@ -108,7 +108,7 @@ if($_SESSION['level'] == 'admin'){
                                 if($row['daily_status'] != 'เข้าพักแล้ว'){
                                 ?>
                                 <div id="btn<?php echo $num; ?>">
-                                    <button onclick="selectRoom(<?php echo $num; ?>)">เลือกห้อง</button>
+                                    <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button>เลือกห้อง</button></a>
                                     <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
                                 </div>
                                 <div id="select<?php echo $num; ?>" style="display:none;">
