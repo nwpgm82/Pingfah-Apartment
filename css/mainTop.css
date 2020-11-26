@@ -1,7 +1,13 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(../fonts/Sarabun-Regular.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Sarabun;
 }
 
 .topbar {
@@ -32,7 +38,7 @@
     font-weight: 500;
 }
 
-.topbar ul a li {
+.topbar ul li {
     display: inline-flex;
     width: 120px;
     height: 120px;
@@ -41,12 +47,12 @@
     transition: 0.1s;
 }
 
-.topbar ul a li:hover {
+.topbar ul li:hover {
     background-color: rgba(131, 120, 47, 0.5);
     color: #fff;
 }
 
-.topbar ul a:last-child li:hover {
+.topbar ul:last-child > li:hover {
     background-color: transparent;
 }
 
