@@ -1,7 +1,7 @@
 var dropdown = document.getElementsByClassName("dropdown-btn");
-var i;
+var dropdown2 = document.getElementsByClassName("dropdown-btn2");
 console.log(window.location.pathname);
-for (i = 0; i < dropdown.length; i++) {
+for (let i = 0; i < dropdown.length; i++) {
     dropdown[i].addEventListener("click", function () {
         this.classList.toggle("active");
         var dropdownContent = this.nextElementSibling;
@@ -17,11 +17,28 @@ for (i = 0; i < dropdown.length; i++) {
     });
 }
 
+for (let j = 0; j < dropdown2.length; j++) {
+    dropdown2[j].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var dropdownContent2 = this.nextElementSibling;
+        if (dropdownContent2.style.display === "block") {
+            dropdownContent2.style.display = "none";
+            document.getElementById("arrow-up2").style.display = "none"
+            document.getElementById("arrow-down2").style.display = "block"
+        } else {
+            dropdownContent2.style.display = "block";
+            document.getElementById("arrow-up2").style.display = "block"
+            document.getElementById("arrow-down2").style.display = "none"
+        }
+    });
+}
+
 function menubar() {
     // localStorage.removeItem("i");
     let main = document.querySelector("#main")
     let employee = document.querySelector("#employee")
     let roomdetail = document.querySelector("#roomdetail")
+    let gallery = document.querySelector("#gallery")
     let roomlist = document.querySelector("#roomlist")
     let daily = document.querySelector("#daily")
     let dailycost = document.querySelector("#dailycost")
@@ -47,7 +64,13 @@ function menubar() {
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/detail.php") {
         roomdetail.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         roomdetail.style.color = "#fff"
-        header.innerHTML = "ข้อมูลห้องพัก"
+        header.innerHTML = "ประเภทห้องพัก"
+        document.querySelector("#dropdown").style.display = "block"
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/gallery/index.php") {
+        gallery.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
+        gallery.style.color = "#fff"
+        header.innerHTML = "แกลอรี่"
+        document.querySelector("#dropdown").style.display = "block"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/room_id.php") {
         roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         roomlist.style.color = "#fff"
@@ -60,12 +83,12 @@ function menubar() {
         dailycost.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         dailycost.style.color = "#fff"
         header.innerHTML = "รายการชำระเงินรายวัน"
-        document.querySelector("#dropdown").style.display = "block"
+        document.querySelector("#dropdown2").style.display = "block"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/cost/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/cost/addcost.php") {
         cost.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         cost.style.color = "#fff"
         header.innerHTML = "รายการชำระเงินรายเดือน"
-        document.querySelector("#dropdown").style.display = "block"
+        document.querySelector("#dropdown2").style.display = "block"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/repair/addRepair.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repairDetail.php") {
         repair.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         repair.style.color = "#fff"

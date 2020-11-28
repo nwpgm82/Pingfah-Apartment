@@ -17,7 +17,6 @@ if($_SESSION['level'] == 'admin'){
     echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
     echo "window.location.assign('../emDetail.php?username=$username'); ";
     echo "</script>";
-    echo "success!!";
   } else {
     echo "Error updating record: " . $conn->error;
   }

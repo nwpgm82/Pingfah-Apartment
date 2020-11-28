@@ -21,7 +21,7 @@ if($_SESSION['level'] == 'admin'){
     <div style="padding:24px;">
         <div class="box">
             <div class="roomDetail-box">
-                <h3>ประเภทห้องพัก</h3>
+                <h3>ประเภทห้องพักทั้งหมด</h3>
                 <div class="hr"></div>
                 <div class="grid">
                     <?php while($row = $result->fetch_assoc()) { ?>

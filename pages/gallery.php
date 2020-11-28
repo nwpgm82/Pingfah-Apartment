@@ -1,4 +1,5 @@
 <?php
+    include('connection.php');
     include('../components/maintopbar.php');
 ?>
 <!DOCTYPE html>
@@ -17,47 +18,40 @@
             <h2>แกลอรี่</h2>
             <div class="hr"></div>
             <div class="grid">
-                <div class="img-box" onclick="showImg(1)">
-                    <img src="../img/tool/sub1.jpg" alt="">
-
+                <?php
+                    $sql = "SELECT * FROM gallery ORDER BY gallery_id DESC";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                ?>
+                <div class="img-box" onclick="showImg(<?php echo $row['gallery_id']; ?>)">
+                    <img src="images/gallery/<?php echo $row['gallery_name']; ?>" alt="">
                 </div>
-                <div class="img-box">
-                    <img src="../img/tool/sub1.jpg" alt="">
-                </div>
-                <div class="img-box">
-                    <img src="../img/tool/sub1.jpg" alt="">
-                </div>
-                <div class="img-box">
-                    <img src="../img/tool/sub1.jpg" alt="">
-                </div>
-                <div class="img-box">
-                    <img src="../img/tool/sub1.jpg" alt="">
-                </div>
-                <div class="img-box">
-                    <img src="../img/tool/sub1.jpg" alt="">
-                </div>
-                <div class="img-box">
-                    <img src="../img/tool/sub1.jpg" alt="">
-                </div>
-                <div class="img-box">
-                    <img src="../img/tool/sub1.jpg" alt="">
-                </div>
+                <?php
+                        }
+                    }else{
+                        echo "ไม่มีรูปภาพ";
+                    }
+                ?>
             </div>
         </div>
     </div>
-    <div class="img-modal" id="modal1" style="display:none;" onclick="close_modal(1)">
+    <?php
+    $sql2 = "SELECT * FROM gallery ORDER BY gallery_id DESC";
+    $result2 = $conn->query($sql2);
+    if ($result2->num_rows > 0) {
+        while($row2 = $result2->fetch_assoc()) {
+    ?>
+    <div class="img-modal" id="modal<?php echo $row2['gallery_id']; ?>" style="display:none;">
         <div class="card">
-            <div class="card-header">
-                <button onclick="close_modal(1)">X</button>
-            </div>
-            <div class="card-img-box">
-                <img src="../img/tool/sub1.jpg" alt="">
-            </div>
-            <div class="card-footer">
-
-            </div>
+            <img src="images/gallery/<?php echo $row2['gallery_name']; ?>" alt="">
+            <button onclick="close_modal(<?php echo $row2['gallery_id']; ?>)">X</button>
         </div>
     </div>
+    <?php
+        }
+    }
+    ?>
     <script src="../js/gallery.js"></script>
 </body>
 

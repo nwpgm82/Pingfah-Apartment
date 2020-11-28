@@ -115,33 +115,27 @@ include('pages/connection.php');
         <div>
             <h2>Gallery</h2>
             <div class="gallery-grid">
-                <div class="a">
-                    <img src="img/tool/sub1.jpg" alt="">
+                <?php
+                    $num = 1;
+                    $sql = "SELECT * FROM gallery ORDER BY gallery_id DESC LIMIT 8";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                ?>
+                <div class="img<?php echo $num; ?>">
+                    <img src="pages/images/gallery/<?php echo $row['gallery_name']; ?>" alt="">
                 </div>
-                <div class="b">
-                    <img src="img/tool/sub2.jpg" alt="">
-                </div>
-                <div class="c">
-                    <img src="img/tool/sub4.jpg" alt="">
-                </div>
-                <div class="d">
-                    <img src="img/tool/sub5.jpg" alt="">
-                </div>
-                <div class="e">
-                    <img src="img/tool/sub6.jpg" alt="">
-                </div>
-                <div class="f">
-                    <img src="img/tool/sub7.jpg" alt="">
-                </div>
-                <div class="g">
-                    <img src="img/tool/sub8.jpg" alt="">
-                </div>
-                <div class="h">
-                    <img src="img/tool/sub9.jpg" alt="">
-                </div>
+                <?php
+                            $num++;
+                        }
+                    }else{
+                        echo "ไม่มีรูปภาพ";
+                    }
+                ?>
+                
             </div>
             <div style="padding-top:24px;display:flex;justify-content:flex-end;">
-                <a href="#">ดูเพิ่มเติม >></a>
+                <a href="pages/gallery.php">ดูเพิ่มเติม >></a>
             </div>
         </div>
     </div>

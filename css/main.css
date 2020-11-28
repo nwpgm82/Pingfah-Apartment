@@ -321,35 +321,35 @@ body::after{
     margin-top: 60px;
 }
 
-.gallery-grid .a {
+.gallery-grid .img1 {
     grid-area: a;
 }
 
-.gallery-grid .b {
+.gallery-grid .img2 {
     grid-area: b;
 }
 
-.gallery-grid .c {
+.gallery-grid .img3 {
     grid-area: c;
 }
 
-.gallery-grid .d {
+.gallery-grid .img4 {
     grid-area: d;
 }
 
-.gallery-grid .e {
+.gallery-grid .img5 {
     grid-area: e;
 }
 
-.gallery-grid .f {
+.gallery-grid .img6 {
     grid-area: f;
 }
 
-.gallery-grid .g {
+.gallery-grid .img7 {
     grid-area: g;
 }
 
-.gallery-grid .h {
+.gallery-grid .img8 {
     grid-area: h;
 }
 

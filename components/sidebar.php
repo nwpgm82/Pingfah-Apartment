@@ -27,21 +27,33 @@
                 <a href="/Pingfah/pages/admin/employee/index.php">
                     <li id="employee">จัดการพนักงาน</li>
                 </a>
-                <a href="/Pingfah/pages/admin/roomDetail/index.php">
-                    <li id="roomdetail">ข้อมูลหอพัก</li>
-                </a>
+                <li class="dropdown-btn">
+                    ข้อมูลหอพัก
+                    <div id="arrow-down" class="arrow-down"></div>
+                    <div id="arrow-up" class="arrow-up" style="display:none;"></div>
+                </li>
+                <div id="dropdown" class="dropdown-container">
+                    <ul>
+                        <a href="/Pingfah/pages/admin/roomDetail/index.php">
+                            <li id="roomdetail">- ประเภทห้องพัก</li>
+                        </a>
+                        <a href="/Pingfah/pages/admin/gallery/index.php">
+                            <li id="gallery">- แกลอรี่</li>
+                        </a>
+                    </ul>
+                </div>
                 <a href="/Pingfah/pages/admin/roomList/index.php">
                     <li id="roomlist">รายการห้องพัก</li>
                 </a>
                 <a href="/Pingfah/pages/admin/daily/index.php">
                     <li id="daily">รายการเช่ารายวัน</li>
                 </a>
-                <li class="dropdown-btn">
+                <li class="dropdown-btn2">
                     รายการชำระเงิน 
-                    <div id="arrow-down" class="arrow-down"></div>
-                    <div id="arrow-up" class="arrow-up" style="display:none;"></div>
+                    <div id="arrow-down2" class="arrow-down"></div>
+                    <div id="arrow-up2" class="arrow-up" style="display:none;"></div>
                 </li>
-                <div id="dropdown" class="dropdown-container">
+                <div id="dropdown2" class="dropdown-container">
                     <ul>
                         <a href="/Pingfah/pages/admin/dailyCost/index.php">
                             <li id="dailycost">- รายวัน</li>

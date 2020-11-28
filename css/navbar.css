@@ -71,12 +71,12 @@ body {
     background-color: rgba(131, 120, 47, 0.5);
 }
 
-.sidebar .dropdown-btn{
+.sidebar .dropdown-btn, .sidebar .dropdown-btn2{
     display: flex;
     justify-content: space-between;
 }
 
-.sidebar .dropdown-btn .arrow-down {
+.sidebar .arrow-down {
     width: 0;
     height: 0;
     border-left: 6px solid transparent;
@@ -84,7 +84,7 @@ body {
     border-top: 6px solid rgba(131, 120, 47, 0.5);
 }
 
-.sidebar .dropdown-btn .arrow-up {
+.sidebar .arrow-up {
     width: 0;
     height: 0;
     border-left: 6px solid transparent;
