@@ -33,7 +33,8 @@ if($_SESSION['level'] == 'admin'){
                         <div class="detail">
                             <div>
                                 <h3>ห้อง<?php echo $row['type'];?></h3>
-                                <p>ค่าเช่า : <?php echo number_format($row['price']); ?> บาท / เดือน</p>
+                                <p>รายเดือน : <?php echo number_format($row['price']); ?> บาท / เดือน</p>
+                                <p>รายวัน : <?php echo number_format($row['daily_price']); ?> บาท / คืน</p>
                             </div>
                             <div style="display:flex;justify-content:flex-end;">
                                 <a href="detail.php?type=<?php echo $row['type'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>

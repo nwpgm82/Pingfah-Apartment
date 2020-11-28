@@ -14,16 +14,6 @@ $(document).ready(function () {
             }
         });
     })
-    // function fetchData(){
-    //     $.ajax({
-    //         url : "index..php",
-    //         type : "POST",
-    //         cache: false,
-    //         success:function(data){
-    //           $("#gallery").html(data);
-    //         }
-    //     });
-    // }
 })
 
 
