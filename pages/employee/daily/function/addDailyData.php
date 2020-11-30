@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == "admin"){
+if($_SESSION['level'] == 'employee'){
     include('../../../connection.php');
     $code = $_REQUEST['code'];
     $room_select = $_REQUEST['room_select'];

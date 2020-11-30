@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    include('../../../components/sidebarEPY.php');
     $room_id = $_REQUEST['room_id'];
     $appliance = $_REQUEST['repairappliance'];
     $category = $_REQUEST['repaircategory'];

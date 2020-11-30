@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
   include('../../../connection.php');
   $num = $_REQUEST["ID"];
   $sql = "DELETE FROM package WHERE package_num = '$num'";

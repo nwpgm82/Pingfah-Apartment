@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
   include('../../../connection.php');
   $room_id = $_POST['room_select'];
   $water_count = $_POST['water'];
@@ -24,14 +24,14 @@ if($_SESSION['level'] == 'admin'){
   if ($result->num_rows > 0) {
       echo "<script>";
       echo "alert('ไม่สามารถบันทึกได้เนื่องจากมีข้อมูลอยู่แล้ว');";
-      echo "location.href = '../../cost/addcost.php';";
+      echo "location.href = '../addcost.php';";
       echo "</script>";
   } else {
     $sql = "INSERT INTO cost (room_id, cost_status, date, room_cost, water_bill, elec_bill, cable_charge, fines, total) VALUES ('$room_id', 'ยังไม่ได้ชำระ', '$date', '$price', '$water_total', '$elec_total', '$cable_charge', 0, '$total')";
     if ($conn->query($sql) === TRUE) {
       echo "<script>";
       echo "alert('บันทึกค่าใช้จ่ายของห้อง $room_id เสร็จสิ้น');";
-      echo "location.href = '../../cost/addcost.php';";
+      echo "location.href = '../index.php';";
       echo "</script>";
     } else {
       echo "Error: " . $sql . "<br>" . $conn->error;

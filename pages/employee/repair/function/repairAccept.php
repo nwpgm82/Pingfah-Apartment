@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
   include('../../../connection.php');
   if(isset($_POST['repair_accept'])){
       $room_id = $_POST['room_select'];

@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    include('../../../components/sidebarEPY.php');
     $check_in = @$_REQUEST['check_in'];
     $check_out = @$_REQUEST['check_out'];
     $code = @$_REQUEST['Code'];
@@ -156,7 +156,7 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/daily.js"></script>
+    <script src="../../../js/employee/daily.js"></script>
 </body>
 
 </html>

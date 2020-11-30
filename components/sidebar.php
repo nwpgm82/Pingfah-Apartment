@@ -9,7 +9,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="/Pingfah/css/navbar.css">
     <title>Pingfah</title>
 </head>
@@ -87,7 +86,7 @@
             <div class="profile">
                 <img src="https://sites.google.com/site/rabbiteieicom/_/rsrc/1467891358746/home/image8.jpg"
                     alt="profile_logo" class="profile-logo">
-                <p class="profile-text">ยินดีต้อนรับ <?php echo $_SESSION['ID']; ?></p>
+                <p class="profile-text">ยินดีต้อนรับ <?php echo $_SESSION['name']; ?></p>
             </div>
         </div>
     </div>

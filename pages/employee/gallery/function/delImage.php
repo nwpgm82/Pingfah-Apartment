@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION["level"] == "admin"){
+if($_SESSION['level'] == 'employee'){
     include("../../../connection.php");
     $id = $_REQUEST["id"];
     $sql = "SELECT * FROM gallery WHERE gallery_id = $id";

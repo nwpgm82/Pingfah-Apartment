@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
   include('../../../connection.php');
   $room = $_REQUEST['room_id'];
   $date = $_REQUEST['date'];
@@ -20,7 +20,7 @@ if($_SESSION['level'] == 'admin'){
           echo "Record updated successfully";
           echo "<script>";
           echo "alert('ยืนยันการชำระเงินเรียบร้อยแล้ว');";
-          echo "location.href = '/Pingfah/pages/admin/cost/index.php';";
+          echo "location.href = '../index.php';";
           echo "</script>";
         } else {
           echo "Error updating record: " . $conn->error;

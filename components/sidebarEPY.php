@@ -1,42 +1,93 @@
-<?php
-session_start();
-if($_SESSION['level'] == 'employee'){
-    include('../connection.php');
-    $user = $_SESSION['ID'];
-    $get_data = "SELECT * FROM employee WHERE username = '$user'";
-    $result = $conn->query($get_data);
-    $row = $result->fetch_assoc();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="/Pingfah/css/navbar.css">
-    <title>Document</title>
+    <title>Pingfah</title>
 </head>
 
-<body>
-    <div id="app">
+<body onload="menubar()">
+    <div >
         <div class="sidebar">
             <div class="logo_box">
                 <img src="/Pingfah/img/logo.png" alt="logo" class="logo">
             </div>
             <ul>
-                <a :href="i.link" v-for="(i,index) in menuList" :key="index"><li :id="i.id">{{i.text}}</li></a>
-                <a href="/Pingfah/pages/logout.php"><li class="logout">ออกจากระบบ</li></a>
+                <a href="/Pingfah/pages/employee/index.php">
+                    <li id="main">หน้าหลัก</li>
+                </a>
+                <li class="dropdown-btn">
+                    ข้อมูลหอพัก
+                    <div id="arrow-down" class="arrow-down"></div>
+                    <div id="arrow-up" class="arrow-up" style="display:none;"></div>
+                </li>
+                <div id="dropdown" class="dropdown-container">
+                    <ul>
+                        <a href="/Pingfah/pages/employee/roomDetail/index.php">
+                            <li id="roomdetail">- ประเภทห้องพัก</li>
+                        </a>
+                        <a href="/Pingfah/pages/employee/gallery/index.php">
+                            <li id="gallery">- แกลอรี่</li>
+                        </a>
+                    </ul>
+                </div>
+                <a href="/Pingfah/pages/employee/roomList/index.php">
+                    <li id="roomlist">รายการห้องพัก</li>
+                </a>
+                <a href="/Pingfah/pages/employee/daily/index.php">
+                    <li id="daily">รายการเช่ารายวัน</li>
+                </a>
+                <li class="dropdown-btn2">
+                    รายการชำระเงิน 
+                    <div id="arrow-down2" class="arrow-down"></div>
+                    <div id="arrow-up2" class="arrow-up" style="display:none;"></div>
+                </li>
+                <div id="dropdown2" class="dropdown-container">
+                    <ul>
+                        <a href="/Pingfah/pages/employee/dailyCost/index.php">
+                            <li id="dailycost">- รายวัน</li>
+                        </a>
+                        <a href="/Pingfah/pages/employee/cost/index.php">
+                            <li id="cost">- รายเดือน</li>
+                        </a>
+                    </ul>
+                </div>
+                <a href="/Pingfah/pages/employee/repair/index.php">
+                    <li id="repair">รายการแจ้งซ่อม</li>
+                </a>
+                <a href="/Pingfah/pages/employee/package/index.php">
+                    <li id="package">รายการพัสดุ</li>
+                </a>
+                <a href="/Pingfah/pages/employee/rule/index.php">
+                    <li id="rule">กฎระเบียบหอพัก</li>
+                </a>
+                <a href="/Pingfah/pages/employee/appeal/index.php">
+                    <li id="appeal">รายการร้องเรียน</li>
+                </a>
+                <a href="/Pingfah/pages/logout.php">
+                    <li class="logout">ออกจากระบบ</li>
+                </a>
             </ul>
         </div>
         <div class="topbar">
             <div style="padding:16px 24px">
-              <h3 id="topbar-page"></h3>  
+                <h3 id="topbar-page"></h3>
             </div>
             <div class="profile">
-                <img src="/Pingfah/pages/images/employee/<?php echo $row['profile_img']; ?>"
+                <?php
+                $user = $_SESSION['ID'];
+                $sql = "SELECT * FROM employee WHERE username = '$user'";
+                $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
+                $row = mysqli_fetch_array($result);
+                if($row != null){
+                extract($row);
+                }    
+                ?>
+                <img src="/Pingfah/pages/images/employee/<?php echo $user; ?>/<?php echo $profile_img; ?>"
                     alt="profile_logo" class="profile-logo">
-                <p class="profile-text">ยินดีต้อนรับ <?php echo $row['firstname']; ?></p>
+                <p class="profile-text">ยินดีต้อนรับ <?php echo $_SESSION['name']; ?></p>
             </div>
         </div>
     </div>
@@ -49,6 +100,7 @@ if($_SESSION['level'] == 'employee'){
 
 </html>
 <?php
-}else{
-    Header("Location: ../login.php");
-}
+// }else{
+//     Header("Location: ../login.php");
+// }
+?>

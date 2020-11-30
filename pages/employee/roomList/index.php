@@ -1,8 +1,8 @@
 <?php 
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    include('../../../components/sidebarEPY.php');
     $num = 1;
     function DateThai($strDate)
     {
@@ -50,7 +50,6 @@ if($_SESSION['level'] == 'admin'){
                         <th>ประเภท</th>
                         <th>วันที่เข้าอยู่</th>
                         <th>สถานะ</th>
-                        <th>เพิ่มเติม</th>
                     </tr>
                     <?php
                             while($row = mysqli_fetch_array($result)) { 
@@ -83,18 +82,6 @@ if($_SESSION['level'] == 'admin'){
                                             echo "<div class='status-daily'></div>";
                                         }
                                     ?>
-                            </td>
-                            <td <?php echo "id='typeShow-btn" .$row["room_id"] . "'" ?>>
-                                <button type="button" class="edit-btn"
-                                    <?php echo "onclick='editType(" .$row["room_id"] .")'" ?>>แก้ไข</button>
-                                <button type="button" class="del-btn"
-                                    <?php echo "onclick='del(" .$row["room_id"] .")'" ?>>ลบ</button>
-                            </td>
-                            <td <?php echo "id='typeEdit-btn" .$row["room_id"] . "' style='display:none' " ?>>
-                                <button type="submit" class="accept-btn"
-                                    <?php echo "onclick='acceptEdit(" .$row["room_id"] .")'" ?>>ยืนยัน</button>
-                                <button type="button" class="cancel-btn"
-                                    <?php echo "onclick='cancelEdit(" .$row["room_id"] .")'" ?>>ยกเลิก</button>
                             </td>
                         </tr>
                     </form>
@@ -139,33 +126,10 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div style="display:flex;justify-content:flex-end;">
-                        <button onclick="addRoom()" class="addRoom-btn">เพิ่มห้องพัก</button>
-                    </div>
-                    <div id="addRoom" style="justify-content:flex-end;">
-                        <form action="../roomList/function/addRoom.php" method="POST">
-                            <div style="padding-right:8px">
-                                <p>ห้อง</p>
-                                <input type="text" name="room" required>
-                            </div>
-                            <div style="padding-right:8px">
-                                <p>ประเภท</p>
-                                <select name="type">
-                                    <option value="พัดลม">พัดลม</option>
-                                    <option value="แอร์">แอร์</option>
-                                </select>
-                            </div>
-                            <div style="display:block;margin-top:auto">
-                                <button type="submit">ยืนยัน</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/roomList.js"></script>
+    <script src="../../../js/employee/roomList.js"></script>
 </body>
 
 </html>

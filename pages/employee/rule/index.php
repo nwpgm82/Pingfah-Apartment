@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php'); 
+    include('../../../components/sidebarEPY.php'); 
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@ if($_SESSION['level'] == 'admin'){
             <div class="rule-box">
                 <h3>กฎระเบียบหอพัก " บ้านพิงฟ้า "</h3>
                 <div class="hr"></div>
-                <form action="../rule/function/ruleAccept.php" method="POST">
+                <form>
                     <textarea id="rule_detail" name="rule_detail" disabled><?php
                     $sql = "SELECT * FROM rule";
                     $result = $conn->query($sql);
@@ -34,18 +34,10 @@ if($_SESSION['level'] == 'admin'){
                           echo "0 results";
                         }
                     ?></textarea>
-                    <div id="edit_btn" style="margin-top:32px;display:block">
-                        <button type="button" class="edit_btn" onclick="edit_rule()">แก้ไข</button>
-                    </div>
-                    <div id="accept_btn" style="margin-top:32px;display:none">
-                        <button type="submit" name="rule_accept">ยืนยันการแก้ไข</button>
-                        <button type="button" class="cancel_btn" onclick="edit_rule()">ยกเลิก</button>
-                    </div>
                 </form>
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/rule.js"></script>
 </body>
 
 </html>

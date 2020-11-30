@@ -1,10 +1,10 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include("../../../connection.php");
     $room_id = $_REQUEST['room_id'];
     $date = $_REQUEST['date'];
-    $del = "DELETE FROM cost WHERE '$room_id' AND date = '$date'";
+    $del = "DELETE FROM cost WHERE room_id = '$room_id' AND date = '$date'";
     if ($conn->query($del) === TRUE) {
         echo "<script>";
         echo "alert('ลบรายการชำระเงินสำเร็จ');";

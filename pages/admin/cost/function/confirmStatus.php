@@ -12,7 +12,7 @@ if($_SESSION['level'] == 'admin'){
   if ($result->num_rows > 0) {
       echo "<script>";
       echo "alert('ไม่สามารถยืนยันได้เนื่องจากได้ยืนยันการชำระเรียบร้อยแล้วแล้ว');";
-      echo "location.href = '/Pingfah/pages/admin/cost/index.php?ID=$room&Date=$date';";
+      echo "location.href = '../index.php?ID=$room&Date=$date';";
       echo "</script>";
   } else {
       $sql2 = "UPDATE cost SET cost_status = 'ชำระเงินแล้ว' WHERE room_id= '$room' AND date ='$date'";
@@ -20,7 +20,7 @@ if($_SESSION['level'] == 'admin'){
           echo "Record updated successfully";
           echo "<script>";
           echo "alert('ยืนยันการชำระเงินเรียบร้อยแล้ว');";
-          echo "location.href = '/Pingfah/pages/admin/cost/index.php';";
+          echo "location.href = '../index.php';";
           echo "</script>";
         } else {
           echo "Error updating record: " . $conn->error;

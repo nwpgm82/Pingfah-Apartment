@@ -1,8 +1,8 @@
 <?php 
 session_start();
 if($_SESSION['level'] == 'admin'){
-    include('../../components/sidebar.php');
     include('../connection.php');
+    include('../../components/sidebar.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,7 @@ if($_SESSION['level'] == 'admin'){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Pingfah/css/home.css">
+    <link rel="stylesheet" href="../../css/home.css">
     <title>Document</title>
 </head>
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION["level"] == "admin"){
+if($_SESSION['level'] == 'employee'){
     include("../../../connection.php");
     $folder_path = "../../../images/gallery/";
     var_dump(is_dir($folder_path));

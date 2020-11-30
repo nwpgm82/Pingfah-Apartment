@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    include('../../../components/sidebarEPY.php');
     $dailycost_id = $_REQUEST['dailycost_id'];
     function DateThai($strDate)
     {

@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    include('../../../components/sidebarEPY.php');
     $date = @$_REQUEST['Date'];
     $check = @$_REQUEST['Status'];
     function DateThai($strDate){
@@ -522,7 +522,7 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/costDate.js"></script>
+    <script src="../../../js/employee/costDate.js"></script>
 </body>
 
 </html>

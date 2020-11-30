@@ -9,6 +9,7 @@ if(isset($_POST['login'])){
     if(mysqli_num_rows($result)==1){
         $row = mysqli_fetch_array($result);
         $_SESSION['ID'] = $row['username'];
+        $_SESSION['name'] = $row['name'];
         $_SESSION['password'] = $row['password'];
         $_SESSION['level'] = $row['level'];
         

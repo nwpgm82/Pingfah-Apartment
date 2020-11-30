@@ -1,8 +1,8 @@
 <?php 
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    include('../../../components/sidebarEPY.php');
     $type = $_REQUEST['type'];
     $sql = "SELECT * FROM roomdetail WHERE type = '$type'";
     $result = $conn->query($sql);
@@ -26,8 +26,7 @@ if($_SESSION['level'] == 'admin'){
             <div class="detail-box">
                 <h3>ห้อง<?php echo $row['type']; ?></h3>
                 <div class="hr"></div>
-                <form action="function/addData.php?type=<?php echo $type; ?>" method="POST"
-                    enctype="multipart/form-data">
+                <form>
                     <div class="roomDetail">
                         <div>
                             <p>ค่าเช่าห้อง(รายเดือน)</p>
@@ -84,10 +83,6 @@ if($_SESSION['level'] == 'admin'){
                                         onclick="delImg('<?php echo $type; ?>','pic1')">X</button>
                                     <?php } ?>
                                 </div>
-                                <?php
-                                if(!isset($row['pic1'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic1')" name="pic1" disabled>
-                                <?php } ?>
                             </div>
                             <div>
                                 <div class="img-box">
@@ -99,10 +94,6 @@ if($_SESSION['level'] == 'admin'){
                                         onclick="delImg('<?php echo $type; ?>','pic2')">X</button>
                                     <?php } ?>
                                 </div>
-                                <?php
-                                if(!isset($row['pic2'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic2')" name="pic2" disabled>
-                                <?php } ?>
                             </div>
                             <div>
                                 <div class="img-box">
@@ -114,10 +105,6 @@ if($_SESSION['level'] == 'admin'){
                                         onclick="delImg('<?php echo $type; ?>','pic3')">X</button>
                                     <?php } ?>
                                 </div>
-                                <?php
-                                if(!isset($row['pic3'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic3')" name="pic3" disabled>
-                                <?php } ?>
                             </div>
                             <div>
                                 <div class="img-box">
@@ -129,10 +116,6 @@ if($_SESSION['level'] == 'admin'){
                                         onclick="delImg('<?php echo $type; ?>','pic4')">X</button>
                                     <?php } ?>
                                 </div>
-                                <?php
-                                if(!isset($row['pic4'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic4')" name="pic4" disabled>
-                                <?php } ?>
                             </div>
                             <div>
                                 <div class="img-box">
@@ -144,10 +127,6 @@ if($_SESSION['level'] == 'admin'){
                                         onclick="delImg('<?php echo $type; ?>','pic5')">X</button>
                                     <?php } ?>
                                 </div>
-                                <?php
-                                if(!isset($row['pic5'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic5')" name="pic5" disabled>
-                                <?php } ?>
                             </div>
                             <div>
                                 <div class="img-box">
@@ -159,27 +138,13 @@ if($_SESSION['level'] == 'admin'){
                                         onclick="delImg('<?php echo $type; ?>','pic6')">X</button>
                                     <?php } ?>
                                 </div>
-                                <?php
-                                if(!isset($row['pic6'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic6')" name="pic6" disabled>
-                                <?php } ?>
                             </div>
                         </div>
                     </div>
-                    <div class="hr"></div>
-                    <div id="edit" style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
-                        <button type="button" class="edit-btn" onclick="edit()">แก้ไข</button>
-                    </div>
-                    <div id="accept" style="padding-top:32px;display:none;justify-content:center;align-items:center;">
-                        <button type="submit" name="accept">ยืนยัน</button>
-                        <button type="button" class="cancel-btn" onclick="cancelEdit()">ยกเลิก</button>
-                    </div>
-
                 </form>
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/detail.js"></script>
 </body>
 
 </html>

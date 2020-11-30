@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php'); 
+    include('../../../components/sidebarEPY.php'); 
     $room_id = $_REQUEST["ID"]; 
     $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
     $check_result = $conn->query($check_status);
@@ -499,7 +499,7 @@ if($_SESSION['level'] == 'admin'){
         ?>
         </div>
     </div>
-    <script src="../../../js/admin/room_id_form.js"></script>
+    <script src="../../../js/employee/room_id_form.js"></script>
 </body>
 
 </html>

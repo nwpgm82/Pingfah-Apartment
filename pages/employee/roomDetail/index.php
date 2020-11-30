@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php'); 
+    include('../../../components/sidebarEPY.php'); 
     $sql = "SELECT * FROM roomDetail";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {    

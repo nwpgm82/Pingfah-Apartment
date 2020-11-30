@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include("../../../connection.php");
     $id = $_REQUEST['id'];
     $sql = "DELETE FROM dailycost WHERE dailycost_id = $id";

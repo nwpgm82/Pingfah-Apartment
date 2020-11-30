@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include("../../../connection.php");
     $daily_id = $_REQUEST['daily_id'];
     $room = json_decode($_REQUEST['room_select']);

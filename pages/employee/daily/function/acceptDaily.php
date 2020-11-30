@@ -8,7 +8,7 @@ function DateThai($strDate){
     $strMonthThai=$strMonthCut[$strMonth];
     return "$strDay $strMonthThai $strYear";
 }
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../../connection.php');
     $search = "SELECT * FROM daily WHERE code = '$re_code'";
     $result = mysqli_query($conn, $search)or die ("Error in query: $search " . mysqli_error());

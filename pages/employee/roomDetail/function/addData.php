@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
   if(isset($_POST['accept'])){
     include('../../../connection.php');
     $type = $_REQUEST['type'];

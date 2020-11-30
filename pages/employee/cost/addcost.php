@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php'); 
+    include('../../../components/sidebarEPY.php'); 
 ?>
 
 <!DOCTYPE html>
@@ -73,16 +73,13 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/addcost.js"></script>
+    <script src="../../../js/employee/addcost.js"></script>
 </body>
 
 </html>
 
 <?php
-}else if($_SESSION['level'] == 'employee'){
-    Header("Location: ../../employee/cost/addcost.php");
-}
-else{
+}else{
    Header("Location: ../../login.php"); 
 }
 
