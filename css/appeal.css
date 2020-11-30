@@ -24,3 +24,125 @@
     -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
+
+.hr {
+    margin: 32px 0;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.7);
+    opacity: 0.5;
+}
+
+.appeal-box .search{
+    padding-top: 32px;
+    display: flex;
+}
+
+.appeal-box input{
+    margin: 0 8px;
+    width: 200px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.appeal-box button{
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.appeal-box .del-btn{
+    background-color: #FF4646;
+    transition: 0.3s;
+}
+
+.appeal-box button:hover{
+    background-color: rgb(131, 120, 47, 1);
+}
+
+.appeal-box .del-btn:hover{
+    background-color:rgb(216, 40, 40);
+}
+
+.appeal-box table {
+    margin-top: 32px;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    border-collapse: collapse;
+}
+
+.appeal-box table tr {
+    height: 50px;
+}
+
+.appeal-box table th,
+.appeal-box table td {
+    border: 1px solid #ddd;
+    padding: 0 16px;
+    overflow: hidden;
+    height: 60px;
+}
+
+.appeal-box table td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.appeal-box table th {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: rgb(131, 120, 47, 0.7);
+}
+
+.appeal-box table td:first-child{
+    width: 20px;
+    text-align: center;
+}
+
+.appeal-box table td:last-child{
+    width: 170px;
+    text-align: right;
+}
+
+.appeal-box table td p {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.pagination {
+    padding: 32px 0;
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}

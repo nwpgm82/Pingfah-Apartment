@@ -71,6 +71,7 @@ if($_SESSION['level'] == 'admin'){
                     </tr>
                     <?php $num++; } ?>
                 </table>
+                <?php } ?>
                 <?php
                 $sql2 = "SELECT * FROM employee ";
                 $query2 = mysqli_query($conn, $sql2);
@@ -86,9 +87,6 @@ if($_SESSION['level'] == 'admin'){
                         <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
                     </div>
                 </div>
-                <?php }else{
-                    echo "ไม่มีรายชื่อพนักงาน";
-                } ?>
                 <div style="display:flex;justify-content:flex-end;">
                     <a href="../employee/addemployee.php"><button>เพิ่มพนักงาน</button></a>
                 </div>

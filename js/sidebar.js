@@ -101,7 +101,7 @@ function menubar() {
         rule.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         rule.style.color = "#fff"
         header.innerHTML = "กฎระเบียบหอพัก"
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/appeal/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/appeal/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/appeal/appealDetail.php") {
         appeal.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         appeal.style.color = "#fff"
         header.innerHTML = "รายการร้องเรียน"
