@@ -1,5 +1,5 @@
 function searchDate(v){
-    location.assign(`/Pingfah/pages/admin/appeal/index.php?Date=${v}`)
+    location.assign(`index.php?Date=${v}`)
 }
 
 function del(id){

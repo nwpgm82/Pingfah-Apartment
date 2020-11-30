@@ -1,7 +1,7 @@
 function searchroom() {
     var x = document.getElementById("room_select").value
     console.log(x)
-    location.href = `/Pingfah/pages/admin/cost/addcost.php?room_select=${x}`
+    location.href = `addcost.php?room_select=${x}`
 }
 
 function onloadpage(){

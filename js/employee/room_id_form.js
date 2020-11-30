@@ -10,7 +10,7 @@ function preview_image(event, pic) {
 
 function delImg(type, pictype, num) {
     if (confirm('คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?')) {
-        location.href = `/Pingfah/pages/admin/roomlist/function/delImg.php?room_id=${type}&pic=${pictype}&num=${num}`
+        location.href = `function/delImg.php?room_id=${type}&pic=${pictype}&num=${num}`
     }
 }
 
@@ -28,7 +28,7 @@ function navigation() {
 
 function delData(room) {
     if (confirm(`คุณต้องการลบข้อมูลของห้อง ${room} ใช่หรือไม่`)) {
-        location.assign(`/Pingfah/pages/admin/roomList/function/delRoom_data.php?ID=${room}`);
+        location.assign(`function/delRoom_data.php?ID=${room}`);
     }
 }
 

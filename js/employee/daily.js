@@ -1,13 +1,13 @@
 function searchDate() {
     let x = document.getElementById("check_in").value
     let y = document.getElementById("check_out").value
-    location.assign(`/Pingfah/pages/admin/daily/index.php?check_in=${x}&check_out=${y}`)
+    location.assign(`index.php?check_in=${x}&check_out=${y}`)
     console.log(x)
 }
 
 function searchCode() {
     let z = document.getElementById("code").value
-    location.assign(`/Pingfah/pages/admin/daily/index.php?Code=${z}`)
+    location.assign(`index.php?Code=${z}`)
 }
 
 function selectRoom(num) {
@@ -21,7 +21,7 @@ function confirmRoom(code, num) {
     let room_select = document.getElementById(`room_select${num}`).value
     if (room_select != "") {
         if (confirm(`คุณต้องการเลือกห้องนี้ ${room_select} ใช่หรือไม่ ? `)) {
-            location.href = `/Pingfah/pages/admin/daily/function/addDailyData.php?code=${code}&room_select=${room_select}`
+            location.href = `function/addDailyData.php?code=${code}&room_select=${room_select}`
         }
     }else{
         alert("กรุณาโปรดเลือกห้อง");
@@ -31,6 +31,6 @@ function confirmRoom(code, num) {
 
 function del(id) {
     if (confirm('คุณต้องการลบรายการจองห้องพักใช่หรือไม่?')) {
-        location.href = `/Pingfah/pages/admin/daily/function/delDaily.php?id=${id}`
+        location.href = `function/delDaily.php?id=${id}`
     }
 }

@@ -68,7 +68,7 @@ function cancel_edit() {
 
 function delImg(user, pictype) {
     if (confirm('คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?')) {
-        location.href = `/Pingfah/pages/admin/employee/function/delImg.php?username=${user}&&pic=${pictype}`
+        location.href = `function/delImg.php?username=${user}&&pic=${pictype}`
     }
 }
 

@@ -1,6 +1,6 @@
 function searchDate(v) {
     var x = document.getElementById("package_date").value
-    location.assign(`/Pingfah/pages/admin/package/index.php?Date=${v}`)
+    location.assign(`index.php?Date=${v}`)
     console.log(x)
 }
 
@@ -21,7 +21,7 @@ function searchCheck(id){
     success.checked = false
     unsuccess.checked = false 
     check.checked = true
-    location.href = `/Pingfah/pages/admin/package/index.php?Status=${check.id}`
+    location.href = `index.php?Status=${check.id}`
 }
 
 function searchCheck2(date,id){
@@ -32,7 +32,7 @@ function searchCheck2(date,id){
     success.checked = false
     unsuccess.checked = false 
     check.checked = true
-    location.href = `/Pingfah/pages/admin/package/index.php?Date=${date}&Status=${check.id}`
+    location.href = `index.php?Date=${date}&Status=${check.id}`
 }
 
 
@@ -41,5 +41,5 @@ function unCheckAll(){
     var unsuccess = document.getElementById("unsuccess")
     success.checked = false
     unsuccess.checked = false
-    location.href = "/Pingfah/pages/admin/package/index.php"
+    location.href = "index.php"
 }

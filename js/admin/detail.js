@@ -10,7 +10,7 @@ function preview_image(event, pic) {
 
 function delImg(type,pictype){
     if(confirm('คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?')){
-        location.href = `/Pingfah/pages/admin/roomDetail/function/delData.php?type=${type}&&pic=${pictype}`
+        location.href = `function/delData.php?type=${type}&&pic=${pictype}`
     }
 }
 

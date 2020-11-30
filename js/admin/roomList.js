@@ -49,6 +49,6 @@ function addRoom(){
 
 function del(room){
     if(confirm(`คุณต้องการลบห้อง ${room} ใช่หรือไม่ ?`)){
-        location.href = `/Pingfah/pages/admin/roomList/function/delRoom.php?ID=${room}`
+        location.href = `function/delRoom.php?ID=${room}`
     }
 }

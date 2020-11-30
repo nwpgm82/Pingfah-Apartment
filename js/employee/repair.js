@@ -1,6 +1,6 @@
 function searchDate(v) {
     var x = document.getElementById("repair_date").value
-    location.assign(`/Pingfah/pages/admin/repair/index.php?Date=${v}`)
+    location.assign(`index.php?Date=${v}`)
     console.log(x)
 }
 
@@ -14,7 +14,7 @@ function searchCheck(id){
     inprogress.checked = false
     pending.checked = false 
     check.checked = true
-    location.href = `/Pingfah/pages/admin/repair/index.php?Status=${check.id}`
+    location.href = `index.php?Status=${check.id}`
 }
 
 function searchCheck2(date,id){
@@ -27,7 +27,7 @@ function searchCheck2(date,id){
     inprogress.checked = false
     pending.checked = false 
     check.checked = true
-    location.href = `/Pingfah/pages/admin/repair/index.php?Date=${date}&Status=${check.id}`
+    location.href = `index.php?Date=${date}&Status=${check.id}`
 }
 
 
@@ -43,7 +43,7 @@ function unCheckAll(){
 
 function repair_del(room,app,cate,date){
     if(confirm('คุณต้องการลบรายการแจ้งซ่อมนี้ใช่หรือไม่ ?')){
-        location.href = `/Pingfah/pages/admin/repair/function/repairDel.php?room_id=${room}&repairappliance=${app}&repaircategory=${cate}&repairdate=${date}`
+        location.href = `function/repairDel.php?room_id=${room}&repairappliance=${app}&repaircategory=${cate}&repairdate=${date}`
     }
 }
 
