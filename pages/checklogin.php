@@ -19,6 +19,7 @@ if(isset($_POST['login'])){
         else if($_SESSION['level'] == 'employee'){
             Header("Location: employee/index.php");
         }else if($_SESSION['level'] == 'guest'){
+            $_SESSION['rule'] = 0;
             Header("Location: guest/index.php");
         }else{
         echo "<script>";

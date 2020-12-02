@@ -11,7 +11,7 @@ function menubar() {
 
     localStorage.setItem("i", window.location.pathname)
     localStorage.getItem("i")
-    if (localStorage.getItem("i") == "/Pingfah/pages/admin/index.php") {
+    if (localStorage.getItem("i") == "/Pingfah/pages/guest/index.php") {
         main.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         main.style.color = "#fff"
         header.innerHTML = "หน้าหลัก"

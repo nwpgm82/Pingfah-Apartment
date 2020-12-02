@@ -2,7 +2,8 @@
 session_start();
 if($_SESSION['level'] == 'guest'){
     include('../../connection.php');
-    include('../../../components/sidebarEPY.php');
+    include("../rule-modal.php");
+    include('../../../components/sidebarGuest.php');
     $room_id = $_REQUEST['room_id'];
     $appliance = $_REQUEST['repairappliance'];
     $category = $_REQUEST['repaircategory'];

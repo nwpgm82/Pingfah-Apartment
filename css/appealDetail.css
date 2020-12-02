@@ -131,3 +131,21 @@
     padding: 12px;
     resize: none;
 }
+
+.box .appealDetail-box button{
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.box .appealDetail-box button:hover{
+    background-color: rgb(131, 120, 47, 1);
+}

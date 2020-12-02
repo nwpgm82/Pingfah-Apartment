@@ -2,6 +2,7 @@
 session_start();
 if($_SESSION['level'] == 'guest'){
     include('../../connection.php');
+    include("../rule-modal.php");
     include('../../../components/sidebarGuest.php'); 
 ?>
 
