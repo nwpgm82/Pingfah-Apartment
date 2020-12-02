@@ -30,22 +30,22 @@
                     <div class="fhr"></div>
                     <div style="padding-top:20px;">
                         <div>
-                            <a href="#main">
+                            <a href="/Pingfah/index.php">
                                 <p>หน้าหลัก</p>
                             </a>
                         </div>
                         <div>
-                            <a href="#main2">
+                            <a href="/Pingfah/pages/roomList.php">
                                 <p>ประเภทห้องพัก</p>
                             </a>
                         </div>
                         <div>
-                            <a href="#services">
+                            <a href="/Pingfah/pages/gallery.php">
                                 <p>แกลอรี่</p>
                             </a>
                         </div>
                         <div>
-                            <a href="#gallery">
+                            <a href="#">
                                 <p>ติดต่อเรา</p>
                             </a>
                         </div>
