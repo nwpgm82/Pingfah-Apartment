@@ -112,6 +112,6 @@ if($_SESSION['level'] == 'employee'){
 </html>
 <?php
 }else{
-    Header("Location: ../login.php"); 
+    Header("Location: ../../login.php"); 
 }
 ?>

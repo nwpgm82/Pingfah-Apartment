@@ -111,6 +111,7 @@ if($_SESSION['level'] == 'employee'){
                                 <?php
                                             if(strlen($row["package_received"]) == 0){
                                                 echo "<button type='submit' class='received-btn'>รับ</button>";
+                                                echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
                                             }else{
                                                 echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
                                             }
@@ -229,6 +230,7 @@ if($_SESSION['level'] == 'employee'){
                                 <?php
                                             if(strlen($row["package_received"]) == 0){
                                                 echo "<button type='submit' class='received-btn'>รับ</button>";
+                                                echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
                                             }else{
                                                 echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
                                             }
@@ -343,6 +345,7 @@ if($_SESSION['level'] == 'employee'){
                                 <?php
                                             if(strlen($row["package_received"]) == 0){
                                                 echo "<button type='submit' class='received-btn'>รับ</button>";
+                                                echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
                                             }else{
                                                 echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
                                             }
@@ -461,6 +464,7 @@ if($_SESSION['level'] == 'employee'){
                                 <?php
                                             if(strlen($row["package_received"]) == 0){
                                                 echo "<button type='submit' class='received-btn'>รับ</button>";
+                                                echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
                                             }else{
                                                 echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
                                             }

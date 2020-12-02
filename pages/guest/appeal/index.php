@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'employee'){
+if($_SESSION['level'] == 'guest'){
     include("../../connection.php");
-    include("../../../components/sidebarEPY.php");
+    include("../../../components/sidebarGuest.php");
     $id = $_REQUEST["appeal_id"];
     
 ?>
@@ -22,36 +22,24 @@ if($_SESSION['level'] == 'employee'){
             <div class="appealDetail-box">
                 <h3>รายละเอียดการร้องเรียน</h3>
                 <div class="hr"></div>
-                <?php
-                $sql = "SELECT * FROM appeal WHERE appeal_id = $id";
-                $result = $conn->query($sql);
-                if($result->num_rows > 0){
-                    while($row = $result->fetch_assoc()) {
-                ?>
                 <div class="row">
                     <div class="col-2">
                         <label>เลขห้อง</label>
-                        <input type="text" value="<?php echo $row['room_id']; ?>" disabled>
+                        <input type="text" value="<?php echo $_SESSION['ID']; ?>" name="room_id" disabled>
                     </div>
                     <div class="col-5">
                         <label>หัวข้อร้องเรียน</label>
-                        <input type="text" value="<?php echo $row['appeal_topic']; ?>" disabled>
+                        <input type="text" name="appeal_topic">
                     </div>
                     <div class="col-5">
                         <label>วันที่ร้องเรียน</label>
-                        <input type="text" value="<?php echo $row['appeal_date']; ?>" disabled>
+                        <input type="text" value="<?php echo date("Y-m-d"); ?>" name="appeal_date">
                     </div>
                 </div>
                 <div style="padding-top:32px;">
                 <label>เนื้อหาการร้องเรียน</label>
-                    <textarea disabled><?php echo $row['appeal_detail']; ?></textarea>
+                    <textarea name="appeal_detail"></textarea>
                 </div>
-                <?php
-                    }
-                }else{
-                    echo "ไม่มีรายละเอียดการร้องเรียน";
-                }
-                ?>
             </div>
         </div>
     </div>

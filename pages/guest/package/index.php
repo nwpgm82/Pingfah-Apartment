@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'guest'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    include('../../../components/sidebarGuest.php');
     $date = @$_REQUEST['Date'];
     $check = @$_REQUEST['Status'];
     function DateThai($strDate){
@@ -45,7 +45,7 @@ if($_SESSION['level'] == 'admin'){
                     }
                     $start = ($page - 1) * $perpage;
                     if(!isset($date) && !isset($check)){
-                        $sql = "SELECT * FROM package ORDER BY package_arrived LIMIT {$start} , {$perpage} ";
+                        $sql = "SELECT * FROM package WHERE package_room = '".$_SESSION['ID']."' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage} ";
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                     ?>
@@ -76,8 +76,7 @@ if($_SESSION['level'] == 'admin'){
                     <?php
                         while($row = $result->fetch_assoc()) {
                         ?>
-                    <form action="../package/function/receivedPackage.php?ID=<?php echo $row["package_num"]; ?>"
-                        method="POST">
+                    <form>
                         <tr>
                             <!-- <td style="width:70px;text-align:center"></td> -->
                             <td><?php echo $row["package_num"] ?></td>
@@ -161,7 +160,7 @@ if($_SESSION['level'] == 'admin'){
                         }
                     }else if(isset($date) && !isset($check)){
                         ///เมื่อค้นหาด้วยวันที่/////
-                        $packageData = "SELECT * FROM package WHERE package_arrived = '$date' ORDER BY package_arrived";
+                        $packageData = "SELECT * FROM package WHERE package_room = '".$_SESSION['ID']."' AND package_arrived = '$date' ORDER BY package_arrived DESC";
                         // $repairCount = "SELECT COUNT(*) FROM repair WHERE repair_date = '$date'";
                         // $resultCount = $conn->query($repairCount);
                         // $rowCount = $resultCount->fetch_row();
@@ -195,8 +194,7 @@ if($_SESSION['level'] == 'admin'){
                     <?php
                         while($row = $result->fetch_assoc()) {
                         ?>
-                    <form action="../package/function/receivedPackage.php?ID=<?php echo $row["package_num"]; ?>"
-                        method="POST">
+                    <form>
                         <tr>
                             <!-- <td style="width:70px;text-align:center"></td> -->
                             <td><?php echo $row["package_num"] ?></td>
@@ -243,7 +241,7 @@ if($_SESSION['level'] == 'admin'){
                 </table>
                 <?php
                     ///////pagination
-                    $sql2 = "SELECT * FROM package WHERE package_arrived = '$date' ORDER BY package_arrived";
+                    $sql2 = "SELECT * FROM package WHERE package_room = '".$_SESSION['ID']."' AND package_arrived = '$date'";
                     $query2 = mysqli_query($conn, $sql2);
                     $total_record = mysqli_num_rows($query2);
                     $total_page = ceil($total_record / $perpage);
@@ -279,7 +277,7 @@ if($_SESSION['level'] == 'admin'){
                         }else if($check == "unsuccess"){
                             $check = "ยังไม่ได้รับพัสดุ";
                         }
-                        $packageDataCheck = "SELECT * FROM package WHERE package_status = '$check' ORDER BY package_arrived LIMIT {$start} , {$perpage}";
+                        $packageDataCheck = "SELECT * FROM package WHERE package_room = '".$_SESSION['ID']."' AND package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";
                         $result = $conn->query($packageDataCheck);
                         if ($result->num_rows > 0) {
                     ?>
@@ -310,8 +308,7 @@ if($_SESSION['level'] == 'admin'){
                     <?php
                         while($row = $result->fetch_assoc()) {
                         ?>
-                    <form action="../package/function/receivedPackage.php?ID=<?php echo $row["package_num"]; ?>"
-                        method="POST">
+                    <form>
                         <tr>
                             <!-- <td style="width:70px;text-align:center"></td> -->
                             <td><?php echo $row["package_num"] ?></td>
@@ -358,7 +355,7 @@ if($_SESSION['level'] == 'admin'){
                 </table>
                 <?php
                     ///////pagination
-                    $sql2 = "SELECT * FROM package WHERE package_status = '$check' ORDER BY package_arrived";
+                    $sql2 = "SELECT * FROM package WHERE package_room = '".$_SESSION['ID']."' AND package_status = '$check'";
                     $query2 = mysqli_query($conn, $sql2);
                     $total_record = mysqli_num_rows($query2);
                     $total_page = ceil($total_record / $perpage);
@@ -398,7 +395,7 @@ if($_SESSION['level'] == 'admin'){
                         }else if($check == "unsuccess"){
                             $check = "ยังไม่ได้รับพัสดุ";
                         }
-                        $packageDataCheck2 = "SELECT * FROM package WHERE package_arrived = '$date' AND package_status = '$check' ORDER BY package_arrived LIMIT {$start} , {$perpage}";   
+                        $packageDataCheck2 = "SELECT * FROM package WHERE package_room = '".$_SESSION['ID']."' AND package_arrived = '$date' AND package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";   
                         $result = $conn->query($packageDataCheck2);
                         if ($result->num_rows > 0) {
                     ?>
@@ -429,8 +426,7 @@ if($_SESSION['level'] == 'admin'){
                     <?php
                         while($row = $result->fetch_assoc()) {
                         ?>
-                    <form action="../package/function/receivedPackage.php?ID=<?php echo $row["package_num"]; ?>"
-                        method="POST">
+                    <form>
                         <tr>
                             <!-- <td style="width:70px;text-align:center"></td> -->
                             <td><?php echo $row["package_num"] ?></td>
@@ -477,7 +473,7 @@ if($_SESSION['level'] == 'admin'){
                 </table>
                 <?php
                     ///////pagination
-                    $sql2 = "SELECT * FROM package WHERE package_arrived = '$date' AND package_status = '$check' ORDER BY package_arrived";
+                    $sql2 = "SELECT * FROM package WHERE package_room = '".$_SESSION['ID']."' AND package_arrived = '$date' AND package_status = '$check'";
                     $query2 = mysqli_query($conn, $sql2);
                     $total_record = mysqli_num_rows($query2);
                     $total_page = ceil($total_record / $perpage);
@@ -513,41 +509,11 @@ if($_SESSION['level'] == 'admin'){
                     }else{
                         echo "<div style='margin:32px 0'>0 results</div>";
                     }
-                    ?>
-                <div id="addPackage">
-                    <form action="/Pingfah/pages/admin/package/function/addPackage.php" method="POST">
-                        <div style="padding-right:8px">
-                            <p>เลขพัสดุ</p>
-                            <input type="text" name="num" required>
-                        </div>
-                        <div style="padding-right:8px">
-                            <p>บริษัท</p>
-                            <input type="text" name="company" required>
-                        </div>
-                        <div style="padding-right:8px">
-                            <p>เวลาที่พัสดุมาถึง</p>
-                            <input type="date" name="arrived" required>
-                        </div>
-                        <div style="padding-right:8px">
-                            <p>ชื่อเจ้าของ</p>
-                            <input type="text" name="name" required>
-                        </div>
-                        <div style="padding-right:8px">
-                            <p>เลขห้อง</p>
-                            <input type="text" name="room" required>
-                        </div>
-                        <div style="display:block;margin-top:auto">
-                            <button type="submit">ยืนยัน</button>
-                        </div>
-                    </form>
-                </div>
-                <div style="display:flex;justify-content:flex-end">
-                    <button onclick="addPackage()">เพิ่มรายการพัสดุ</button>
-                </div>
+                ?>
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/package.js"></script>
+    <script src="../../../js/guest/package.js"></script>
 </body>
 
 </html>

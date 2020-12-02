@@ -11,6 +11,6 @@ if($_SESSION["level"] == "admin"){
         echo "</script>";
     }
 }else{
-    Header("Location: ../../login.php");
+    Header("Location: ../../../login.php");
 }
 ?>

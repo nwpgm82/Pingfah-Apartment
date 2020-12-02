@@ -1,13 +1,3 @@
-// function currentDate(){
-//     var d = new Date()
-//     var day = String(d.getDate())
-//     var month = String(d.getMonth()+1)
-//     var year = String(d.getFullYear())
-//     d = month + '/' + day + '/' + year
-//     console.log(d)
-//     document.getElementById("cost_date").value = d
-// }
-
 function searchDate(v){
     var x = document.getElementById("cost_date").value
     location.assign(`index.php?Date=${v}`)

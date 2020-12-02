@@ -1,14 +1,10 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
-    include('../../connection.php');
-    include('../../../components/sidebar.php'); 
-    $room_id = $_REQUEST["ID"]; 
-    $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
-    $check_result = $conn->query($check_status);
-    $status = $check_result->fetch_assoc();
-    // echo $status['room_status'];
+if($_SESSION["level"] === 'guest'){
+    include("../../connection.php");
+    include("../../../components/sidebarGuest.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,22 +18,18 @@ if($_SESSION['level'] == 'admin'){
 <body>
     <div class="box">
         <div style="padding:24px;">
-            <?php
-        if($status['room_status'] != 'เช่ารายวัน'){
-        ?>
             <div id="month" class="roomform-box">
                 <div id="first">
-                    <?php
-                $sql = "SELECT room_member, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, id_line FROM roommember WHERE room_member='$room_id' ";
+                <?php
+                $sql = "SELECT * FROM roommember WHERE room_member='".$_SESSION['ID']."' ";
                 $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
                 $row = mysqli_fetch_array($result);
                 if($row != null){
                 extract($row);
                 }    
                 ?>
-                    <form action='room_member_add_DB.php?ID=<?php echo $room_id; ?>' method='POST' id="form"
-                        enctype="multipart/form-data">
-                        <h3>ห้อง <?php echo $room_id; ?></h3>
+                    <form>
+                        <h3>ห้อง <?php echo $_SESSION["ID"]; ?></h3>
                         <div class="hr"></div>
                         <div class="row">
                             <div class="col-2 select-box">
@@ -99,7 +91,8 @@ if($_SESSION['level'] == 'admin'){
                             <div class="col-3 input-box">
                                 <p>อีเมล์</p>
                                 <input type="text" required name="email" id="email"
-                                    value="<?php if(isset($email)){echo $email;}; ?>" placeholder="Email" minlength="2" disabled>
+                                    value="<?php if(isset($email)){echo $email;}; ?>" placeholder="Email" minlength="2"
+                                    disabled>
                             </div>
                             <div class="col-3 input-box">
                                 <p>Line</p>
@@ -152,86 +145,31 @@ if($_SESSION['level'] == 'admin'){
                                 <div>
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box">
-                                        <img id="output_imagepic1"
-                                            src="../../images/roommember/<?php echo $room_id; ?>/1/<?php echo $pic_idcard; ?>" />
-                                        <?php
-                                        if(isset($pic_idcard)){ ?>
-                                        <button class="del-btn" type="button" id="del-btn1" style="display:none;"
-                                            onclick="delImg('<?php echo $room_id ?>','pic_idcard',1)">X</button>
-                                        <?php } ?>
+                                        <img id="output_imagepic1" src="../../images/roommember/<?php echo $_SESSION["ID"]; ?>/1/<?php echo $pic_idcard; ?>" />
                                     </div>
-                                    <?php
-                                    if(!isset($pic_idcard)){ ?>
-                                    <input type="file" id="pic_idcard1" accept="image/*" onchange="preview_image(event,'pic1')"
-                                        name="pic_idcard" disabled>
-                                    <?php } ?>
                                 </div>
                                 <div>
                                     <p>สำเนาทะเบียนบ้าน</p>
                                     <div class="img-box">
-                                        <img id="output_imagepic2"
-                                            src="../../images/roommember/<?php echo $room_id; ?>/1/<?php echo $pic_home; ?>" />
-                                        <?php
-                                    if(isset($pic_home)){ ?>
-                                        <button class="del-btn" type="button" id="del-btn2" style="display:none;"
-                                            onclick="delImg('<?php echo $room_id; ?>','pic_home',1)">X</button>
-                                        <?php } ?>
+                                        <img id="output_imagepic2" src="../../images/roommember/<?php echo $_SESSION["ID"]; ?>/1/<?php echo $pic_home; ?>" />
                                     </div>
-                                    <?php
-                                if(!isset($pic_home)){ ?>
-                                    <input type="file" id="pic_home1" accept="image/*" onchange="preview_image(event,'pic2')"
-                                        name="pic_home" disabled>
-                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
                         <div class="hr" style="margin: 32px 0;"></div>
-                        <?php if($row != null){ ?>
+                        <?php if($id_card2 != ""){ ?>
                         <div style="display:flex;justify-content:flex-end;">
                             <button type="button" onclick="navigation()">คนที่ 2</button>
                         </div>
-                        <div id="edit-1" style="padding-top:32px;display:flex;justify-content:center;">
-                            <button type="button" class="edit-btn" onclick="editData(1)">แก้ไข</button>
-                        </div>
-                        <div id="btn-1" style="padding-top:32px;display:none;justify-content:center;">
-                            <button type="submit" name='formSubmit' class="confirm">ยืนยัน</button>
-                            <button type="button" class="delData" onclick="cancelEditData(1)">ยกเลิก</button>
-                        </div>
-                        <hr />
-                        <div style="padding-top:32px;display:flex;justify-content:flex-end">
-                            <button type="button" class="delData"
-                                onclick="delData(<?php echo $room_id; ?>)">ลบข้อมูล</button>
-                        </div>
-                        <?php }else{ ?>
-                            <div id="edit-1" style="padding-top:32px;display:flex;justify-content:center;">
-                            <button type="button" class="edit-btn" onclick="editData(1)">แก้ไข</button>
-                        </div>
-                        <div id="btn-1" style="padding-top:32px;display:none;justify-content:center;">
-                            <button type="submit" name='formSubmit' class="confirm">ยืนยัน</button>
-                            <button type="button" class="delData" onclick="cancelEditData(1)">ยกเลิก</button>
-                        </div>
-                        <!-- <div style="display:flex;justify-content:center;">
-                            <button type="submit" name='formSubmit' class="confirm">ยืนยัน</button>
-                        </div> -->
                         <?php } ?>
 
                     </form>
                 </div>
                 <!--  -->
-                <?php if($row != null){ ?>
+                <?php if($id_card2 != null){ ?>
                 <div id="second" style="display:none">
-                    <?php
-                $room_id2 = $_REQUEST["ID"]; 
-                $sql2 = "SELECT room_member, name_title2, firstname2, lastname2, nickname2, id_card2, phone2, email2, birthday2, age2, race2, nationality2, job2, address2, pic_idcard2, pic_home2, id_line2 FROM roommember WHERE room_member='$room_id2' ";
-                $result2 = mysqli_query($conn, $sql2)or die ("Error in query: $sql2 " . mysqli_error());
-                $row2 = mysqli_fetch_array($result2);
-                if($row2 != null){
-                extract($row2);
-                }     
-                ?>
-                    <form action='room_member_add_DB.php?ID=<?php echo $room_id; ?>' method='POST' id="form"
-                        enctype="multipart/form-data">
-                        <h3>ห้อง <?php echo $room_id; ?></h3>
+                    <form>
+                        <h3>ห้อง <?php echo $_SESSION["ID"]; ?></h3>
                         <div class="hr"></div>
                         <div class="row">
                             <div class="col-2 select-box">
@@ -347,36 +285,14 @@ if($_SESSION['level'] == 'admin'){
                                 <div>
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box">
-                                        <img id="output_imagepic3"
-                                            src="../../images/roommember/<?php echo $room_id; ?>/2/<?php echo $pic_idcard2; ?>" />
-                                        <?php
-                                    if(isset($pic_idcard2)){ ?>
-                                        <button class="del-btn" type="button" id="del-btn3" style="display:none;"
-                                            onclick="delImg('<?php echo $room_id ?>','pic_idcard2',2)">X</button>
-                                        <?php } ?>
+                                        <img id="output_imagepic3" src="../../images/roommember/<?php echo $_SESSION["ID"]; ?>/2/<?php echo $pic_idcard2; ?>" />
                                     </div>
-                                    <?php
-                                if(!isset($pic_idcard2)){ ?>
-                                    <input type="file" id="pic_idcard2" accept="image/*" onchange="preview_image(event,'pic3')"
-                                        name="pic_idcard2" disabled>
-                                    <?php } ?>
                                 </div>
                                 <div>
                                     <p>สำเนาทะเบียนบ้าน</p>
                                     <div class="img-box">
-                                        <img id="output_imagepic4"
-                                            src="../../images/roommember/<?php echo $room_id; ?>/2/<?php echo $pic_home2; ?>" />
-                                        <?php
-                                    if(isset($pic_home2)){ ?>
-                                        <button class="del-btn" type="button" id="del-btn4" style="display:none;"
-                                            onclick="delImg('<?php echo $room_id; ?>','pic_home2',2)">X</button>
-                                        <?php } ?>
+                                        <img id="output_imagepic4" src="../../images/roommember/<?php echo $_SESSION["ID"]; ?>/2/<?php echo $pic_home2; ?>" />
                                     </div>
-                                    <?php
-                                if(!isset($pic_home2)){ ?>
-                                    <input type="file" id="pic_home2" accept="image/*" onchange="preview_image(event,'pic4')"
-                                        name="pic_home2" disabled>
-                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -384,119 +300,10 @@ if($_SESSION['level'] == 'admin'){
                         <div style="display:flex;justify-content:flex-start;">
                             <button type="button" onclick="navigation()">คนที่ 1</button>
                         </div>
-                        <div id="edit-2" style="padding-top:32px;display:flex;justify-content:center;">
-                            <button type="button" class="edit-btn" onclick="editData(2)">แก้ไข</button>
-                        </div>
-                        <div id="btn-2" style="padding-top:32px;display:none;justify-content:center">
-                            <button type="submit" name='formSubmit2'>ยืนยัน</button>
-                            <button type="button" class="delData" onclick="cancelEditData(2)">ยกเลิก</button>
-                        </div>
-                        <div class="hr" style="margin: 32px 0;"></div>
-                        <div style="padding-top:32px;display:flex;justify-content:flex-end">
-                            <button type="button" class="delData"
-                                onclick="delData(<?php echo $room_id; ?>)">ลบข้อมูล</button>
-                        </div>
                     </form>
                 </div>
                 <?php } ?>
             </div>
-            <?php
-        }else if($status['room_status'] == 'เช่ารายวัน'){
-            $sql = "SELECT * FROM roommember WHERE room_member = '$room_id'";
-            $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
-            $row = mysqli_fetch_array($result);
-            if($row != null){
-                extract($row);
-            }    
-            $sql2 =  "SELECT * FROM daily WHERE id_card = '$id_card'";
-            $result2 = mysqli_query($conn, $sql2)or die ("Error in query: $sql2 " . mysqli_error());
-            $row2 = mysqli_fetch_array($result2);
-            if($row2 != null){
-                extract($row2);
-            } 
-        ?>
-
-            <div id="daily" class="roomform-box">
-                <form action='room_member_add_DB.php?ID=<?php echo $room_id; ?>' method='POST' id="form"
-                    enctype="multipart/form-data">
-                    <h3>ห้อง <?php echo $room_id; ?></h3>
-                    <div class="hr"></div>
-                    <div class="row">
-                        <div class="col-2 input-box">
-                            <label>เช็คอิน</label>
-                            <input type="text" value="<?php echo $check_in; ?>" disabled>
-                        </div>
-                        <div class="col-2 input-box">
-                            <label>เช็คเอ้าท์</label>
-                            <input type="text" value="<?php echo $check_out; ?>" disabled>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4 input-box">
-                            <label>ชื่อ</label>
-                            <input type="text" value="<?php echo $firstname; ?>" disabled>
-                        </div>
-                        <div class="col-4 input-box">
-                            <label>นามสกุล</label>
-                            <input type="text" value="<?php echo $lastname; ?>" disabled>
-                        </div>
-                        <div class="col-4 input-box">
-                            <label>เลขบัตรประชาชน / Passport</label>
-                            <input type="text" value="<?php echo $id_card; ?>" disabled>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4 input-box">
-                            <label>อีเมล</label>
-                            <input type="text" value="<?php echo $email; ?>" disabled>
-                        </div>
-                        <div class="col-4 input-box">
-                            <label>เบอร์โทรศัพท์</label>
-                            <input type="text" value="<?php echo $phone; ?>" disabled>
-                        </div>
-                        <div class="col-4 input-box">
-                            <label>เลขในการจอง</label>
-                            <input type="text" value="<?php echo $code; ?>" disabled>
-                        </div>
-                    </div>
-                    <div style="padding-top:32px;">
-                        <h3>สำเนาเอกสาร</h3>
-                        <div class="grid">
-                            <div>
-                                <p>สำเนาบัตรประชาชน</p>
-                                <div class="img-box">
-                                    <img id="output_imagepic1"
-                                        src="../../images/roommember/<?php echo $room_id; ?>/1/<?php echo $pic_idcard; ?>" />
-                                    <?php
-                                        if(isset($pic_idcard)){ ?>
-                                    <button class="del-btn" type="button"
-                                        onclick="delImg('<?php echo $room_id ?>','pic_idcard',1)">X</button>
-                                    <?php } ?>
-                                </div>
-                                <?php
-                                    if(!isset($pic_idcard)){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic1')"
-                                    name="pic_idcard">
-                                <?php } ?>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    if($pic_idcard == null){
-                    ?>
-                    <div style="padding-top:32px;display:flex;justify-content:center">
-                        <button type="submit" name='formSubmit3' class="confirm">ยืนยัน</button>
-                    </div>
-                    <?php } ?>
-                </form>
-                <div class="hr" style="margin: 32px 0;"></div>
-                <div style="padding-top:32px;display:flex;justify-content:flex-end">
-                    <button type="button" class="delData" onclick="delData(<?php echo $room_id; ?>)">ลบข้อมูล</button>
-                </div>
-            </div>
-            <?php 
-        }
-        ?>
         </div>
     </div>
     <script src="../../../js/admin/room_id_form.js"></script>
@@ -505,6 +312,6 @@ if($_SESSION['level'] == 'admin'){
 </html>
 <?php
 }else{
-    Header("Location: ../../login.php"); 
+    header("Location: ../../login.php");
 }
 ?>

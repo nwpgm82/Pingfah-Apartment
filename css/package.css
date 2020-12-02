@@ -68,7 +68,7 @@
 }
 
 .package-box table td:last-child,.package-box table th:last-child{
-    width: 130px;
+    width: auto;
 }
 
 .package-box table th {
@@ -126,7 +126,7 @@
 
 .package-box .del-btn{
     margin: 0 4px;
-    width: 80px;
+    width: auto;
     height: 40px;
     background-color: #FF4646;
     border-radius: 4px;

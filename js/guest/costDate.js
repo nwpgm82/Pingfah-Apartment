@@ -4,12 +4,6 @@ function searchDate(v){
     console.log(x)
 }
 
-function confirmStatus(room,date){
-    if(confirm(`ยืนยันการชำระเงินห้อง ${room}`)){
-        location.href = `function/confirmStatus.php?room_id=${room}&date=${date}`
-    }
-}
-
 function searchCheck(id){
     var check = document.getElementById(id)
     var success = document.getElementById("success")
@@ -39,12 +33,6 @@ function unCheckAll(){
     success.checked = false
     unsuccess.checked = false
     location.href = "index.php"
-}
-
-function delcost(room,date){
-    if(confirm("คุณต้องการลบรายการชำระเงินนี้ใช่หรือไม่ ?")){
-        location.href = `function/delcostData.php?room_id=${room}&date=${date}`
-    }
 }
 
 ///sort table////

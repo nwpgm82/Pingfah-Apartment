@@ -60,6 +60,6 @@ if($_SESSION["level"] == "admin"){
 </html>
 <?php
 }else{
-    Header("Location: ../login.php"); 
+    Header("Location: ../../login.php"); 
 }
 ?>
