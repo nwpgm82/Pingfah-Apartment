@@ -7,10 +7,10 @@ function bannerload() {
     banner.style.transform = "scale(1)"
     banner.style.opacity = 1
     let today_monthNames = [
-        "ม.ค.", "ก.พ.", "มี.ค.",
-        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
-        "ส.ค.", "ก.ย.", "ต.ค.",
-        "พ.ค.", "ธ.ค."
+        "JAN", "FEB", "MAR",
+        "APR", "MAY", "JUN", "JUL",
+        "AUG", "SEP", "OCT",
+        "NOV", "DEC"
     ];
     let today = new Date()
     let today_day = today.getDate()
@@ -78,10 +78,10 @@ function checkInDate2(value) {
 }
 function formatDate(date) {
     var monthNames = [
-        "ม.ค.", "ก.พ.", "มี.ค.",
-        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
-        "ส.ค.", "ก.ย.", "ต.ค.",
-        "พ.ค.", "ธ.ค."
+        "JAN", "FEB", "MAR",
+        "APR", "MAY", "JUN", "JUL",
+        "AUG", "SEP", "OCT",
+        "NOV", "DEC"
     ];
     var day = date.getDate();
     var monthIndex = date.getMonth();

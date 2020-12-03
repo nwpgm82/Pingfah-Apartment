@@ -22,12 +22,24 @@ include('pages/connection.php');
             <div class="card">
                 <strong><label class="topic">RESERVATION</label></strong>
                 <div style="padding:0 16px 0 32px">
-                    <label>Check In : </label>
-                    <input type="date" id="check_in">
+
+                    <div style="display:flex;align-items:center;">
+                        <label>Check In : </label>
+                        <div style="position:relative;padding-left:8px;height:40px;">
+                            <input type="date" id="check_in" onchange="checkInDate(value)">
+                            <p id="check_in_date" class="dateText"></p>
+                        </div>
+                    </div>
+
                 </div>
                 <div style="padding:0 16px">
-                    <label>Check out : </label>
-                    <input type="date" id="check_out">
+                <div style="display:flex;align-items:center;">
+                        <label>Check Out : </label>
+                        <div style="position:relative;padding-left:8px;height:40px;">
+                            <input type="date" id="check_out" onchange="checkInDate2(value)">
+                            <p id="check_out_date" class="dateText"></p>
+                        </div>
+                    </div>
                 </div>
                 <button type="button" onclick="checkRoom()">CHECK AVAILABILITY</button>
             </div>
@@ -68,7 +80,8 @@ include('pages/connection.php');
                         </div>
                         <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, esse nulla aliquam reprehenderit dignissimos qui laudantium minus, blanditiis obcaecati tenetur sequi placeat impedit quis similique magnam pariatur voluptatum delectus aspernatur?</p> -->
                         <div style="display:flex;justify-content:flex-end">
-                            <a href="pages/roomDetail.php?room_type=<?php echo $row['type']; ?>"><button>ดูเพิ่มเติม</button></a>
+                            <a
+                                href="pages/roomDetail.php?room_type=<?php echo $row['type']; ?>"><button>ดูเพิ่มเติม</button></a>
                         </div>
                     </div>
                 </div>
@@ -132,7 +145,7 @@ include('pages/connection.php');
                         echo "ไม่มีรูปภาพ";
                     }
                 ?>
-                
+
             </div>
             <div style="padding-top:24px;display:flex;justify-content:flex-end;">
                 <a href="pages/gallery.php">ดูเพิ่มเติม >></a>
@@ -141,6 +154,8 @@ include('pages/connection.php');
     </div>
     <?php include('components/mainFoot.php') ?>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
     AOS.init();
     </script>

@@ -95,12 +95,39 @@ body::after{
     font-family: 'Playfair Display', serif;
 }
 
-.reservation .card input[type="date"] {
-    width: auto;
+.reservation .card input{
+    position: relative;
+    width: 180px;
     height: 40px;
     padding: 0 12px;
     border: 1px solid rgb(131, 120, 47, 0.7);
     border-radius: 4px;
+    cursor: pointer;
+}
+
+.reservation .card input:before {
+    top: 10px; left: 12px;
+    display: inline-block;
+    color: black;
+    font-size: 16px;
+}
+
+.reservation .card input::-webkit-datetime-edit, input::-webkit-inner-spin-button, input::-webkit-clear-button {
+    display: none;
+}
+input::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    color: black;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.reservation .card .dateText{
+    position: absolute;
+    top: 10px;
+    left: 20px;
 }
 
 .reservation .card button {
