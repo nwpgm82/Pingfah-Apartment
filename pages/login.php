@@ -10,7 +10,7 @@
 
 <body>
     <div class="login">
-        <img src="/Pingfah/img/main_logo.png" alt="">
+        <a href="../index.php"><img src="/Pingfah/img/main_logo.png" alt=""></a>
         <form action="checklogin.php" method="POST">
             <div>
                 <p>บัญชีผู้ใช้ / Username</p>

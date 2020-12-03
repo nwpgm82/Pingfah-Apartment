@@ -16,7 +16,7 @@ include('pages/connection.php');
     <?php include('components/maintopbar.php') ?>
     <div style="position:relative;">
         <div class="banner">
-            <img src="img/tool/main_img.jpg" alt="" id="banner">
+            <img src="img/tool/13136571044859.jpg" alt="" id="banner">
         </div>
         <div class="reservation" id="re">
             <div class="card">

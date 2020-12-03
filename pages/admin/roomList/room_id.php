@@ -4,6 +4,10 @@ if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
     include('../../../components/sidebar.php'); 
     $room_id = $_REQUEST["ID"]; 
+    $path1 = "../../images/roommember/$room_id";
+    if(is_dir($path1)){
+        echo "<script>alert('มีโฟลเดอร์ $path1')</script>";
+    }
     $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
     $check_result = $conn->query($check_status);
     $status = $check_result->fetch_assoc();
