@@ -4,8 +4,8 @@ if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
     include('../../../components/sidebar.php'); 
     $room_id = $_REQUEST["ID"]; 
-    $path1 = "../../images/roommember/$room_id/1/";
-    $path2 = "../../images/roommember/$room_id/2/";
+    $path1 = "../../images/roommember/$room_id/";
+    $path2 = "../../images/roommember/$room_id/";
     if(is_dir($path1)){
         echo "<script>alert('มีโฟลเดอร์ $path1')</script>";
     }else{
