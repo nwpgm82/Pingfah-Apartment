@@ -8,11 +8,15 @@ if($_SESSION['level'] == 'admin'){
     $subpath1 = "../../images/roommember/$room_id/1/";
     $subpath2 = "../../images/roommember/$room_id/2/";
     if(is_dir($path1)){
-        echo "<script>alert('มีโฟลเดอร์ $path1')</script>";
+        echo "<script>console.log('มีโฟลเดอร์ $path1')</script>";
     }else{
-        echo "<script>alert('ไม่มีโฟลเดอร์ $path1')</script>";
-        mkdir($subpath1);
-        mkdir($subpath2);
+        echo "<script>console.log('ไม่มีโฟลเดอร์ $path1')</script>";
+        mkdir($path1);
+        if(is_dir($path1)){
+            mkdir($subpath1);
+            mkdir($subpath2);
+        }
+        
     }
     $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
     $check_result = $conn->query($check_status);

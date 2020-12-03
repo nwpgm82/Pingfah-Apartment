@@ -3,7 +3,21 @@ session_start();
 if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
     include('../../../components/sidebarEPY.php'); 
-    $room_id = $_REQUEST["ID"]; 
+    $room_id = $_REQUEST["ID"];
+    $path1 = "../../images/roommember/$room_id/";
+    $subpath1 = "../../images/roommember/$room_id/1/";
+    $subpath2 = "../../images/roommember/$room_id/2/";
+    if(is_dir($path1)){
+        echo "<script>console.log('มีโฟลเดอร์ $path1')</script>";
+    }else{
+        echo "<script>console.log('ไม่มีโฟลเดอร์ $path1')</script>";
+        mkdir($path1);
+        if(is_dir($path1)){
+            mkdir($subpath1);
+            mkdir($subpath2);
+        }
+        
+    } 
     $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
     $check_result = $conn->query($check_status);
     $status = $check_result->fetch_assoc();
