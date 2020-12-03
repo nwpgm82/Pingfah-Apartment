@@ -9,7 +9,10 @@ if($_SESSION['level'] == 'admin'){
     if(is_dir($path1)){
         echo "<script>alert('มีโฟลเดอร์ $path1')</script>";
     }else{
-        echo "ไม่มีโฟลเดอร์ $path1";
+        echo "<script>alert('ไม่มีโฟลเดอร์ $path1')</script>";
+        mkdir("../../images/roommember/$room_id/");
+        mkdir("../../images/roommember/$room_id/1/");
+        mkdir("../../images/roommember/$room_id/2/");
     }
 
     if(is_dir($path2)){
