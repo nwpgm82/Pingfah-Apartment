@@ -7,6 +7,8 @@ if($_SESSION['level'] == 'admin'){
     $path1 = "../../images/roommember/$room_id";
     if(is_dir($path1)){
         echo "<script>alert('มีโฟลเดอร์ $path1')</script>";
+    }else{
+        echo "ไม่มีโฟลเดอร์";
     }
     $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
     $check_result = $conn->query($check_status);
