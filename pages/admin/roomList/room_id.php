@@ -4,11 +4,18 @@ if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
     include('../../../components/sidebar.php'); 
     $room_id = $_REQUEST["ID"]; 
-    $path1 = "../../images/roommember/$room_id";
+    $path1 = "../../images/roommember/$room_id/1";
+    $path2 = "../../images/roommember/$room_id/2";
     if(is_dir($path1)){
         echo "<script>alert('มีโฟลเดอร์ $path1')</script>";
     }else{
-        echo "ไม่มีโฟลเดอร์";
+        echo "ไม่มีโฟลเดอร์ $path1";
+    }
+
+    if(is_dir($path2)){
+        echo "<script>alert('มีโฟลเดอร์ $path2')</script>";
+    }else{
+        echo "ไม่มีโฟลเดอร์ $path2";
     }
     $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
     $check_result = $conn->query($check_status);
