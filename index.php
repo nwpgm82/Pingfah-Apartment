@@ -22,7 +22,6 @@ include('pages/connection.php');
             <div class="card">
                 <strong><label class="topic">RESERVATION</label></strong>
                 <div style="padding:0 16px 0 32px">
-
                     <div style="display:flex;align-items:center;">
                         <label>Check In : </label>
                         <div style="position:relative;padding-left:8px;height:40px;">
@@ -154,7 +153,7 @@ include('pages/connection.php');
     </div>
     <?php include('components/mainFoot.php') ?>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
     AOS.init();

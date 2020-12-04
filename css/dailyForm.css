@@ -38,7 +38,7 @@ body {
 
 .box .dailyForm .row {
     display: flex;
-    padding-top: 32px;
+    padding-bottom: 32px;
 }
 
 .dailyForm .row .col-1 {

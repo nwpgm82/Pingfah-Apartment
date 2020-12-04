@@ -3,21 +3,6 @@
     include('../components/maintopbar.php');
     @$get_checkin = $_REQUEST['check_in'];
     @$get_checkout = $_REQUEST['check_out'];
-    $room_type = $_REQUEST['room_type'];
-    $count = "SELECT * FROM daily WHERE room_type = '$room_type' AND ((check_in BETWEEN '$get_checkin' AND '$get_checkout') OR (check_out BETWEEN '$get_checkin' AND '$get_checkout') OR ('$get_checkin' BETWEEN check_in AND check_out) OR ('$get_checkout' BETWEEN check_in AND check_out ))";
-    $countresult = $conn->query($count);
-    $typetotal_int = 0;
-    if ($countresult->num_rows > 0) {
-        while($data = $countresult->fetch_assoc()) {
-            $typetotal_int += $data["room_count"];
-        }
-    } else {
-        $typetotal_int = 0;
-    }
-    $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = '$room_type' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
-    $roomdata= mysqli_fetch_assoc($countroom);  
-    $roomtotal_int = intval($roomdata['roomtotal']);
-    $total_int = $roomtotal_int - $typetotal_int;
     function DateThai($strDate)
     {
         $strYear = date("Y",strtotime($strDate))+543;
@@ -43,11 +28,7 @@
         <div class="dailyForm">
             <h2>แบบฟอร์มจองห้องพัก</h2>
             <div class="hr"></div>
-            <h3>ประเภทห้องพัก : <label style="color: #b3994c;font-weight: bold;">ห้อง<?php echo $room_type; ?></label>
-            </h3>
-            <form
-                action="mainpage_function/addDailyForm.php?room_type=<?php echo $room_type; ?>&check_in=<?php echo $get_checkin; ?>&check_out=<?php echo $get_checkout; ?>"
-                method="POST" onsubmit="return confirm('คุณต้องการจองห้องพักใช่หรือไม่ ?');">
+            <form action="mainpage_function/addDailyForm.php?room_type=<?php echo $room_type; ?>&check_in=<?php echo $get_checkin; ?>&check_out=<?php echo $get_checkout; ?>" method="POST" onsubmit="return confirm('คุณต้องการจองห้องพักใช่หรือไม่ ?');">
                 <div class="row">
                     <div class="col-4">
                         <p>ชื่อ</p>
