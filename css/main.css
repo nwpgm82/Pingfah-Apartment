@@ -62,7 +62,7 @@ body::after{
 }
 
 .reservation {
-    width: 1200px;
+    width: 1400px;
     height: 90px;
     margin: auto;
 }
@@ -71,7 +71,7 @@ body::after{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 1200px;
+    width: 1400px;
     height: 120px;
     background: url('../img/tool/bg2.png');
     border-radius: 4px;
@@ -95,7 +95,7 @@ body::after{
     font-family: 'Playfair Display', serif;
 }
 
-.reservation .card input{
+.reservation .card input[type=text]{
     position: relative;
     width: 180px;
     height: 40px;
@@ -105,7 +105,26 @@ body::after{
     cursor: pointer;
 }
 
-.reservation .card input:before {
+.reservation .card input[type=number]{
+    width: 70px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.7);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.reservation .card input[type=number]::-webkit-inner-spin-button, 
+.reservation .card input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+
+.reservation .card input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* .reservation .card input:before {
     top: 10px; left: 12px;
     display: inline-block;
     color: black;
@@ -122,12 +141,13 @@ input::-webkit-calendar-picker-indicator {
     color: black;
     opacity: 1;
     cursor: pointer;
-}
+} */
 
 .reservation .card .dateText{
     position: absolute;
     top: 10px;
     left: 20px;
+    background-color: #fff;
 }
 
 .reservation .card button {

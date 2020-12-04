@@ -2,6 +2,7 @@ let check_in = document.getElementById("check_in")
 let check_out = document.getElementById("check_out")
 let check_in_date = document.getElementById("check_in_date")
 let check_out_date = document.getElementById("check_out_date")
+
 function bannerload() {
     var banner = document.getElementById("banner")
     banner.style.transform = "scale(1)"
@@ -45,6 +46,7 @@ function bannerload() {
     console.log(check_in.value)
     console.log(check_out.value)
 }
+
 function checkRoom() {
     if (check_in.value && check_out.value != "") {
         location.href = `pages/checkRoom.php?check_in=${check_in.value}&check_out=${check_out.value}`
@@ -52,30 +54,30 @@ function checkRoom() {
         alert("กรุณากรอกวันที่ค้นหาให้ครบ");
     }
 }
-function checkInDate(value) {
-    console.log(value)
-    check_in_date.innerHTML = formatDate(new Date(value))
-    check_out.setAttribute("min", check_in.value)
-    if (new Date(value).getTime() >= new Date(check_out.value).getTime()) {
-        let nDate = new Date(check_in.value)
-        nDate.setDate(nDate.getDate() + 1)
-        let nDate_date = nDate.getDate()
-        let nDate_month = nDate.getMonth() + 1
-        if(nDate_date < 10){
-            nDate_date = "0" + nDate_date.toString()
-        }
-        if(nDate_month < 10){
-            nDate_month = "0" + nDate_month.toString()
-        }
-        check_out.value = nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date
-        check_out_date.innerHTML = formatDate(new Date(check_out.value))
-        check_out.setAttribute("min",check_out.value)
-    }
-}
-function checkInDate2(value) {
-    console.log(value)
-    check_out_date.innerHTML = formatDate(new Date(value))
-}
+// function checkInDate(value) {
+//     console.log(value)
+//     check_in_date.innerHTML = formatDate(new Date(value))
+//     check_out.setAttribute("min", check_in.value)
+//     if (new Date(value).getTime() >= new Date(check_out.value).getTime()) {
+//         let nDate = new Date(check_in.value)
+//         nDate.setDate(nDate.getDate() + 1)
+//         let nDate_date = nDate.getDate()
+//         let nDate_month = nDate.getMonth() + 1
+//         if(nDate_date < 10){
+//             nDate_date = "0" + nDate_date.toString()
+//         }
+//         if(nDate_month < 10){
+//             nDate_month = "0" + nDate_month.toString()
+//         }
+//         check_out.value = nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date
+//         check_out_date.innerHTML = formatDate(new Date(check_out.value))
+//         check_out.setAttribute("min",check_out.value)
+//     }
+// }
+// function checkInDate2(value) {
+//     console.log(value)
+//     check_out_date.innerHTML = formatDate(new Date(value))
+// }
 function formatDate(date) {
     var monthNames = [
         "ม.ค.", "ก.พ.", "มี.ค.",
@@ -88,3 +90,91 @@ function formatDate(date) {
     var year = date.getFullYear();
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
+
+function formatDate2(inputDate) {
+    var date = new Date(inputDate);
+    if (!isNaN(date.getTime())) {
+        // Months use 0 index.
+        return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+    }
+}
+
+$('input[type=text]').dateDropper({
+    roundtrip: "my-trip",
+    theme: "my-style",
+    format: "Y-m-d",
+    lang: "th",
+    lock: "from",
+    startFromMonday: false,
+});
+
+$('#check_in').change(function () {
+    console.log("check in :", $('#check_in').val())
+    $('#check_in_date').html(formatDate(new Date($('#check_in').val())))
+    if (new Date($("#check_in").val()) >= new Date($("#check_out").val())) {
+        let nDate = new Date($("#check_in").val())
+        nDate.setDate(nDate.getDate() + 1)
+        let nDate_date = nDate.getDate()
+        let nDate_month = nDate.getMonth() + 1
+        if (nDate_date < 10) {
+            nDate_date = "0" + nDate_date.toString()
+        }
+        if (nDate_month < 10) {
+            nDate_month = "0" + nDate_month.toString()
+        }
+        $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
+        $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
+
+    }else{
+        $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+    }
+})
+
+$('#check_out').change(function () {
+    if (new Date($("#check_in").val()) >= new Date($("#check_out").val())) {
+        let nDate = new Date($("#check_in").val())
+        nDate.setDate(nDate.getDate() + 1)
+        let nDate_date = nDate.getDate()
+        let nDate_month = nDate.getMonth() + 1
+        if (nDate_date < 10) {
+            nDate_date = "0" + nDate_date.toString()
+        }
+        if (nDate_month < 10) {
+            nDate_month = "0" + nDate_month.toString()
+        }
+        $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
+        $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
+
+    } else {
+        $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+    }
+})
+
+// $("#check_in").change(function(){
+//     console.log($("#check_in").val())
+//     $("#check_in_date").html(formatDate(new Date($("#check_in").val())))
+//     // console.log(new Date($("#check_in").val()))
+//     if(new Date($("#check_in").val()) >= new Date($("#check_out").val())){
+//         let nDate = new Date($("#check_in").val())
+//         nDate.setDate(nDate.getDate() + 1)
+//         let nDate_date = nDate.getDate()
+//         let nDate_month = nDate.getMonth() + 1
+//         if(nDate_date < 10){
+//             nDate_date = "0" + nDate_date.toString()
+//         }
+//         if(nDate_month < 10){
+//             nDate_month = "0" + nDate_month.toString()
+//         }
+//         $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
+//         $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
+//         // check_out.setAttribute("min",check_out.value)
+//         // $('#check_out').dateDropper({
+//         //     lock : formatDate2($("#check_out").val())
+//         // })
+//     }
+// })
+
+// $("#check_out").change(function(){
+//     console.log($("#check_out").val())
+//     // $("#check_out_date").html(formatDate(new Date($("#check_in").val())))
+// })

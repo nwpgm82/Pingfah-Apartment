@@ -8,7 +8,13 @@ include('pages/connection.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/my-style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -25,24 +31,32 @@ include('pages/connection.php');
                     <div style="display:flex;align-items:center;">
                         <label>Check In : </label>
                         <div style="position:relative;padding-left:8px;height:40px;">
-                            <input type="date" id="check_in" onchange="checkInDate(value)">
+                            <input id="check_in" type="text">
                             <p id="check_in_date" class="dateText"></p>
                         </div>
                     </div>
 
                 </div>
                 <div style="padding:0 16px">
-                <div style="display:flex;align-items:center;">
+                    <div style="display:flex;align-items:center;">
                         <label>Check Out : </label>
                         <div style="position:relative;padding-left:8px;height:40px;">
-                            <input type="date" id="check_out" onchange="checkInDate2(value)">
+                            <input id="check_out" type="text">
                             <p id="check_out_date" class="dateText"></p>
                         </div>
                     </div>
                 </div>
+                <div style="display:flex;align-items:center;">
+                    <label>จำนวนผู้พัก : </label>
+                    <div style="position:relative;padding:0 8px;height:40px;">
+                        <input id="people" type="number" min="1" max="10" value="1">
+                    </div>
+                    <label>คน</label>
+                </div>
                 <button type="button" onclick="checkRoom()">CHECK AVAILABILITY</button>
             </div>
         </div>
+    </div>
     </div>
     <div class="about" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
         <div class="about-detail">
@@ -152,13 +166,10 @@ include('pages/connection.php');
         </div>
     </div>
     <?php include('components/mainFoot.php') ?>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="js/main.js"></script>
     <script>
     AOS.init();
     </script>
-    <script src="js/main.js"></script>
 </body>
 
 </html>
