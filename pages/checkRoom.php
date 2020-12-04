@@ -62,7 +62,7 @@
             
             ?>
             <div style="padding-top: 32px;">
-                <form action="dailyForm.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out; ?>" method="POST">
+                <form action="dailyForm.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out; ?>&people=<?php echo $people; ?>" method="POST">
                 <?php
                 $countAll = "SELECT * FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))";
                 $allresult = $conn->query($countAll);
