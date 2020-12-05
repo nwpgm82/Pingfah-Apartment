@@ -86,7 +86,7 @@ function decrease(num) {
 }
 
 function checkform(){
-    let people_check = parseInt(document.getElementById("people").value)/2
+    let people_check = Math.ceil(parseInt(document.getElementById("people").value)/2)
     let room_check = parseInt(document.getElementById("people1").value) + parseInt(document.getElementById("people2").value)
     if(people_check > room_check){
         alert("กรุณาเลือกห้องพักให้เพียงพอกับผู้พัก")
