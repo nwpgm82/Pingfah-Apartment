@@ -11,6 +11,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/checkRoom.css">
+    <link rel="stylesheet" href="../css/my-style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -25,8 +29,7 @@
                         <div style="display:flex;align-items:center;">
                             <label class="checkText">Check In : </label>
                             <div style="position:relative;padding-left:8px;height:40px;">
-                                <input type="date" id="check_in" value="<?php echo $check_in; ?>" name="check_in"
-                                    onchange="checkInDate(value)">
+                                <input id="check_in" name="check_in" type="text" value="<?php echo $check_in; ?>" >
                                 <p id="check_in_date" class="dateText"></p>
                             </div>
                         </div>
@@ -35,8 +38,7 @@
                         <div style="display:flex;align-items:center;">
                             <label class="checkText">Check Out : </label>
                             <div style="position:relative;padding-left:8px;height:40px;">
-                                <input type="date" id="check_out" value="<?php echo $check_out; ?>" name="check_out"
-                                    onchange="checkInDate2(value)">
+                                <input id="check_out" name="check_out" type="text" value="<?php echo $check_out; ?>">
                                 <p id="check_out_date" class="dateText"></p>
                             </div>
                         </div>
@@ -47,7 +49,7 @@
                             <div style="position:relative;padding-left:8px;height:40px;">
                                 <input type="number" id="people" name="people" min="1" max="10"
                                     value="<?php echo $people; ?>">
-                                <p id="check_out_date" class="dateText"></p>
+                                <!-- <p id="check_out_date" class="dateText"></p> -->
                             </div>
                         </div>
                     </div>
@@ -62,8 +64,10 @@
             
             ?>
             <div style="padding-top: 32px;">
-                <form action="dailyForm.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out; ?>&people=<?php echo $people; ?>" method="POST">
-                <?php
+                <form
+                    action="dailyForm.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out; ?>&people=<?php echo $people; ?>"
+                    method="POST" onsubmit="return checkform()">
+                    <?php
                 $countAll = "SELECT * FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))";
                 $allresult = $conn->query($countAll);
                 $alltotal_int = 0;
@@ -112,7 +116,8 @@
                                 <div>
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
                                     <button type="button" onclick="decrease(1)">-</button>
-                                    <input type="number" id="people1" min="0" max="<?php echo $total_int; ?>" value="0" name="air">
+                                    <input type="number" id="people1" min="0" max="<?php echo $total_int; ?>" value="0"
+                                        name="air">
                                     <button type="button" onclick="increase(1)">+</button>
                                     <label>ห้อง</label>
                                 </div>
@@ -154,7 +159,8 @@
                                 <div>
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
                                     <button type="button" onclick="decrease(2)">-</button>
-                                    <input type="number" id="people2" min="0" max="<?php echo $total_int2; ?>" value="0" name="fan">
+                                    <input type="number" id="people2" min="0" max="<?php echo $total_int2; ?>" value="0"
+                                        name="fan">
                                     <button type="button" onclick="increase(2)">+</button>
                                     <label>ห้อง</label>
                                 </div>

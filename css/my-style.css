@@ -14,9 +14,9 @@
 
 div.datedropper.my-style {
 
-  --dd-color1: rgb(131, 120, 47, 1);
+  --dd-color1: #a8a06d;
   --dd-color2: #FFF;
-  --dd-color3: rgb(131, 120, 47, 0.5);
+  --dd-color3: rgb(131, 120, 47, 1);
   --dd-color4: #fff;
 
   --dd-radius: 4px;

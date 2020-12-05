@@ -2,7 +2,7 @@ let check_in = document.getElementById("check_in")
 let check_out = document.getElementById("check_out")
 let check_in_date = document.getElementById("check_in_date")
 let check_out_date = document.getElementById("check_out_date")
-
+let people = document.getElementById("people")
 function bannerload() {
     var banner = document.getElementById("banner")
     banner.style.transform = "scale(1)"
@@ -38,9 +38,9 @@ function bannerload() {
 
     let next_day = tomorrow_year + '-' + tomorrow_month + '-' + tomorrow_day
     check_in.value = current_day
-    check_in.setAttribute("min", current_day)
+    // check_in.setAttribute("min", current_day)
     check_out.value = next_day
-    check_out.setAttribute("min", check_out.value)
+    // check_out.setAttribute("min", check_out.value)
     check_in_date.innerHTML = current_dayShow
     check_out_date.innerHTML = next_dayShow
     console.log(check_in.value)
@@ -48,8 +48,8 @@ function bannerload() {
 }
 
 function checkRoom() {
-    if (check_in.value && check_out.value != "") {
-        location.href = `pages/checkRoom.php?check_in=${check_in.value}&check_out=${check_out.value}`
+    if (check_in.value !="" && check_out.value != "" && people.value != "") {
+        location.href = `pages/checkRoom.php?check_in=${check_in.value}&check_out=${check_out.value}&people=${people.value}`
     } else {
         alert("กรุณากรอกวันที่ค้นหาให้ครบ");
     }

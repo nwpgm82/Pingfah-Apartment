@@ -42,17 +42,22 @@ body{
     border: 1px solid rgb(131, 120, 47, 0.7);
     border-radius: 4px;
     font-size: 16px;
+    cursor: pointer;
 }
 
-.box .checkRoom .searchDate input[type=date]{
+/* .box .checkRoom .searchDate input[type=date]{
     padding: 0 40px 0 12px;
+} */
+
+.box .checkRoom input[type=text]{
+    color: transparent;
 }
 
 .box .checkRoom input[type=number]{
     width: 70px;
 }
 
-.box .checkRoom .searchDate input[type=date]:before {
+/* .box .checkRoom .searchDate input[type=date]:before {
     top: 10px; left: 12px;
     display: inline-block;
     color: black;
@@ -69,12 +74,15 @@ body{
     color: black;
     opacity: 1;
     cursor: pointer;
-}
+} */
 
 .box .checkRoom .searchDate .dateText{
     position: absolute;
+    width: 130px;
     top: 10px;
     left: 20px;
+    background-color: #fff;
+    cursor: default;
 }
 
 .box .checkRoom .searchDate button{
