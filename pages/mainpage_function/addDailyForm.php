@@ -6,25 +6,34 @@ if(isset($_POST['accept_daily'])){
     $id_card = $_POST['id_card'];
     $email = $_POST['email'];
     $tel = $_POST['tel'];
-    $room_type = $_REQUEST['room_type'];
-    $room_count = $_POST['room_count'];
     $check_in = $_REQUEST['check_in'];
     $check_in_show = DateThai($check_in);
     $check_out = $_REQUEST['check_out'];
     $check_out_show = DateThai($check_out);
+    $people = $_REQUEST['people'];
+    $air = $_REQUEST['air'];
+    $fan = $_REQUEST['fan'];
+    $room_total = intval($air) + intval($fan);
+    // echo "$room_total";
     $code = createRandomPassword();
     // echo $firstname ."/" .$lastname ."/" .$id_card ."/" .$email ."/" .$tel ."/" .$room_type ."/ " .$check_in ."/" .$check_out;
-    $searchroom = mysqli_query($conn,"SELECT COUNT(*) AS total FROM roomlist WHERE room_type = '$room_type' AND room_status = 'ว่าง'");
-    $data= mysqli_fetch_assoc($searchroom);  
-    $total_int = intval($data['total']);
-    if($total_int != 0){
-        // $searchfreeroom = "SELECT * FROM roomlist WHERE room_status = 'ว่าง' LIMIT 1";
-        // $result = $conn->query($searchfreeroom);
-        // $row = $result->fetch_assoc();
-        // $room_select = $row['room_id'];
-        $sql = "INSERT INTO daily (firstname, lastname, id_card, email, tel, room_type,room_count, code, check_in, check_out) VALUES ('$firstname', '$lastname', '$id_card', '$email', '$tel', '$room_type', '$room_count', '$code', '$check_in', '$check_out')";
-        // $sql2 = "INSERT INTO roommember (room_member, firstname, lastname, id_card, phone, email) VALUE ('$room_select', '$firstname','$lastname','$id_card','$tel','$email') LIMIT 1";
-        // $update = "UPDATE roomlist SET room_status = 'เช่ารายวัน', check_in = '$check_in', check_out = '$check_out' WHERE room_id = '$room_select'";
+    $countAll = "SELECT * FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))";
+    $allresult = $conn->query($countAll);
+    $alltotal_int = 0;
+    if ($allresult->num_rows > 0) {
+        while($all = $allresult->fetch_assoc()) {
+            $alltotal_int += $all['room_count'];
+        }
+    }else{
+        $alltotal_int = 0;
+    }
+    $countroomAll = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
+    $roomAlldata= mysqli_fetch_assoc($countroomAll);  
+    $roomAlltotal_int = intval($roomAlldata['roomtotal']);
+    $totalAll_int = $roomAlltotal_int - $alltotal_int;
+    // echo $totalAll_int;
+    if($totalAll_int != 0 && $totalAll_int > $room_total && $room_total != 0){
+        $sql = "INSERT INTO daily (firstname, lastname, id_card, email, tel, code, check_in, check_out, people, air_room, fan_room) VALUES ('$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '$check_in', '$check_out', '$people', $air, $fan)";
         ///////////////////// อีเมล ////////////////////////
         require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
         header('Content-Type: text/html; charset=utf-8');
@@ -74,8 +83,8 @@ if(isset($_POST['accept_daily'])){
                             <p style='color:#000'><strong>เลขบัตรประชาชน :</strong> $id_card</p>
                             <p style='color:#000'><strong>อีเมล :</strong> $email</p>
                             <p style='color:#000'><strong>เบอร์โทรศัพท์ :</strong> $tel</p>
-                            <p style='color:#000'><strong>ประเภทห้องพัก :</strong> ห้อง$room_type</p>
-                            <p style='color:#000'><strong>จำนวน :</strong> $room_count ห้อง</p>
+                            <p style='color:#000'><strong>จำนวนผู้พัก :</strong> $people ท่าน</p>
+                            <p style='color:#000'><strong>จำนวนห้องพัก : ห้องแอร์ </strong>$air ห้อง <strong>| ห้องพัดลม : </strong>$fan ห้อง</p>
                             <p style='color:#000'><strong>วันที่เข้าพัก :</strong> $check_in_show <strong>ถึง</strong> $check_out_show</p>
                             <p style='color:#000'><strong>*** ลูกค้าสามารถเข้าพักได้หลัง 12:00 น. เท่านั้น ***</strong></p>
                             <h3 style='text-align:center;color:#000'><strong>เลขที่ในการจอง :</strong> $code</h3>
@@ -98,13 +107,21 @@ if(isset($_POST['accept_daily'])){
                 echo "</script>";
             } else {
                 echo $mail->ErrorInfo; // ข้อความ รายละเอียดการ error
+                echo "Error: " . $sql . "<br>" . $conn->error;
             }
         }
     }else{
-        echo "<script>";
-        echo "alert('ไม่สามารถจองห้องได้เนื่องจากห้องเต็มแล้ว');";
-        echo "window.history.back();";
-        echo "</script>";
+        if($totalAll_int == 0 || $totalAll_int < $room_total){
+            echo "<script>";
+            echo "alert('ไม่สามารถจองห้องได้เนื่องจากห้องเต็มแล้ว');";
+            echo "window.history.back();";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('ข้อมูลไม่เพียงพอ');";
+            echo "window.history.back();";
+            echo "</script>";
+        }
     }
 }
 

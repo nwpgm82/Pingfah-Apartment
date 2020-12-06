@@ -91,10 +91,6 @@ body::after{
     text-transform: uppercase;
 }
 
-.reservation .card label {
-    font-family: 'Playfair Display', serif;
-}
-
 .reservation .card input[type=text]{
     position: relative;
     width: 180px;

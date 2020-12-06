@@ -17,7 +17,6 @@ include('../components/maintopbar.php');
         <div class="roomPage">
             <h2>ประเภทห้องพัก</h2>
             <div class="hr"></div>
-            <div class="grid">
                 <?php
                 $sql = "SELECT * FROM roomdetail";
                 $result = $conn->query($sql);
@@ -32,10 +31,6 @@ include('../components/maintopbar.php');
                             <p>- รายเดือน : <?php echo number_format($row['price']); ?> บาท</p>
                             <p>- รายวัน : <?php echo number_format($row['daily_price']); ?> บาท</p>
                         </div>
-                        <div style="display: flex;justify-content: flex-end;">
-                            <a
-                                href="roomdetail.php?room_type=<?php echo $row['type']; ?>"><button>ดูเพิ่มเติม</button></a>
-                        </div>
                     </div>
                 </div>
                 <?php
@@ -44,7 +39,6 @@ include('../components/maintopbar.php');
                     echo "ไม่มีประเภทห้องพัก";
                 }
                 ?>
-            </div>
         </div>
     </div>
 </body>

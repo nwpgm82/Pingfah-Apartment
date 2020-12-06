@@ -12,30 +12,42 @@
     font-family: Sarabun;
 }
 
-body{
+body {
     background: url('../img/tool/bg.png');
 }
 
-.box{
+body::before{
+    content: '';
+    position: absolute;
+    z-index: -1; /* push it to the background */
+    top: 0px; /* position it off the top background */
+    right: 0px;
+    bottom: -340px; /* position it off the bottom background */
+    left: 0px;
+    background: url('../img/tool/flower.png') bottom left no-repeat,url('../img/tool/flower2.png') bottom right no-repeat;
+    opacity: 0.2;
+}
+
+.box {
     width: 1400px;
     margin: auto;
     padding: 32px;
 }
 
-.box .checkRoom{
+.box .checkRoom {
     width: 100%;
 }
 
-.searchDate{
+.searchDate {
     padding-top: 32px;
     display: flex;
 }
 
-.box .checkRoom .searchDate .checkText{
+.box .checkRoom .searchDate .checkText {
     font-family: 'Playfair Display', serif;
 }
 
-.box .checkRoom input{
+.box .checkRoom input {
     width: 180px;
     height: 40px;
     padding: 0 12px;
@@ -49,11 +61,11 @@ body{
     padding: 0 40px 0 12px;
 } */
 
-.box .checkRoom input[type=text]{
+.box .checkRoom input[type=text] {
     color: transparent;
 }
 
-.box .checkRoom input[type=number]{
+.box .checkRoom input[type=number] {
     width: 70px;
 }
 
@@ -76,7 +88,7 @@ body{
     cursor: pointer;
 } */
 
-.box .checkRoom .searchDate .dateText{
+.box .checkRoom .searchDate .dateText {
     position: absolute;
     width: 130px;
     top: 10px;
@@ -85,7 +97,7 @@ body{
     cursor: default;
 }
 
-.box .checkRoom .searchDate button{
+.box .checkRoom .searchDate button {
     width: auto;
     height: 40px;
     padding: 0 16px;
@@ -97,11 +109,9 @@ body{
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
-    font-family: 'Playfair Display', serif;
-    text-transform: uppercase;
 }
 
-.hr{
+.hr {
     margin: 16px auto 32px auto;
     border-bottom: 1px solid rgb(131, 120, 47, 0.7);
     opacity: 0.5;
@@ -114,12 +124,12 @@ body{
     column-gap: 16px;
 } */
 
-.box .checkRoom .card{
+.box .checkRoom .card {
     margin-bottom: 24px;
     display: grid;
     grid-template-columns: 30% auto;
     width: 100%;
-    height: 300px;
+    height: 400px;
     background: url('../img/tool/bg2.png');
     border-radius: 4px;
     overflow: hidden;
@@ -128,38 +138,85 @@ body{
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
-.box .checkRoom .card h3{
+.box .checkRoom .card h2 {
     color: #b3994c;
     font-weight: bold;
 }
 
-.box .checkRoom .card img{
+.box .checkRoom .card .img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 0.8fr;
+    gap: 4px 4px;
+    grid-template-areas:
+        "a a"
+        "b c";
+}
+
+.a {
+    grid-area: a;
+}
+
+.b {
+    grid-area: b;
+    height: 125px;
+}
+
+.c {
+    grid-area: c;
+    height: 125px;
+}
+
+.box .checkRoom .card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.box .checkRoom .card .detail{
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+.box .checkRoom .card .detail {
+    height: 290px;
+    padding: 16px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     line-height: 40px;
 }
 
-.box .checkRoom .card .detail input[type=number]::-webkit-inner-spin-button, 
-.box .checkRoom .card .detail input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
+.box .checkRoom .card .detail .user-grid {
+    display: grid;
+    grid-template-columns: 20px auto;
+    column-gap: 8px;
 }
 
-.box .checkRoom .card .detail input[type=number] {
-  -moz-appearance: textfield;
+.box .checkRoom .card .detail .user-grid img {
+    width: 20px;
+    object-fit: contain;
 }
 
-.box .checkRoom button{
+.box .checkRoom .card .detail .convenient-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+}
+
+.box .checkRoom .card .detail .convenient-grid .sub-grid {
+    display: grid;
+    grid-template-columns: 40px auto;
+    column-gap: 16px;
+}
+
+.box .checkRoom .card input[type=number]::-webkit-inner-spin-button,
+.box .checkRoom .card input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.box .checkRoom .card input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.box .checkRoom button {
     width: auto;
     height: 40px;
-    padding: 0 16px;
+    padding: 0px 16px;
     border-radius: 4px;
     border: none;
     background-color: rgb(131, 120, 47, 0.7);
@@ -170,7 +227,7 @@ body{
     transition: 0.3s;
 }
 
-.box .checkRoom .rent{
+.box .checkRoom .rent {
     width: 180px;
     height: 60px;
     padding: 0 16px;
@@ -184,6 +241,6 @@ body{
     transition: 0.3s;
 }
 
-.box .checkRoom button:hover{
+.box .checkRoom button:hover {
     background-color: rgb(131, 120, 47, 1);
 }

@@ -11,6 +11,11 @@ function checkRoomLoad() {
     check_out_date.innerHTML = formatDate(new Date(check_out.value))
 }
 
+function search(){
+    let people = document.getElementById("people").value
+    location.href = `checkRoom.php?check_in=${check_in.value}&check_out=${check_out.value}&people=${people}`
+}
+
 // function checkInDate(value) {
 //     console.log(value)
 //     check_in_date.innerHTML = formatDate(new Date(value))

@@ -29,17 +29,16 @@ include('pages/connection.php');
                 <strong><label class="topic">RESERVATION</label></strong>
                 <div style="padding:0 16px 0 32px">
                     <div style="display:flex;align-items:center;">
-                        <label>Check In : </label>
+                        <label style="font-family: 'Playfair Display', serif;">Check In : </label>
                         <div style="position:relative;padding-left:8px;height:40px;">
                             <input id="check_in" type="text">
                             <p id="check_in_date" class="dateText"></p>
                         </div>
                     </div>
-
                 </div>
                 <div style="padding:0 16px">
                     <div style="display:flex;align-items:center;">
-                        <label>Check Out : </label>
+                        <label style="font-family: 'Playfair Display', serif;">Check Out : </label>
                         <div style="position:relative;padding-left:8px;height:40px;">
                             <input id="check_out" type="text">
                             <p id="check_out_date" class="dateText"></p>
@@ -51,7 +50,7 @@ include('pages/connection.php');
                     <div style="position:relative;padding:0 8px;height:40px;">
                         <input id="people" type="number" min="1" max="10" value="1">
                     </div>
-                    <label>คน</label>
+                    <label style="line-height:0px">(สูงสุด : 10)</label>
                 </div>
                 <button type="button" onclick="checkRoom()">CHECK AVAILABILITY</button>
             </div>

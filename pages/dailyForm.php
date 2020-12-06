@@ -1,8 +1,11 @@
 <?php
     include('connection.php');
     include('../components/maintopbar.php');
-    @$get_checkin = $_REQUEST['check_in'];
-    @$get_checkout = $_REQUEST['check_out'];
+    @$check_in = $_POST['check_in'];
+    @$check_out = $_POST['check_out'];
+    @$people = $_POST['people'];
+    @$air = $_POST['air'];
+    @$fan = $_POST['fan'];
     function DateThai($strDate)
     {
         $strYear = date("Y",strtotime($strDate))+543;
@@ -28,7 +31,7 @@
         <div class="dailyForm">
             <h2>แบบฟอร์มจองห้องพัก</h2>
             <div class="hr"></div>
-            <form action="mainpage_function/addDailyForm.php?room_type=<?php echo $room_type; ?>&check_in=<?php echo $get_checkin; ?>&check_out=<?php echo $get_checkout; ?>" method="POST" onsubmit="return confirm('คุณต้องการจองห้องพักใช่หรือไม่ ?');">
+            <form action="mainpage_function/addDailyForm.php?check_in=<?php echo $check_in;?>&check_out=<?php echo $check_out;?>&people=<?php echo $people;?>&air=<?php echo $air;?>&fan=<?php echo $fan;?>" method="POST" onsubmit="return confirm('คุณต้องการจองห้องพักใช่หรือไม่ ?');">
                 <div class="row">
                     <div class="col-4">
                         <p>ชื่อ</p>
@@ -44,26 +47,33 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <p>อีเมล</p>
                         <input type="email" name="email" required>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <p>เบอร์โทรศัพท์</p>
                         <input type="tel" name="tel" required>
                     </div>
                     <div class="col-2">
                         <p>เช็คอิน</p>
-                        <input type="text" name="check_in_input" value="<?php echo DateThai($get_checkin); ?>" readonly>
+                        <input type="text" name="check_in_input" value="<?php echo DateThai($check_in); ?>" readonly>
                     </div>
                     <div class="col-2">
                         <p>เช็คเอ้าท์</p>
-                        <input type="text" name="check_out_input" value="<?php echo DateThai($get_checkout); ?>"
-                            readonly>
+                        <input type="text" name="check_out_input" value="<?php echo DateThai($check_out); ?>" readonly>
                     </div>
                     <div class="col-1">
-                        <p>จำนวนห้อง</p>
-                        <input type="number" name="room_count" min="1" max="<?php echo $total_int; ?>" required>
+                        <p>จำนวนผู้พัก</p>
+                        <input type="text" name="people" value="<?php echo $people; ?>" readonly>
+                    </div>
+                    <div class="col-1">
+                        <p>ห้องแอร์</p>
+                        <input type="number" name="air" value="<?php echo $air; ?>" readonly>
+                    </div>
+                    <div class="col-1">
+                        <p>ห้องพัดลม</p>
+                        <input type="number" name="fan" value="<?php echo $fan; ?>" readonly>
                     </div>
                 </div>
                 <div style="padding-top:64px;display:flex;justify-content:center;">

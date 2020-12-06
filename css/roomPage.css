@@ -11,7 +11,23 @@
 }
 
 body{
+    width: 100%;
+    min-height: 100vh;
+
+    position: relative;
     background: url("../img/tool/bg.png");
+}
+
+body::before{
+    content: '';
+    position: absolute;
+    z-index: -1; /* push it to the background */
+    top: 0px; /* position it off the top background */
+    right: 0px;
+    bottom: -100px; /* position it off the bottom background */
+    left: 0px;
+    background: url('../img/tool/flower.png') bottom left no-repeat,url('../img/tool/flower2.png') bottom right no-repeat;
+    opacity: 0.2;
 }
 
 .box{
@@ -30,16 +46,10 @@ body{
     opacity: 0.5;
 }
 
-.box .roomPage .grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    padding-top: 32px;
-}
-
-.box .roomPage .grid .card{
+.box .roomPage .card{
+    margin: 32px 0;
     width: 100%;
-    height: 250px;
+    height: 400px;
     border-radius: 4px;
     background: url("../img/tool/bg2.png");
     overflow: hidden;
@@ -50,18 +60,18 @@ body{
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
-.box .roomPage .grid .card h3{
+.box .roomPage .card h3{
     color: #b3994c;
     font-weight: bold;
 }
 
-.box .roomPage .grid .card img{
+.box .roomPage .card img{
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.box .roomPage .grid .card .detail{
+.box .roomPage .card .detail{
     padding: 16px;
     display: flex;
     justify-content: space-between;
@@ -69,7 +79,7 @@ body{
     line-height: 40px;
 }
 
-.box .roomPage .grid .card button{
+.box .roomPage .card button{
     width: auto;
     height: 40px;
     padding: 0 16px;
@@ -83,6 +93,6 @@ body{
     transition: 0.3s;
 }
 
-.box .roomPage .grid .card button:hover{
+.box .roomPage .card button:hover{
     background-color: rgb(131, 120, 47, 1);
 }
