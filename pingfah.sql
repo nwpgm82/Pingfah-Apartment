@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2020 at 11:43 AM
+-- Generation Time: Dec 06, 2020 at 07:07 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -40,7 +40,8 @@ CREATE TABLE `appeal` (
 --
 
 INSERT INTO `appeal` (`appeal_id`, `room_id`, `appeal_topic`, `appeal_detail`, `appeal_date`) VALUES
-(2, '201', 'ข้างห้องเสียงดัง', 'ห้อง 202 เสียงดังมากหลังเที่ยงคืนครับ', '2020-11-30');
+(2, '201', 'ข้างห้องเสียงดัง', 'ห้อง 202 เสียงดังมากหลังเที่ยงคืนครับ', '2020-11-30'),
+(5, '202', 'ข้างห้องเสียงดัง', 'ห้อง 203 เปิดเพลงเสียงดังมากนอนไม่หลับเลยครับ', '2020-12-03');
 
 -- --------------------------------------------------------
 
@@ -82,21 +83,29 @@ CREATE TABLE `daily` (
   `id_card` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `tel` varchar(200) NOT NULL,
-  `room_type` varchar(200) NOT NULL,
-  `code` varchar(255) NOT NULL,
-  `check_in` varchar(255) DEFAULT NULL,
-  `check_out` varchar(255) DEFAULT NULL,
+  `code` varchar(200) NOT NULL,
+  `check_in` varchar(200) DEFAULT NULL,
+  `check_out` varchar(200) DEFAULT NULL,
+  `people` varchar(2) DEFAULT NULL,
+  `air_room` int(2) DEFAULT NULL,
+  `fan_room` int(2) DEFAULT NULL,
   `daily_status` varchar(200) DEFAULT NULL,
-  `room_count` int(2) DEFAULT NULL
+  `payment_datebefore` varchar(200) NOT NULL,
+  `payment_img` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `daily`
 --
 
-INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `room_type`, `code`, `check_in`, `check_out`, `daily_status`, `room_count`) VALUES
-(13, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'แอร์', 'nw68y0ftqpx', '2020-11-25', '2020-11-26', 'เข้าพักแล้ว', 3),
-(14, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'พัดลม', 'nrogk56n2rj', '2020-11-24', '2020-11-26', 'เข้าพักแล้ว', 3);
+INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `code`, `check_in`, `check_out`, `people`, `air_room`, `fan_room`, `daily_status`, `payment_datebefore`, `payment_img`) VALUES
+(13, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'nw68y0ftqpx', '2020-11-25', '2020-11-26', '', NULL, NULL, 'เข้าพักแล้ว', '', NULL),
+(14, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'nrogk56n2rj', '2020-11-24', '2020-11-26', '', NULL, NULL, 'เข้าพักแล้ว', '', NULL),
+(15, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'f25omtxwa4z', '2020-12-04', '2020-12-05', '', NULL, NULL, NULL, '', NULL),
+(17, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'k0kp6jtpnnx', '2020-12-09', '2020-12-16', '3', 3, 0, NULL, '', NULL),
+(18, 'สุภิศรา', 'เตชนันท์', '5556667778889', 'supisra45.30@gmail.com', '0620477145', '6vmygc8qxym', '2020-12-09', '2020-12-16', '5', 3, 2, NULL, '', NULL),
+(21, 'พงศธร', 'สร้อยอินต๊ะ', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '7xgn0rotoid', '2020-12-07', '2020-12-08', '5', 3, 2, NULL, '2020-12-08', NULL),
+(25, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'mmkycurx0fm', '2020-12-07', '2020-12-08', '2', 2, 0, NULL, '2020-12-07', NULL);
 
 -- --------------------------------------------------------
 
@@ -179,15 +188,11 @@ CREATE TABLE `gallery` (
 --
 
 INSERT INTO `gallery` (`gallery_id`, `gallery_name`) VALUES
-(16, '115774657_3345395698845713_2446905765721859802_o.jpg'),
-(17, '117094314_3466888280022757_1501037714692968577_o.jpg'),
-(18, '115829682_3345399482178668_7710700474312287945_o.jpg'),
-(19, 'Rabbit-01.jpg'),
-(20, 'rabbit.jpg'),
-(21, '115742121_3369166353135314_4310419490959465258_o.jpg'),
-(22, '404570.jpg'),
-(23, '71nsvxFpSTL._AC_SL1200_.jpg'),
-(24, 'download.jpg');
+(27, 'sub1.jpg'),
+(28, 'sub6.jpg'),
+(29, '13136571443830.jpg'),
+(30, '13136571044859.jpg'),
+(31, '13136571097113.jpg');
 
 -- --------------------------------------------------------
 
@@ -230,6 +235,13 @@ CREATE TABLE `package` (
   `repair_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `package`
+--
+
+INSERT INTO `package` (`package_id`, `package_num`, `package_company`, `package_arrived`, `package_status`, `package_name`, `package_room`, `package_received`, `repair_id`) VALUES
+(1, 'SHP5042811237', 'Kerry', '2020-12-02', 'ยังไม่ได้รับพัสดุ', 'นวพล', '205', '', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -245,6 +257,16 @@ CREATE TABLE `repair` (
   `repair_date` varchar(200) NOT NULL,
   `repair_status` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `repair`
+--
+
+INSERT INTO `repair` (`repair_id`, `room_id`, `repair_appliance`, `repair_category`, `repair_detail`, `repair_date`, `repair_status`) VALUES
+(1, '205', 'หลอดไฟ', 'เครื่องใช้ไฟฟ้า', 'หลอดขาด', '2020-12-02', 'รอดำเนินการ'),
+(2, '205', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ประตูตู้เสื้อผ้าแตกหัก', '2020-12-02', 'กำลังดำเนินการ'),
+(3, '205', 'เตียงนอน', 'เฟอร์นิเจอร์', 'ผ้าปูที่นอนขาด', '2020-12-02', 'รอดำเนินการ'),
+(4, '202', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ราวแขวนผ้าหัก', '2020-12-03', 'ดำเนินการเสร็จสิ้น');
 
 -- --------------------------------------------------------
 
@@ -275,7 +297,7 @@ CREATE TABLE `roomdetail` (
 
 INSERT INTO `roomdetail` (`type`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `price`, `pic1`, `pic2`, `pic3`, `pic4`, `pic5`, `pic6`, `detail`, `daily_price`) VALUES
 ('พัดลม', 80.00, 7.50, 105.00, 150.00, 2300.00, 'sub8.jpg', 'sub2.jpg', 'sub4.jpg', 'sub7.jpg', 'sub1.jpg', 'sub6.jpg', 'ห้องพัดลม 2300', 250.00),
-('แอร์', 80.00, 7.50, 105.00, 150.00, 2700.00, 'sub2.jpg', NULL, NULL, NULL, NULL, NULL, 'ห้องแอร์ 2700 บาท', 350.00);
+('แอร์', 80.00, 7.50, 105.00, 150.00, 2700.00, 'sub2.jpg', 'sub5.jpg', 'sub6.jpg', NULL, NULL, NULL, 'ห้องแอร์ 2700 บาท', 350.00);
 
 -- --------------------------------------------------------
 
@@ -362,7 +384,7 @@ CREATE TABLE `roommember` (
 
 INSERT INTO `roommember` (`room_member`, `name_title`, `firstname`, `lastname`, `nickname`, `id_card`, `phone`, `email`, `birthday`, `age`, `race`, `nationality`, `job`, `address`, `pic_idcard`, `pic_home`, `id_line`, `name_title2`, `firstname2`, `lastname2`, `nickname2`, `id_card2`, `phone2`, `email2`, `birthday2`, `age2`, `race2`, `nationality2`, `job2`, `address2`, `pic_idcard2`, `pic_home2`, `id_line2`) VALUES
 ('201', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', '404365.jpg', NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
-('202', 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '1998-12-21', 21, 'ไทย', 'ไทย', 'นักศึกษา', '140/40 หมู่ 2 ต. หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', '404365.jpg', 'ข้อเสนอแนะบ้านพักพิงฟ้า.jpg', 'blackfrostier', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('202', 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '1998-12-21', 21, 'ไทย', 'ไทย', 'นักศึกษา', '140/40 หมู่ 2 ต. หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', '404365.jpg', 'ข้อเสนอแนะบ้านพักพิงฟ้า.jpg', 'blackfrostier', 'นางสาว', 'สุภิศรา', 'เตชนันท์', 'แยม', '5556669998888', '0956766976', 'supisra45.30@gmail.com', '1999-04-22', 21, 'ไทย', 'ไทย', 'นักศึกษา', 'หหหหกกกกฟฟฟฟ                        ', '117094314_3466888280022757_1501037714692968577_o.jpg', '115829682_3345399482178668_7710700474312287945_o.jpg', 'Yammy'),
 ('203', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
 ('204', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
 ('205', 'นางสาว', 'สุภิศรา', 'เตชนันท์', 'แยม', '5556667778889', '0956766976', 'supisra45.30@gmail.com', '2020-11-30', 21, 'ไทย', 'ไทย', 'นักศึกษา', 'เลขที่ 288 หมู่ที่ 5 ตำบล ริมกก อำเภอ เมืองเชียงราย จังหวัด เชียงราย 57100                        ', '115829682_3345399482178668_7710700474312287945_o.jpg', 'ข้อเสนอแนะบ้านพักพิงฟ้า.jpg', 'Yammy', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
@@ -471,7 +493,7 @@ ALTER TABLE `roommember`
 -- AUTO_INCREMENT for table `appeal`
 --
 ALTER TABLE `appeal`
-  MODIFY `appeal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `appeal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `cost`
@@ -483,7 +505,7 @@ ALTER TABLE `cost`
 -- AUTO_INCREMENT for table `daily`
 --
 ALTER TABLE `daily`
-  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `dailycost`
@@ -501,19 +523,19 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `gallery_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `gallery_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `repair`
 --
 ALTER TABLE `repair`
-  MODIFY `repair_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `repair_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
