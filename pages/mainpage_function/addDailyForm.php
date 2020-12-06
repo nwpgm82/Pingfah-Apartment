@@ -14,6 +14,24 @@ if(isset($_POST['accept_daily'])){
     $air = $_REQUEST['air'];
     $fan = $_REQUEST['fan'];
     $room_total = intval($air) + intval($fan);
+    $date1 = date_create($check_in);
+    $date2 = date_create($check_out);
+    $diff=date_diff($date1,$date2);
+    $checkdate_result = $diff->format("%R%a days");
+    if($checkdate_result == 1){
+        if(date("Y-m-d") == $check_in){
+            $payment_datebefore = $check_in;
+            $payment_datebeforeEmail = DateThai($check_in);
+        }else{
+            $paymentBefore = new DateTime('tomorrow');
+            $payment_datebefore = $paymentBefore->format('Y-m-d');
+            $payment_datebeforeEmail = DateThai($payment_datebefore);
+        }
+    }else{
+        $paymentBefore = new DateTime('tomorrow');
+        $payment_datebefore = $paymentBefore->format('Y-m-d');
+        $payment_datebeforeEmail = DateThai($payment_datebefore);
+    }
     // echo "$room_total";
     $code = createRandomPassword();
     // echo $firstname ."/" .$lastname ."/" .$id_card ."/" .$email ."/" .$tel ."/" .$room_type ."/ " .$check_in ."/" .$check_out;
@@ -33,7 +51,7 @@ if(isset($_POST['accept_daily'])){
     $totalAll_int = $roomAlltotal_int - $alltotal_int;
     // echo $totalAll_int;
     if($totalAll_int != 0 && $totalAll_int > $room_total && $room_total != 0){
-        $sql = "INSERT INTO daily (firstname, lastname, id_card, email, tel, code, check_in, check_out, people, air_room, fan_room) VALUES ('$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '$check_in', '$check_out', '$people', $air, $fan)";
+        $sql = "INSERT INTO daily (firstname, lastname, id_card, email, tel, code, check_in, check_out, people, air_room, fan_room, payment_datebefore) VALUES ('$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '$check_in', '$check_out', '$people', $air, $fan , '$payment_datebefore')";
         ///////////////////// อีเมล ////////////////////////
         require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
         header('Content-Type: text/html; charset=utf-8');
@@ -87,6 +105,7 @@ if(isset($_POST['accept_daily'])){
                             <p style='color:#000'><strong>จำนวนห้องพัก : ห้องแอร์ </strong>$air ห้อง <strong>| ห้องพัดลม : </strong>$fan ห้อง</p>
                             <p style='color:#000'><strong>วันที่เข้าพัก :</strong> $check_in_show <strong>ถึง</strong> $check_out_show</p>
                             <p style='color:#000'><strong>*** ลูกค้าสามารถเข้าพักได้หลัง 12:00 น. เท่านั้น ***</strong></p>
+                            <p style='color:red;'><strong>*** โปรดวางเงินมัดจำค่าห้องเป็นจำนวน 1,000 บาท ก่อนวันที่ $payment_datebeforeEmail มิเช่นนั้นการจองห้องพักจะถูกยกเลิก ***</strong></p>
                             <h3 style='text-align:center;color:#000'><strong>เลขที่ในการจอง :</strong> $code</h3>
                         </div>
         			</div>
@@ -103,7 +122,7 @@ if(isset($_POST['accept_daily'])){
             if ($mail->send() && $conn->query($sql) === TRUE) {
                 echo "<script>";
                 echo "alert('จองห้องเรียบร้อยแล้ว กรุณาดูคำสั่งในการจองได้ในอีเมล์');";
-                echo "location.href = '../../index.php'";
+                echo "location.href = '../successRent.php?code=$code'";
                 echo "</script>";
             } else {
                 echo $mail->ErrorInfo; // ข้อความ รายละเอียดการ error

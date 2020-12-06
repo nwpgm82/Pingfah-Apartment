@@ -49,7 +49,7 @@ function bannerload() {
 
 function checkRoom() {
     if (check_in.value !="" && check_out.value != "" && people.value != "") {
-        location.href = `pages/checkRoom.php?check_in=${check_in.value}&check_out=${check_out.value}&people=${people.value}`
+        window.open(`pages/checkRoom.php?check_in=${check_in.value}&check_out=${check_out.value}&people=${people.value}`,"_blank")
     } else {
         alert("กรุณากรอกวันที่ค้นหาให้ครบ");
     }

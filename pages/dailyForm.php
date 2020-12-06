@@ -6,6 +6,21 @@
     @$people = $_POST['people'];
     @$air = $_POST['air'];
     @$fan = $_POST['fan'];
+    $date1 = date_create($check_in);
+    $date2 = date_create($check_out);
+    $diff= date_diff($date1,$date2);
+    $checkdate_result = $diff->format("%R%a days");
+    if($checkdate_result == 1){
+        if(date("Y-m-d") == $check_in){
+            $datetime_result = DateThai($check_in);
+        }else{
+            $datetime = new DateTime('tomorrow');
+            $datetime_result = DateThai($datetime->format('Y-m-d'));
+        }
+    }else{
+        $datetime = new DateTime('tomorrow');
+        $datetime_result = DateThai($datetime->format('Y-m-d'));
+    }
     function DateThai($strDate)
     {
         $strYear = date("Y",strtotime($strDate))+543;
@@ -75,6 +90,10 @@
                         <p>ห้องพัดลม</p>
                         <input type="number" name="fan" value="<?php echo $fan; ?>" readonly>
                     </div>
+                </div>
+                <div style="line-height:40px;">
+                    <p style="color:red;"><strong>*** โปรดวางเงินมัดจำค่าห้องเป็นจำนวน 1,000 บาท ก่อนวันที่ <?php echo $datetime_result; ?> มิเช่นนั้นการจองห้องพักจะถูกยกเลิก ***</strong></p>
+                <p style="color:red;"><strong>*** เงินมัดจำจะได้คืนก็ต่อเมื่อเช็คเอ้าท์เรียบร้อยแล้ว ***</strong></p>
                 </div>
                 <div style="padding-top:64px;display:flex;justify-content:center;">
                     <button type="submit" name="accept_daily">ยืนยันการจอง</button>
