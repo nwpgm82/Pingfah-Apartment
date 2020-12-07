@@ -4,6 +4,7 @@ if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
     include('../../../components/sidebar.php');
     $type = $_REQUEST['type'];
+    $num = 1;
     $sql = "SELECT * FROM roomdetail WHERE type = '$type'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -32,136 +33,148 @@ if($_SESSION['level'] == 'admin'){
                         <div>
                             <p>ค่าเช่าห้อง(รายเดือน)</p>
                             <input type="text" name="price"
-                                value="<?php if(isset($row['price'])){ echo $row['price']; }else{ echo 0; } ?>" disabled>
+                                value="<?php if(isset($row['price'])){ echo $row['price']; }else{ echo 0; } ?>"
+                                disabled>
                             <label>บาท/เดือน</label>
                         </div>
                         <div>
                             <p>ค่าเช่าห้อง(รายวัน)</p>
                             <input type="text" name="price"
-                                value="<?php if(isset($row['daily_price'])){ echo $row['daily_price']; }else{ echo 0; } ?>" disabled>
+                                value="<?php if(isset($row['daily_price'])){ echo $row['daily_price']; }else{ echo 0; } ?>"
+                                disabled>
                             <label>บาท/วัน</label>
                         </div>
                         <div>
                             <p>ค่าน้ำ</p>
                             <input type="text" name="water_bill"
-                                value="<?php if(isset($row['water_bill'])){ echo $row['water_bill']; }else{ echo 0; } ?>" disabled>
+                                value="<?php if(isset($row['water_bill'])){ echo $row['water_bill']; }else{ echo 0; } ?>"
+                                disabled>
                             <label>บาท/คน</label>
                         </div>
                         <div>
                             <p>ค่าไฟ (หน่วย)</p>
                             <input type="text" name="elec_bill"
-                                value="<?php if(isset($row['elec_bill'])){ echo $row['elec_bill']; }else{ echo 0; } ?>" disabled>
+                                value="<?php if(isset($row['elec_bill'])){ echo $row['elec_bill']; }else{ echo 0; } ?>"
+                                disabled>
                             <label>บาท/เดือน</label>
                         </div>
                         <div>
                             <p>ค่าเคเบิล</p>
                             <input type="text" name="cable_charge"
-                                value="<?php if(isset($row['cable_charge'])){ echo $row['cable_charge']; }else{ echo 0; } ?>" disabled>
+                                value="<?php if(isset($row['cable_charge'])){ echo $row['cable_charge']; }else{ echo 0; } ?>"
+                                disabled>
                             <label>บาท/เดือน</label>
                         </div>
                         <div>
                             <p>ค่าปรับ</p>
                             <input type="text" name="fines"
-                                value="<?php if(isset($row['fines'])){ echo $row['fines']; }else{ echo 0; } ?>" disabled>
+                                value="<?php if(isset($row['fines'])){ echo $row['fines']; }else{ echo 0; } ?>"
+                                disabled>
                             <label>บาท/วัน</label>
                         </div>
                     </div>
-                    <div style="padding-top:32px;">
-                        <p>รายละเอียดห้องพัก</p>
-                        <textarea name="detail" id="textarea" cols="30"
-                            rows="10" disabled><?php if(isset($row['detail'])){ echo $row['detail']; }else{ echo "-";}; ?></textarea>
+                    <!-- <div class="hr"></div> -->
+                    <div style="padding:32px 0;">
+                        <h3>สิ่งอำนวยความสะดวก</h3>
+                        <div class="hr"></div>
+                        <div style="padding-top:16px;display:flex;">
+                            <div>
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="" id="">
+                                    <label>เครื่องปรับอากาศ</label>
+                                </div>
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="" id="">
+                                    <label>เครื่องปรับอากาศ</label>
+                                </div>
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="" id="">
+                                    <label>เครื่องปรับอากาศ</label>
+                                </div>
+                            </div>
+                            <div style="padding: 0 32px;">
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="" id="">
+                                    <label>เครื่องปรับอากาศ</label>
+                                </div>
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="" id="">
+                                    <label>เครื่องปรับอากาศ</label>
+                                </div>
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="" id="">
+                                    <label>เครื่องปรับอากาศ</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div style="padding-top:32px;">
-                        <p>รูปภาพ</p>
+                        <div>
+                            <h3>รูปภาพ</h3>
+                            <form id="submitForm" enctype="multipart/form-data">
+                                <input type="file" name="file" id="file" class="inputfile" />
+                                <label for="file">เพิ่มรูปภาพ</label>
+                            </form>
+                        </div>
+                        <div class="hr"></div>
                         <div class="grid">
-                            <div>
-                                <div class="img-box">
-                                    <img id="output_imagepic1"
-                                        src="../../images/roomdetail/<?php echo $row['pic1']; ?>" />
-                                    <?php
-                                    if(isset($row['pic1'])){ ?>
-                                    <button class="del-btn" type="button" id="delimg-btn1" style="display:none;"
-                                        onclick="delImg('<?php echo $type; ?>','pic1')">X</button>
-                                    <?php } ?>
-                                </div>
-                                <?php
-                                if(!isset($row['pic1'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic1')" name="pic1" disabled>
-                                <?php } ?>
+                            <?php
+                            $perpage = 8;
+                            if(isset($_GET['gal_page'])){
+                                $page = $_GET['gal_page'];
+                            }else{
+                                $page = 1;
+                            }
+                            $start = ($page - 1) * $perpage;
+                            if($type == "พัดลม"){
+                                $sql = "SELECT * FROM fan_gal ORDER BY air_id DESC LIMIT {$start} , {$perpage}";
+                            }else if($type == "แอร์"){
+                                $sql = "SELECT * FROM air_gal ORDER BY gal_id DESC LIMIT {$start} , {$perpage}";
+                            }
+                            $result = $conn->query($sql);
+                            if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                            ?>
+                            <div class="img-box">
+                                <img src="../../images/gallery/<?php echo $row['gal_name']; ?>" alt="">
+                                <button type="button" class="del-btn" id="del-btn" style="display:none;"
+                                    onclick="delImg(<?php echo $row['gal_id']; ?>)">X</button>
                             </div>
-                            <div>
-                                <div class="img-box">
-                                    <img id="output_imagepic2"
-                                        src="../../images/roomdetail/<?php echo $row['pic2']; ?>" />
-                                    <?php
-                                    if(isset($row['pic2'])){ ?>
-                                    <button class="del-btn" type="button" id="delimg-btn2" style="display:none;"
-                                        onclick="delImg('<?php echo $type; ?>','pic2')">X</button>
-                                    <?php } ?>
-                                </div>
+                            <?php
+                                    $num++;
+                                }
+                            }else{
+                                echo "ไม่มีรูปภาพ";
+                            }
+                            ?>
+                        </div>
+                        <?php
+                        ///////pagination
+                        $sql2 = "SELECT * FROM gallery";
+                        $query2 = mysqli_query($conn, $sql2);
+                        $total_record = mysqli_num_rows($query2);
+                        $total_page = ceil($total_record / $perpage);
+                        ?>
+                        <div style="display:flex;justify-content:flex-end">
+                            <div class="pagination">
                                 <?php
-                                if(!isset($row['pic2'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic2')" name="pic2" disabled>
+                                if($type == "พัดลม"){
+                                ?>
+                                <a href="detail.php?type=พัดลม">&laquo;</a>
+                                <?php for($i=1;$i<=$total_page;$i++){ ?>
+                                <a href="detail.php?type=พัดลม&gal_page=<?php echo $i; ?>"
+                                    <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                                 <?php } ?>
-                            </div>
-                            <div>
-                                <div class="img-box">
-                                    <img id="output_imagepic3"
-                                        src="../../images/roomdetail/<?php echo $row['pic3']; ?>" />
-                                    <?php
-                                    if(isset($row['pic3'])){ ?>
-                                    <button class="del-btn" type="button" id="delimg-btn3" style="display:none;"
-                                        onclick="delImg('<?php echo $type; ?>','pic3')">X</button>
-                                    <?php } ?>
-                                </div>
+                                <a href="detail.php?type=พัดลม&gal_page=<?php echo $total_page; ?>">&raquo;</a>
                                 <?php
-                                if(!isset($row['pic3'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic3')" name="pic3" disabled>
+                                }else if($type == "แอร์"){
+                                ?>
+                                <a href="detail.php?type=แอร์">&laquo;</a>
+                                <?php for($i=1;$i<=$total_page;$i++){ ?>
+                                <a href="detail.php?type=แอร์&gal_page=<?php echo $i; ?>"
+                                    <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                                 <?php } ?>
-                            </div>
-                            <div>
-                                <div class="img-box">
-                                    <img id="output_imagepic4"
-                                        src="../../images/roomdetail/<?php echo $row['pic4']; ?>" />
-                                    <?php
-                                    if(isset($row['pic4'])){ ?>
-                                    <button class="del-btn" type="button" id="delimg-btn4" style="display:none;"
-                                        onclick="delImg('<?php echo $type; ?>','pic4')">X</button>
-                                    <?php } ?>
-                                </div>
-                                <?php
-                                if(!isset($row['pic4'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic4')" name="pic4" disabled>
-                                <?php } ?>
-                            </div>
-                            <div>
-                                <div class="img-box">
-                                    <img id="output_imagepic5"
-                                        src="../../images/roomdetail/<?php echo $row['pic5']; ?>" />
-                                    <?php
-                                    if(isset($row['pic5'])){ ?>
-                                    <button class="del-btn" type="button" id="delimg-btn5" style="display:none;"
-                                        onclick="delImg('<?php echo $type; ?>','pic5')">X</button>
-                                    <?php } ?>
-                                </div>
-                                <?php
-                                if(!isset($row['pic5'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic5')" name="pic5" disabled>
-                                <?php } ?>
-                            </div>
-                            <div>
-                                <div class="img-box">
-                                    <img id="output_imagepic6"
-                                        src="../../images/roomdetail/<?php echo $row['pic6']; ?>" />
-                                    <?php
-                                    if(isset($row['pic6'])){ ?>
-                                    <button class="del-btn" type="button" id="delimg-btn6" style="display:none;"
-                                        onclick="delImg('<?php echo $type; ?>','pic6')">X</button>
-                                    <?php } ?>
-                                </div>
-                                <?php
-                                if(!isset($row['pic6'])){ ?>
-                                <input type="file" accept="image/*" onchange="preview_image(event,'pic6')" name="pic6" disabled>
+                                <a href="detail.php?type=แอร์&gal_page=<?php echo $total_page; ?>">&raquo;</a>
                                 <?php } ?>
                             </div>
                         </div>

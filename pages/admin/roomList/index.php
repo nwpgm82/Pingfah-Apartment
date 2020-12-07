@@ -3,6 +3,8 @@ session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
     include('../../../components/sidebar.php');
+    $check = @$_REQUEST['Status'];
+    // $page
     $num = 1;
     function DateThai($strDate)
     {
@@ -31,6 +33,23 @@ if($_SESSION['level'] == 'admin'){
             <div class="roomList-box">
                 <h3>รายการห้องพักทั้งหมด</h3>
                 <div class="hr"></div>
+                <div style="display:flex;align-items:center;">
+                    <div style="padding:32px 16px;">
+                        <input type="checkbox" id="available" onchange="searchCheck(this.id)" <?php if(isset($check)){ if($check == "available"){ echo "checked";}} ?>>
+                        <label for="scales">ว่าง</label>
+                    </div>
+                    <div style="padding:32px 16px;">
+                        <input type="checkbox" id="unavailable" onchange="searchCheck(this.id)" <?php if(isset($check)){ if($check == "unavailable"){ echo "checked";}} ?>>
+                        <label for="scales">ไม่ว่าง</label>
+                    </div>
+                    <div style="padding:32px 16px;">
+                        <input type="checkbox" id="daily" onchange="searchCheck(this.id)" <?php if(isset($check)){ if($check == "daily"){ echo "checked";}} ?>>
+                        <label for="scales">เช่ารายวัน</label>
+                    </div>
+                    <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                </div>
+
+                
                 <?php
                     $perpage = 8;
                     if(isset($_GET['page'])){
@@ -39,9 +58,20 @@ if($_SESSION['level'] == 'admin'){
                         $page = 1;
                     }
                     $start = ($page - 1) * $perpage;
+                    if($check == "available"){
+                        $status = "ว่าง";
+                        $roomlist = "SELECT * FROM  roomList WHERE room_status = '$status' ORDER BY room_id LIMIT {$start} , {$perpage}";
+                    }else if($check == "unavailable"){
+                        $status = "ไม่ว่าง";
+                        $roomlist = "SELECT * FROM  roomList WHERE room_status = '$status' ORDER BY room_id LIMIT {$start} , {$perpage}";
+                    }else if($check == "daily"){
+                        $status = "เช่ารายวัน";
+                        $roomlist = "SELECT * FROM  roomList WHERE room_status = '$status' ORDER BY room_id LIMIT {$start} , {$perpage}";
+                    }else{
                         $roomlist = "SELECT * FROM  roomList ORDER BY room_id LIMIT {$start} , {$perpage}";
-                        $result = $conn->query($roomlist);
-                        if ($result->num_rows > 0) {
+                    }
+                    $result = $conn->query($roomlist);
+                    if ($result->num_rows > 0) {
                 ?>
                 <table>
                     <tr>
@@ -102,18 +132,54 @@ if($_SESSION['level'] == 'admin'){
                 </table>
                 <?php
                 ///////pagination
-                $sql2 = "SELECT * FROM roomlist";
+                if($check == "available"){
+                    $sql2 = "SELECT * FROM roomlist WHERE room_status = 'ว่าง'";
+                }else if($check == "unavailable"){
+                    $sql2 = "SELECT * FROM roomlist WHERE room_status = 'ไม่ว่าง'";
+                }else if($check == "daily"){
+                    $sql2 = "SELECT * FROM roomlist WHERE room_status = 'เช่ารายวัน'";
+                }else{
+                    $sql2 = "SELECT * FROM roomlist";
+                }
                 $query2 = mysqli_query($conn, $sql2);
                 $total_record = mysqli_num_rows($query2);
                 $total_page = ceil($total_record / $perpage);
                 ?>
                 <div style="display:flex;justify-content:flex-end">
                     <div class="pagination">
+                        <?php
+                        if($check == "available"){
+                        ?>
+                        <a href="index.php?Status=available&page=1">&laquo;</a>
+                        <?php for($i=1;$i<=$total_page;$i++){ ?>
+                        <a href="index.php?Status=available&page=<?php echo $i; ?>" <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?> ><?php echo $i; ?></a>
+                        <?php } ?>
+                        <a href="index.php?Status=available&page=<?php echo $total_page; ?>">&raquo;</a>
+                        <?php
+                        }else if($check == "unavailable"){
+                        ?>
+                        <a href="index.php?Status=unavailable&page=1">&laquo;</a>
+                        <?php for($i=1;$i<=$total_page;$i++){ ?>
+                        <a href="index.php?Status=unavailable&page=<?php echo $i; ?>" <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?> ><?php echo $i; ?></a>
+                        <?php } ?>
+                        <a href="index.php?Status=unavailable&page=<?php echo $total_page; ?>">&raquo;</a>
+                        <?php 
+                        }else if($check == "daily"){
+                        ?>
+                        <a href="index.php?Status=daily&page=1">&laquo;</a>
+                        <?php for($i=1;$i<=$total_page;$i++){ ?>
+                        <a href="index.php?Status=daily&page=<?php echo $i; ?>" <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?> ><?php echo $i; ?></a>
+                        <?php } ?>
+                        <a href="index.php?Status=daily&page=<?php echo $total_page; ?>">&raquo;</a>
+                        <?php
+                        }else{
+                        ?>
                         <a href="index.php?page=1">&laquo;</a>
                         <?php for($i=1;$i<=$total_page;$i++){ ?>
-                        <a href="index.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        <a href="index.php?page=<?php echo $i; ?>" <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?> ><?php echo $i; ?></a>
                         <?php } ?>
                         <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
+                        <?php } ?>
                     </div>
                 </div>
 

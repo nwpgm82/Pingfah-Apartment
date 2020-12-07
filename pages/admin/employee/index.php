@@ -63,7 +63,7 @@ if($_SESSION['level'] == 'admin'){
                         <td>
                             <div class="grid-btn">
                                 <a href="../employee/emDetail.php?username=<?php echo $row['username']; ?>"><button
-                                        type="button" class="more-btn">เพิ่มเติม</button></a>
+                                        type="button" class="more-btn">แสดงข้อมูลเพิ่มเติม</button></a>
                                 <button type="button" class="del-btn"
                                     onclick="delEm(<?php echo $row['id']; ?>,'<?php echo $row['username']; ?>')">ลบ</button>
                             </div>
@@ -72,7 +72,7 @@ if($_SESSION['level'] == 'admin'){
                     <?php $num++; } ?>
                 </table>
                 <?php
-                $sql2 = "SELECT * FROM employee ";
+                $sql2 = "SELECT * FROM employee";
                 $query2 = mysqli_query($conn, $sql2);
                 $total_record = mysqli_num_rows($query2);
                 $total_page = ceil($total_record / $perpage);
@@ -81,7 +81,7 @@ if($_SESSION['level'] == 'admin'){
                     <div class="pagination">
                         <a href="index.php?page=1">&laquo;</a>
                         <?php for($i=1;$i<=$total_page;$i++){ ?>
-                        <a href="index.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        <a href="index.php?page=<?php echo $i; ?>" <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                         <?php } ?>
                         <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
                     </div>

@@ -26,9 +26,27 @@
 }
 
 .hr {
-    margin: 16px auto 32px auto;
+    margin: 16px auto;
     border-bottom: 1px solid rgb(131, 120, 47, 0.7);
     opacity: 0.5;
+}
+
+.roomList-box button {
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.roomList-box button:hover {
+    background-color: rgb(131, 120, 47, 1);
 }
 
 .roomList-box table {
@@ -36,7 +54,7 @@
     border-radius: 4px;
     overflow: hidden;
     border-collapse: collapse;
-    table-layout:fixed;
+    table-layout: fixed;
 }
 
 .roomList-box table tr {
@@ -57,22 +75,23 @@
     background-color: rgb(131, 120, 47, 0.7);
 }
 
-.roomList-box table th:first-child{
+.roomList-box table th:first-child {
     width: 20px;
 }
 
-.roomList-box table th:nth-child(2){
-    width: 160px;
-}
-.roomList-box table th:nth-child(3){
+.roomList-box table th:nth-child(2) {
     width: 160px;
 }
 
-.roomList-box table th:nth-child(4){
+.roomList-box table th:nth-child(3) {
+    width: 160px;
+}
+
+.roomList-box table th:nth-child(4) {
     width: 280px;
 }
 
-.roomList-box table th:nth-child(5){
+.roomList-box table th:nth-child(5) {
     width: 80px;
 }
 
@@ -81,20 +100,20 @@
     font-weight: 500;
 }
 
-.roomList-box table td:first-child{
+.roomList-box table td:first-child {
     text-align: center;
 }
 
 .roomList-box table a {
     font-size: 16px;
-    font-weight: 500;
-    color: rgb(131, 120, 47);
-    text-decoration: none;
+    font-weight: bold;
+    color: rgb(131, 120, 47, 0.7);
+    /* text-decoration: none; */
     transition: 0.3s;
 }
 
 .roomList-box table a:hover {
-    color: rgb(131, 120, 47, 0.7);
+    color: rgb(131, 120, 47, 1);
 }
 
 .roomList-box .status-available {
@@ -122,7 +141,7 @@
     margin: auto;
 }
 
-.roomList-box .status-daily{
+.roomList-box .status-daily {
     width: 36px;
     height: 36px;
     background-color: rgb(0, 183, 255);
@@ -166,7 +185,7 @@
 
 .roomList-box table .del-btn:hover,
 .roomList-box table .cancel-btn:hover {
-    background-color:rgb(216, 40, 40);
+    background-color: rgb(216, 40, 40);
 }
 
 .roomList-box table .accept-btn {
@@ -183,8 +202,8 @@
     cursor: pointer;
 }
 
-.roomList-box table .accept-btn:hover{
-    background-color:  rgb(74, 165, 74);
+.roomList-box table .accept-btn:hover {
+    background-color: rgb(74, 165, 74);
 }
 
 .roomList-box table form {
@@ -210,25 +229,8 @@
     border: 1px solid rgb(131, 120, 47, 1);
 }
 
-.roomList-box table .edit-btn:hover{
+.roomList-box table .edit-btn:hover {
     background-color: rgb(0, 165, 165);
-}
-
-.roomList-box .addRoom-btn {
-    width: 100px;
-    height: 40px;
-    border-radius: 4px;
-    border: none;
-    background-color: rgb(131, 120, 47, 0.7);
-    font-size: 16px;
-    font-weight: 500;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.roomList-box .addRoom-btn:hover {
-    background-color: rgb(131, 120, 47, 1);
 }
 
 .roomList-box #addRoom {
@@ -269,13 +271,13 @@
     background-color: rgb(131, 120, 47, 1);
 }
 
-.roomList-box .status-grid{
+.roomList-box .status-grid {
     margin-bottom: 32px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.roomList-box .status-grid .sub-grid{
+.roomList-box .status-grid .sub-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -284,24 +286,35 @@
 .pagination {
     padding: 32px 0;
     display: inline-block;
-  }
-  
-  .pagination a {
-    color: black;
+}
+
+.pagination a {
+    color: #fff;
     float: left;
     padding: 8px 16px;
     text-decoration: none;
     transition: background-color .3s;
-    border: 1px solid #ddd;
-  }
-  
-  .pagination a.active {
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
-  }
-  
-  .pagination a:hover:not(.active) {background-color: #ddd;}
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    background-color: rgb(131, 120, 47, 0.5);
+}
+
+.pagination a.active {
+    background-color: rgb(131, 120, 47, 1);
+    color: #fff;
+    border: 1px solid rgb(131, 120, 47, 1);
+}
+
+.pagination a:hover:not(.active) {
+    background-color: rgb(131, 120, 47, 0.7);
+    border: 1px solid rgb(131, 120, 47, 0.7);
+}
+
+input[type=checkbox]{
+    width: 20px;
+    height: 20px;
+    margin: 0 8px;
+    cursor: pointer;
+}
 
 @media screen and (max-width: 1199px) {
     .roomList-box {

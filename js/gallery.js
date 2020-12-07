@@ -1,3 +1,4 @@
+AOS.init();
 function showImg(num){
     let modal = document.querySelector(`#modal${num}`)
     modal.style.display = "flex"

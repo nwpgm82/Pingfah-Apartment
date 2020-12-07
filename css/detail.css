@@ -35,7 +35,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding-top: 32px;
+    padding: 32px 0;
 }
 
 .detail-box .roomDetail input {
@@ -65,10 +65,10 @@
 
 .detail-box .grid {
     display: grid;
-    grid-template-columns: 497px 497px 497px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 16px;
     width: 100%;
-    margin-top: 16px;
+    margin-top: 32px;
 }
 
 .detail-box input[type="file"] {
@@ -78,14 +78,14 @@
 
 .detail-box .grid .img-box img{
     width: 100%;
-    height: 512px;
+    height: 100%;
     object-fit: cover;
     border-radius: 4px;
 }
 
 .detail-box .grid .img-box{
     width: 100%;
-    height: 512px;
+    height: 356px;
     border: 1px solid rgb(131, 120, 47, 0.5);
     border-radius: 4px;
     overflow: hidden;
@@ -139,9 +139,12 @@ canvas {
 }
 
 .detail-box .grid .del-btn{
-    width: 40px;
+    margin: 0;
+    width: auto;
     height: 40px;
+    padding: 0 16px;
     border-radius: 4px;
+    border: none;
     background-color: rgb(255, 70, 70);
     position: absolute;
     top: 8px;
@@ -152,4 +155,30 @@ canvas {
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.pagination {
+    padding: 32px 0;
+    display: inline-block;
+}
+
+.pagination a {
+    color: #fff;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    background-color: rgb(131, 120, 47, 0.5);
+}
+
+.pagination a.active {
+    background-color: rgb(131, 120, 47, 1);
+    color: #fff;
+    border: 1px solid rgb(131, 120, 47, 1);
+}
+
+.pagination a:hover:not(.active) {
+    background-color: rgb(131, 120, 47, 0.7);
+    border: 1px solid rgb(131, 120, 47, 0.7);
 }

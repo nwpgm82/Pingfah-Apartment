@@ -10,13 +10,8 @@
     $date2 = date_create($check_out);
     $diff= date_diff($date1,$date2);
     $checkdate_result = $diff->format("%R%a days");
-    if($checkdate_result == 1){
-        if(date("Y-m-d") == $check_in){
-            $datetime_result = DateThai($check_in);
-        }else{
-            $datetime = new DateTime('tomorrow');
-            $datetime_result = DateThai($datetime->format('Y-m-d'));
-        }
+    if(date("Y-m-d") == $check_in){  
+        $datetime_result = DateThai($check_in);
     }else{
         $datetime = new DateTime('tomorrow');
         $datetime_result = DateThai($datetime->format('Y-m-d'));

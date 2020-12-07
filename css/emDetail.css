@@ -224,8 +224,16 @@
     background-color: darkturquoise;
 }
 
+.emDetail-box .edit-btn:hover{
+    background-color: darkturquoise;
+}
+
 .emDetail-box .cancel-btn{
     background-color: rgb(255, 70, 70);
+}
+
+.emDetail-box .cancel-btn:hover{
+    background-color: rgb(216, 40, 40);
 }
 
 .emDetail-box .del-btn{
@@ -242,4 +250,8 @@
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.emDetail-box .del-btn:hover{
+    background-color: rgb(216, 40, 40);
 }

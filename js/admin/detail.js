@@ -16,32 +16,26 @@ function delImg(type,pictype){
 
 function edit(){
     let input = document.getElementsByTagName("input")
+    var del_btn = document.getElementsByClassName("del-btn")
     for(let i = 0 ; i < input.length ; i++){
         input[i].disabled = false
     }
-    for(let j = 1 ; j <= 6; j++){
-        var del_img = document.getElementById(`delimg-btn${j}`)
-        if(del_img){
-            del_img.style.display = "block"
-        }
+    for(var i = 0; i < del_btn.length; i++) {
+        del_btn[i].style.display = "block";
     }
-    document.getElementById("textarea").disabled = false
     document.getElementById("edit").style.display = "none"
     document.getElementById("accept").style.display = "flex"
 }
 
 function cancelEdit(){
     let input = document.getElementsByTagName("input")
+    var del_btn = document.getElementsByClassName("del-btn")
     for(let i = 0 ; i < input.length ; i++){
         input[i].disabled = true
     }
-    for(let j = 1 ; j <= 6; j++){
-        var del_img = document.getElementById(`delimg-btn${j}`)
-        if(del_img){
-            del_img.style.display = "none"
-        }
+    for(var i = 0; i < del_btn.length; i++) {
+        del_btn[i].style.display = "none";
     }
-    document.getElementById("textarea").disabled = true
     document.getElementById("edit").style.display = "flex"
     document.getElementById("accept").style.display = "none"
 }

@@ -9,6 +9,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/gallery.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <title>Document</title>
 </head>
 
@@ -24,7 +26,7 @@
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
                 ?>
-                <div class="img-box" onclick="showImg(<?php echo $row['gallery_id']; ?>)">
+                <div class="img-box" onclick="showImg(<?php echo $row['gallery_id']; ?>)" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
                     <img src="images/gallery/<?php echo $row['gallery_name']; ?>" alt="">
                 </div>
                 <?php

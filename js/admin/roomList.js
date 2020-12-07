@@ -1,3 +1,25 @@
+function searchCheck(id){
+    var check = document.getElementById(id)
+    var available = document.getElementById("available")
+    var unavailable = document.getElementById("unavailable")
+    var daily = document.getElementById("daily")
+    available.checked = false
+    unavailable.checked = false 
+    daily.checked = false
+    check.checked = true
+    location.href = `index.php?Status=${check.id}`
+}
+
+function unCheckAll(){
+    var available = document.getElementById("available")
+    var unavailable = document.getElementById("unavailable")
+    var daily = document.getElementById("daily")
+    available.checked = false
+    unavailable.checked = false
+    daily.checked = false
+    location.href = "index.php"
+}
+
 function editType(room) {
     var typeShow = document.getElementById(`typeShow${room.toString()}`)
     var typeEdit = document.getElementById(`typeEdit${room.toString()}`)

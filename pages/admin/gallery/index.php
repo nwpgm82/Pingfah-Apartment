@@ -32,7 +32,14 @@ if($_SESSION["level"] == "admin"){
                 <div class="hr"></div>
                 <div class="grid">
                     <?php
-                    $sql = "SELECT * FROM gallery ORDER BY gallery_id DESC";
+                    $perpage = 8;
+                    if(isset($_GET['page'])){
+                        $page = $_GET['page'];
+                    }else{
+                        $page = 1;
+                    }
+                    $start = ($page - 1) * $perpage;
+                    $sql = "SELECT * FROM gallery ORDER BY gallery_id DESC LIMIT {$start} , {$perpage}";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
@@ -47,6 +54,22 @@ if($_SESSION["level"] == "admin"){
                         echo "ไม่มีรูปภาพ";
                     }
                     ?>
+                </div>
+                <?php
+                ///////pagination
+                $sql2 = "SELECT * FROM gallery";
+                $query2 = mysqli_query($conn, $sql2);
+                $total_record = mysqli_num_rows($query2);
+                $total_page = ceil($total_record / $perpage);
+                ?>
+                <div style="display:flex;justify-content:flex-end">
+                    <div class="pagination">
+                        <a href="index.php?page=1">&laquo;</a>
+                        <?php for($i=1;$i<=$total_page;$i++){ ?>
+                        <a href="index.php?page=<?php echo $i; ?>" <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?> ><?php echo $i; ?></a>
+                        <?php } ?>
+                        <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
+                    </div>
                 </div>
             </div>
         </div>

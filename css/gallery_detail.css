@@ -67,6 +67,7 @@
 
 .gallery-card .grid{
     width: 100%;
+    height: 728px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 16px;
@@ -88,7 +89,7 @@
     height: 100%;
     object-fit: cover;
     transition: 0.3s;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .gallery-card .grid .img-box .del-btn{
@@ -111,4 +112,30 @@
 
 .gallery-card .grid .img-box .del-btn:hover{
     background-color: rgb(216, 40, 40);
+}
+
+.pagination {
+    padding: 32px 0;
+    display: inline-block;
+}
+
+.pagination a {
+    color: #fff;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    background-color: rgb(131, 120, 47, 0.5);
+}
+
+.pagination a.active {
+    background-color: rgb(131, 120, 47, 1);
+    color: #fff;
+    border: 1px solid rgb(131, 120, 47, 1);
+}
+
+.pagination a:hover:not(.active) {
+    background-color: rgb(131, 120, 47, 0.7);
+    border: 1px solid rgb(131, 120, 47, 0.7);
 }
