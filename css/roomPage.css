@@ -113,7 +113,7 @@ body::before {
 .box .roomPage .card .mySlides1,
 .box .roomPage .card .mySlides2 {
     display: none;
-    height: 450px;
+    height: 430px;
 }
 
 /* Add a pointer when hovering over the thumbnail images */
@@ -173,6 +173,18 @@ body::before {
     scroll-behavior: smooth;
 }
 
+.box .roomPage .card .row::-webkit-scrollbar {
+    height: 8px;
+}
+
+.box .roomPage .card .row::-webkit-scrollbar-thumb {
+    background:  rgb(131, 120, 47, 0.7);
+}
+
+.box .roomPage .card .row::-webkit-scrollbar-thumb:hover{
+    background:  rgb(131, 120, 47, 1);
+}
+
 .box .roomPage .card .row:after {
     content: "";
     display: table;
@@ -182,8 +194,8 @@ body::before {
 /* Six columns side by side */
 .box .roomPage .card .column {
     display: inline-block;
-    width: 16%;
-    height: 50px;
+    width: 20%;
+    height: 70px;
 }
 
 /* Add a transparency effect for thumnbail images */

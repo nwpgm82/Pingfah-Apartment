@@ -5,7 +5,7 @@ showSlides2(slideIndex2);
 
 function plusSlides1(n) {
     showSlides1(slideIndex1 += n);
-    document.getElementById("row1").scrollTo(document.getElementsByClassName("active"))
+    document.querySelector("#row1").scrollLeft = document.querySelector("#row1").querySelector(".active").offsetLeft
 }
 
 function currentSlide1(n) {
@@ -14,11 +14,22 @@ function currentSlide1(n) {
 
 function plusSlides2(n) {
     showSlides2(slideIndex2 += n);
+    document.querySelector("#row2").scrollLeft = document.querySelector("#row2").querySelector(".active").offsetLeft
 }
 
 function currentSlide2(n) {
     showSlides2(slideIndex2 = n);
 }
+
+document.getElementById('row1').addEventListener('mousewheel', function (e) {
+    this.scrollLeft -= (e.wheelDelta)*4;
+    e.preventDefault();
+}, false);
+
+document.getElementById('row2').addEventListener('mousewheel', function (e) {
+    this.scrollLeft -= (e.wheelDelta)*4;
+    e.preventDefault();
+}, false);
 
 function showSlides1(n) {
     let i;
@@ -43,7 +54,6 @@ function showSlides1(n) {
 }
 
 function showSlides2(m) {
-    console.log("xx")
     let j;
     let slides = document.getElementsByClassName("mySlides2");
     let dots = document.getElementsByClassName("demo2");
