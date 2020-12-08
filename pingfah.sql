@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2020 at 07:07 PM
+-- Generation Time: Dec 08, 2020 at 07:42 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `pingfah`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `air_gal`
+--
+
+CREATE TABLE `air_gal` (
+  `gal_id` int(11) NOT NULL,
+  `gal_name` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `air_gal`
+--
+
+INSERT INTO `air_gal` (`gal_id`, `gal_name`) VALUES
+(1, '115774657_3345395698845713_2446905765721859802_o.jpg'),
+(2, '115742121_3369166353135314_4310419490959465258_o.jpg'),
+(3, '71nsvxFpSTL._AC_SL1200_.jpg'),
+(4, 'download.jpg'),
+(5, 'rabbit.jpg'),
+(6, '115829682_3345399482178668_7710700474312287945_o.jpg'),
+(7, 'Rabbit-01.jpg');
 
 -- --------------------------------------------------------
 
@@ -105,7 +129,9 @@ INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `t
 (17, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'k0kp6jtpnnx', '2020-12-09', '2020-12-16', '3', 3, 0, NULL, '', NULL),
 (18, 'สุภิศรา', 'เตชนันท์', '5556667778889', 'supisra45.30@gmail.com', '0620477145', '6vmygc8qxym', '2020-12-09', '2020-12-16', '5', 3, 2, NULL, '', NULL),
 (21, 'พงศธร', 'สร้อยอินต๊ะ', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '7xgn0rotoid', '2020-12-07', '2020-12-08', '5', 3, 2, NULL, '2020-12-08', NULL),
-(25, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'mmkycurx0fm', '2020-12-07', '2020-12-08', '2', 2, 0, NULL, '2020-12-07', NULL);
+(25, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'mmkycurx0fm', '2020-12-07', '2020-12-08', '2', 2, 0, NULL, '2020-12-07', NULL),
+(26, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'us6f4zbi5yx', '2020-12-09', '2020-12-10', '1', 1, 0, NULL, '2020-12-08', NULL),
+(30, 'พงศธร', 'สร้อยอินต๊ะ', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '8ojjyt3wmet', '2020-12-07', '2020-12-08', '1', 1, 0, NULL, '2020-12-07', NULL);
 
 -- --------------------------------------------------------
 
@@ -175,6 +201,40 @@ INSERT INTO `employee` (`id`, `title_name`, `firstname`, `lastname`, `nickname`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fan_gal`
+--
+
+CREATE TABLE `fan_gal` (
+  `gal_id` int(11) NOT NULL,
+  `gal_name` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `fan_gal`
+--
+
+INSERT INTO `fan_gal` (`gal_id`, `gal_name`) VALUES
+(1, 'sub2.jpg'),
+(2, 'sub5.jpg'),
+(3, 'sub8.jpg'),
+(4, 'sub6.jpg'),
+(5, 'user.png'),
+(6, 'key2.png'),
+(7, 'line.png'),
+(8, 'login-btn.png'),
+(9, 'camera2.png'),
+(10, 'bg.png'),
+(11, 'air2.png'),
+(12, 'wash2.png'),
+(13, 'submain-banner.png'),
+(14, 'wifi2.png'),
+(15, 'topbar-bg2.png'),
+(16, 'sub9.jpg'),
+(19, 'convenient-banner.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `gallery`
 --
 
@@ -192,7 +252,15 @@ INSERT INTO `gallery` (`gallery_id`, `gallery_name`) VALUES
 (28, 'sub6.jpg'),
 (29, '13136571443830.jpg'),
 (30, '13136571044859.jpg'),
-(31, '13136571097113.jpg');
+(31, '13136571097113.jpg'),
+(32, '115774657_3345395698845713_2446905765721859802_o.jpg'),
+(34, '115742121_3369166353135314_4310419490959465258_o.jpg'),
+(36, '71nsvxFpSTL._AC_SL1200_.jpg'),
+(37, 'download.jpg'),
+(38, 'rabbit.jpg'),
+(40, 'Rabbit-01.jpg'),
+(41, 'kda-more-kaisa-ahri-lol-uhdpaper.com-hd-8.721.jpg'),
+(48, '404570.jpg');
 
 -- --------------------------------------------------------
 
@@ -281,23 +349,22 @@ CREATE TABLE `roomdetail` (
   `cable_charge` float(255,2) DEFAULT NULL,
   `fines` float(255,2) DEFAULT NULL,
   `price` float(255,2) DEFAULT NULL,
-  `pic1` varchar(255) DEFAULT NULL,
-  `pic2` varchar(255) DEFAULT NULL,
-  `pic3` varchar(255) DEFAULT NULL,
-  `pic4` varchar(255) DEFAULT NULL,
-  `pic5` varchar(255) DEFAULT NULL,
-  `pic6` varchar(255) DEFAULT NULL,
   `detail` varchar(255) DEFAULT NULL,
-  `daily_price` float(255,2) DEFAULT NULL
+  `daily_price` float(255,2) DEFAULT NULL,
+  `sv_fan` varchar(2) DEFAULT NULL,
+  `sv_air` varchar(2) DEFAULT NULL,
+  `sv_wifi` varchar(2) DEFAULT NULL,
+  `sv_furniture` varchar(2) DEFAULT NULL,
+  `sv_readtable` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `roomdetail`
 --
 
-INSERT INTO `roomdetail` (`type`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `price`, `pic1`, `pic2`, `pic3`, `pic4`, `pic5`, `pic6`, `detail`, `daily_price`) VALUES
-('พัดลม', 80.00, 7.50, 105.00, 150.00, 2300.00, 'sub8.jpg', 'sub2.jpg', 'sub4.jpg', 'sub7.jpg', 'sub1.jpg', 'sub6.jpg', 'ห้องพัดลม 2300', 250.00),
-('แอร์', 80.00, 7.50, 105.00, 150.00, 2700.00, 'sub2.jpg', 'sub5.jpg', 'sub6.jpg', NULL, NULL, NULL, 'ห้องแอร์ 2700 บาท', 350.00);
+INSERT INTO `roomdetail` (`type`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `price`, `detail`, `daily_price`, `sv_fan`, `sv_air`, `sv_wifi`, `sv_furniture`, `sv_readtable`) VALUES
+('พัดลม', 80.00, 7.50, 105.00, 150.00, 2300.00, '', 250.00, '', NULL, NULL, NULL, NULL),
+('แอร์', 80.00, 7.50, 105.00, 150.00, 2700.00, 'ห้องแอร์ 2700 บาท', 350.00, '', 'on', 'on', 'on', 'on');
 
 -- --------------------------------------------------------
 
@@ -414,6 +481,12 @@ INSERT INTO `rule` (`rule_detail`) VALUES
 --
 
 --
+-- Indexes for table `air_gal`
+--
+ALTER TABLE `air_gal`
+  ADD PRIMARY KEY (`gal_id`);
+
+--
 -- Indexes for table `appeal`
 --
 ALTER TABLE `appeal`
@@ -442,6 +515,12 @@ ALTER TABLE `dailycost`
 --
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `fan_gal`
+--
+ALTER TABLE `fan_gal`
+  ADD PRIMARY KEY (`gal_id`);
 
 --
 -- Indexes for table `gallery`
@@ -490,6 +569,12 @@ ALTER TABLE `roommember`
 --
 
 --
+-- AUTO_INCREMENT for table `air_gal`
+--
+ALTER TABLE `air_gal`
+  MODIFY `gal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `appeal`
 --
 ALTER TABLE `appeal`
@@ -505,7 +590,7 @@ ALTER TABLE `cost`
 -- AUTO_INCREMENT for table `daily`
 --
 ALTER TABLE `daily`
-  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `dailycost`
@@ -520,10 +605,16 @@ ALTER TABLE `employee`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
+-- AUTO_INCREMENT for table `fan_gal`
+--
+ALTER TABLE `fan_gal`
+  MODIFY `gal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `gallery_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `gallery_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `package`
