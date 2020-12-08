@@ -17,12 +17,49 @@
 .detail-box {
     width: 100%;
     min-height: 800px;
-    padding: 36px;
     border-radius: 4px;
     background-color: #fff;
     -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.detail-box .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-box .header .inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.detail-box .header .inputfile + label {
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    background-color: rgb(131, 120, 47, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 12px;  
+    border-radius: 4px;
+    height: 40px;
+    transition: 0.3s;
+}
+
+.detail-box .header .inputfile + label:hover {
+    background-color: rgb(131, 120, 47, 1);
+}
+
+.detail-box .header .inputfile:disabled + label{
+    background-color: #ddd;
 }
 
 .hr {

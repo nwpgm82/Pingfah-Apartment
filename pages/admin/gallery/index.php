@@ -46,7 +46,7 @@ if($_SESSION["level"] == "admin"){
                     ?>
                     <div class="img-box">
                         <img src="../../images/gallery/<?php echo $row['gallery_name']; ?>" alt="">
-                        <button class="del-btn" onclick="delImg(<?php echo $row['gallery_id']; ?>)">X</button>
+                        <button class="del-btn" onclick="delImg(<?php echo $row['gallery_id']; ?>,'<?php echo $row['gallery_name']; ?>')">X</button>
                     </div>
                     <?php
                         }

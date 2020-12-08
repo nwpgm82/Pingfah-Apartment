@@ -17,8 +17,8 @@ $(document).ready(function () {
 })
 
 
-function delImg(id){
+function delImg(id,name){
     if(confirm("คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?")){
-        location.href = `function/delImage.php?id=${id}`
+        location.href = `function/delImage.php?id=${id}&name=${name}`
     }
 }

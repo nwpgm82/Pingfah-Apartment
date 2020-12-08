@@ -37,7 +37,7 @@ if($_SESSION['level'] == 'admin'){
                                 <p>รายวัน : <?php echo number_format($row['daily_price']); ?> บาท / คืน</p>
                             </div>
                             <div style="display:flex;justify-content:flex-end;">
-                                <a href="detail.php?type=<?php echo $row['type'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                <a href="detail.php?type=<?php if($row['type'] == 'พัดลม'){ echo 'fan'; }else if($row['type'] == 'แอร์'){ echo 'air'; }?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
                             </div>
                         </div>
                     </div>

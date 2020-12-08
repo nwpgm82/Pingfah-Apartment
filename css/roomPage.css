@@ -10,7 +10,7 @@
     font-family: Sarabun;
 }
 
-body{
+body {
     width: 100%;
     min-height: 100vh;
 
@@ -18,38 +18,41 @@ body{
     background: url("../img/tool/bg.png");
 }
 
-body::before{
+body::before {
     content: '';
     position: absolute;
-    z-index: -1; /* push it to the background */
-    top: 0px; /* position it off the top background */
+    z-index: -1;
+    /* push it to the background */
+    top: 0px;
+    /* position it off the top background */
     right: 0px;
-    bottom: -100px; /* position it off the bottom background */
+    bottom: -100px;
+    /* position it off the bottom background */
     left: 0px;
-    background: url('../img/tool/flower.png') bottom left no-repeat,url('../img/tool/flower2.png') bottom right no-repeat;
+    background: url('../img/tool/flower.png') bottom left no-repeat, url('../img/tool/flower2.png') bottom right no-repeat;
     opacity: 0.2;
 }
 
-.box{
+.box {
     width: 1400px;
     margin: auto;
     padding: 32px;
 }
 
-.box .roomPage{
+.box .roomPage {
     width: 100%;
 }
 
-.hr{
+.hr {
     margin: 16px auto;
     border-bottom: 1px solid rgb(131, 120, 47, 0.7);
     opacity: 0.5;
 }
 
-.box .roomPage .card{
+.box .roomPage .card {
     margin: 32px 0;
     width: 100%;
-    height: 400px;
+    height: auto;
     border-radius: 4px;
     background: url("../img/tool/bg2.png");
     overflow: hidden;
@@ -60,18 +63,18 @@ body::before{
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
-.box .roomPage .card h3{
+.box .roomPage .card h3 {
     color: #b3994c;
     font-weight: bold;
 }
 
-.box .roomPage .card img{
+.box .roomPage .card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.box .roomPage .card .detail{
+.box .roomPage .card .detail {
     padding: 16px;
     display: flex;
     justify-content: space-between;
@@ -79,7 +82,7 @@ body::before{
     line-height: 40px;
 }
 
-.box .roomPage .card button{
+.box .roomPage .card button {
     width: auto;
     height: 40px;
     padding: 0 16px;
@@ -93,6 +96,104 @@ body::before{
     transition: 0.3s;
 }
 
-.box .roomPage .card button:hover{
+.box .roomPage .card button:hover {
     background-color: rgb(131, 120, 47, 1);
+}
+
+.box .roomPage .cardimg {
+    vertical-align: middle;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.box .roomPage .card .container {
+    position: relative;
+}
+
+/* Hide the images by default */
+.box .roomPage .card .mySlides1,
+.box .roomPage .card .mySlides2 {
+    display: none;
+    height: 450px;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.box .roomPage .card .cursor {
+    cursor: pointer;
+}
+
+/* Next & previous buttons */
+.box .roomPage .card .prev,
+.box .roomPage .card .next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 0 16px;
+    /* margin-top: -50px; */
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.box .roomPage .card .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.box .roomPage .card .prev:hover,
+.box .roomPage .card .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.box .roomPage .card .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+/* Container for image text */
+.box .roomPage .card .caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
+}
+
+.box .roomPage .card .row {
+    overflow: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+}
+
+.box .roomPage .card .row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Six columns side by side */
+.box .roomPage .card .column {
+    display: inline-block;
+    width: 16%;
+    height: 50px;
+}
+
+/* Add a transparency effect for thumnbail images */
+.box .roomPage .card .demo1,
+.box .roomPage .card .demo2 {
+    opacity: 0.4;
+}
+
+.box .roomPage .card .active,
+.box .roomPage .card .demo1:hover,
+.box .roomPage .card .demo2:hover {
+    opacity: 1;
 }
