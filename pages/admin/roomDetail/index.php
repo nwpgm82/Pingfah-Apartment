@@ -27,8 +27,20 @@ if($_SESSION['level'] == 'admin'){
                     <?php while($row = $result->fetch_assoc()) { ?>
                     <div class="card">
                         <div>
-                            <img src="<?php if(isset($row['pic1'])){ echo "../../images/roomdetail/" .$row['pic1']; }else{ echo "https://i.pinimg.com/originals/c5/45/2a/c5452a51a5bd54f08b5b3bfb80882cf5.jpg"; } ?>"
-                                alt="">
+                            <?php
+                            if($row['type'] == "พัดลม"){
+                                $type_show = "fan";
+                                $getImg = "SELECT gal_name FROM fan_gal LIMIT 1";
+                            }else if($row['type'] == "แอร์"){
+                                $type_show = "air";
+                                $getImg = "SELECT gal_name FROM air_gal LIMIT 1";
+                            }
+                            $resultImg = $conn->query($getImg);
+                            if ($resultImg->num_rows > 0) {
+                                while($row2 = $resultImg->fetch_assoc()) { 
+                            ?>
+                            <img src="<?php if(isset($row2['gal_name'])){ echo "../../images/roomdetail/$type_show/" .$row2['gal_name']; }else{ echo "https://i.pinimg.com/originals/c5/45/2a/c5452a51a5bd54f08b5b3bfb80882cf5.jpg"; } ?>" alt="">
+                            <?php } } ?>
                         </div>
                         <div class="detail">
                             <div>

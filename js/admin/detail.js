@@ -16,7 +16,6 @@ function delImg(type,gal_id,gal_name){
 
 function edit(){
     let input = document.getElementsByTagName("input")
-    var del_btn = document.getElementsByClassName("del-btn")
     for(let i = 0 ; i < (input.length-1) ; i++){
         input[i].disabled = false
     }
@@ -30,7 +29,6 @@ function edit(){
 
 function cancelEdit(){
     let input = document.getElementsByTagName("input")
-    var del_btn = document.getElementsByClassName("del-btn")
     for(let i = 0 ; i < (input.length-1) ; i++){
         input[i].disabled = true
     }

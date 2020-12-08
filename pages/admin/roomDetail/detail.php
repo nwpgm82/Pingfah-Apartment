@@ -34,19 +34,19 @@ if($_SESSION['level'] == 'admin'){
         <div class="box">
             <div class="detail-box">
                 <div style="padding:36px;">
-                    <div class="header">
-                        <h3>ห้อง<?php echo $type_show; ?></h3>
-                        <div id="edit" style="display:flex;justify-content:center;align-items:center;">
-                            <button type="button" class="edit-btn" onclick="edit()">แก้ไข</button>
-                        </div>
-                        <div id="accept" style="display:none;justify-content:center;align-items:center;">
-                            <button type="submit" name="accept">ยืนยัน</button>
-                            <button type="button" class="cancel-btn" onclick="cancelEdit()">ยกเลิก</button>
-                        </div>
-                    </div>
-                    <div class="hr"></div>
-                    <form action="function/addData.php?type=<?php echo $type_show; ?>" method="POST"
+                    <form action="function/addData.php?type=<?php echo $type; ?>" method="POST"
                         enctype="multipart/form-data">
+                        <div class="header">
+                            <h3>ห้อง<?php echo $type_show; ?></h3>
+                            <div id="edit" style="display:flex;justify-content:center;align-items:center;">
+                                <button type="button" class="edit-btn" onclick="edit()">แก้ไข</button>
+                            </div>
+                            <div id="accept" style="display:none;justify-content:center;align-items:center;">
+                                <button type="submit" name="accept">ยืนยัน</button>
+                                <button type="button" class="cancel-btn" onclick="cancelEdit()">ยกเลิก</button>
+                            </div>
+                        </div>
+                        <div class="hr"></div>
                         <div class="roomDetail">
                             <div>
                                 <p>ค่าเช่าห้อง(รายเดือน)</p>
@@ -95,34 +95,26 @@ if($_SESSION['level'] == 'admin'){
                         <div style="padding:32px 0;">
                             <h3>สิ่งอำนวยความสะดวก</h3>
                             <div class="hr"></div>
-                            <div style="padding-top:16px;display:flex;">
-                                <div>
-                                    <div style="padding:16px 0;">
-                                        <input type="checkbox" name="" id="">
-                                        <label>เครื่องปรับอากาศ</label>
-                                    </div>
-                                    <div style="padding:16px 0;">
-                                        <input type="checkbox" name="" id="">
-                                        <label>เครื่องปรับอากาศ</label>
-                                    </div>
-                                    <div style="padding:16px 0;">
-                                        <input type="checkbox" name="" id="">
-                                        <label>เครื่องปรับอากาศ</label>
-                                    </div>
+                            <div class="detail-grid">
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="sv_air" <?php if($row['sv_air'] == 'on'){ echo "checked"; }?> disabled>
+                                    <label>เครื่องปรับอากาศ</label>
                                 </div>
-                                <div style="padding: 0 32px;">
-                                    <div style="padding:16px 0;">
-                                        <input type="checkbox" name="" id="">
-                                        <label>เครื่องปรับอากาศ</label>
-                                    </div>
-                                    <div style="padding:16px 0;">
-                                        <input type="checkbox" name="" id="">
-                                        <label>เครื่องปรับอากาศ</label>
-                                    </div>
-                                    <div style="padding:16px 0;">
-                                        <input type="checkbox" name="" id="">
-                                        <label>เครื่องปรับอากาศ</label>
-                                    </div>
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="sv_fan" <?php if($row['sv_fan'] == 'on'){ echo "checked"; }?> disabled>
+                                    <label>พัดลม</label>
+                                </div>
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="sv_wifi" <?php if($row['sv_wifi'] == 'on'){ echo "checked"; }?> disabled>
+                                    <label>WI-FI</label>
+                                </div>
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="sv_furniture" <?php if($row['sv_furniture'] == 'on'){ echo "checked"; }?> disabled>
+                                    <label>เฟอร์นิเจอร์ - ตู้เสื้อผ้า, เตียง</label>
+                                </div>
+                                <div style="padding:16px 0;">
+                                    <input type="checkbox" name="sv_readtable" <?php if($row['sv_readtable'] == 'on'){ echo "checked"; }?> disabled>
+                                    <label>โต๊ะอ่านหนังสือ</label>
                                 </div>
                             </div>
                         </div>

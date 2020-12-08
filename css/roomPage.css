@@ -168,9 +168,11 @@ body::before {
 }
 
 .box .roomPage .card .row {
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     white-space: nowrap;
     scroll-behavior: smooth;
+    display: -webkit-box;
 }
 
 .box .roomPage .card .row::-webkit-scrollbar {
@@ -193,7 +195,6 @@ body::before {
 
 /* Six columns side by side */
 .box .roomPage .card .column {
-    display: inline-block;
     width: 20%;
     height: 70px;
 }
@@ -201,11 +202,18 @@ body::before {
 /* Add a transparency effect for thumnbail images */
 .box .roomPage .card .demo1,
 .box .roomPage .card .demo2 {
-    opacity: 0.4;
+    opacity: 0.3;
+    transition: 0.1s;
 }
 
 .box .roomPage .card .active,
 .box .roomPage .card .demo1:hover,
 .box .roomPage .card .demo2:hover {
     opacity: 1;
+}
+
+.box .roomPage .card .detail-grid{
+    padding-top:16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }

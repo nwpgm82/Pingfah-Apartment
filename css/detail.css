@@ -128,16 +128,24 @@
     overflow: hidden;
     position: relative;
 }
-/* 
-canvas {
-    width: 497px;
-    height: 512px;
-    border: 1px solid rgb(131, 120, 47, 0.5);
-    border-radius: 4px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-} */
+
+.detail-box .detail-grid{
+    padding-top:16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 500px;
+}
+
+.detail-box .detail-grid input[type=checkbox]{
+    width: 20px;
+    height: 20px;
+    margin: 0 8px;
+    cursor: pointer;
+}
+
+.detail-box .detail-grid input[type=checkbox]:disabled:hover{
+    cursor: default;
+}
 
 .detail-box button{
     width: auto;
