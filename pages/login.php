@@ -10,7 +10,7 @@
 
 <body>
     <div class="login">
-        <a href="../index.php"><img src="/Pingfah/img/main_logo.png" alt=""></a>
+        <a href="../index.php"><img src="../img/main_logo.png" alt=""></a>
         <form action="checklogin.php" method="POST">
             <div>
                 <p>บัญชีผู้ใช้ / Username</p>
@@ -20,7 +20,10 @@
                 <p>รหัสผ่าน / Password</p>
                 <input type="password" name="password" required>
             </div>
-            <div style="margin-top: 16px;display:flex;justify-content:flex-end;">
+            <div style="text-align:right;padding:8px 0;">
+                <a href="forgotPassword.php">ลืมรหัสผ่าน</a>
+            </div>
+            <div style="padding-top: 16px;display:flex;justify-content:flex-end;">
                <button type="submit" name="login">เข้าสู่ระบบ / Login</button> 
             </div>
         </form>

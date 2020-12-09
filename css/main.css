@@ -96,9 +96,14 @@ body::after{
     width: 180px;
     height: 40px;
     padding: 0 12px;
+    color: transparent;
     border: 1px solid rgb(131, 120, 47, 0.7);
     border-radius: 4px;
     cursor: pointer;
+    background-image: url("../img/tool/calendar.png");
+    background-repeat:no-repeat;
+    background-size: 20px;
+    background-position: 92% 50%;
 }
 
 .reservation .card input[type=number]{
@@ -120,30 +125,21 @@ body::after{
   -moz-appearance: textfield;
 }
 
-/* .reservation .card input:before {
-    top: 10px; left: 12px;
-    display: inline-block;
-    color: black;
-    font-size: 16px;
-}
-
-.reservation .card input::-webkit-datetime-edit, input::-webkit-inner-spin-button, input::-webkit-clear-button {
-    display: none;
-}
-input::-webkit-calendar-picker-indicator {
+.reservation .card .icon{
+    width: 20px;
+    height: 20px;
     position: absolute;
     top: 10px;
-    right: 8px;
-    color: black;
-    opacity: 1;
-    cursor: pointer;
-} */
+    right: 16px;
+}
 
 .reservation .card .dateText{
     position: absolute;
     top: 10px;
     left: 20px;
+    width: 134px;
     background-color: #fff;
+    cursor: default;
 }
 
 .reservation .card button {

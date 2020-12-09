@@ -141,7 +141,7 @@ body::before {
 .box .roomPage .card .mySlides1,
 .box .roomPage .card .mySlides2 {
     display: none;
-    height: 430px;
+    height: 441px;
 }
 
 /* Add a pointer when hovering over the thumbnail images */

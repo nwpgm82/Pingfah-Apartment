@@ -81,8 +81,19 @@ include('pages/connection.php');
                     while($row = $result->fetch_assoc()) {
                 ?>
                 <div class="detail-grid">
-                    <img src="<?php if(isset($row['pic1'])){ echo "pages/images/roomdetail/" .$row['pic1'];}else{ echo 'img/tool/no-img.png'; } ?>"
-                        alt="">
+                    <?php
+                    if($row['type'] == "พัดลม"){
+                        $type_show = "fan";
+                        $getImg = "SELECT gal_name from fan_gal LIMIT 1";
+                    }else if($row['type'] == "แอร์"){
+                        $type_show = "air";
+                        $getImg = "SELECT gal_name from air_gal LIMIT 1";
+                    }
+                    $resultImg = $conn->query($getImg);
+                        while($row2 = $resultImg->fetch_assoc()) {
+                    ?>
+                    <img src="<?php if(isset($row2['gal_name'])){ echo "pages/images/roomdetail/$type_show/" .$row2['gal_name'];}else{ echo 'img/tool/no-img.png'; } ?>" alt="">
+                    <?php } ?>
                     <div class="detail">
                         <div>
                             <h3>ห้อง<?php echo $row['type']?></h3>
@@ -93,7 +104,7 @@ include('pages/connection.php');
                         <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, esse nulla aliquam reprehenderit dignissimos qui laudantium minus, blanditiis obcaecati tenetur sequi placeat impedit quis similique magnam pariatur voluptatum delectus aspernatur?</p> -->
                         <div style="display:flex;justify-content:flex-end">
                             <a
-                                href="pages/roomDetail.php?room_type=<?php echo $row['type']; ?>"><button>ดูเพิ่มเติม</button></a>
+                                href="pages/roomList.php"><button>ดูเพิ่มเติม</button></a>
                         </div>
                     </div>
                 </div>

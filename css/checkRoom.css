@@ -63,6 +63,10 @@ body::before{
 
 .box .checkRoom input[type=text] {
     color: transparent;
+    background-image: url("../img/tool/calendar.png");
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 92% 50%;
 }
 
 .box .checkRoom input[type=number] {
@@ -90,7 +94,7 @@ body::before{
 
 .box .checkRoom .searchDate .dateText {
     position: absolute;
-    width: 130px;
+    width: 134px;
     top: 10px;
     left: 20px;
     background-color: #fff;
@@ -267,7 +271,7 @@ body::before{
 .box .checkRoom .card .mySlides1,
 .box .checkRoom .card .mySlides2 {
     display: none;
-    height: 430px;
+    height: 441px;
 }
 
 /* Add a pointer when hovering over the thumbnail images */

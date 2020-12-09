@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/mainFoot.css">
+    <link rel="stylesheet" href="/Pingfah/css/mainFoot.css">
     <title>Document</title>
 </head>
 
@@ -12,7 +12,7 @@
     <div class="foot">
         <div class="detail-box">
             <div>
-                <img src="img/main_logo.png" alt="">
+                <img src="/Pingfah/img/main_logo.png" alt="">
             </div>
             <div class="flex">
                 <div>
@@ -41,7 +41,7 @@
                         </div>
                         <div>
                             <a href="/Pingfah/pages/gallery.php">
-                                <p>แกลอรี่</p>
+                                <p>แกลลอรี่</p>
                             </a>
                         </div>
                         <div>
