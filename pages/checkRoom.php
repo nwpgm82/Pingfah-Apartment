@@ -123,7 +123,7 @@
                             <div class="hr" style="margin:16px 0;"></div>
                             <div class="detail">
                                 <div>
-                                    <h4>รายละเอียดห้องพัก</h4>
+                                    <h3>รายละเอียดห้องพัก</h3>
                                     <div class="user-grid">
                                         <img src="../img/tool/user.png" alt="">
                                         <label>2 คน</label>
@@ -133,7 +133,7 @@
                                         บาท</label>
                                 </div>
                                 <div>
-                                    <h4>สิ่งอำนวยความสะดวก</h4>
+                                    <h3>สิ่งอำนวยความสะดวก</h3>
                                     <div class="convenient-grid">
                                         <?php
                                         if($row["sv_air"] == "on"){
@@ -241,7 +241,7 @@
                             <div class="hr" style="margin:16px 0;"></div>
                             <div class="detail">
                                 <div>
-                                    <h4>รายละเอียดห้องพัก</h4>
+                                    <h3>รายละเอียดห้องพัก</h3>
                                     <div class="user-grid">
                                         <img src="../img/tool/user.png" alt="">
                                         <label>2 คน</label>
@@ -251,7 +251,7 @@
                                         บาท</label>
                                 </div>
                                 <div>
-                                    <h4>สิ่งอำนวยความสะดวก</h4>
+                                    <h3>สิ่งอำนวยความสะดวก</h3>
                                     <div class="convenient-grid">
                                         <?php
                                         if($row2["sv_air"] == "on"){

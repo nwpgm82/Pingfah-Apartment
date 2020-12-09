@@ -72,7 +72,7 @@ $column_num2 = 1;
                     <div>
                         <h2>ห้อง<?php echo $row['type']; ?></h2>
                         <div class="hr"></div>
-                        
+                        <h3>รายละเอียดห้องพัก</h3>
                         <div class="user-grid">
                             <img src="../img/tool/user.png" alt="">
                             <label>2 คน</label>
@@ -82,7 +82,6 @@ $column_num2 = 1;
                     </div>
                     <div style="padding-top: 30px;">
                         <h3 style="color:#000">สิ่งอำนวยความสะดวก</h3>
-                        <div class="hr"></div>
                         <div class="detail-grid">
                             <?php
                             if($row["sv_air"] == "on"){
