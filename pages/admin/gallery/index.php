@@ -23,7 +23,7 @@ if($_SESSION["level"] == "admin"){
         <div style="padding:24px;">
             <div class="gallery-card">
                 <div class="header">
-                    <h3>รายการแกลอรี่ทั้งหมด</h3>
+                    <h3>รายการแกลลอรี่ทั้งหมด</h3>
                     <form id="submitForm" enctype="multipart/form-data">
                         <input type="file" name="file" id="file" class="inputfile"/>
                         <label for="file">เพิ่มรูปภาพ</label>

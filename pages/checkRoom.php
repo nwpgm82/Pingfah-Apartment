@@ -60,11 +60,11 @@
                 <div class="hr"></div>
                 <?php 
             if(isset($check_in) || isset($check_out)){
-                echo "<h3>ประเภทห้องพักที่ว่างให้บริการ</h3>";
+                echo "<h2>ประเภทห้องพักที่ว่างให้บริการ</h2><div class='hr'></div>";
             }
             
             ?>
-                <div style="padding-top: 32px;">
+                <div>
                     <?php
                 $countDailyAll = mysqli_query($conn,"SELECT SUM(air_room+fan_room) AS dailyTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))");
                 $roomDailyAlldata= mysqli_fetch_assoc($countDailyAll);  
@@ -89,19 +89,38 @@
                             $row = $result->fetch_assoc();
                 ?>
                     <div class="card">
-                        <div class="img-grid">
-                            <div class="a">
-                                <img src="images/roomdetail/<?php echo $row['pic1']; ?>" alt="">
+                        <div class="container">
+                            <?php
+                            $column1 = 1;
+                            $getImg = "SELECT * FROM air_gal";
+                            $resultImg = $conn->query($getImg);
+                            if ($resultImg->num_rows > 0) {
+                                while($row2 = $resultImg->fetch_assoc()) {
+                            ?>
+                            <div class="mySlides1">
+                                <img src="images/roomdetail/air/<?php echo $row2['gal_name']; ?>" alt="">
                             </div>
-                            <div class="b">
-                                <img src="images/roomdetail/<?php echo $row['pic2']; ?>" alt="">
-                            </div>
-                            <div class="c">
-                                <img src="images/roomdetail/<?php echo $row['pic3']; ?>" alt="">
+                            <?php } } ?>
+                            <a class="prev" onclick="plusSlides1(-1)">❮</a>
+                            <a class="next" onclick="plusSlides1(1)">❯</a>
+                            <div class="row" id="row1">
+                                <?php
+                                $getImg2 = "SELECT * FROM air_gal";
+                                $resultImg2 = $conn->query($getImg2);
+                                if ($resultImg2->num_rows > 0) {
+                                    while($row3 = $resultImg2->fetch_assoc()) {
+                                ?>
+                                <div class="column">
+                                    <img class="demo1 cursor"
+                                        src="images/roomdetail/air/<?php echo $row3['gal_name']; ?>" style="width:100%"
+                                        onclick="currentSlide1(<?php echo $column1; ?>)">
+                                </div>
+                                <?php $column1++; } } ?>
                             </div>
                         </div>
-                        <div style="padding:16px;">
+                        <div style="padding:16px;width: 882px !important;">
                             <h2>ห้องแอร์</h2>
+                            <div class="hr" style="margin:16px 0;"></div>
                             <div class="detail">
                                 <div>
                                     <h4>รายละเอียดห้องพัก</h4>
@@ -109,35 +128,53 @@
                                         <img src="../img/tool/user.png" alt="">
                                         <label>2 คน</label>
                                     </div>
-                                    <label>รายวัน : <label style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['daily_price']); ?></strong></label> บาท</label>
+                                    <label>รายวัน : <label
+                                            style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['daily_price']); ?></strong></label>
+                                        บาท</label>
                                 </div>
                                 <div>
                                     <h4>สิ่งอำนวยความสะดวก</h4>
                                     <div class="convenient-grid">
+                                        <?php
+                                        if($row["sv_air"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/air2.png">
+                                            <label>เครื่องปรับอากาศ</label>
                                         </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_fan"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/fan.png">
+                                            <label>พัดลม</label>
                                         </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_wifi"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/wifi2.png">
+                                            <label>WI-FI</label>
                                         </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_furniture"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/clothes.png">
+                                            <label>เฟอร์นิเจอร์ - ตู้เสื้อผ้า, เตียง</label>
                                         </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_readtable"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/table.png">
+                                            <label>โต๊ะอ่านหนังสือ</label>
                                         </div>
-                                        <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
-                                        </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -170,19 +207,38 @@
                             $row2 = $result2->fetch_assoc();
                     ?>
                     <div class="card">
-                        <div class="img-grid">
-                            <div class="a">
-                                <img src="images/roomdetail/<?php echo $row2['pic1']; ?>" alt="">
+                        <div class="container">
+                            <?php
+                            $column2 = 1;
+                            $getImg3 = "SELECT * FROM fan_gal";
+                            $resultImg3 = $conn->query($getImg3);
+                            if ($resultImg3->num_rows > 0) {
+                                while($row3 = $resultImg3->fetch_assoc()) {
+                            ?>
+                            <div class="mySlides2">
+                                <img src="images/roomdetail/fan/<?php echo $row3['gal_name']; ?>" alt="">
                             </div>
-                            <div class="b">
-                                <img src="images/roomdetail/<?php echo $row2['pic2']; ?>" alt="">
-                            </div>
-                            <div class="c">
-                                <img src="images/roomdetail/<?php echo $row2['pic3']; ?>" alt="">
+                            <?php } } ?>
+                            <a class="prev" onclick="plusSlides2(-1)">❮</a>
+                            <a class="next" onclick="plusSlides2(1)">❯</a>
+                            <div class="row" id="row2">
+                                <?php
+                                $getImg4 = "SELECT * FROM fan_gal";
+                                $resultImg4 = $conn->query($getImg4);
+                                if ($resultImg4->num_rows > 0) {
+                                    while($row4 = $resultImg4->fetch_assoc()) {
+                                ?>
+                                <div class="column">
+                                    <img class="demo2 cursor"
+                                        src="images/roomdetail/fan/<?php echo $row4['gal_name']; ?>" style="width:100%"
+                                        onclick="currentSlide2(<?php echo $column2; ?>)">
+                                </div>
+                                <?php $column2++; } } ?>
                             </div>
                         </div>
-                        <div style="padding:16px;">
+                        <div style="padding:16px;width: 882px !important;">
                             <h2>ห้องพัดลม</h2>
+                            <div class="hr" style="margin:16px 0;"></div>
                             <div class="detail">
                                 <div>
                                     <h4>รายละเอียดห้องพัก</h4>
@@ -190,35 +246,53 @@
                                         <img src="../img/tool/user.png" alt="">
                                         <label>2 คน</label>
                                     </div>
-                                    <label>รายวัน : <label style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['daily_price']); ?></strong></label> บาท</label>
+                                    <label>รายวัน : <label
+                                            style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['daily_price']); ?></strong></label>
+                                        บาท</label>
                                 </div>
                                 <div>
                                     <h4>สิ่งอำนวยความสะดวก</h4>
                                     <div class="convenient-grid">
+                                        <?php
+                                        if($row2["sv_air"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/air2.png">
+                                            <label>เครื่องปรับอากาศ</label>
                                         </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row2["sv_fan"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/fan.png">
+                                            <label>พัดลม</label>
                                         </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row2["sv_wifi"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/wifi2.png">
+                                            <label>WI-FI</label>
                                         </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row2["sv_furniture"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/clothes.png">
+                                            <label>เฟอร์นิเจอร์ - ตู้เสื้อผ้า, เตียง</label>
                                         </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row2["sv_readtable"] == "on"){
+                                        ?>
                                         <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
+                                            <img src="../img/tool/table.png">
+                                            <label>โต๊ะอ่านหนังสือ</label>
                                         </div>
-                                        <div class="sub-grid">
-                                            <img src="../img/tool/air2.png" alt="">
-                                            <p>เครื่องปรับอากาศ</p>
-                                        </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>

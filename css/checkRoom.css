@@ -126,13 +126,13 @@ body::before{
 
 .box .checkRoom .card {
     margin-bottom: 24px;
-    display: grid;
-    grid-template-columns: 30% auto;
     width: 100%;
-    height: 400px;
-    background: url('../img/tool/bg2.png');
+    height: auto;
     border-radius: 4px;
+    background: url("../img/tool/bg2.png");
     overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
@@ -175,10 +175,9 @@ body::before{
 }
 
 .box .checkRoom .card .detail {
-    height: 290px;
-    padding: 16px 0;
+    height: 370px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 300px 1fr;
     line-height: 40px;
 }
 
@@ -200,9 +199,16 @@ body::before{
 }
 
 .box .checkRoom .card .detail .convenient-grid .sub-grid {
+    margin: 16px 0;
     display: grid;
     grid-template-columns: 40px auto;
     column-gap: 16px;
+    width: 100%;
+    align-items: center;
+}
+
+.box .checkRoom .card .detail .convenient-grid .sub-grid img{
+    width: 40px;
 }
 
 .box .checkRoom .card input[type=number]::-webkit-inner-spin-button,
@@ -244,4 +250,117 @@ body::before{
 
 .box .checkRoom button:hover {
     background-color: rgb(131, 120, 47, 1);
+}
+
+
+.box .checkRoom .card .cardimg {
+    vertical-align: middle;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.box .checkRoom .card .container {
+    position: relative;
+}
+
+/* Hide the images by default */
+.box .checkRoom .card .mySlides1,
+.box .checkRoom .card .mySlides2 {
+    display: none;
+    height: 430px;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.box .checkRoom .card .cursor {
+    cursor: pointer;
+}
+
+/* Next & previous buttons */
+.box .checkRoom .card .prev,
+.box .checkRoom .card .next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 0 16px;
+    /* margin-top: -50px; */
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.box .checkRoom .card .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.box .checkRoom .card .prev:hover,
+.box .checkRoom .card .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.box .checkRoom .card .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+/* Container for image text */
+.box .checkRoom .card .caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
+}
+
+.box .checkRoom .card .row {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    display: -webkit-box;
+}
+
+.box .checkRoom .card .row::-webkit-scrollbar {
+    height: 8px;
+}
+
+.box .checkRoom .card .row::-webkit-scrollbar-thumb {
+    background:  rgb(131, 120, 47, 0.7);
+}
+
+.box .checkRoom .card .row::-webkit-scrollbar-thumb:hover{
+    background:  rgb(131, 120, 47, 1);
+}
+
+.box .checkRoom .card .row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Six columns side by side */
+.box .checkRoom .card .column {
+    width: 20%;
+    height: 70px;
+}
+
+/* Add a transparency effect for thumnbail images */
+.box .checkRoom .card .demo1,
+.box .checkRoom .card .demo2 {
+    opacity: 0.3;
+    transition: 0.1s;
+}
+
+.box .checkRoom .card .active,
+.box .checkRoom .card .demo1:hover,
+.box .checkRoom .card .demo2:hover {
+    opacity: 1;
 }

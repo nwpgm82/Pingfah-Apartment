@@ -69,7 +69,7 @@ function menubar() {
     }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/gallery/index.php") {
         gallery.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         gallery.style.color = "#fff"
-        header.innerHTML = "แกลอรี่"
+        header.innerHTML = "แกลลอรี่"
         document.querySelector("#dropdown").style.display = "block"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/room_id.php") {
         roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"

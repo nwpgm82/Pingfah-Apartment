@@ -28,7 +28,7 @@ $column_num2 = 1;
             ?>
             <div class="card">
                 <div class="container">
-                <?php
+                    <?php
                     if($row['type'] == 'พัดลม'){
                         $type_show = 'fan';
                         $getImg = "SELECT * FROM fan_gal";
@@ -60,18 +60,71 @@ $column_num2 = 1;
                             while($row3 = $resultImg2->fetch_assoc()) {
                         ?>
                         <div class="column">
-                        <img class="demo<?php echo $num; ?> cursor"
+                            <img class="demo<?php echo $num; ?> cursor"
                                 src="images/roomdetail/<?php echo $type_show; ?>/<?php echo $row3['gal_name']; ?>"
-                                style="width:100%" onclick="currentSlide<?php echo $num; ?>(<?php echo ${'column_num'.$num}; ?>)">
+                                style="width:100%"
+                                onclick="currentSlide<?php echo $num; ?>(<?php echo ${'column_num'.$num}; ?>)">
                         </div>
                         <?php ${'column_num'.$num}++; } } ?>
                     </div>
                 </div>
                 <div class="detail">
                     <div>
-                        <h3>ห้อง<?php echo $row['type']; ?></h3>
-                        <p>- รายเดือน : <?php echo number_format($row['price']); ?> บาท</p>
-                        <p>- รายวัน : <?php echo number_format($row['daily_price']); ?> บาท</p>
+                        <h2>ห้อง<?php echo $row['type']; ?></h2>
+                        <div class="hr"></div>
+                        
+                        <div class="user-grid">
+                            <img src="../img/tool/user.png" alt="">
+                            <label>2 คน</label>
+                        </div>
+                        <p>รายเดือน : <label style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['price']); ?></strong></label> บาท</p>
+                        <p>รายวัน : <label style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['daily_price']); ?></strong></label> บาท</p>
+                    </div>
+                    <div style="padding-top: 30px;">
+                        <h3 style="color:#000">สิ่งอำนวยความสะดวก</h3>
+                        <div class="hr"></div>
+                        <div class="detail-grid">
+                            <?php
+                            if($row["sv_air"] == "on"){
+                            ?>
+                            <div class="sub-grid">
+                                <img src="../img/tool/air2.png">
+                                <label>เครื่องปรับอากาศ</label>
+                            </div>
+                            <?php } ?>
+                            <?php
+                            if($row["sv_fan"] == "on"){
+                            ?>
+                            <div class="sub-grid">
+                                <img src="../img/tool/fan.png">
+                                <label>พัดลม</label>
+                            </div>
+                            <?php } ?>
+                            <?php
+                            if($row["sv_wifi"] == "on"){
+                            ?>
+                            <div class="sub-grid">
+                                <img src="../img/tool/wifi2.png">
+                                <label>WI-FI</label>
+                            </div>
+                            <?php } ?>
+                            <?php
+                            if($row["sv_furniture"] == "on"){
+                            ?>
+                            <div class="sub-grid">
+                                <img src="../img/tool/clothes.png">
+                                <label>เฟอร์นิเจอร์ - ตู้เสื้อผ้า, เตียง</label>
+                            </div>
+                            <?php } ?>
+                            <?php
+                            if($row["sv_readtable"] == "on"){
+                            ?>
+                            <div class="sub-grid">
+                                <img src="../img/tool/table.png">
+                                <label>โต๊ะอ่านหนังสือ</label>
+                            </div>
+                            <?php } ?>
+                        </div>
                     </div>
                 </div>
             </div>

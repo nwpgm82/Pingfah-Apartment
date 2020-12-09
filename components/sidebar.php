@@ -37,7 +37,7 @@
                             <li id="roomdetail">- ประเภทห้องพัก</li>
                         </a>
                         <a href="/Pingfah/pages/admin/gallery/index.php">
-                            <li id="gallery">- แกลอรี่</li>
+                            <li id="gallery">- แกลลอรี่</li>
                         </a>
                     </ul>
                 </div>

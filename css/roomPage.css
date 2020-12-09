@@ -63,7 +63,7 @@ body::before {
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
-.box .roomPage .card h3 {
+.box .roomPage .card h2 {
     color: #b3994c;
     font-weight: bold;
 }
@@ -76,10 +76,37 @@ body::before {
 
 .box .roomPage .card .detail {
     padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
     line-height: 40px;
+}
+
+.box .roomPage .card .detail .user-grid {
+    display: grid;
+    grid-template-columns: 20px auto;
+    column-gap: 8px;
+}
+
+.box .roomPage .card .detail .user-grid img {
+    width: 20px;
+    object-fit: contain;
+}
+
+.box .roomPage .card .detail .detail-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 850px;
+}
+
+.box .roomPage .card .detail .detail-grid .sub-grid{
+    margin: 16px 0;
+    display: grid;
+    grid-template-columns: 40px auto;
+    column-gap: 16px;
+    width: 100%;
+    align-items: center;
+}
+
+.box .roomPage .card .detail .detail-grid .sub-grid img{
+    width: 40px;
 }
 
 .box .roomPage .card button {
@@ -210,10 +237,4 @@ body::before {
 .box .roomPage .card .demo1:hover,
 .box .roomPage .card .demo2:hover {
     opacity: 1;
-}
-
-.box .roomPage .card .detail-grid{
-    padding-top:16px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
 }

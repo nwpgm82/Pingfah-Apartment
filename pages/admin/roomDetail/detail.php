@@ -96,25 +96,30 @@ if($_SESSION['level'] == 'admin'){
                             <h3>สิ่งอำนวยความสะดวก</h3>
                             <div class="hr"></div>
                             <div class="detail-grid">
-                                <div style="padding:16px 0;">
+                                <div class="sub-grid">
                                     <input type="checkbox" name="sv_air" <?php if($row['sv_air'] == 'on'){ echo "checked"; }?> disabled>
                                     <label>เครื่องปรับอากาศ</label>
+                                    <img src="../../../img/tool/air2.png">
                                 </div>
-                                <div style="padding:16px 0;">
+                                <div class="sub-grid">
                                     <input type="checkbox" name="sv_fan" <?php if($row['sv_fan'] == 'on'){ echo "checked"; }?> disabled>
                                     <label>พัดลม</label>
+                                    <img src="../../../img/tool/fan.png">
                                 </div>
-                                <div style="padding:16px 0;">
+                                <div class="sub-grid">
                                     <input type="checkbox" name="sv_wifi" <?php if($row['sv_wifi'] == 'on'){ echo "checked"; }?> disabled>
                                     <label>WI-FI</label>
+                                    <img src="../../../img/tool/wifi2.png">
                                 </div>
-                                <div style="padding:16px 0;">
+                                <div class="sub-grid">
                                     <input type="checkbox" name="sv_furniture" <?php if($row['sv_furniture'] == 'on'){ echo "checked"; }?> disabled>
                                     <label>เฟอร์นิเจอร์ - ตู้เสื้อผ้า, เตียง</label>
+                                    <img src="../../../img/tool/clothes.png">
                                 </div>
-                                <div style="padding:16px 0;">
+                                <div class="sub-grid">
                                     <input type="checkbox" name="sv_readtable" <?php if($row['sv_readtable'] == 'on'){ echo "checked"; }?> disabled>
                                     <label>โต๊ะอ่านหนังสือ</label>
+                                    <img src="../../../img/tool/table.png">
                                 </div>
                             </div>
                         </div>

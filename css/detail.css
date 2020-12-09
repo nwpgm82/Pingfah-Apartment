@@ -133,19 +133,32 @@
     padding-top:16px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    width: 500px;
+    width: 850px;
 }
 
-.detail-box .detail-grid input[type=checkbox]{
+.detail-box .detail-grid .sub-grid{
+    margin: 16px 0;
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    width: 100%;
+    align-items: center;
+}
+
+.detail-box .detail-grid .sub-grid input[type=checkbox]{
     width: 20px;
     height: 20px;
     margin: 0 8px;
     cursor: pointer;
 }
 
-.detail-box .detail-grid input[type=checkbox]:disabled:hover{
+.detail-box .detail-grid .sub-grid input[type=checkbox]:disabled:hover{
     cursor: default;
 }
+
+.detail-box .detail-grid .sub-grid img{
+    width: 40px;
+}
+
 
 .detail-box button{
     width: auto;
