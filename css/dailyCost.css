@@ -120,6 +120,7 @@
 .dailycost-box table .status-success {
     background-color: #B1D78A;
     cursor: default;
+    width: 100%;
 }
 
 .dailycost-box table .status-success p {

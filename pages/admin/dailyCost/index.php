@@ -82,6 +82,7 @@ if($_SESSION['level'] == 'admin'){
                         <th>เลขที่ในการจอง</th>
                         <th>ราคารวม</th>
                         <th>สถานะการชำระเงิน</th>
+                        <th>เพิ่มเติม</th>
                     </tr>
                     <?php
                         while($row = $result->fetch_assoc()) {
@@ -93,8 +94,8 @@ if($_SESSION['level'] == 'admin'){
                         <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?></td>
                         <td><?php echo $row['code']; ?></td>
                         <td><?php echo $row['price_total']; ?></td>
+                        <td><button class="status-success"><?php echo $row['daily_status']; ?></button></td>
                         <td>
-                            <button class="status-success"><?php echo $row['daily_status']; ?></button>
                             <a href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
                             <button type="button" class="del" onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
                         </td>
