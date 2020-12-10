@@ -44,33 +44,61 @@
                         <p><strong>เลขบัตรประชาชน : </strong> <?php echo $id_card ?></p>
                         <p><strong>อีเมล : </strong> <?php echo $email; ?></p>
                         <p><strong>เบอร์โทรศัพท์ : </strong> <?php echo $tel; ?></p>
-                        <p><strong>ประเภทห้องพัก : </strong> <?php echo $room_type; ?></p>
-                        <p><strong>จำนวน : </strong> <?php echo $room_count; ?> ห้อง</p>
+                        <p><strong>หัองแอร์ : </strong> <?php echo $air_room; ?> ห้อง</p>
+                        <p><strong>ห้องพัดลม : </strong> <?php echo $fan_room; ?> ห้อง</p>
                         <p><strong>วันที่เข้าพัก : </strong> <?php echo DateThai($check_in); ?> <strong>ถึง</strong>
                             <?php echo DateThai($check_out); ?></p>
                     </div>
                     <div style="padding: 0 24px;border-left:1px solid rgb(131, 120, 47, 0.7);">
                         <h3>รายการห้องที่ว่าง</h3>
                         <div style="padding-top:32px;">
-                            <label><strong>จำนวนในการเลือกคงเหลือ : </strong>&nbsp;<label id="count"></label></label>
-                            <div style="padding-top:32px;">
-                                <?php
-                            $select_room = "SELECT * FROM roomlist WHERE room_type = '$room_type' AND room_status = 'ว่าง'";
-                            $result2 = $conn->query($select_room);
-                            if ($result2->num_rows > 0) {
-                                while($row2 = $result2->fetch_assoc()) {
-                            ?>
-                                <button id="room<?php echo $row2['room_id']; ?>" type="button"
-                                    onclick="count('<?php echo $row2['room_id']; ?>')"><?php echo $row2['room_id']; ?></button>
-                                <?php
-                                }
-                            } else {
-                                echo "*** ไม่มีห้องว่างให้เช่า ***";
-                            }
-                            ?>
+                            <h3>ห้องแอร์</h3>
+                            <div style="padding-top:16px;">
+                                <label><strong>จำนวนที่เลือกได้คงเหลือ : </strong>&nbsp;<label id="air"></label>&nbsp; ห้อง</label>
+                                <div style="padding-top:32px;">
+                                    <?php
+                                    $select_room = "SELECT * FROM roomlist WHERE room_type = 'แอร์' AND room_status = 'ว่าง'";
+                                    $result2 = $conn->query($select_room);
+                                    if ($result2->num_rows > 0) {
+                                        while($row2 = $result2->fetch_assoc()) {
+                                    ?>
+                                    <button id="room<?php echo $row2['room_id']; ?>" type="button"
+                                        onclick="count('<?php echo $row2['room_id']; ?>')"><?php echo $row2['room_id']; ?></button>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "*** ไม่มีห้องว่างให้เช่า ***";
+                                    }
+                                    ?>
+                                </div>
                             </div>
                         </div>
-
+                        <div class="hr" style="margin:16px 0;"></div>
+                        <div>
+                            <h3>ห้องพัดลม</h3>
+                            <div style="padding-top:16px;">
+                                <label><strong>จำนวนที่เลือกได้คงเหลือ : </strong>&nbsp;<label id="fan"></label>&nbsp; ห้อง</label>
+                                <div style="padding-top:32px;">
+                                    <?php
+                                    $select_room = "SELECT * FROM roomlist WHERE room_type = 'พัดลม' AND room_status = 'ว่าง'";
+                                    $result2 = $conn->query($select_room);
+                                    if ($result2->num_rows > 0) {
+                                        while($row2 = $result2->fetch_assoc()) {
+                                    ?>
+                                    <button id="room<?php echo $row2['room_id']; ?>" type="button"
+                                        onclick="count2('<?php echo $row2['room_id']; ?>')"><?php echo $row2['room_id']; ?></button>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "*** ไม่มีห้องว่างให้เช่า ***";
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            
+                        </div>
                     </div>
                 </div>
                 <div class="hr"></div>
@@ -81,12 +109,14 @@
         </div>
     </div>
     <script>
-    var room_arr = []
-    var num = <?php echo $room_count;?>;
-    document.getElementById("count").innerHTML = num;
+    let room_arr = []
+    let air = <?php echo $air_room;?>;
+    let fan = <?php echo $fan_room;?>;
+    document.getElementById("air").innerHTML = air;
+    document.getElementById("fan").innerHTML = fan;
 
     function accept_select(id) {
-        if (num == 0) {
+        if (air == 0 && fan == 0) {
             if (confirm('คุณต้องการยืนยันการเลือกห้องใช่หรือไม่ ?')) {
                 let str = JSON.stringify(room_arr)
                 console.log(str)
@@ -100,8 +130,8 @@
     function count(room) {
         let room_select = document.getElementById(`room${room}`)
         if (room_select.style.backgroundColor != "grey") {
-            if (num > 0) {
-                num = num - 1
+            if (air > 0) {
+                air = air - 1
                 room_select.style.backgroundColor = "grey"
                 room_arr.push(room)
                 console.log(room_arr)
@@ -111,10 +141,29 @@
             }
         } else {
             room_select.style.backgroundColor = ""
-            num = num + 1
+            air = air + 1
         }
+        document.getElementById("air").innerHTML = air;
+    }
+    function count2(room) {
+        let room_select = document.getElementById(`room${room}`)
+        if (room_select.style.backgroundColor != "grey") {
+            if (fan > 0) {
+                fan = fan - 1
+                room_select.style.backgroundColor = "grey"
+                room_arr.push(room)
+                console.log(room_arr)
 
-        document.getElementById("count").innerHTML = num;
+            } else {
+                alert("ไม่สามารถเลือกห้องได้")
+            }
+        } else {
+            room_arr.splice(room_arr.findIndex((el) => el === room),1)
+            console.log(room_arr)
+            room_select.style.backgroundColor = ""
+            fan = fan + 1
+        }
+        document.getElementById("fan").innerHTML = fan;
     }
     </script>
 </body>

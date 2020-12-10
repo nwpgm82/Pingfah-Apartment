@@ -77,8 +77,7 @@ if($_SESSION['level'] == 'admin'){
                     <tr>
                         <th>ลำดับ</th>
                         <th>เลขห้องที่จอง</th>
-                        <th>ชื่อผู้จอง</th>
-                        <th>เบอร์โทรศัพท์</th>
+                        <th>ชื่อผู้เช่า</th>
                         <th>วันที่เข้าพัก</th>
                         <th>เลขที่ในการจอง</th>
                         <th>ราคารวม</th>
@@ -91,7 +90,6 @@ if($_SESSION['level'] == 'admin'){
                         <td><?php echo $num; ?></td>
                         <td><?php echo $row['room_id']; ?></td>
                         <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
-                        <td><?php echo $row['tel']; ?></td>
                         <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?></td>
                         <td><?php echo $row['code']; ?></td>
                         <td><?php echo $row['price_total']; ?></td>

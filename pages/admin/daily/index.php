@@ -78,28 +78,29 @@ if($_SESSION['level'] == 'admin'){
                         <tr>
                             <th>ลำดับ</th>
                             <th>ชื่อผู้เช่า</th>
-                            <th>เบอร์โทรศัพท์</th>
-                            <th>ประเภทห้อง</th>
-                            <th>จำนวนห้อง</th>
+                            <th>ห้องแอร์</th>
+                            <th>ห้องพัดลม</th>
                             <th>วันที่เข้าพัก</th>
                             <th>เลขที่ในการจอง</th>
+                            <th>สถานะ</th>
+                            <th>ห้องที่เลือก</th>
                             <th>เพิ่มเติม</th>
                         </tr>
                         <?php
                         while($row = $result->fetch_assoc()) {
-                            $roomtype = $row['room_type'];
                         ?>
                         <tr>
                             <td><?php echo $num; ?></td>
                             <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
-                            <td><?php echo $row['tel']; ?></td>
-                            <td><?php echo $row['room_type']; ?></td>
-                            <td><?php echo $row['room_count']; ?></td>
+                            <td><?php echo $row['air_room']; ?></td>
+                            <td><?php echo $row['fan_room']; ?></td>
                             <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?></td>
                             <td><?php echo $row['code']; ?></td>
+                            <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอ้าท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอ้าท์แล้ว</button>"; }else{ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; } ?></td>
+                            <td><?php echo $row['room_select']; ?></td>
                             <td>
                                 <?php
-                                if($row['daily_status'] != 'เข้าพักแล้ว'){
+                                if($row['daily_status'] == ''){
                                 ?>
                                 <div id="btn<?php echo $num; ?>">
                                     <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button class="select_room">เลือกห้อง</button></a>
@@ -118,15 +119,22 @@ if($_SESSION['level'] == 'admin'){
                                         <option value="<?php echo $select['room_id']; ?>"><?php echo $select['room_id']; ?></option>
                                         <?php } } ?>
                                     </select>
-                                    <button onclick="confirmRoom('<?php echo $row['code']; ?>',<?php echo $num; ?>)">ยืนยัน</button>
+                                    <button onclick="confirmRoom('<?php echo $row['daily_id']; ?>',<?php echo $num; ?>)">ยืนยัน</button>
                                 </div>
+                                <?php 
+                                }else if($row['daily_status'] == 'เข้าพักแล้ว'){
+                                ?>
+                                <button class="checkout-btn" onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอ้าท์</button>
+                                <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
+                                <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
                                 <?php 
                                 }else{
                                 ?>
-                                <button type="button" class="confirmed-btn">เข้าพักแล้ว</button>
                                 <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
                                 <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
-                                <?php } ?>
+                                <?php    
+                                } 
+                                ?>
                             </td>
                         </tr>
                         <?php $num++; } ?>
@@ -142,7 +150,7 @@ if($_SESSION['level'] == 'admin'){
                         <div class="pagination">
                             <a href="index.php?page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
-                            <a href="index.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                            <a href="index.php?page=<?php echo $i; ?>" <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
                             <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
                         </div>
