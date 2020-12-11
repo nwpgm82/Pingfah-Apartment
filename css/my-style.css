@@ -22,6 +22,11 @@ div.datedropper.my-style {
   --dd-radius: 4px;
   --dd-width: 180px;
   --dd-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
+  --dd-fontSize: 16px;
 
+}
+
+div.datedropper .picker ul.pick.pick-m {
+  font-size: 20px;
 }
 
