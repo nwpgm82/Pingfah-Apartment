@@ -17,11 +17,9 @@ if($_SESSION['level'] == 'admin'){
         return "$strDay $strMonthThai $strYear";
     }
     if($check_in != "" && $check_out != ""){
-        echo "1";
         $query = "SELECT check_in, SUM(air_room + fan_room) as total_daily FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in ORDER BY check_in ASC";
         $query2 = "SELECT check_in, SUM(air_room) as total_air, SUM(fan_room) as total_fan FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in ORDER BY check_in ASC";
     }else{
-        echo "2";
         $query = "SELECT check_in, SUM(air_room + fan_room) as total_daily FROM daily  GROUP BY check_in ORDER BY check_in ASC";
         $query2 = "SELECT check_in, SUM(air_room) as total_air, SUM(fan_room) as total_fan FROM daily  GROUP BY check_in ORDER BY check_in ASC";
     }
