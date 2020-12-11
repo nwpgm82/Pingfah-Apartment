@@ -126,6 +126,10 @@
     border-collapse: collapse;
 }
 
+.fixed{
+    table-layout: fixed;
+}
+
 .dailycost-box table tr {
     height: 50px;
 }
@@ -149,6 +153,10 @@
     font-weight: 500;
     color: #fff;
     background-color: rgb(131, 120, 47, 0.7);
+}
+
+.dailycost-box table th:first-child{
+    padding: 0;
 }
 
 .dailycost-box table td:first-child {

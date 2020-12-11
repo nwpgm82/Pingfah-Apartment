@@ -104,16 +104,16 @@ if($_SESSION['level'] == 'admin'){
                 }
                 if ($result->num_rows > 0) {
                 ?>
-                <table>
+                <table class="fixed">
                     <tr>
-                        <th>ลำดับ</th>
-                        <th>เลขห้องที่จอง</th>
-                        <th>ชื่อผู้เช่า</th>
-                        <th>วันที่เข้าพัก</th>
-                        <th>เลขที่ในการจอง</th>
-                        <th>ราคารวม</th>
-                        <th>สถานะการชำระเงิน</th>
-                        <th>เพิ่มเติม</th>
+                        <th style="width:4%">ลำดับ</th>
+                        <th style="width:15%">เลขห้องที่จอง</th>
+                        <th style="width:18%">ชื่อผู้เช่า</th>
+                        <th style="width:18%">วันที่เข้าพัก</th>
+                        <th style="width:10%">เลขที่ในการจอง</th>
+                        <th style="width:10%">ราคารวม</th>
+                        <th style="width:10%">สถานะการชำระเงิน</th>
+                        <th style="width:15%">เพิ่มเติม</th>
                     </tr>
                     <?php
                         while($row = $result->fetch_assoc()) {
