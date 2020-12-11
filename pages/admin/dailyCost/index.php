@@ -16,6 +16,13 @@ if($_SESSION['level'] == 'admin'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
+    $query = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost GROUP BY check_in";
+    $query_result = mysqli_query($conn, $query);
+    $datax = array();
+    foreach ($query_result as $k) {
+        $datax[] = "['".DateThai($k['check_in'])."'".", ".$k['daily_price']."]";
+    }
+    $datax = implode(",", $datax);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +31,11 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/dailyCost.css">
+    <link rel="stylesheet" href="../../../css/my-style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -31,14 +43,28 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="dailycost-box">
+                <div class="card">
+                    <div id="columnchart_material1" class="chart"></div>
+                </div>
+                <div class="hr"></div>
                 <h3>ค้นหารายการชำระเงินรายวัน</h3>
                 <div class="search">
                     <div style="padding-right:16px;">
-                        <label>ค้นหาตามวันที่</label>
-                        <input type="date" id="check_in" value="<?php echo $check_in; ?>" required>
-                        <label>~</label>
-                        <input type="date" id="check_out" value="<?php echo $check_out; ?>" required>
-                        <button type="button" onclick="searchDate()">ค้นหา</button>
+                        <div style="display:flex;align-items:center;">
+                            <label>ค้นหาตามวันที่</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="check_in"
+                                    value="<?php echo $check_in; ?>" required>
+                                <p id="check_in_date" class="dateText"></p>
+                            </div>
+                            <label>~</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="check_out"
+                                    value="<?php echo $check_out; ?>" required>
+                                <p id="check_out_date" class="dateText"></p>
+                            </div>
+                            <button type="button" onclick="searchDate()">ค้นหา</button>
+                        </div>
                     </div>
                     <div style="padding-right:16px;">
                         <label>ค้นหาเลขในการจอง</label>
@@ -91,13 +117,16 @@ if($_SESSION['level'] == 'admin'){
                         <td><?php echo $num; ?></td>
                         <td><?php echo $row['room_id']; ?></td>
                         <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
-                        <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?></td>
+                        <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?>
+                        </td>
                         <td><?php echo $row['code']; ?></td>
                         <td><?php echo $row['price_total']; ?></td>
                         <td><button class="status-success"><?php echo $row['daily_status']; ?></button></td>
                         <td>
-                            <a href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
-                            <button type="button" class="del" onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
+                            <a
+                                href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
+                            <button type="button" class="del"
+                                onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
                         </td>
                     </tr>
                     <?php $num++; } ?>
@@ -127,6 +156,30 @@ if($_SESSION['level'] == 'admin'){
         </div>
     </div>
     <script src="../../../js/admin/dailyCost.js"></script>
+    <script>
+    google.charts.load('current', {
+        'packages': ['bar']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['วัน / เดือน / ปี', 'รายได้'],
+            <?php echo $datax;?>
+        ]);
+
+        var options = {
+            title: 'รายการชำระเงินรายวัน',
+            colors: ['rgb(131, 120, 47)'],
+            fontName: "Sarabun"
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+    </script>
 </body>
 
 </html>

@@ -37,9 +37,12 @@ if($_SESSION['level'] == 'admin'){
                 <h3>รายละเอียดการจอง</h3>
                 <div class="hr"></div>
                 <div>
-                    <label><strong>เลขที่ในการจอง : </strong><?php echo $code; ?> <strong>&nbsp; | &nbsp; ประเภทห้องพัก :
-                        </strong>ห้อง<?php echo $room_type; ?></label>
+                    <h3>เลขที่ในการจอง : </strong><?php echo $code; ?></h3>
                     <div class="row">
+                        <div class="col-4">
+                            <p>ห้องที่เลือก</p>
+                            <input type="text" value="<?php echo $room_select ?>" disabled>
+                        </div>
                         <div class="col-4">
                             <p>ชื่อ</p>
                             <input type="text" value="<?php echo $firstname ?>" disabled>
@@ -48,20 +51,23 @@ if($_SESSION['level'] == 'admin'){
                             <p>นามสกุล</p>
                             <input type="text" value="<?php echo $lastname ?>" disabled>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-4">
                             <p>เลขบัตรประชาชน / Passport</p>
                             <input type="text" value="<?php echo $id_card ?>" disabled>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-4">
                             <p>อีเมล</p>
                             <input type="email" value="<?php echo $email ?>" disabled>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <p>เบอร์โทรศัพท์</p>
                             <input type="tel" value="<?php echo $tel ?>" disabled>
                         </div>
+
+                    </div>
+                    <div class="row">
                         <div class="col-2">
                             <p>เช็คอิน</p>
                             <input type="text" value="<?php echo DateThai($check_in); ?>" disabled>
@@ -71,18 +77,33 @@ if($_SESSION['level'] == 'admin'){
                             <input type="text" value="<?php echo DateThai($check_out); ?>" disabled>
                         </div>
                         <div class="col-1">
-                            <p>จำนวนห้อง</p>
-                            <input type="number" value="<?php echo $room_count; ?>" disabled>
+                            <p>ห้องแอร์</p>
+                            <input type="number" value="<?php echo $air_room; ?>" disabled>
                         </div>
-                    </div>
-                    <div class="row">
+                        <div class="col-1">
+                            <p>ห้องพัดลม</p>
+                            <input type="number" value="<?php echo $fan_room; ?>" disabled>
+                        </div>
                         <div class="col-2">
                             <p>สถานะการเข้าพัก</p>
-                            <input type="email" value="<?php if(isset($daily_status)){ echo $daily_status; }else{ echo "ยังไม่ได้เข้าพัก"; } ?>" disabled>
+                            <input type="email"
+                                value="<?php if(isset($daily_status)){ echo $daily_status; }else{ echo "ยังไม่ได้เข้าพัก"; } ?>"
+                                disabled>
+                        </div>
+                    </div>
+                    <div style="padding-top:32px;">
+                        <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>
+                        <div class="hr"></div>
+                        <div class="img-box">
+                            <?php
+                            if($payment_img != null || $payment_img != ""){
+                            ?>
+                            <img src="../../../img/tool/bill.jpg" alt="">
+                            <button class="del-btn" onclick="delImg(<?php echo $daily_id; ?>,'<?php echo $payment_img; ?>')">X</button>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -125,6 +125,7 @@
     -moz-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.05);
     box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.05);
     background-color: #fff;
+    overflow: hidden;
 }
 
 .home-box .grid .card .icon-box img {

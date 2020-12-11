@@ -60,8 +60,8 @@ if($_SESSION['level'] == 'admin'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="../../css/my-style.css">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../js/datedropper.pro.min.js"></script>
@@ -269,13 +269,14 @@ if($_SESSION['level'] == 'admin'){
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['เดือน', 'ชำระเงินแล้ว', 'ยังไม่ได้ชำระ'],
+            ['เดือน / ปี', 'ชำระเงินแล้ว', 'ยังไม่ได้ชำระ'],
             <?php echo $datax;?>
         ]);
 
         var options = {
-            title: 'รายการชำระรายเดือน',
-            colors: ['rgb(131, 120, 47)', '#a8a06d']
+            title: 'รายการชำระเงินรายเดือน',
+            colors: ['rgb(131, 120, 47)', '#a8a06d'],
+            fontName: "Sarabun"
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
@@ -286,13 +287,14 @@ if($_SESSION['level'] == 'admin'){
     function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วันที่', 'รายได้'],
+            ['วัน / เดือน / ปี', 'รายได้'],
             <?php echo $datax2;?>
         ]);
 
         var options = {
-            title: 'รายการชำระรายวัน',
-            colors: ['rgb(131, 120, 47)']
+            title: 'รายการชำระเงินรายวัน',
+            colors: ['rgb(131, 120, 47)'],
+            fontName: "Sarabun"
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
@@ -310,6 +312,7 @@ if($_SESSION['level'] == 'admin'){
         var options = {
             title: 'รายการแจ้งซ่อมแยกตามประเภท',
             is3D: true,
+            fontName: "Sarabun"
             // colors: ['rgb(131, 120, 47)']
         };
 
@@ -328,6 +331,7 @@ if($_SESSION['level'] == 'admin'){
         var options = {
             title: 'รายการแจ้งซ่อมแยกตามสถานะ',
             is3D: true,
+            fontName: "Sarabun"
             // colors: ['rgb(131, 120, 47)']
         };
 
