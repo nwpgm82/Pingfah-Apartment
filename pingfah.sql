@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2020 at 07:42 PM
+-- Generation Time: Dec 11, 2020 at 08:58 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -92,7 +92,9 @@ CREATE TABLE `cost` (
 --
 
 INSERT INTO `cost` (`cost_id`, `room_id`, `type`, `cost_status`, `date`, `room_cost`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `total`) VALUES
-(3, '202', '', 'ชำระเงินแล้ว', '2020-11', 2700.00, 80.00, 750.00, 105.00, 0.00, '3635');
+(5, '201', '', 'ยังไม่ได้ชำระ', '2020-11', 2700.00, 80.00, 750.00, 105.00, 0.00, '3635'),
+(6, '202', '', 'ชำระเงินแล้ว', '2020-12', 2700.00, 80.00, 600.00, 105.00, 0.00, '3485'),
+(7, '201', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 80.00, 375.00, 105.00, 0.00, '3260');
 
 -- --------------------------------------------------------
 
@@ -115,23 +117,17 @@ CREATE TABLE `daily` (
   `fan_room` int(2) DEFAULT NULL,
   `daily_status` varchar(200) DEFAULT NULL,
   `payment_datebefore` varchar(200) NOT NULL,
-  `payment_img` varchar(200) DEFAULT NULL
+  `payment_img` varchar(200) DEFAULT NULL,
+  `room_select` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `daily`
 --
 
-INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `code`, `check_in`, `check_out`, `people`, `air_room`, `fan_room`, `daily_status`, `payment_datebefore`, `payment_img`) VALUES
-(13, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'nw68y0ftqpx', '2020-11-25', '2020-11-26', '', NULL, NULL, 'เข้าพักแล้ว', '', NULL),
-(14, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'nrogk56n2rj', '2020-11-24', '2020-11-26', '', NULL, NULL, 'เข้าพักแล้ว', '', NULL),
-(15, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'f25omtxwa4z', '2020-12-04', '2020-12-05', '', NULL, NULL, NULL, '', NULL),
-(17, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'k0kp6jtpnnx', '2020-12-09', '2020-12-16', '3', 3, 0, NULL, '', NULL),
-(18, 'สุภิศรา', 'เตชนันท์', '5556667778889', 'supisra45.30@gmail.com', '0620477145', '6vmygc8qxym', '2020-12-09', '2020-12-16', '5', 3, 2, NULL, '', NULL),
-(21, 'พงศธร', 'สร้อยอินต๊ะ', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '7xgn0rotoid', '2020-12-07', '2020-12-08', '5', 3, 2, NULL, '2020-12-08', NULL),
-(25, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'mmkycurx0fm', '2020-12-07', '2020-12-08', '2', 2, 0, NULL, '2020-12-07', NULL),
-(26, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'us6f4zbi5yx', '2020-12-09', '2020-12-10', '1', 1, 0, NULL, '2020-12-08', NULL),
-(30, 'พงศธร', 'สร้อยอินต๊ะ', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '8ojjyt3wmet', '2020-12-07', '2020-12-08', '1', 1, 0, NULL, '2020-12-07', NULL);
+INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `code`, `check_in`, `check_out`, `people`, `air_room`, `fan_room`, `daily_status`, `payment_datebefore`, `payment_img`, `room_select`) VALUES
+(32, 'พงศธร', 'สร้อยอินต๊ะ', '5556667778889', 'blackfrostier@gmail.com', '45611216156', 'a8smqzdkphh', '2020-12-10', '2020-12-11', '3', 2, 1, 'เช็คเอ้าท์แล้ว', '2020-12-10', NULL, '203, 204, 206'),
+(33, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'ytm447v4phn', '2020-12-12', '2020-12-13', '3', 3, 0, 'เข้าพักแล้ว', '2020-12-12', NULL, '203, 205, 208');
 
 -- --------------------------------------------------------
 
@@ -151,16 +147,17 @@ CREATE TABLE `dailycost` (
   `check_out` varchar(200) NOT NULL,
   `price_total` float(11,2) NOT NULL,
   `daily_status` varchar(200) NOT NULL,
-  `code` varchar(200) NOT NULL
+  `code` varchar(200) NOT NULL,
+  `payment_img` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `dailycost`
 --
 
-INSERT INTO `dailycost` (`dailycost_id`, `room_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `check_in`, `check_out`, `price_total`, `daily_status`, `code`) VALUES
-(12, '201, 203, 204', 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '2020-11-25', '2020-11-26', 1050.00, 'ชำระเงินแล้ว', 'nw68y0ftqpx'),
-(13, '206, 207, 306', 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '2020-11-24', '2020-11-26', 750.00, 'ชำระเงินแล้ว', 'nrogk56n2rj');
+INSERT INTO `dailycost` (`dailycost_id`, `room_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `check_in`, `check_out`, `price_total`, `daily_status`, `code`, `payment_img`) VALUES
+(32, '203, 204, 206', 'พงศธร', 'สร้อยอินต๊ะ', '5556667778889', 'blackfrostier@gmail.com', '45611216156', '2020-12-10', '2020-12-11', 950.00, 'ชำระเงินแล้ว', 'a8smqzdkphh', 'bill.jpg'),
+(33, '203, 205, 208', 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '2020-12-12', '2020-12-13', 1050.00, 'ชำระเงินแล้ว', 'ytm447v4phn', NULL);
 
 -- --------------------------------------------------------
 
@@ -272,6 +269,7 @@ CREATE TABLE `login` (
   `username` varchar(200) NOT NULL,
   `name` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL,
   `level` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -279,11 +277,12 @@ CREATE TABLE `login` (
 -- Dumping data for table `login`
 --
 
-INSERT INTO `login` (`username`, `name`, `password`, `level`) VALUES
-('202', '', '475e1c39acbf5b4aff05495b8c1d18f5', 'guest'),
-('205', '', '1cbf2e9cd7eba3b7dd32cf2565d57908', 'guest'),
-('admin', 'admin', '81dc9bdb52d04dc20036dbd8313ed055', 'admin'),
-('nwpgm82', 'นวพล', 'ef16b5fe40a49934ad40c0b059090b14', 'employee');
+INSERT INTO `login` (`username`, `name`, `password`, `email`, `level`) VALUES
+('201', '201', '475e1c39acbf5b4aff05495b8c1d18f5', 'blackfrostier@gmail.com', 'guest'),
+('202', '202', '1cbf2e9cd7eba3b7dd32cf2565d57908', 'supisra45.30@gmail.com', 'guest'),
+('205', '', '1cbf2e9cd7eba3b7dd32cf2565d57908', '', 'guest'),
+('admin', 'admin', '81dc9bdb52d04dc20036dbd8313ed055', '', 'admin'),
+('nwpgm82', 'นวพล', 'ef16b5fe40a49934ad40c0b059090b14', 'blackfrostier@gmail.com', 'employee');
 
 -- --------------------------------------------------------
 
@@ -363,7 +362,7 @@ CREATE TABLE `roomdetail` (
 --
 
 INSERT INTO `roomdetail` (`type`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `price`, `detail`, `daily_price`, `sv_fan`, `sv_air`, `sv_wifi`, `sv_furniture`, `sv_readtable`) VALUES
-('พัดลม', 80.00, 7.50, 105.00, 150.00, 2300.00, '', 250.00, '', NULL, NULL, NULL, NULL),
+('พัดลม', 80.00, 7.50, 105.00, 150.00, 2300.00, '', 250.00, 'on', '', 'on', 'on', 'on'),
 ('แอร์', 80.00, 7.50, 105.00, 150.00, 2700.00, 'ห้องแอร์ 2700 บาท', 350.00, '', 'on', 'on', 'on', 'on');
 
 -- --------------------------------------------------------
@@ -386,20 +385,20 @@ CREATE TABLE `roomlist` (
 --
 
 INSERT INTO `roomlist` (`room_id`, `room_type`, `room_status`, `come`, `check_in`, `check_out`) VALUES
-('201', 'แอร์', 'เช่ารายวัน', '', '2020-11-25', '2020-11-26'),
-('202', 'แอร์', 'ไม่ว่าง', '2020/11/30', '', ''),
-('203', 'แอร์', 'เช่ารายวัน', '', '2020-11-25', '2020-11-26'),
-('204', 'แอร์', 'เช่ารายวัน', '', '2020-11-25', '2020-11-26'),
-('205', 'แอร์', 'ไม่ว่าง', '2020/11/30', '', ''),
-('206', 'พัดลม', 'เช่ารายวัน', '', '2020-11-24', '2020-11-26'),
-('207', 'พัดลม', 'เช่ารายวัน', '', '2020-11-24', '2020-11-26'),
-('208', 'แอร์', 'ว่าง', '', '', ''),
+('201', 'แอร์', 'ไม่ว่าง', '2020/12/11', '', ''),
+('202', 'แอร์', 'ไม่ว่าง', '2020/12/11', '', ''),
+('203', 'แอร์', 'เช่ารายวัน', '', '2020-12-12', '2020-12-13'),
+('204', 'แอร์', 'เช่ารายวัน', '', '2020-12-10', '2020-12-11'),
+('205', 'แอร์', 'เช่ารายวัน', '', '2020-12-12', '2020-12-13'),
+('206', 'พัดลม', 'เช่ารายวัน', '', '2020-12-10', '2020-12-11'),
+('207', 'พัดลม', 'ว่าง', '', '', ''),
+('208', 'แอร์', 'เช่ารายวัน', '', '2020-12-12', '2020-12-13'),
 ('301', 'แอร์', 'ว่าง', '', '', ''),
 ('302', 'แอร์', 'ว่าง', '', '', ''),
 ('303', 'แอร์', 'ว่าง', '', '', ''),
 ('304', 'แอร์', 'ว่าง', '', '', ''),
 ('305', 'แอร์', 'ว่าง', '', '', ''),
-('306', 'พัดลม', 'เช่ารายวัน', '', '2020-11-24', '2020-11-26'),
+('306', 'พัดลม', 'ว่าง', '', '', ''),
 ('307', 'แอร์', 'ว่าง', '', '', ''),
 ('308', 'แอร์', 'ว่าง', '', '', '');
 
@@ -450,14 +449,13 @@ CREATE TABLE `roommember` (
 --
 
 INSERT INTO `roommember` (`room_member`, `name_title`, `firstname`, `lastname`, `nickname`, `id_card`, `phone`, `email`, `birthday`, `age`, `race`, `nationality`, `job`, `address`, `pic_idcard`, `pic_home`, `id_line`, `name_title2`, `firstname2`, `lastname2`, `nickname2`, `id_card2`, `phone2`, `email2`, `birthday2`, `age2`, `race2`, `nationality2`, `job2`, `address2`, `pic_idcard2`, `pic_home2`, `id_line2`) VALUES
-('201', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', '404365.jpg', NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
-('202', 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '1998-12-21', 21, 'ไทย', 'ไทย', 'นักศึกษา', '140/40 หมู่ 2 ต. หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', '404365.jpg', 'ข้อเสนอแนะบ้านพักพิงฟ้า.jpg', 'blackfrostier', 'นางสาว', 'สุภิศรา', 'เตชนันท์', 'แยม', '5556669998888', '0956766976', 'supisra45.30@gmail.com', '1999-04-22', 21, 'ไทย', 'ไทย', 'นักศึกษา', 'หหหหกกกกฟฟฟฟ                        ', '117094314_3466888280022757_1501037714692968577_o.jpg', '115829682_3345399482178668_7710700474312287945_o.jpg', 'Yammy'),
+('201', 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '1998-12-21', 21, 'ไทย', 'ไทย', 'นักศึกษา', '140/40 หมู่ 2 ต. หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', '404365.jpg', 'ข้อเสนอแนะบ้านพักพิงฟ้า.jpg', 'blackfrostier', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('202', 'นางสาว', 'สุภิศรา', 'เตชนันท์', 'แยม', '5556667778889', '0956766976', 'supisra45.30@gmail.com', '1998-04-22', 21, 'ไทย', 'ไทย', 'นักศึกษา', 'เลขที่ 288 หมู่ที่ 5 ตำบล ริมกก อำเภอ เมืองเชียงราย จังหวัด เชียงราย 57100', '117094314_3466888280022757_1501037714692968577_o.jpg', '115829682_3345399482178668_7710700474312287945_o.jpg', 'Yammy', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
 ('203', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
-('204', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
-('205', 'นางสาว', 'สุภิศรา', 'เตชนันท์', 'แยม', '5556667778889', '0956766976', 'supisra45.30@gmail.com', '2020-11-30', 21, 'ไทย', 'ไทย', 'นักศึกษา', 'เลขที่ 288 หมู่ที่ 5 ตำบล ริมกก อำเภอ เมืองเชียงราย จังหวัด เชียงราย 57100                        ', '115829682_3345399482178668_7710700474312287945_o.jpg', 'ข้อเสนอแนะบ้านพักพิงฟ้า.jpg', 'Yammy', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
-('206', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
-('207', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
-('306', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, '');
+('204', '', 'พงศธร', 'สร้อยอินต๊ะ', '', '5556667778889', '4561121615', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('205', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('206', '', 'พงศธร', 'สร้อยอินต๊ะ', '', '5556667778889', '4561121615', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('208', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -475,6 +473,40 @@ CREATE TABLE `rule` (
 
 INSERT INTO `rule` (`rule_detail`) VALUES
 ('1. ผู้เช่าจะต้องอยู่ครบ 6 เดือน พร้อมด้วยการแจ้งล่วงหน้าอย่างน้อย 1 เดือน ทางผู้ให้เช่าจึงจะคืนเงินประกันให้\r\n2. ผู้เช่าจะต้องชำระเงินค่าห้อง ค่าน้ำ และค่าไฟ ก่อนวันที่ 5 ของทุกเดือนหากจ่ายช้ากว่ากำหนดทางผู้เช่าจะเก็บวันละ 150 บาท หากผู้เช่าค้างชำระเกิน 15 วัน ทางผู้ให้เช่ามีสิทธิ์ให้ผู้เช่าออกโดยไม่คืนเงินประกัน\r\n3. ห้ามนำของผิดกฏหมายเข้ามาในห้องพักโดยเด็ดขาด และทางผู้ให้เช่าจะไม่รับผิดชอบใด ๆ ทั้งสิ้น\r\n4. ห้ามเปิด ทีวี เครื่องเสียง วิทยุ ส่งเสียงดัง หรือทำกิจกรรมใด ๆ ที่ทำให้เกิดเสียงดังรบกวนผู้อื่น\r\n5. ห้ามนำสัตว์เลี้ยงทุกชนิดเข้ามาเลี้ยงในห้องพักอย่างเด็ดขาด\r\n6.ห้ามก่อการทะเลาะวิวาท ภายในบริเวณหอพัก\r\n7. ห้ามดื่มสุรา สูบบุหรี่ และสิ่งเสพติดทุกชนิดภายในบริเวณหอพัก\r\n8. ห้ามเล่นการพนันทุกชนิดภายในห้องพัก\r\n9. ห้ามตอกตะปู ติดรูป สติ๊กเกอร์ ภายในห้องพัก และทรัพย์สินของทางหอพัก หายพบจะต้องเสียค่าปรับจุดละ 50 บาท\r\n10. กรณีที่ทำลูกกุญแจหาย ปรับ 100 บาท / ลูก และบัตรคีย์การ์ดหาย ปรับ 200 บาท / ใบ\r\n11. ห้ามประกอบอาหาร โดยใช้แก๊สหุงต้มโดยเด็ดขาด\r\n12. ปิดน้ำประปา และไฟฟ้าให้เรียบร้อยก่อนออกจากห้องพักทุกครั้ง\r\n13. ทางหอพักจะไม่รับผิดชอบทรัพย์สินมีค่าใด ๆ ในกรณีที่เกิดการสูญหาย\r\n14. ทางหอพักได้จัดเตรียม ตู้เสื้อผ้า เตียงนอน ที่นอนสปริง ผ้ารองกันเปื้อน ผ้าปูที่นอน โต๊ะทำงาน พัดลม เครื่องทำน้ำอุ่น และผ้าม่านให้ผู้เช่าไว้พร้อมในห้องพัก แต่ถ้าอุปกรณ์เครื่องใช้เกิดการชำรุด หรือเสียหาย ทางผู้ให้เช่าจะยึดเงินค่าประกัน และเรียกเก็บเพิ่มตามแต่เห็นสมควรของมูลค่าทรัพย์สิน-อุปกรณ์ ที่ชำรุดเสียหายนั้น\r\n15. ทางหอพักสามารถเข้าได้ตลอด 24 ชั่วโมง หากผู้เช่าเข้าหอพักหลังเวลา 20.00 น. ให้ล็อคกุญแจประตูใหญ่ด้านหน้าทุกครั้ง\r\n16. เพื่อความปลอดภัยของผู้เช่าห้องพัก ทางผู้ดูแลหอพักได้บันทึกภาพกล้องวงจรปิดไว้ตลอด 24 ชั่วโมง ห้ามกระทำการใด ๆ ที่ผิดกฎระเบียบฯ หรือผิดกฎหมายอย่างเด็ดขาด\r\n17. ขยะก่อนนำมาทิ้งให้ใส่ถุงขยะที่มีตราของเทศบาลตำบลหนองป่าครั่งเท่านั้น\r\n18. ห้องพักสามารถพักได้ไม่เกิน 2 คน และต้องแจ้งให้ผู้เช่าทราบก่อนทุกครั่ง หากฝ่าฝืนปรับ 200 บาท / วัน หรือให้ออกจากห้องพักทันที\r\n** หากผู้เช่าทำผิดกฎระเบียบข้างต้น ผู้ให้เช่ามีสิทธิ์ให้ออกโดยไม่คืนค่าประกันไม่ว่ากรณีใด ๆ **');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_sales`
+--
+
+CREATE TABLE `tbl_sales` (
+  `id` int(11) NOT NULL,
+  `product_type` varchar(100) NOT NULL,
+  `amount` float(10,2) NOT NULL,
+  `date_save` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_sales`
+--
+
+INSERT INTO `tbl_sales` (`id`, `product_type`, `amount`, `date_save`) VALUES
+(1, 'PC', 100.00, '2020-04-16'),
+(2, 'Notebook', 400.00, '2020-04-16'),
+(3, 'PC', 15000.00, '2020-03-01'),
+(4, 'Notebook', 250.00, '2020-03-01'),
+(5, 'PC', 100.00, '2020-04-16'),
+(6, 'Notebook', 11000.00, '2020-04-16'),
+(7, 'PC', 100.00, '2020-03-01'),
+(8, 'Notebook', 150.00, '2020-03-01'),
+(9, 'Smart Phone', 300.00, '2020-03-01'),
+(10, 'Smart Phone', 14000.00, '2020-04-01'),
+(11, 'PC', 800.00, '2020-02-01'),
+(12, 'Notebook', 100.00, '2020-02-01'),
+(13, 'Smart Phone', 400.00, '2020-02-02'),
+(14, 'Accessories', 5000.00, '2020-04-18'),
+(15, 'Accessories', 4500.00, '2020-03-01');
 
 --
 -- Indexes for dumped tables
@@ -565,6 +597,12 @@ ALTER TABLE `roommember`
   ADD PRIMARY KEY (`room_member`);
 
 --
+-- Indexes for table `tbl_sales`
+--
+ALTER TABLE `tbl_sales`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -584,19 +622,13 @@ ALTER TABLE `appeal`
 -- AUTO_INCREMENT for table `cost`
 --
 ALTER TABLE `cost`
-  MODIFY `cost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `daily`
 --
 ALTER TABLE `daily`
-  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
---
--- AUTO_INCREMENT for table `dailycost`
---
-ALTER TABLE `dailycost`
-  MODIFY `dailycost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -627,6 +659,12 @@ ALTER TABLE `package`
 --
 ALTER TABLE `repair`
   MODIFY `repair_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tbl_sales`
+--
+ALTER TABLE `tbl_sales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
