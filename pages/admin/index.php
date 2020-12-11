@@ -11,18 +11,46 @@ if($_SESSION['level'] == 'admin'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strMonthThai $strYear";
     }
+    function DateThai2($strDate)
+    {
+        $strYear = date("Y",strtotime($strDate))+543;
+        $strMonth= date("n",strtotime($strDate));
+        $strDay= date("j",strtotime($strDate));
+        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strDay $strMonthThai $strYear";
+    }
     $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระ' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date";
+    $query2 = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost GROUP BY check_in";
+    $query3 = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
+    $query4 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
     $result = mysqli_query($conn, $query);
-
+    $result2 = mysqli_query($conn, $query2);
+    $result3 = mysqli_query($conn, $query3);
+    $result4 = mysqli_query($conn, $query4);
     //echo $query;
     $datax = array();
+    $datax2 = array();
+    $datax3 = array();
+    $datax4 = array();
     foreach ($result as $k) {
       $datax[] = "['".DateThai($k['date'])."'".", ".$k['total_price'] ."," .$k['untotal_price'] ."]";
     }
-
+    foreach ($result2 as $j) {
+      $datax2[] = "['".DateThai2($j['check_in'])."'".", ".$j['daily_price']."]";
+    }
+    foreach ($result3 as $l) {
+      $datax3[] = "['".$l['repair_category']."'".", ".$l['total_cate']."]";
+    }
+    foreach ($result4 as $m) {
+      $datax4[] = "['".$m['repair_status']."'".", ".$m['total_cate_status']."]";
+    }
     //cut last commar
     $datax = implode(",", $datax);
-    echo $datax;
+    $datax2 = implode(",", $datax2);
+    $datax3 = implode(",", $datax3);
+    $datax4 = implode(",", $datax4);
+    // echo $datax;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +72,7 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="home-box">
-                <h3>Overview</h3>
+                <h3>Overview Dashboard</h3>
                 <div class="hr"></div>
                 <div class="grid">
                     <div class="card">
@@ -209,9 +237,20 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                     </div>
                 </div>
-                <!-- <div class="grid">
-                    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
-                </div> -->
+                <div class="chart-grid">
+                    <div class="card2 a">
+                        <div id="columnchart_material1" class="chart"></div>
+                    </div>
+                    <div class="card2 b">
+                        <div id="columnchart_material2" class="chart"></div>
+                    </div>
+                    <div class="card2 c">
+                        <div class="sub-grid">
+                            <div id="piechart" class="chart"></div>
+                            <div id="piechart2" class="chart"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -220,8 +259,13 @@ if($_SESSION['level'] == 'admin'){
     google.charts.load('current', {
         'packages': ['bar']
     });
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
     google.charts.setOnLoadCallback(drawChart);
-
+    google.charts.setOnLoadCallback(drawChart2);
+    google.charts.setOnLoadCallback(drawChart3);
+    google.charts.setOnLoadCallback(drawChart4);
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
@@ -234,9 +278,62 @@ if($_SESSION['level'] == 'admin'){
             colors: ['rgb(131, 120, 47)', '#a8a06d']
         };
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+
+    function drawChart2() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['วันที่', 'รายได้'],
+            <?php echo $datax2;?>
+        ]);
+
+        var options = {
+            title: 'รายการชำระรายวัน',
+            colors: ['rgb(131, 120, 47)']
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+
+    function drawChart3() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['ประเภท', 'รายการ'],
+            <?php echo $datax3;?>
+        ]);
+
+        var options = {
+            title: 'รายการแจ้งซ่อมแยกตามประเภท',
+            is3D: true,
+            // colors: ['rgb(131, 120, 47)']
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+
+    function drawChart4() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['ประเภท', 'รายการ'],
+            <?php echo $datax4;?>
+        ]);
+
+        var options = {
+            title: 'รายการแจ้งซ่อมแยกตามสถานะ',
+            is3D: true,
+            // colors: ['rgb(131, 120, 47)']
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+        chart.draw(data, options);
     }
     </script>
     <script src="../../js/home.js"></script>
