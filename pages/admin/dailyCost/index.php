@@ -16,7 +16,12 @@ if($_SESSION['level'] == 'admin'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    $query = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost GROUP BY check_in";
+    if($check_in != "" && $check_out != ""){
+        $query = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in";
+    }else{
+        $query = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost GROUP BY check_in";
+    }
+    
     $query_result = mysqli_query($conn, $query);
     $datax = array();
     foreach ($query_result as $k) {
