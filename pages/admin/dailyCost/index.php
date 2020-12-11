@@ -111,8 +111,8 @@ if($_SESSION['level'] == 'admin'){
                         <th style="width:18%">ชื่อผู้เช่า</th>
                         <th style="width:18%">วันที่เข้าพัก</th>
                         <th style="width:10%">เลขที่ในการจอง</th>
-                        <th style="width:10%">ราคารวม</th>
-                        <th style="width:10%">สถานะการชำระเงิน</th>
+                        <th style="width:8%">ราคารวม</th>
+                        <th style="width:12%">สถานะการชำระเงิน</th>
                         <th style="width:15%">เพิ่มเติม</th>
                     </tr>
                     <?php
