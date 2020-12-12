@@ -1,0 +1,200 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(../fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+body {
+    background: url('../img/tool/bg.png');
+}
+
+body::before{
+    content: '';
+    position: absolute;
+    z-index: -1; /* push it to the background */
+    top: 0px; /* position it off the top background */
+    right: 0px;
+    bottom: -340px; /* position it off the bottom background */
+    left: 0px;
+    background: url('../img/tool/flower.png') bottom left no-repeat,url('../img/tool/flower2.png') bottom right no-repeat;
+    opacity: 0.2;
+}
+
+.box {
+    width: 1400px;
+    margin: auto;
+    padding: 32px;
+}
+
+.box .search input {
+    width: 180px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.7);
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.hr {
+    margin: 16px auto 32px auto;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.7);
+    opacity: 0.5;
+}
+
+.box .checkCode-box {
+    width: 100%;
+    height: auto;
+    background-image: url("../img/tool/bg2.png");
+    border-radius: 4px;
+    padding: 24px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.box .checkCode-box .row {
+    display: flex;
+    padding-bottom: 32px;
+}
+
+.checkCode-box .row .col-1 {
+    flex: 0 0 auto;
+    width: 8.333333%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-2 {
+    flex: 0 0 auto;
+    width: 16.666667%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-3 {
+    flex: 0 0 auto;
+    width: 25%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-4 {
+    flex: 0 0 auto;
+    width: 33.333333%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-5 {
+    flex: 0 0 auto;
+    width: 41.666667%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-6 {
+    flex: 0 0 auto;
+    width: 50%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-7 {
+    flex: 0 0 auto;
+    width: 58.333333%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-8 {
+    flex: 0 0 auto;
+    width: 66.666667%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-9 {
+    flex: 0 0 auto;
+    width: 75%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-10 {
+    flex: 0 0 auto;
+    width: 83.333333%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-11 {
+    flex: 0 0 auto;
+    width: 91.666667%;
+    padding: 0 4px;
+}
+
+.checkCode-box .row .col-12 {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 0 4px;
+}
+
+.box .checkCode-box .row input {
+    margin-top: 8px;
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.box .checkCode-box .img-box{
+    width: 50%;
+    height: 500px;
+    border: 1px solid rgb(131, 120, 47, 0.7);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.box .checkCode-box .img-box img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.box .checkCode-box .img-box .del-btn {
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    background-color: rgb(255, 70, 70);
+    border: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.box .checkCode-box .img-box .del-btn:hover{
+    background-color: rgb(216, 40, 40);
+}
+
+.box .checkCode-box button{
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}

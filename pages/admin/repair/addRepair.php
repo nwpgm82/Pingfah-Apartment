@@ -21,6 +21,10 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/addRepair.css">
+    <link rel="stylesheet" href="../../../css/my-style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -28,7 +32,7 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="addRepair-box">
-                <h3>รายละเอียดความเสียหาย</h3>
+                <h3>เพิ่มรายการแจ้งซ่อม</h3>
                 <div class="hr"></div>
                 <form action="../repair/function/repairAccept.php" method="POST">
                     <div style="margin-top: 32px;">
@@ -74,9 +78,10 @@ if($_SESSION['level'] == 'admin'){
                         <textarea name="repair_detail" id="" cols="30" rows="10"></textarea>
                     </div>
                     <div class="flex-detail">
-                        <div>
+                        <div style="position:relative;">
                             <p>เวลาที่ลง</p>
-                            <input type="text" value="<?php echo DateThai(date("Y-m-d")); ?>" name="repair_date" readonly>
+                            <input type="text" id="repairDate" name="repair_date" readonly>
+                            <p id="repair_date" class="dateText"></p>
                         </div>
                         <!-- <div>
                             <p>สถานะ</p>

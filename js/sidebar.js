@@ -89,11 +89,16 @@ function menubar() {
         cost.style.color = "#fff"
         header.innerHTML = "รายการชำระเงินรายเดือน"
         document.querySelector("#dropdown2").style.display = "block"
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repair_report.php") {
+        cost.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
+        cost.style.color = "#fff"
+        header.innerHTML = "รายการค่าใช้จ่ายจากการแจ้งซ่อม"
+        document.querySelector("#dropdown2").style.display = "block"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/repair/addRepair.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repairDetail.php") {
         repair.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         repair.style.color = "#fff"
         header.innerHTML = "รายการแจ้งซ่อม"
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/package/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/package/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/package/addPackage.php") {
         package.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         package.style.color = "#fff"
         header.innerHTML = "รายการพัสดุ"

@@ -60,6 +60,9 @@
                         <a href="/Pingfah/pages/admin/cost/index.php">
                             <li id="cost">- รายเดือน</li>
                         </a>
+                        <a href="/Pingfah/pages/admin/repair/repair_report.php">
+                            <li id="repair_report">- ค่าใช้จ่ายจากการแจ้งซ่อม</li>
+                        </a>
                     </ul>
                 </div>
                 <a href="/Pingfah/pages/admin/repair/index.php">

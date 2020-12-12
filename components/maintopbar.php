@@ -21,6 +21,9 @@
             <a href="/Pingfah/pages/gallery.php">
                 <li>แกลลอรี่</li>
             </a>
+            <a href="/Pingfah/pages/checkCode.php">
+                <li>ตรวจสอบการจอง</li>
+            </a>
             <a href="#contact">
                 <li>ติดต่อเรา</li>
             </a>

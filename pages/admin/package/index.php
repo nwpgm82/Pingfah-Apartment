@@ -14,6 +14,18 @@ if($_SESSION['level'] == 'admin'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
+    if(isset($from) && isset($to)){
+        $query = "SELECT package_arrived ,SUM(case WHEN package_status = 'รับพัสดุแล้ว' THEN 1 ELSE 0 END) as total_package, SUM(case WHEN package_status = 'ยังไม่ได้รับพัสดุ' THEN 1 ELSE 0 END) as untotal_package FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') ORDER BY package_arrived";
+    }else{
+        $query = "SELECT package_arrived ,SUM(case WHEN package_status = 'รับพัสดุแล้ว' THEN 1 ELSE 0 END) as total_package, SUM(case WHEN package_status = 'ยังไม่ได้รับพัสดุ' THEN 1 ELSE 0 END) as untotal_package FROM package ORDER BY package_arrived";
+    }
+    // $query = "SELECT COUNT(*) as total_package FROM package WHERE package_status = 'ยังไม่ได้รับพัสดุ' ORDER BY package_arrived";
+    $result = mysqli_query($conn, $query);
+    $datax = array();
+    foreach ($result as $k) {
+        $datax[] = "['".DateThai($k['package_arrived'])."'".", ".$k['total_package'] ."," .$k['untotal_package'] ."]";
+    }
+    $datax = implode(",", $datax);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +46,10 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="package-box">
+                <div class="card">
+                    <div id="columnchart_material1" class="chart"></div>
+                </div>
+                <div class="hr"></div>
                 <div>
                     <h3>ค้นหารายการพัสดุ</h3>
                     <div style="padding-top:32px">
@@ -52,7 +68,7 @@ if($_SESSION['level'] == 'admin'){
                                 </div>
                                 <button type="button" onclick="searchDate()">ค้นหา</button>
                             </div>
-                            <button onclick="addPackage()">เพิ่มรายการพัสดุ</button>
+                            <a href="addPackage.php"><button type="button">เพิ่มรายการพัสดุ</button></a>
                         </div>
                     </div>
                     <div class="hr"></div>
@@ -117,7 +133,7 @@ if($_SESSION['level'] == 'admin'){
                         while($row = $result->fetch_assoc()) {
                         ?>
                         <form action="../package/function/receivedPackage.php?ID=<?php echo $row["package_num"]; ?>"
-                            method="POST">
+                            onsubmit="return confirm('คุณต้องการยืนยันการรับพัสดุใช่หรือไม่ ? ');" method="POST">
                             <tr>
                                 <!-- <td style="width:70px;text-align:center"></td> -->
                                 <td><?php echo $row["package_num"] ?></td>
@@ -140,23 +156,28 @@ if($_SESSION['level'] == 'admin'){
                                 <td><?php echo $row["package_room"] ?></td>
                                 <td>
                                     <?php
-                                        if(strlen($row["package_received"]) == 0){
-                                            echo "<input type='text' name='received' required>";
-                                        }else{
-                                            echo $row["package_received"];
-                                        }
+                                    if(strlen($row["package_received"]) == 0){
+                                        echo "<input type='text' name='received' required>";
+                                    }else{
+                                        echo $row["package_received"];
+                                    }
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                            if(strlen($row["package_received"]) == 0){
-                                                echo "<button type='submit' class='received-btn'>รับ</button>";
-                                                echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
-                                            }else{
-                                                echo "<a href='../package/function/delPackage.php?ID=" .$row["package_num"] ."'><button type='button' class='del-btn'>ลบ</button></a>";
-                                            }
-                                        ?>
-
+                                    if(strlen($row["package_received"]) == 0){
+                                    ?>
+                                    <button type="submit" class="received-btn">รับพัสดุ</button>
+                                    <button type="button" class="del-btn"
+                                        onclick="del('<?php echo $row['package_num'] ?>')">ลบ</button>
+                                    <?php
+                                    }else{
+                                    ?>
+                                    <button type="button" class="del-btn"
+                                        onclick="del('<?php echo $row['package_num'] ?>')">ลบ</button>
+                                    <?php
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                         </form>
@@ -186,7 +207,7 @@ if($_SESSION['level'] == 'admin'){
                             <a href="index.php?Date=<?php echo $date; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
                             <a href="index.php?Date=<?php echo $date; ?>&page=<?php echo $i; ?>"
-                            <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
                             <a href="index.php?Date=<?php echo $date; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
@@ -195,25 +216,27 @@ if($_SESSION['level'] == 'admin'){
                             <a href="index.php?Status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
                             <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
-                            <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
                             <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
                             }else if(isset($date) && isset($check)){
                             ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=1">&laquo;</a>
+                            <a
+                                href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
                             <a href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
-                            <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <a
+                                href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
                             }else{
                             ?>
                             <a href="index.php?page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
                             <a href="index.php?page=<?php echo $i; ?>"
-                            <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
                             <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php } ?>
@@ -230,6 +253,30 @@ if($_SESSION['level'] == 'admin'){
         </div>
     </div>
     <script src="../../../js/admin/package.js"></script>
+    <script>
+    google.charts.load('current', {
+        'packages': ['bar']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['วัน / เดือน / ปี', 'รับพัสดุแล้ว', 'ยังไม่ได้รับพัสดุ'],
+            <?php echo $datax;?>
+        ]);
+
+        var options = {
+            title: 'รายการพัสดุ',
+            colors: ['rgb(131, 120, 47)', '#a8a06d'],
+            fontName: "Sarabun"
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+    </script>
 </body>
 
 </html>

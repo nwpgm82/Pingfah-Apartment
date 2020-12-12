@@ -4,14 +4,14 @@ function searchDate(){
     location.assign(`index.php?from=${x}&to=${y}`)
 }
 
-function addPackage(){
-    var add = document.getElementById("addPackage")
-    if(add.style.display == ''){
-        add.style.display = 'block'
-    }else{
-        add.style.display = ''
-    }
-}
+// function addPackage(){
+//     var add = document.getElementById("addPackage")
+//     if(add.style.display == ''){
+//         add.style.display = 'block'
+//     }else{
+//         add.style.display = ''
+//     }
+// }
 
 function searchCheck(id){
     var check = document.getElementById(id)
@@ -42,6 +42,12 @@ function unCheckAll(){
     success.checked = false
     unsuccess.checked = false
     location.href = "index.php"
+}
+
+function del(id){
+    if(confirm("คุณต้องการลบรายการพัสดุนี้ใช่หรือไม่ ? ")){
+      location.href = `../package/function/delPackage.php?ID=${id}`
+    }
 }
 
 function formatDate(date) {
