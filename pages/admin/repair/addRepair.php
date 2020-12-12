@@ -69,7 +69,7 @@ if($_SESSION['level'] == 'admin'){
                             </select>
                         </div>
                     </div>
-                    <div style="margin-top: 32px;">
+                    <div>
                         <p>รายละเอียด</p>
                         <textarea name="repair_detail" id="" cols="30" rows="10"></textarea>
                     </div>
