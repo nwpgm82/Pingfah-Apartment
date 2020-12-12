@@ -185,7 +185,7 @@ body::before{
     background-color: rgb(216, 40, 40);
 }
 
-.box .checkCode-box button{
+.box button{
     width: auto;
     height: 40px;
     padding: 0 16px;

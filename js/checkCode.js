@@ -1,3 +1,8 @@
+function searchDate(){
+    let x = document.getElementById("code").value
+    location.href = `checkCode.php?code=${x}`
+}
+
 function preview_image(event, pic) {
     console.log(pic)
     var reader = new FileReader();

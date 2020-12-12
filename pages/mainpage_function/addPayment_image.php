@@ -5,8 +5,8 @@ $img = $_FILES['payment_img']['name'];
 $path_file = "../images/daily/";
 $path_file2 = "../images/daily/$daily_id/";
 $target = "../images/daily/$daily_id/".basename($img);
-$result = mysql_query("SELECT code FROM daily WHERE daily_id = $daily_id LIMIT 1");
-$row = mysql_fetch_assoc($result);
+$result = mysqli_query($conn,"SELECT code FROM daily WHERE daily_id = $daily_id LIMIT 1");
+$row = mysqli_fetch_assoc($result);
 $sql = "UPDATE daily SET payment_img = '$img' WHERE daily_id = '$daily_id'";
 if(is_dir($path_file)){
     if(is_dir($path_file2)){

@@ -2,7 +2,7 @@
 session_start();
 if($_SESSION["level"] == "admin"){
     include("../../../connection.php");
-    $id = $_REQUEST["id"];
+    $id = $_REQUEST["daily_id"];
     $name = $_REQUEST["name"];
     $pic_location = "../../../images/daily/$id/$name";
     $countCheck = mysqli_query($conn,"SELECT COUNT(payment_img) AS total FROM daily WHERE payment_img = '$name' GROUP BY payment_img HAVING COUNT(payment_img)");
@@ -12,7 +12,7 @@ if($_SESSION["level"] == "admin"){
         if($conn->query($del) === TRUE){
             echo "<script>";
             echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
-            echo "window.location.assign('../dailyCostDetail.php?dailycost_id=$id');";
+            echo "window.location.assign('../dailyDetail.php?daily_id=$id');";
             echo "</script>";
         }else{
             echo "Error deleting record: " . $conn->error;
@@ -22,7 +22,7 @@ if($_SESSION["level"] == "admin"){
         if($conn->query($del) === TRUE && unlink($pic_location)){
             echo "<script>";
             echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
-            echo "window.location.assign('../dailyCostDetail.php?dailycost_id=$id');";
+            echo "window.location.assign('../dailyDetail.php?daily_id=$id');";
             echo "</script>";
         }else{
             echo "Error deleting record: " . $conn->error;
