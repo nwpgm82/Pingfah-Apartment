@@ -88,7 +88,7 @@ function DateThai($strDate){
                 </div>
                 <div style="line-height:40px;">
                     <p style="color:red;"><strong>*** โปรดวางเงินมัดจำค่าห้องเป็นจำนวน 1,000 บาท ก่อนวันที่
-                            <?php echo DateThai($payment_datebefore); ?> มิเช่นนั้นการจองห้องพักจะถูกยกเลิก ***</strong>
+                            <?php echo DateThai($row['payment_datebefore']); ?> มิเช่นนั้นการจองห้องพักจะถูกยกเลิก ***</strong>
                     </p>
                     <p style="color:red;"><strong>*** เงินมัดจำจะได้คืนก็ต่อเมื่อเช็คเอ้าท์เรียบร้อยแล้ว ***</strong>
                     </p>
