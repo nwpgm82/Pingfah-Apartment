@@ -60,7 +60,7 @@ if($_SESSION['level'] == 'admin'){
                 </div>
                 <div class="hr"></div>
                 <div>
-                    <h3>ค้นหารายการชำระเงิน</h3>
+                    <h3>ค้นหารายการชำระเงินห้องพักรายเดือน</h3>
                     <div style="padding-top:32px">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
                             <div style="display:flex;align-items:center;">
@@ -79,7 +79,7 @@ if($_SESSION['level'] == 'admin'){
                             <a href="../cost/addcost.php"><button>เพิ่มรายการชำระเงิน</button></a>
                         </div>
                         <div class="hr"></div>
-                        <h3>รายการชำระเงินทั้งหมด</h3>
+                        <h3>รายการชำระเงินห้องพักรายเดือนทั้งหมด</h3>
                         <div style="display:flex;align-items:center;">
                             <div style="padding:32px 16px;display: flex;align-items: center;">
                                 <input type="checkbox" id="success"
@@ -272,7 +272,7 @@ if($_SESSION['level'] == 'admin'){
             <?php echo $datax;?>
         ]);
         var options = {
-            title: 'รายการชำระเงินรายเดือน',
+            title: 'รายการชำระเงินห้องพักรายเดือน',
             colors: ['rgb(131, 120, 47)', '#a8a06d'],
             fontName: "Sarabun"
         };

@@ -100,7 +100,7 @@ if($_SESSION['level'] == 'admin'){
                 if(isset($code)){
                     echo "<h3>ผลลัพธ์การค้นหา : $code</h3>";
                 }else{
-                    echo "<h3>รายการชำระเงินทั้งหมด</h3>";
+                    echo "<h3>รายการชำระเงินห้องพักรายวันทั้งหมด</h3>";
                 }
                 if ($result->num_rows > 0) {
                 ?>

@@ -60,14 +60,6 @@ function formatDate(date) {
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
 
-function formatDate2(inputDate) {
-    var date = new Date(inputDate);
-    if (!isNaN(date.getTime())) {
-        // Months use 0 index.
-        return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
-    }
-}
-
 $(document).ready(function () {
     let check_in = document.getElementById("check_in")
     let check_out = document.getElementById("check_out")

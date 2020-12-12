@@ -3,6 +3,15 @@ session_start();
 if($_SESSION['level'] == 'admin'){ 
     include('../../connection.php');
     include('../../../components/sidebar.php');
+    function DateThai($strDate)
+    {
+        $strYear = date("Y",strtotime($strDate))+543;
+        $strMonth= date("n",strtotime($strDate));
+        $strDay= date("j",strtotime($strDate));
+        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strDay $strMonthThai $strYear";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -67,18 +76,19 @@ if($_SESSION['level'] == 'admin'){
                     <div class="flex-detail">
                         <div>
                             <p>เวลาที่ลง</p>
-                            <input type="date" value="<?php echo date("Y-m-d") ?>" name="repair_date">
+                            <input type="text" value="<?php echo DateThai(date("Y-m-d")); ?>" name="repair_date" readonly>
                         </div>
-                        <div>
+                        <!-- <div>
                             <p>สถานะ</p>
                             <select name="repair_status" id="status">
                                 <option value="รอดำเนินการ">รอดำเนินการ</option>
-                                <!-- <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
-                                <option value="ดำเนินการเสร็จสิ้น">ดำเนินการเสร็จสิ้น</option> -->
+                                <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
+                                <option value="ดำเนินการเสร็จสิ้น">ดำเนินการเสร็จสิ้น</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
-                    <div style="margin-top:32px">
+                    <div class="hr"></div>
+                    <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
                         <button type="submit" name="repair_accept">ยืนยัน</button>
                     </div>
                 </form>
