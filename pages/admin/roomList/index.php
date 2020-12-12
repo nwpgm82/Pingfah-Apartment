@@ -34,15 +34,15 @@ if($_SESSION['level'] == 'admin'){
                 <h3>รายการห้องพักทั้งหมด</h3>
                 <div class="hr"></div>
                 <div style="display:flex;align-items:center;">
-                    <div style="padding:32px 16px;">
+                    <div style="padding:32px 16px;display:flex;align-items:center;">
                         <input type="checkbox" id="available" onchange="searchCheck(this.id)" <?php if(isset($check)){ if($check == "available"){ echo "checked";}} ?>>
                         <label for="scales">ว่าง</label>
                     </div>
-                    <div style="padding:32px 16px;">
+                    <div style="padding:32px 16px;display:flex;align-items:center;">
                         <input type="checkbox" id="unavailable" onchange="searchCheck(this.id)" <?php if(isset($check)){ if($check == "unavailable"){ echo "checked";}} ?>>
                         <label for="scales">ไม่ว่าง</label>
                     </div>
-                    <div style="padding:32px 16px;">
+                    <div style="padding:32px 16px;display:flex;align-items:center;">
                         <input type="checkbox" id="daily" onchange="searchCheck(this.id)" <?php if(isset($check)){ if($check == "daily"){ echo "checked";}} ?>>
                         <label for="scales">เช่ารายวัน</label>
                     </div>
