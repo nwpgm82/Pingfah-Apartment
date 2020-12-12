@@ -31,8 +31,9 @@
     opacity: 0.5;
 }
 
-.package-box input[type="date"]{
-    margin-left: 8px;
+.package-box input[type=text]#date_from,.package-box input[type=text]#date_to{
+    position: relative;
+    margin: 0 8px;
     width: 200px;
     height: 40px;
     padding: 0 12px;
@@ -41,6 +42,32 @@
     font-size: 16px;
     outline: none;
     transition: 0.3s;
+    color: transparent;
+    background-color: transparent;
+    background-image: url("../img/tool/calendar.png");
+    background-repeat:no-repeat;
+    background-size: 20px;
+    background-position: 92% 50%;
+    cursor: pointer;
+}
+
+.package-box .dateText{
+    position: absolute;
+    top: 1px;
+    left: 20px;
+    width: 152px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    cursor: default;
+}
+
+.package-box input[type=checkbox]{
+    width: 20px;
+    height: 20px;
+    margin: 0 8px;
+    cursor: pointer;
 }
 
 .package-box table{
@@ -219,20 +246,22 @@
 }
 
 .pagination a {
-    color: black;
+    color: #fff;
     float: left;
     padding: 8px 16px;
     text-decoration: none;
     transition: background-color .3s;
-    border: 1px solid #ddd;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    background-color: rgb(131, 120, 47, 0.5);
 }
 
 .pagination a.active {
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
+    background-color: rgb(131, 120, 47, 1);
+    color: #fff;
+    border: 1px solid rgb(131, 120, 47, 1);
 }
 
 .pagination a:hover:not(.active) {
-    background-color: #ddd;
+    background-color: rgb(131, 120, 47, 0.7);
+    border: 1px solid rgb(131, 120, 47, 0.7);
 }

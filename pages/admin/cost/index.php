@@ -255,7 +255,6 @@ if($_SESSION['level'] == 'admin'){
                         ?>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
