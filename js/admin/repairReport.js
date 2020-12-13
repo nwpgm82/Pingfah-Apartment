@@ -1,49 +1,16 @@
 function searchDate(){
     var x = document.getElementById("date_from").value
     var y = document.getElementById("date_to").value
-    location.assign(`index.php?from=${x}&to=${y}`)
+    location.assign(`repairReport.php?from=${x}&to=${y}`)
 }
-
-function searchCheck(id){
-    var check = document.getElementById(id)
-    var success = document.getElementById("success")
-    var inprogress = document.getElementById("inprogress")
-    var pending = document.getElementById("pending")
-
-    success.checked = false
-    inprogress.checked = false
-    pending.checked = false 
-    check.checked = true
-    location.href = `index.php?Status=${check.id}`
-}
-
-function searchCheck2(from,to,id){
-    var check = document.getElementById(id)
-    var success = document.getElementById("success")
-    var inprogress = document.getElementById("inprogress")
-    var pending = document.getElementById("pending")
-
-    success.checked = false
-    inprogress.checked = false
-    pending.checked = false 
-    check.checked = true
-    location.href = `index.php?from=${from}&to=${to}&Status=${check.id}`
-}
-
 
 function unCheckAll(){
-    var success = document.getElementById("success")
-    var inprogress = document.getElementById("inprogress")
-    var pending = document.getElementById("pending")
-    success.checked = false
-    inprogress.checked = false
-    pending.checked = false
-    location.href = "index.php"
+    location.href = "repairReport.php"
 }
 
-function repair_del(id){
+function repair_del(room,app,cate,date){
     if(confirm('คุณต้องการลบรายการแจ้งซ่อมนี้ใช่หรือไม่ ?')){
-        location.href = `function/repairDel.php?repair_id=${id}`
+        location.href = `function/repairDel.php?room_id=${room}&repairappliance=${app}&repaircategory=${cate}&repairdate=${date}`
     }
 }
 

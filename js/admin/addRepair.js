@@ -77,6 +77,7 @@ $(document).ready(function(){
         theme: "my-style",
         lang: "th",
         format: "Y-m-d",
+        lock: "to",
         large: true,
         largeDefault: true,
         startFromMonday: false,

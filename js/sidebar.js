@@ -44,6 +44,7 @@ function menubar() {
     let dailycost = document.querySelector("#dailycost")
     let cost = document.querySelector("#cost")
     let repair = document.querySelector("#repair")
+    let repair_report = document.querySelector("#repair_report")
     let package = document.querySelector("#package")
     let rule = document.querySelector("#rule")
     let appeal = document.querySelector("#appeal")
@@ -89,9 +90,9 @@ function menubar() {
         cost.style.color = "#fff"
         header.innerHTML = "รายการชำระเงินรายเดือน"
         document.querySelector("#dropdown2").style.display = "block"
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repair_report.php") {
-        cost.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        cost.style.color = "#fff"
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repairReport.php") {
+        repair_report.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
+        repair_report.style.color = "#fff"
         header.innerHTML = "รายการค่าใช้จ่ายจากการแจ้งซ่อม"
         document.querySelector("#dropdown2").style.display = "block"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/repair/addRepair.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repairDetail.php") {

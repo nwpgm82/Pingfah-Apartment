@@ -15,10 +15,10 @@ if($_SESSION['level'] == 'admin'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    $query = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
-    $query2 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
-    $result = mysqli_query($conn, $query);
-    $result2 = mysqli_query($conn, $query2);
+    $query_data = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
+    $query_data2 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
+    $result = mysqli_query($conn, $query_data);
+    $result2 = mysqli_query($conn, $query_data2);
     $datax = array();
     $datax2 = array();
     foreach ($result as $k) {
@@ -78,19 +78,19 @@ if($_SESSION['level'] == 'admin'){
                     <div class="hr"></div>
                     <h3>รายการแจ้งซ่อมทั้งหมด</h3>
                     <div style="display:flex;align-items:center;">
-                        <div style="padding:32px 16px;">
+                        <div style="padding:32px 16px;display:flex;">
                             <input type="checkbox" id="success"
                                 onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
                                 <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
-                            <label for="scales">ดำเนินการเสร็จสิ้น</label>
+                            <label for="scales">ซ่อมเสร็จแล้ว</label>
                         </div>
-                        <div style="padding:32px 16px;">
+                        <div style="padding:32px 16px;display:flex;">
                             <input type="checkbox" id="inprogress"
                                 onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
                                 <?php if(isset($check)){ if($check == "inprogress"){ echo "checked";}} ?>>
                             <label for="scales">กำลังดำเนินการ</label>
                         </div>
-                        <div style="padding:32px 16px;">
+                        <div style="padding:32px 16px;display:flex;">
                             <input type="checkbox" id="pending"
                                 onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
                                 <?php if(isset($check)){ if($check == "pending"){ echo "checked";}} ?>>
@@ -110,7 +110,7 @@ if($_SESSION['level'] == 'admin'){
                         $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') ORDER BY repair_date";
                     }else if(!isset($from) && !isset($to) && isset($check)){
                         if($check == "success"){
-                            $check = "ดำเนินการเสร็จสิ้น";
+                            $check = "ซ่อมเสร็จแล้ว";
                         }else if($check == "inprogress"){
                             $check = "กำลังดำเนินการ";
                         }else if($check == "pending"){
@@ -119,7 +119,7 @@ if($_SESSION['level'] == 'admin'){
                         $sql = "SELECT * FROM repair WHERE repair_status = '$check' ORDER BY repair_date LIMIT {$start} , {$perpage}";
                     }else if(isset($from) && isset($to) && isset($check)){
                         if($check == "success"){
-                            $check = "ดำเนินการเสร็จสิ้น";
+                            $check = "ซ่อมเสร็จแล้ว";
                         }else if($check == "inprogress"){
                             $check = "กำลังดำเนินการ";
                         }else if($check == "pending"){
@@ -163,7 +163,7 @@ if($_SESSION['level'] == 'admin'){
                                     <p><?php echo $row['repair_status']; ?></p>
                                 </div>
                                 <?php
-                                }else if($row['repair_status'] == 'ดำเนินการเสร็จสิ้น'){
+                                }else if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){
                             ?>
                                 <div class="success-status">
                                     <p><?php echo $row['repair_status']; ?></p>
@@ -177,11 +177,11 @@ if($_SESSION['level'] == 'admin'){
                             <td class="flex-more">
                                 <div>
                                     <a
-                                        href="../repair/repairDetail.php?room_id=<?php echo $row['room_id'];?>&repairappliance=<?php echo $row['repair_appliance'];?>&repaircategory=<?php echo $row['repair_category'];?>&repairdate=<?php echo $row['repair_date'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                        href="../repair/repairDetail.php?repair_id=<?php echo $row['repair_id'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
                                 </div>
                                 <div>
                                     <button class="del-btn"
-                                        onclick="repair_del(<?php echo "'".$row['room_id']."','".$row['repair_appliance']."','".$row['repair_category']."','".$row['repair_date']."'"?>)">ลบ</button>
+                                        onclick="repair_del(<?php echo $row['repair_id']; ?>)">ลบ</button>
                                 </div>
                             </td>
                         </tr>
@@ -197,16 +197,16 @@ if($_SESSION['level'] == 'admin'){
                     <div style="display:flex;justify-content:flex-end">
                         <div class="pagination">
                             <?php
-                        if(isset($date) && !isset($check)){
+                        if(isset($from) && isset($to) && !isset($check)){
                         ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&page=1">&laquo;</a>
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&page=<?php echo $i; ?>"
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $i; ?>"
                                 <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
-                        }else if(!isset($date) && isset($check)){
+                        }else if(!isset($from) && !isset($to) && isset($check)){
                         ?>
                             <a href="index.php?Status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
@@ -215,16 +215,16 @@ if($_SESSION['level'] == 'admin'){
                             <?php } ?>
                             <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
-                        }else if(isset($date) && isset($check)){
+                        }else if(isset($from) && isset($to) && isset($check)){
                         ?>
                             <a
-                                href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=1">&laquo;</a>
+                                href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&Status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
                                 <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
                             <a
-                                href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                                href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
                         }else{
                         ?>

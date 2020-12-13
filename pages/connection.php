@@ -11,7 +11,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
   while($row = $result->fetch_assoc()) {
-    if($row['daily_status'] == null && $row['payment_img'] == null){
+    if($row['daily_status'] == "รอการเข้าพัก" && $row['payment_img'] == null){
         $date_paymentbefore = date("Y-m-d", strtotime($row['payment_datebefore']));
         if(date("Y-m-d") > $date_paymentbefore){
             $update = "UPDATE daily SET daily_status = 'ยกเลิกการจอง' WHERE daily_id = '".$row['daily_id']."'";
