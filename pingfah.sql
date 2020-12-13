@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2020 at 11:54 AM
+-- Generation Time: Dec 13, 2020 at 07:21 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -115,7 +115,7 @@ CREATE TABLE `daily` (
   `people` varchar(2) DEFAULT NULL,
   `air_room` int(2) DEFAULT NULL,
   `fan_room` int(2) DEFAULT NULL,
-  `daily_status` varchar(200) DEFAULT NULL,
+  `daily_status` varchar(200) NOT NULL,
   `payment_datebefore` varchar(200) NOT NULL,
   `payment_img` varchar(200) DEFAULT NULL,
   `room_select` varchar(200) DEFAULT NULL
@@ -129,7 +129,7 @@ INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `t
 (32, 'พงศธร', 'สร้อยอินต๊ะ', '5556667778889', 'blackfrostier@gmail.com', '45611216156', 'a8smqzdkphh', '2020-12-10', '2020-12-11', '3', 2, 1, 'เช็คเอ้าท์แล้ว', '2020-12-10', NULL, '203, 204, 206'),
 (33, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'ytm447v4phn', '2020-12-12', '2020-12-13', '3', 3, 0, 'เข้าพักแล้ว', '2020-12-12', '115829682_3345399482178668_7710700474312287945_o.jpg', '203, 205, 208'),
 (34, 'เกม1', 'เกม2', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'jqq064w5et7', '2020-12-13', '2020-12-14', '1', 0, 1, 'ยกเลิกการจอง', '2020-12-13', NULL, NULL),
-(35, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'xf7ft2pzuts', '2020-12-13', '2020-12-14', '1', 1, 0, NULL, '2020-12-13', NULL, NULL);
+(35, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'xf7ft2pzuts', '2020-12-13', '2020-12-14', '1', 1, 0, 'ยกเลิกการจอง', '2020-12-13', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -325,6 +325,7 @@ CREATE TABLE `repair` (
   `repair_category` varchar(200) NOT NULL,
   `repair_detail` varchar(200) NOT NULL,
   `repair_date` varchar(200) NOT NULL,
+  `repair_successdate` varchar(200) NOT NULL,
   `repair_status` varchar(200) NOT NULL,
   `repair_income` float(100,2) NOT NULL,
   `repair_expenses` float(100,2) NOT NULL
@@ -334,12 +335,11 @@ CREATE TABLE `repair` (
 -- Dumping data for table `repair`
 --
 
-INSERT INTO `repair` (`repair_id`, `room_id`, `repair_appliance`, `repair_category`, `repair_detail`, `repair_date`, `repair_status`, `repair_income`, `repair_expenses`) VALUES
-(1, '205', 'หลอดไฟ', 'เครื่องใช้ไฟฟ้า', 'หลอดขาด', '2020-12-02', 'รอดำเนินการ', 0.00, 0.00),
-(2, '205', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ประตูตู้เสื้อผ้าแตกหัก', '2020-12-02', 'กำลังดำเนินการ', 0.00, 0.00),
-(3, '205', 'เตียงนอน', 'เฟอร์นิเจอร์', 'ผ้าปูที่นอนขาด', '2020-12-02', 'รอดำเนินการ', 0.00, 0.00),
-(4, '202', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ราวแขวนผ้าหัก', '2020-12-03', 'ดำเนินการเสร็จสิ้น', 0.00, 0.00),
-(7, '201', 'หลอดไฟ', 'เครื่องใช้ไฟฟ้า', 'หลอดขาดดด', '2020-12-13', 'รอดำเนินการ', 0.00, 0.00);
+INSERT INTO `repair` (`repair_id`, `room_id`, `repair_appliance`, `repair_category`, `repair_detail`, `repair_date`, `repair_successdate`, `repair_status`, `repair_income`, `repair_expenses`) VALUES
+(2, '205', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ประตูตู้เสื้อผ้าแตกหัก', '2020-12-02', '', 'กำลังดำเนินการ', 0.00, 0.00),
+(3, '205', 'เตียงนอน', 'เฟอร์นิเจอร์', 'ผ้าปูที่นอนขาด', '2020-12-02', '', 'รอดำเนินการ', 0.00, 0.00),
+(4, '202', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ราวแขวนผ้าหัก', '2020-12-03', '2020-12-13', 'ซ่อมเสร็จแล้ว', 500.00, 300.00),
+(7, '201', 'หลอดไฟ', 'เครื่องใช้ไฟฟ้า', 'หลอดขาดดด', '2020-12-13', '2020-12-14', 'ซ่อมเสร็จแล้ว', 100.00, 60.00);
 
 -- --------------------------------------------------------
 
