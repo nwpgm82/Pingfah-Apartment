@@ -135,6 +135,7 @@ $(document).ready(function () {
         theme: "my-style",
         lang: "th",
         format: "Y-m",
+        lock: "to",
         hideDay: true,
         hideMonth: false,
         hideYear: false,
@@ -146,11 +147,12 @@ $(document).ready(function () {
         theme: "my-style",
         lang: "th",
         format: "Y-m",
+        lock: "to",
         hideDay: true,
         hideMonth: false,
         hideYear: false,
         startFromMonday: false,
-        minDate: formatDate2($('#date_from').val())
+        // minDate: formatDate2($('#date_from').val())
     });
 
     $('#date_from').change(function () {

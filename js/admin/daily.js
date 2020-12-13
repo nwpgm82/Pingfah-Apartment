@@ -10,6 +10,34 @@ function searchCode() {
     location.assign(`index.php?Code=${z}`)
 }
 
+function searchCheck(id){
+    var check = document.getElementById(id)
+    var come = document.getElementById("come")
+    var checkout = document.getElementById("checkout")
+    var pending = document.getElementById("pending")
+    var cancel = document.getElementById("cancel")
+    come.checked = false
+    checkout.checked = false 
+    pending.checked = false
+    cancel.checked = false 
+    check.checked = true
+    location.href = `index.php?Status=${check.id}`
+}
+
+function searchCheck2(checkIn,checkOut,id){
+    var check = document.getElementById(id)
+    var come = document.getElementById("come")
+    var checkout = document.getElementById("checkout")
+    var pending = document.getElementById("pending")
+    var cancel = document.getElementById("cancel")
+    come.checked = false
+    checkout.checked = false 
+    pending.checked = false
+    cancel.checked = false 
+    check.checked = true
+    location.href = `index.php?check_in=${checkIn}&check_out=${checkOut}&Status=${check.id}`
+}
+
 function selectRoom(num) {
     let btn = document.getElementById(`btn${num}`)
     let room = document.getElementById(`select${num}`)

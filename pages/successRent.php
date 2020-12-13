@@ -29,7 +29,7 @@ function DateThai($strDate)
                 <h1 style="text-align:center;color:rgb(131, 120, 47, 1)">จองห้องพักสำเร็จ</h1>
                 <h2 style="text-align:center;color:rgb(131, 120, 47, 1)">เลขที่ในการจอง : <?php if(isset($_REQUEST['code'])){ echo $_REQUEST['code'];} ?></h2>
                 <div style="padding:32px 0;width:480px;">
-                    <p style="color:rgb(131, 120, 47, 1);text-align:center;"><strong>*** เมื่อวางเงินมัดจำแล้วให้อัปโหลดสลิปได้ที่เมนู <a href="checkRentStatus.php" style="color:">ตรวจสอบการจอง</a> ***</strong></p>
+                    <p style="color:rgb(131, 120, 47, 1);text-align:center;"><strong>*** เมื่อวางเงินมัดจำแล้วให้อัปโหลดสลิปได้ที่เมนู <a href="checkCode.php" style="color:">ตรวจสอบการจอง</a> ***</strong></p>
                 </div>
                 <div style="display:flex;justify-content:center;align-items:center;">
                     <button id="close-window">ปิดหน้านี้</button>

@@ -27,6 +27,7 @@
 
 .daily-box .card{
     width: 100%;
+    min-height: 400px;
     padding: 16px;
     border: 1px solid rgb(131, 120, 47, 0.7);
     border-radius: 4px;
@@ -42,12 +43,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 32px;
+    min-height: 366px;
 }
 
 .daily-box .card .chart {
     width: 100%;
     height: 100%;
-    min-height: 400px;
 }
 
 .hr {
@@ -94,6 +95,13 @@
     align-items: center;
     background-color: #fff;
     cursor: default;
+}
+
+.daily-box input[type=checkbox]{
+    width: 20px;
+    height: 20px;
+    margin: 0 8px;
+    cursor: pointer;
 }
 
 .daily-box button{
@@ -173,6 +181,16 @@
     
 }
 
+.daily-box .canceldaily-btn{
+    background-color: #D68B8B;
+    cursor: default;
+    width:100%;
+}
+
+.daily-box .canceldaily-btn:hover{
+    background-color: #D68B8B;
+}
+
 .daily-box .confirmed-btn:hover{
     background-color: #B1D78A;
 }
@@ -194,7 +212,6 @@
 }
 
 .daily-box table {
-    margin-top: 32px;
     width: 100%;
     border-radius: 4px;
     overflow: hidden;

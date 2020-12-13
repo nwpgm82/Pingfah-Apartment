@@ -49,32 +49,30 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="repair-box">
-                <div class="card">
-                    <div class="sub-grid">
-                        <div id="piechart" class="chart"></div>
-                        <div id="piechart2" class="chart"></div>
+                <h3>ค้นหารายการแจ้งซ่อม</h3>
+                <div style="padding-top:32px;display:flex;justify-content:space-between;align-items:center;">
+                    <div style="display:flex;align-items:center;">
+                        <label>ค้นหาตามวันที่</label>
+                        <div style="position:relative;">
+                            <input type="text" id="date_from" class="roundtrip-input" value="<?php echo $from; ?>">
+                            <p id="from_date" class="dateText"></p>
+                        </div>
+                        <label>~</label>
+                        <div style="position:relative;">
+                            <input type="text" id="date_to" class="roundtrip-input" value="<?php echo $to; ?>">
+                            <p id="to_date" class="dateText"></p>
+                            <button type="button" style="margin:0 8px;" onclick="searchDate()">ค้นหา</button>
+                        </div>
+                        <button style="margin:0 8px;" onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
                     </div>
+                    <a href="addRepair.php"><button>เพิ่มรายการแจ้งซ่อม</button></a>
                 </div>
                 <div class="hr"></div>
                 <div>
-                    <h3>ค้นหารายการแจ้งซ่อม</h3>
-                    <div style="padding-top:32px">
-                        <div style="display:flex;justify-content:space-between;align-items:center;">
-                            <div style="display:flex;align-items:center;">
-                                <label>ค้นหาตามวันที่</label>
-                                <div style="position:relative;">
-                                    <input type="text" id="date_from" class="roundtrip-input"
-                                        value="<?php echo $from; ?>">
-                                    <p id="from_date" class="dateText"></p>
-                                </div>
-                                <label>~</label>
-                                <div style="position:relative;">
-                                    <input type="text" id="date_to" class="roundtrip-input" value="<?php echo $to; ?>">
-                                    <p id="to_date" class="dateText"></p>
-                                </div>
-                                <button type="button" onclick="searchDate()">ค้นหา</button>
-                            </div>
-                            <a href="addRepair.php"><button>เพิ่มรายการแจ้งซ่อม</button></a>
+                    <div class="card">
+                        <div class="sub-grid">
+                            <div id="piechart" class="chart"></div>
+                            <div id="piechart2" class="chart"></div>
                         </div>
                     </div>
                     <div class="hr"></div>
@@ -98,7 +96,7 @@ if($_SESSION['level'] == 'admin'){
                                 <?php if(isset($check)){ if($check == "pending"){ echo "checked";}} ?>>
                             <label for="scales">รอดำเนินการ</label>
                         </div>
-                        <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        
                     </div>
                     <?php
                     $perpage = 5;

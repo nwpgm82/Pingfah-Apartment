@@ -41,7 +41,7 @@ function DateThai($strDate){
         ?>
         <div class="checkCode-box">
             <h3>รายละเอียดในการจองห้องพัก</h3>
-            <form action="mainpage_function/addPayment_image.php?daily_id=<?php echo $daily_id; ?>" method="POST" enctype="multipart/form-data">
+            <form action="mainpage_function/addPayment_image.php?daily_id=<?php echo $row['daily_id']; ?>" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-4">
                         <p>ชื่อ</p>
@@ -97,21 +97,26 @@ function DateThai($strDate){
                     <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>
                     <div class="hr"></div>
                     <div class="img-box">
-                        <img id="output_imagepic1" src="images/daily/<?php echo $row['daily_id']; ?>/<?php echo $row['payment_img']; ?>" />
+                        <img id="output_imagepic1" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> />
                         <?php
                         if(isset($row['payment_img'])){ ?>
-                        <button class="del-btn" type="button" id="del-btn1" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')">X</button>
+                        <button class="del-btn" type="button" id="del-btn1" style="margin:0;" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')">X</button>
                         <?php } ?>
                     </div>
                     <?php
                     if(!isset($row['payment_img'])){ ?>
-                    <input type="file" id="pic_idcard1" accept="image/*" onchange="preview_image(event,'pic1')" name="payment_img">
+                    <input type="file" id="pic_idcard1" accept="image/*" style="padding-top:16px;" onchange="preview_image(event,'pic1')" name="payment_img">
                     <?php } ?>
                 </div>
                 <div class="hr"></div>
-                <div style="padding-top:64px;display:flex;justify-content:center;">
+                <?php
+                if(!isset($row['payment_img'])){
+                ?>
+                <div style="padding-top:32px;display:flex;justify-content:center;">
                     <button type="submit">ยืนยัน</button>
+                    <button type="button" class="cancel-btn" onclick="cancel_daily(<?php echo $row['daily_id']; ?>)">ยกเลิกการจองห้องพัก</button>
                 </div>
+                <?php } ?>
             </form>
         </div>
         <?php } }else{

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("../connection.php");
-$id = $_REQUEST["id"];
+$id = $_REQUEST["daily_id"];
 $name = $_REQUEST["name"];
 $pic_location = "../images/daily/$id/$name";
 $countCheck = mysqli_query($conn,"SELECT code, COUNT(payment_img) AS total FROM daily WHERE payment_img = '$name' GROUP BY payment_img HAVING COUNT(payment_img)");

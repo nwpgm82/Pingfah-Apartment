@@ -87,6 +87,7 @@ $(document).ready(function () {
         roundtrip: true,
         theme: "my-style",
         lang: "th",
+        lock: "to",
         format: "Y-m-d",
         startFromMonday: false,
     });

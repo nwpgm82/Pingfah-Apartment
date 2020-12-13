@@ -13,8 +13,14 @@ function preview_image(event, pic) {
     reader.readAsDataURL(event.target.files[0]);
 }
 
-function delImg(code,name) {
+function delImg(id,name) {
     if (confirm('คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?')) {
-        location.href = `mainpage_function/delImg.php?code=${code}name=${name}`
+        location.href = `mainpage_function/delImage.php?daily_id=${id}&name=${name}`
+    }
+}
+
+function cancel_daily(id){
+    if(confirm("คุณต้องการยกเลิกการจองใช่หรือไม่ ?")){
+        location.href = `mainpage_function/cancelDaily.php?daily_id=${id}`
     }
 }

@@ -49,53 +49,61 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="cost-box">
-                <div class="card">
-                    <div id="columnchart_material1" class="chart"></div>
-                </div>
-                <div style="padding-top:32px;">
-                    <div style="line-height:40px;">
-                        <p>ชำระเงินแล้ว : <?php echo number_format($totalresult["total_cost"]); ?> บาท</p>
-                        <p>ยังไม่ได้ชำระเงิน : <?php echo number_format($totalresult["untotal_cost"]); ?> บาท</p>
+                <h3>ค้นหารายการชำระเงินห้องพักรายเดือน</h3>
+                <div style="padding-top:32px;display:flex;justify-content:space-between;align-items:center;">
+                    <div style="display:flex;align-items:center;">
+                        <label>ค้นหาตามเดือน</label>
+                        <div style="position:relative;">
+                            <input type="text" id="date_from" value="<?php echo $from; ?>">
+                            <p id="from_date" class="dateText"></p>
+                        </div>
+                        <label>~</label>
+                        <div style="position:relative;">
+                            <input type="text" id="date_to" value="<?php echo $to; ?>">
+                            <p id="to_date" class="dateText"></p>
+                            <button type="button" style="margin:0 8px;" onclick="searchDate()">ค้นหา</button>
+                        </div>
+                        <button style="margin:0 8px;" onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
                     </div>
+                    <a href="../cost/addcost.php"><button>เพิ่มรายการชำระเงิน</button></a>
                 </div>
                 <div class="hr"></div>
                 <div>
-                    <h3>ค้นหารายการชำระเงินห้องพักรายเดือน</h3>
-                    <div style="padding-top:32px">
-                        <div style="display:flex;justify-content:space-between;align-items:center;">
-                            <div style="display:flex;align-items:center;">
-                                <label>ค้นหาตามเดือน</label>
-                                <div style="position:relative;">
-                                    <input type="text" id="date_from" value="<?php echo $from; ?>">
-                                    <p id="from_date" class="dateText"></p>
-                                </div>
-                                <label>~</label>
-                                <div style="position:relative;">
-                                    <input type="text" id="date_to" value="<?php echo $to; ?>">
-                                    <p id="to_date" class="dateText"></p>
-                                </div>
-                                <button type="button" onclick="searchDate()">ค้นหา</button>
-                            </div>
-                            <a href="../cost/addcost.php"><button>เพิ่มรายการชำระเงิน</button></a>
-                        </div>
-                        <div class="hr"></div>
-                        <h3>รายการชำระเงินห้องพักรายเดือนทั้งหมด</h3>
-                        <div style="display:flex;align-items:center;">
-                            <div style="padding:32px 16px;display: flex;align-items: center;">
-                                <input type="checkbox" id="success"
-                                    onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                    <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
-                                <label for="scales">ชำระเงินแล้ว</label>
-                            </div>
-                            <div style="padding:32px 16px;display: flex;align-items: center;">
-                                <input type="checkbox" id="unsuccess"
-                                    onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                    <?php if(isset($check)){ if($check == "unsuccess"){ echo "checked";}} ?>>
-                                <label for="scales">ยังไม่ได้ชำระ</label>
-                            </div>
-                            <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
-                        </div>
+                    <div class="card">
                         <?php
+                        if(strlen($datax) != 0){
+                        ?>
+                        <div id="columnchart_material1" class="chart"></div>
+                        <?php
+                        }else{
+                            echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>";
+                        }
+                        ?>
+                    </div>
+                    <div style="padding-top:32px;">
+                        <div style="line-height:40px;">
+                            <p>ชำระเงินแล้ว : <?php echo number_format($totalresult["total_cost"]); ?> บาท</p>
+                            <p>ยังไม่ได้ชำระเงิน : <?php echo number_format($totalresult["untotal_cost"]); ?> บาท
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hr"></div>
+                    <h3>รายการชำระเงินห้องพักรายเดือนทั้งหมด</h3>
+                    <div style="display:flex;align-items:center;">
+                        <div style="padding:32px 16px;display: flex;align-items: center;">
+                            <input type="checkbox" id="success"
+                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
+                                <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
+                            <label for="scales">ชำระเงินแล้ว</label>
+                        </div>
+                        <div style="padding:32px 16px;display: flex;align-items: center;">
+                            <input type="checkbox" id="unsuccess"
+                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
+                                <?php if(isset($check)){ if($check == "unsuccess"){ echo "checked";}} ?>>
+                            <label for="scales">ยังไม่ได้ชำระ</label>
+                        </div>
+                    </div>
+                    <?php
                         $perpage = 10;
                         if(isset($_GET['page'])){
                             $page = $_GET['page'];
@@ -125,70 +133,70 @@ if($_SESSION['level'] == 'admin'){
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                         ?>
-                        <table>
-                            <tr>
-                                <th>เลขห้อง</th>
-                                <!-- <th>ประเภท</th> -->
-                                <th>ประจำเดือน</th>
-                                <th>ค่าห้อง</th>
-                                <th>ค่าน้ำ</th>
-                                <th>ค่าไฟ</th>
-                                <th>ค่าเคเบิล</th>
-                                <th>ค่าปรับ</th>
-                                <th>ราคารวม</th>
-                                <th>สถานะการจ่ายเงิน</th>
-                                <th>เพิ่มเติม</th>
-                            </tr>
-                            <?php while($row = $result->fetch_assoc()){ ?>
-                            <tr>
-                                <td><?php echo $row["room_id"];?></td>
-                                <!-- <td><?php echo $row["type"]?></td> -->
-                                <td><?php echo DateThai($row["date"]);?></td>
-                                <td><?php echo number_format($row["room_cost"]);?></td>
-                                <td><?php echo number_format($row["water_bill"]);?></td>
-                                <td><?php echo number_format($row["elec_bill"]);?></td>
-                                <td><?php echo number_format($row["cable_charge"]);?></td>
-                                <td><?php echo number_format($row["fines"]);?></td>
-                                <td><?php echo number_format($row["total"]);?></td>
-                                <?php
+                    <table>
+                        <tr>
+                            <th>เลขห้อง</th>
+                            <!-- <th>ประเภท</th> -->
+                            <th>ประจำเดือน</th>
+                            <th>ค่าห้อง</th>
+                            <th>ค่าน้ำ</th>
+                            <th>ค่าไฟ</th>
+                            <th>ค่าเคเบิล</th>
+                            <th>ค่าปรับ</th>
+                            <th>ราคารวม</th>
+                            <th>สถานะการจ่ายเงิน</th>
+                            <th>เพิ่มเติม</th>
+                        </tr>
+                        <?php while($row = $result->fetch_assoc()){ ?>
+                        <tr>
+                            <td><?php echo $row["room_id"];?></td>
+                            <!-- <td><?php echo $row["type"]?></td> -->
+                            <td><?php echo DateThai($row["date"]);?></td>
+                            <td><?php echo number_format($row["room_cost"]);?></td>
+                            <td><?php echo number_format($row["water_bill"]);?></td>
+                            <td><?php echo number_format($row["elec_bill"]);?></td>
+                            <td><?php echo number_format($row["cable_charge"]);?></td>
+                            <td><?php echo number_format($row["fines"]);?></td>
+                            <td><?php echo number_format($row["total"]);?></td>
+                            <?php
                             if($row['cost_status'] == 'ชำระเงินแล้ว'){
                             ?>
-                                <td>
-                                    <div class="status-success">
-                                        <p><?php echo $row["cost_status"]?></p>
-                                    </div>
-                                </td>
-                                <?php
+                            <td>
+                                <div class="status-success">
+                                    <p><?php echo $row["cost_status"]?></p>
+                                </div>
+                            </td>
+                            <?php
                             }else{
                             ?>
-                                <td>
-                                    <div class="status-nosuccess">
-                                        <p><?php echo $row["cost_status"]?></p>
-                                    </div>
-                                </td>
-                                <?php } ?>
-                                <?php
+                            <td>
+                                <div class="status-nosuccess">
+                                    <p><?php echo $row["cost_status"]?></p>
+                                </div>
+                            </td>
+                            <?php } ?>
+                            <?php
                             if($row['cost_status'] != 'ชำระเงินแล้ว'){
                             ?>
-                                <td>
-                                    <button class="confirm-status"
-                                        onclick="confirmStatus(<?php echo $row['room_id'] .",'" .$row['date'] ."'"; ?>)">ยืนยันการชำระ</button>
-                                    <button class="del"
-                                        onclick="delcost(<?php echo $row['room_id'] .",'" .$row['date'] ."'"; ?>)">ลบ</button>
-                                </td>
-                                <?php 
+                            <td>
+                                <button class="confirm-status"
+                                    onclick="confirmStatus(<?php echo $row['room_id'] .",'" .$row['date'] ."'"; ?>)">ยืนยันการชำระ</button>
+                                <button class="del"
+                                    onclick="delcost(<?php echo $row['room_id'] .",'" .$row['date'] ."'"; ?>)">ลบ</button>
+                            </td>
+                            <?php 
                             }else{
                             ?>
-                                <td>
-                                    <button class="confirmed-status">ยืนยันการชำระ</button>
-                                    <button class="del"
-                                        onclick="delcost(<?php echo $row['room_id'] .",'" .$row['date'] ."'"; ?>)">ลบ</button>
-                                </td>
-                                <?php } ?>
-                            </tr>
+                            <td>
+                                <button class="confirmed-status">ยืนยันการชำระ</button>
+                                <button class="del"
+                                    onclick="delcost(<?php echo $row['room_id'] .",'" .$row['date'] ."'"; ?>)">ลบ</button>
+                            </td>
                             <?php } ?>
-                        </table>
-                        <?php
+                        </tr>
+                        <?php } ?>
+                    </table>
+                    <?php
                         ///////pagination
                         if(isset($date) && !isset($check)){
                             $sql2 ="SELECT * FROM cost WHERE date = '$date'";
@@ -203,57 +211,54 @@ if($_SESSION['level'] == 'admin'){
                         $total_record = mysqli_num_rows($query2);
                         $total_page = ceil($total_record / $perpage);
                         ?>
-                        <div style="display:flex;justify-content:flex-end">
-                            <div class="pagination">
-                                <?php
+                    <div style="display:flex;justify-content:flex-end">
+                        <div class="pagination">
+                            <?php
                                 if(isset($date) && !isset($check)){
                                 ?>
-                                <a href="index.php?Date=<?php echo $date; ?>&page=1">&laquo;</a>
-                                <?php for($i=1;$i<=$total_page;$i++){ ?>
-                                <a href="index.php?Date=<?php echo $date; ?>&page=<?php echo $i; ?>"
-                                    <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
-                                <?php } ?>
-                                <a
-                                    href="index.php?Date=<?php echo $date; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
-                                <?php
+                            <a href="index.php?Date=<?php echo $date; ?>&page=1">&laquo;</a>
+                            <?php for($i=1;$i<=$total_page;$i++){ ?>
+                            <a href="index.php?Date=<?php echo $date; ?>&page=<?php echo $i; ?>"
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                            <?php } ?>
+                            <a href="index.php?Date=<?php echo $date; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <?php
                                 }else if(!isset($date) && isset($check)){
                                 ?>
-                                <a href="index.php?Status=<?php echo $check; ?>&page=1">&laquo;</a>
-                                <?php for($i=1;$i<=$total_page;$i++){ ?>
-                                <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
-                                    <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
-                                <?php } ?>
-                                <a
-                                    href="index.php?Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
-                                <?php
+                            <a href="index.php?Status=<?php echo $check; ?>&page=1">&laquo;</a>
+                            <?php for($i=1;$i<=$total_page;$i++){ ?>
+                            <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                            <?php } ?>
+                            <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <?php
                                 }else if(isset($date) && isset($check)){
                                 ?>
-                                <a
-                                    href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=1">&laquo;</a>
-                                <?php for($i=1;$i<=$total_page;$i++){ ?>
-                                <a href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
-                                    <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
-                                <?php } ?>
-                                <a
-                                    href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
-                                <?php
+                            <a
+                                href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=1">&laquo;</a>
+                            <?php for($i=1;$i<=$total_page;$i++){ ?>
+                            <a href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                            <?php } ?>
+                            <a
+                                href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <?php
                                 }else{
                                 ?>
-                                <a href="index.php?page=1">&laquo;</a>
-                                <?php for($i=1;$i<=$total_page;$i++){ ?>
-                                <a href="index.php?page=<?php echo $i; ?>"
-                                    <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
-                                <?php } ?>
-                                <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
-                                <?php } ?>
-                            </div>
+                            <a href="index.php?page=1">&laquo;</a>
+                            <?php for($i=1;$i<=$total_page;$i++){ ?>
+                            <a href="index.php?page=<?php echo $i; ?>"
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                            <?php } ?>
+                            <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
+                            <?php } ?>
                         </div>
-                        <?php
+                    </div>
+                    <?php
                         }else{
                             echo "<div style='margin:32px 0'>ไม่มีรายการชำระเงินรายเดือน</div>";
                         }
                         ?>
-                    </div>
                 </div>
             </div>
         </div>
@@ -263,7 +268,11 @@ if($_SESSION['level'] == 'admin'){
     google.charts.load('current', {
         'packages': ['bar']
     });
+    <?php
+    if(strlen($datax) != 0){
+    ?>
     google.charts.setOnLoadCallback(drawChart);
+    <?php } ?>
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([

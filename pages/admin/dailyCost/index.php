@@ -48,10 +48,6 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="dailycost-box">
-                <div class="card">
-                    <div id="columnchart_material1" class="chart"></div>
-                </div>
-                <div class="hr"></div>
                 <h3>ค้นหารายการชำระเงินรายวัน</h3>
                 <div class="search">
                     <div style="padding-right:16px;">
@@ -79,6 +75,18 @@ if($_SESSION['level'] == 'admin'){
                     <div>
                         <a href="index.php"><button type="button">ยกเลิกการกรองทั้งหมด</button></a>
                     </div>
+                </div>
+                <div class="hr"></div>
+                <div class="card">
+                    <?php
+                    if(strlen($datax) != 0){
+                    ?>
+                    <div id="columnchart_material1" class="chart"></div>
+                    <?php
+                    }else{
+                        echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>";
+                    }
+                    ?>
                 </div>
                 <div class="hr"></div>
                 <?php
@@ -165,8 +173,11 @@ if($_SESSION['level'] == 'admin'){
     google.charts.load('current', {
         'packages': ['bar']
     });
+    <?php
+    if(strlen($datax) != 0){
+    ?>
     google.charts.setOnLoadCallback(drawChart);
-
+    <?php } ?>
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
