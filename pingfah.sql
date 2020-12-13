@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2020 at 08:58 PM
+-- Generation Time: Dec 13, 2020 at 11:54 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -94,7 +94,7 @@ CREATE TABLE `cost` (
 INSERT INTO `cost` (`cost_id`, `room_id`, `type`, `cost_status`, `date`, `room_cost`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `total`) VALUES
 (5, '201', '', 'ยังไม่ได้ชำระ', '2020-11', 2700.00, 80.00, 750.00, 105.00, 0.00, '3635'),
 (6, '202', '', 'ชำระเงินแล้ว', '2020-12', 2700.00, 80.00, 600.00, 105.00, 0.00, '3485'),
-(7, '201', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 80.00, 375.00, 105.00, 0.00, '3260');
+(8, '201', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 160.00, 375.00, 105.00, 0.00, '3340');
 
 -- --------------------------------------------------------
 
@@ -127,7 +127,9 @@ CREATE TABLE `daily` (
 
 INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `code`, `check_in`, `check_out`, `people`, `air_room`, `fan_room`, `daily_status`, `payment_datebefore`, `payment_img`, `room_select`) VALUES
 (32, 'พงศธร', 'สร้อยอินต๊ะ', '5556667778889', 'blackfrostier@gmail.com', '45611216156', 'a8smqzdkphh', '2020-12-10', '2020-12-11', '3', 2, 1, 'เช็คเอ้าท์แล้ว', '2020-12-10', NULL, '203, 204, 206'),
-(33, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'ytm447v4phn', '2020-12-12', '2020-12-13', '3', 3, 0, 'เข้าพักแล้ว', '2020-12-12', NULL, '203, 205, 208');
+(33, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'ytm447v4phn', '2020-12-12', '2020-12-13', '3', 3, 0, 'เข้าพักแล้ว', '2020-12-12', '115829682_3345399482178668_7710700474312287945_o.jpg', '203, 205, 208'),
+(34, 'เกม1', 'เกม2', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'jqq064w5et7', '2020-12-13', '2020-12-14', '1', 0, 1, 'ยกเลิกการจอง', '2020-12-13', NULL, NULL),
+(35, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'xf7ft2pzuts', '2020-12-13', '2020-12-14', '1', 1, 0, NULL, '2020-12-13', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -156,7 +158,7 @@ CREATE TABLE `dailycost` (
 --
 
 INSERT INTO `dailycost` (`dailycost_id`, `room_id`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `check_in`, `check_out`, `price_total`, `daily_status`, `code`, `payment_img`) VALUES
-(32, '203, 204, 206', 'พงศธร', 'สร้อยอินต๊ะ', '5556667778889', 'blackfrostier@gmail.com', '45611216156', '2020-12-10', '2020-12-11', 950.00, 'ชำระเงินแล้ว', 'a8smqzdkphh', 'bill.jpg'),
+(32, '203, 204, 206', 'พงศธร', 'สร้อยอินต๊ะ', '5556667778889', 'blackfrostier@gmail.com', '45611216156', '2020-12-10', '2020-12-11', 950.00, 'ชำระเงินแล้ว', 'a8smqzdkphh', '115829682_3345399482178668_7710700474312287945_o.jpg'),
 (33, '203, 205, 208', 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', '2020-12-12', '2020-12-13', 1050.00, 'ชำระเงินแล้ว', 'ytm447v4phn', NULL);
 
 -- --------------------------------------------------------
@@ -294,7 +296,7 @@ CREATE TABLE `package` (
   `package_id` int(11) NOT NULL,
   `package_num` varchar(200) NOT NULL,
   `package_company` varchar(200) NOT NULL,
-  `package_arrived` varchar(200) NOT NULL,
+  `package_arrived` varchar(200) DEFAULT NULL,
   `package_status` varchar(200) NOT NULL,
   `package_name` varchar(200) NOT NULL,
   `package_room` varchar(200) NOT NULL,
@@ -307,7 +309,8 @@ CREATE TABLE `package` (
 --
 
 INSERT INTO `package` (`package_id`, `package_num`, `package_company`, `package_arrived`, `package_status`, `package_name`, `package_room`, `package_received`, `repair_id`) VALUES
-(1, 'SHP5042811237', 'Kerry', '2020-12-02', 'ยังไม่ได้รับพัสดุ', 'นวพล', '205', '', 0);
+(2, 'THSSSSSDDA', 'Kerry', '2020-12-13', 'ยังไม่ได้รับพัสดุ', 'นวพล', '201', '', 0),
+(3, 'AAASSSSDDD', 'นินจาแวน', '2020-12-13', 'รับพัสดุแล้ว', 'พงศธร สร้อยอินต๊ะ', '201', 'พงศธร', 0);
 
 -- --------------------------------------------------------
 
@@ -322,18 +325,21 @@ CREATE TABLE `repair` (
   `repair_category` varchar(200) NOT NULL,
   `repair_detail` varchar(200) NOT NULL,
   `repair_date` varchar(200) NOT NULL,
-  `repair_status` varchar(200) NOT NULL
+  `repair_status` varchar(200) NOT NULL,
+  `repair_income` float(100,2) NOT NULL,
+  `repair_expenses` float(100,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `repair`
 --
 
-INSERT INTO `repair` (`repair_id`, `room_id`, `repair_appliance`, `repair_category`, `repair_detail`, `repair_date`, `repair_status`) VALUES
-(1, '205', 'หลอดไฟ', 'เครื่องใช้ไฟฟ้า', 'หลอดขาด', '2020-12-02', 'รอดำเนินการ'),
-(2, '205', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ประตูตู้เสื้อผ้าแตกหัก', '2020-12-02', 'กำลังดำเนินการ'),
-(3, '205', 'เตียงนอน', 'เฟอร์นิเจอร์', 'ผ้าปูที่นอนขาด', '2020-12-02', 'รอดำเนินการ'),
-(4, '202', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ราวแขวนผ้าหัก', '2020-12-03', 'ดำเนินการเสร็จสิ้น');
+INSERT INTO `repair` (`repair_id`, `room_id`, `repair_appliance`, `repair_category`, `repair_detail`, `repair_date`, `repair_status`, `repair_income`, `repair_expenses`) VALUES
+(1, '205', 'หลอดไฟ', 'เครื่องใช้ไฟฟ้า', 'หลอดขาด', '2020-12-02', 'รอดำเนินการ', 0.00, 0.00),
+(2, '205', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ประตูตู้เสื้อผ้าแตกหัก', '2020-12-02', 'กำลังดำเนินการ', 0.00, 0.00),
+(3, '205', 'เตียงนอน', 'เฟอร์นิเจอร์', 'ผ้าปูที่นอนขาด', '2020-12-02', 'รอดำเนินการ', 0.00, 0.00),
+(4, '202', 'ตู้เสื้อผ้า', 'เฟอร์นิเจอร์', 'ราวแขวนผ้าหัก', '2020-12-03', 'ดำเนินการเสร็จสิ้น', 0.00, 0.00),
+(7, '201', 'หลอดไฟ', 'เครื่องใช้ไฟฟ้า', 'หลอดขาดดด', '2020-12-13', 'รอดำเนินการ', 0.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -622,13 +628,13 @@ ALTER TABLE `appeal`
 -- AUTO_INCREMENT for table `cost`
 --
 ALTER TABLE `cost`
-  MODIFY `cost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `daily`
 --
 ALTER TABLE `daily`
-  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -652,13 +658,13 @@ ALTER TABLE `gallery`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `repair`
 --
 ALTER TABLE `repair`
-  MODIFY `repair_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `repair_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_sales`
