@@ -48,7 +48,7 @@ include('pages/connection.php');
                 <div style="display:flex;align-items:center;">
                     <label>จำนวนผู้พัก : </label>
                     <div style="position:relative;padding:0 8px;height:40px;">
-                        <input id="people" type="number" min="1" max="10" value="1">
+                        <input id="people" type="number" min="1" max="10" value="1" oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
                     </div>
                     <label style="line-height:0px">(สูงสุด : 10)</label>
                 </div>
