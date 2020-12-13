@@ -37,9 +37,9 @@ if($_SESSION["rule"] == 0){
                 </div>
                 <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
                     <form id="submitForm">
-                        <div>
-                            <label>ข้าพเจ้ารับทราบและพร้อมปฏิบัติตามตามกฎระเบียบหอพักทุกข้อ</label>
+                        <div style="display:flex;">
                             <input type="checkbox" id="check" onclick="checked_btn()">
+                            <label>ข้าพเจ้ารับทราบและพร้อมปฏิบัติตามตามกฎระเบียบหอพักทุกข้อ</label>
                         </div>
                         <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
                             <button type="submit" id="accept-rule" disabled>ตกลง</button>
