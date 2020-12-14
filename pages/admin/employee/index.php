@@ -3,6 +3,21 @@ session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
     include('../../../components/sidebar.php');
+    function textFormat( $text = '', $pattern = '', $ex = '' ) {
+        $cid = ( $text == '' ) ? '0000000000000' : $text;
+        $pattern = ( $pattern == '' ) ? '_-____-_____-__-_' : $pattern;
+        $p = explode( '-', $pattern );
+        $ex = ( $ex == '' ) ? '-' : $ex;
+        $first = 0;
+        $last = 0;
+        for ( $i = 0; $i <= count( $p ) - 1; $i++ ) {
+           $first = $first + $last;
+           $last = strlen( $p[$i] );
+           $returnText[$i] = substr( $cid, $first, $last );
+        }
+      
+        return implode( $ex, $returnText );
+     }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +54,8 @@ if($_SESSION['level'] == 'admin'){
                         <th>ลำดับ</th>
                         <th>ชื่อพนักงาน</th>
                         <th>ตำแหน่ง</th>
+                        <th>เบอร์โทรศัพท์</th>
+                        <th>อีเมล์</th>
                         <th>เพิ่มเติม</th>
                     </tr>
                     <?php while($row = $result->fetch_assoc()) { ?>
@@ -60,6 +77,8 @@ if($_SESSION['level'] == 'admin'){
                                 <p><?php echo $row["position"]; ?></p>
                             </div>
                         </td>
+                        <td><?php echo textFormat($row["tel"],"___-_______"); ?></td>
+                        <td><?php echo $row["email"]; ?></td>
                         <td>
                             <div class="grid-btn">
                                 <a href="../employee/emDetail.php?username=<?php echo $row['username']; ?>"><button

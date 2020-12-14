@@ -16,6 +16,7 @@ function edit() {
     document.getElementById("email").disabled = false
     document.getElementById("id_line").disabled = false
     document.getElementById("birthday").disabled = false
+    document.getElementById("birth_date").style.backgroundColor = "#fff"
     document.getElementById("age").disabled = false
     document.getElementById("race").disabled = false
     document.getElementById("nationality").disabled = false
@@ -48,6 +49,7 @@ function cancel_edit() {
     document.getElementById("email").disabled = true
     document.getElementById("id_line").disabled = true
     document.getElementById("birthday").disabled = true
+    document.getElementById("birth_date").style.backgroundColor = "#fafafa"
     document.getElementById("age").disabled = true
     document.getElementById("race").disabled = true
     document.getElementById("nationality").disabled = true
@@ -80,3 +82,42 @@ function preview_image(event, pic) {
     }
     reader.readAsDataURL(event.target.files[0]);
 }
+
+function formatDate(date) {
+    var monthNames = [
+        "ม.ค.", "ก.พ.", "มี.ค.",
+        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
+        "ส.ค.", "ก.ย.", "ต.ค.",
+        "พ.ค.", "ธ.ค."
+    ];
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+
+function formatDate2(inputDate) {
+    var date = new Date(inputDate);
+    if (!isNaN(date.getTime())) {
+        // Months use 0 index.
+        return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+    }
+}
+
+
+$(document).ready(function(){
+    $('#birth_date').html(formatDate(new Date($('#birthday').val())))
+    $('#birthday').dateDropper({
+        theme: "my-style",
+        large: true,
+        largeDefault: true,
+        format: "Y-m-d",
+        lang: "th",
+        startFromMonday: false,
+        defaultDate: formatDate2($('#birthday').val())
+    });
+
+    $('#birthday').change(function(){
+        $('#birth_date').html(formatDate(new Date($('#birthday').val())))
+    })
+})

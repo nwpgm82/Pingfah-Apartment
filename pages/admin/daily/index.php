@@ -213,7 +213,7 @@ if($_SESSION['level'] == 'admin'){
                                 <td><?php echo $row['room_select']; ?></td>
                                 <td>
                                     <?php
-                                    if($row['daily_status'] == ''){
+                                    if($row['daily_status'] == 'รอการเข้าพัก'){
                                     ?>
                                     <div id="btn<?php echo $num; ?>">
                                         <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button

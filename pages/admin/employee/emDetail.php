@@ -11,6 +11,10 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/emDetail.css">
+    <link rel="stylesheet" href="../../../css/my-style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -94,7 +98,7 @@ if($_SESSION['level'] == 'admin'){
                                         placeholder="เลขบัตรประชาชน" disabled required>
                                 </div>
                                 <div class="col-3">
-                                    <p>เบอรโทรศัพท์</p>
+                                    <p>เบอร์โทรศัพท์</p>
                                     <input type="tel" value="<?php echo $tel; ?>" name="tel" id="tel"
                                         placeholder="เบอร์โทรศัพท์" disabled required>
                                 </div>
@@ -112,8 +116,11 @@ if($_SESSION['level'] == 'admin'){
                             <div class="row" style="padding-top: 32px;">
                                 <div class="col-3">
                                     <p>เกิดวันที่</p>
-                                    <input type="date" value="<?php echo $birthday; ?>" name="birthday" id="birthday"
-                                        placeholder="เกิดวันที่" disabled required>
+                                    <div style="position:relative;">
+                                        <input id="birthday" name="birthday" type="text" value="<?php echo $birthday; ?>" disabled required>
+                                        <p id="birth_date" class="dateText"></p>
+                                    </div>
+                                    <!-- <input type="date" value="<?php echo $birthday; ?>" name="birthday" id="birthday" placeholder="เกิดวันที่" disabled required> -->
                                 </div>
                                 <div class="col-3">
                                     <p>อายุ</p>

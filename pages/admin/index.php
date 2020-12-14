@@ -276,7 +276,8 @@ if($_SESSION['level'] == 'admin'){
         var options = {
             title: 'รายการชำระเงินรายเดือน',
             colors: ['rgb(131, 120, 47)', '#a8a06d'],
-            fontName: "Sarabun"
+            fontName: "Sarabun",
+            vAxis: { format: "decimal"}
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
@@ -294,7 +295,8 @@ if($_SESSION['level'] == 'admin'){
         var options = {
             title: 'รายการชำระเงินรายวัน',
             colors: ['rgb(131, 120, 47)'],
-            fontName: "Sarabun"
+            fontName: "Sarabun",
+            vAxis: { format: "decimal"}
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
@@ -312,8 +314,12 @@ if($_SESSION['level'] == 'admin'){
         var options = {
             title: 'รายการแจ้งซ่อมแยกตามประเภท',
             is3D: true,
-            fontName: "Sarabun"
-            // colors: ['rgb(131, 120, 47)']
+            fontName: "Sarabun",
+            slices: {
+                0: { color: 'rgb(131, 120, 47)' },
+                1: { color: '#a8a06d' },
+                2: { color: '#b7ad7b'}
+            }
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -331,8 +337,12 @@ if($_SESSION['level'] == 'admin'){
         var options = {
             title: 'รายการแจ้งซ่อมแยกตามสถานะ',
             is3D: true,
-            fontName: "Sarabun"
-            // colors: ['rgb(131, 120, 47)']
+            fontName: "Sarabun",
+            slices: {
+                0: { color: 'rgb(131, 120, 47)' },
+                1: { color: '#a8a06d' },
+                2: { color: '#b7ad7b'}
+            }
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart2'));

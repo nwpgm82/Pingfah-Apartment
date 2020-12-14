@@ -15,7 +15,7 @@
 }
 
 .employee-box {
-    width: fit-content;
+    width: 100%;
     min-height: 800px;
     padding: 36px;
     border-radius: 4px;
@@ -68,6 +68,10 @@
     padding: 0 16px;
 }
 
+.employee-box td:last-child{
+    width: 362px;
+}
+
 .employee-box table td .grid{
     display: grid;
     grid-template-columns: 40px auto;
@@ -111,7 +115,7 @@
 
 .employee-box table td .grid-btn{
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 0 16px;
 }
 
