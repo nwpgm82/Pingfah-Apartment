@@ -57,7 +57,8 @@ if($_SESSION['level'] == 'admin'){
                                     </div>
                                     <div style="display:block;margin-top:auto">
                                         <button type="submit">ยืนยัน</button>
-                                        <button type="button" class="cancel-btn" onclick="canceladdRoom()">ยกเลิก</button>
+                                        <button type="button" class="cancel-btn"
+                                            onclick="canceladdRoom()">ยกเลิก</button>
                                     </div>
                                 </form>
                             </div>
@@ -260,7 +261,24 @@ if($_SESSION['level'] == 'admin'){
                             <input type="text" class="roundtrip-input" id="check_out" required>
                             <p id="check_out_date" class="dateText"></p>
                         </div>
+                    </div>
+                    <div style="display:flex;align-items:center;padding-top:16px;">
+                        <div style="display:flex;align-items:center;">
+                            <label>จำนวนผู้พัก : </label>
+                            <div style="position:relative;padding:0 8px;height:40px;">
+                                <input type="number" id="people" name="people" min="1" max="10" value="1" oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
+                            </div>
+                            <label>(สูงสุด : 10)</label>
+                        </div>
                         <button type="button" style="margin-left:8px;" onclick="searchDate()">ค้นหา</button>
+                    </div>
+                    <div style="padding-top:32px;">
+
+                        <div class="card">
+                            <div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

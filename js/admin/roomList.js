@@ -5,19 +5,19 @@ function searchDate() {
     console.log(x)
 }
 
-function searchCheck(id){
+function searchCheck(id) {
     var check = document.getElementById(id)
     var available = document.getElementById("available")
     var unavailable = document.getElementById("unavailable")
     var daily = document.getElementById("daily")
     available.checked = false
-    unavailable.checked = false 
+    unavailable.checked = false
     daily.checked = false
     check.checked = true
     location.href = `index.php?Status=${check.id}`
 }
 
-function unCheckAll(){
+function unCheckAll() {
     var available = document.getElementById("available")
     var unavailable = document.getElementById("unavailable")
     var daily = document.getElementById("daily")
@@ -67,22 +67,22 @@ function cancelEdit(room) {
     typeEdit_btn.style.display = 'none'
 }
 
-function addRoom(){
-    let addRoom_btn = document.getElementById("addRoom-btn") 
+function addRoom() {
+    let addRoom_btn = document.getElementById("addRoom-btn")
     let add = document.getElementById("addRoom")
     add.style.display = 'flex'
     addRoom_btn.style.display = 'none'
 }
 
-function canceladdRoom(){
-    let addRoom_btn = document.getElementById("addRoom-btn") 
+function canceladdRoom() {
+    let addRoom_btn = document.getElementById("addRoom-btn")
     let add = document.getElementById("addRoom")
     add.style.display = 'none'
     addRoom_btn.style.display = ''
 }
 
-function del(room){
-    if(confirm(`คุณต้องการลบห้อง ${room} ใช่หรือไม่ ?`)){
+function del(room) {
+    if (confirm(`คุณต้องการลบห้อง ${room} ใช่หรือไม่ ?`)) {
         location.href = `function/delRoom.php?ID=${room}`
     }
 }
@@ -105,7 +105,7 @@ $(document).ready(function () {
     let check_out = document.getElementById("check_out")
     let check_in_date = document.getElementById("check_in_date")
     let check_out_date = document.getElementById("check_out_date")
-    if(check_in.value == "" && check_out.value == ""){
+    if (check_in.value == "" && check_out.value == "") {
         let today_monthNames = [
             "ม.ค.", "ก.พ.", "มี.ค.",
             "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
@@ -134,7 +134,7 @@ $(document).ready(function () {
             tomorrow_month = '0' + tomorrow_month.toString()
         }
         let current_day = today_year + '-' + today_month + '-' + today_day
-    
+
         let next_day = tomorrow_year + '-' + tomorrow_month + '-' + tomorrow_day
         check_in.value = current_day
         // check_in.setAttribute("min", current_day)
@@ -142,25 +142,59 @@ $(document).ready(function () {
         // check_out.setAttribute("min", check_out.value)
         check_in_date.innerHTML = current_dayShow
         check_out_date.innerHTML = next_dayShow
-    }else{
+    } else {
         check_in_date.innerHTML = formatDate(new Date(check_in.value))
         check_out_date.innerHTML = formatDate(new Date(check_out.value))
     }
-    
+
     $('.roundtrip-input').dateDropper({
-        roundtrip: true,
+        roundtrip: "my-trip",
         theme: "my-style",
-        lang: "th",
         format: "Y-m-d",
+        lang: "th",
+        lock: "from",
         startFromMonday: false,
     });
 
     $('#check_in').change(function () {
         console.log("check in :", $('#check_in').val())
         $('#check_in_date').html(formatDate(new Date($('#check_in').val())))
+        if (new Date($("#check_in").val()) >= new Date($("#check_out").val())) {
+            let nDate = new Date($("#check_in").val())
+            nDate.setDate(nDate.getDate() + 1)
+            let nDate_date = nDate.getDate()
+            let nDate_month = nDate.getMonth() + 1
+            if (nDate_date < 10) {
+                nDate_date = "0" + nDate_date.toString()
+            }
+            if (nDate_month < 10) {
+                nDate_month = "0" + nDate_month.toString()
+            }
+            $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
+            $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
+    
+        }else{
+            $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+        }
     })
-
+    
     $('#check_out').change(function () {
-        $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+        if (new Date($("#check_in").val()) >= new Date($("#check_out").val())) {
+            let nDate = new Date($("#check_in").val())
+            nDate.setDate(nDate.getDate() + 1)
+            let nDate_date = nDate.getDate()
+            let nDate_month = nDate.getMonth() + 1
+            if (nDate_date < 10) {
+                nDate_date = "0" + nDate_date.toString()
+            }
+            if (nDate_month < 10) {
+                nDate_month = "0" + nDate_month.toString()
+            }
+            $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
+            $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
+    
+        } else {
+            $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+        }
     })
 })
