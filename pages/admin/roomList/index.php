@@ -4,6 +4,9 @@ if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
     include('../../../components/sidebar.php');
     $check = @$_REQUEST['Status'];
+    $check_in = @$_REQUEST['check_in'];
+    $check_out = @$_REQUEST['check_out'];
+    $people = @$_REQUEST['people'];
     // $page
     $num = 1;
     function DateThai($strDate)
@@ -106,8 +109,8 @@ if($_SESSION['level'] == 'admin'){
                     }else{
                         $roomlist = "SELECT * FROM  roomList ORDER BY room_id LIMIT {$start} , {$perpage}";
                     }
-                    $result = $conn->query($roomlist);
-                    if ($result->num_rows > 0) {
+                    $room_result = $conn->query($roomlist);
+                    if ($room_result->num_rows > 0) {
                     ?>
                     <table>
                         <tr>
@@ -119,7 +122,7 @@ if($_SESSION['level'] == 'admin'){
                             <th>เพิ่มเติม</th>
                         </tr>
                         <?php
-                            while($row = mysqli_fetch_array($result)) { 
+                            while($row = mysqli_fetch_array($room_result)) { 
                         ?>
                         <form action="../roomList/function/editType.php?ID=<?php echo $row["room_id"]; ?>"
                             method='POST'>
@@ -228,7 +231,7 @@ if($_SESSION['level'] == 'admin'){
                     }else{
                         echo "0 result";
                     }
-                    mysqli_close($conn);
+                    // mysqli_close($conn);
                     ?>
                     <div style="display:flex;justify-content:flex-end;">
                         <div class="status-grid">
@@ -253,12 +256,14 @@ if($_SESSION['level'] == 'admin'){
                     <label>ค้นหาตามวันที่</label>
                     <div style="display:flex;align-items:center;padding-top:8px;">
                         <div style="position:relative;">
-                            <input type="text" class="roundtrip-input" id="check_in" required>
+                            <input type="text" class="roundtrip-input" id="check_in" value="<?php echo $check_in ?>"
+                                required>
                             <p id="check_in_date" class="dateText"></p>
                         </div>
                         <label style="padding:0 8px;">~</label>
                         <div style="position:relative;">
-                            <input type="text" class="roundtrip-input" id="check_out" required>
+                            <input type="text" class="roundtrip-input" id="check_out" value="<?php echo $check_out ?>"
+                                required>
                             <p id="check_out_date" class="dateText"></p>
                         </div>
                     </div>
@@ -266,25 +271,129 @@ if($_SESSION['level'] == 'admin'){
                         <div style="display:flex;align-items:center;">
                             <label>จำนวนผู้พัก : </label>
                             <div style="position:relative;padding:0 8px;height:40px;">
-                                <input type="number" id="people" name="people" min="1" max="10" value="1" oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
+                                <input type="number" id="people" name="people" min="1" max="10"
+                                    value="<?php echo $people; ?>"
+                                    oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
                             </div>
                             <label>(สูงสุด : 10)</label>
                         </div>
                         <button type="button" style="margin-left:8px;" onclick="searchDate()">ค้นหา</button>
                     </div>
-                    <div style="padding-top:32px;">
+                    <div class="hr"></div>
+                    <div>
+                        <div>
+                            <?php
+                            $countDailyAll = mysqli_query($conn,"SELECT SUM(air_room+fan_room) AS dailyTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง'");
+                            $roomDailyAlldata= mysqli_fetch_assoc($countDailyAll);  
+                            $roomDailyAlltotal_int = intval($roomDailyAlldata['dailyTotal']);
+                            $countroomAll = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
+                            $roomAlldata= mysqli_fetch_assoc($countroomAll);  
+                            $roomAlltotal_int = intval($roomAlldata['roomtotal']);
+                            $totalAll_int = $roomAlltotal_int - $roomDailyAlltotal_int;
 
-                        <div class="card">
-                            <div>
-
+                            if($people <= ($totalAll_int * 2)){
+                                if(isset($check_in) || isset($check_out)){
+                                    $countAir = mysqli_query($conn,"SELECT SUM(air_room) AS airTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง'");
+                                    $roomDailyAirdata= mysqli_fetch_assoc($countAir);  
+                                    $roomDailyAirtotal_int = intval($roomDailyAirdata['airTotal']);
+                                    $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = 'แอร์' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
+                                    $roomdata= mysqli_fetch_assoc($countroom);  
+                                    $roomtotal_int = intval($roomdata['roomtotal']);
+                                    $total_int = $roomtotal_int - $roomDailyAirtotal_int;
+                                    if($total_int > 3){
+                                        $sql = "SELECT * FROM roomdetail WHERE type = 'แอร์'";
+                                        $result = $conn->query($sql);
+                                        $row2 = $result->fetch_assoc();
+                            ?>
+                            <div class="card">
+                                <div class="container">
+                                    <?php
+                                    $getImg = "SELECT * FROM air_gal";
+                                    $resultImg = $conn->query($getImg);
+                                    if ($resultImg->num_rows > 0) {
+                                        while($row3 = $resultImg->fetch_assoc()) {
+                                    ?>
+                                    <div class="mySlides1">
+                                        <img src="../../images/roomdetail/air/<?php echo $row3['gal_name']; ?>"
+                                            style="width:100%">
+                                    </div>
+                                    <?php }} ?>
+                                    <a class="prev" onclick="plusSlides1(-1)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides1(1)">&#10095;</a>
+                                </div>
+                                <div class="detail">
+                                    <div>
+                                        <h3>ห้องแอร์</h3>
+                                        <div class="user-grid">
+                                            <img src="../../../img/tool/user.png" alt="">
+                                            <label>2 คน</label>
+                                        </div>
+                                        <p>รายเดือน : <label
+                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['price']); ?></strong></label> บาท
+                                        </p>
+                                        <p>รายวัน : <label
+                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['daily_price']); ?></strong></label> บาท
+                                        </p>
+                                    </div>
+                                    <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int; ?> ห้อง</p>
+                                </div>
                             </div>
+                            <?php }} ?>
+                            <?php
+                            if(isset($check_in) || isset($check_out)){
+                                $countFan = mysqli_query($conn,"SELECT SUM(fan_room) AS fanTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง'");
+                                $roomDailyFandata= mysqli_fetch_assoc($countFan);  
+                                $roomDailyFantotal_int = intval($roomDailyFandata['fanTotal']);
+                                $countroom2 = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal2 FROM roomlist WHERE room_type = 'พัดลม' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
+                                $roomdata2= mysqli_fetch_assoc($countroom2);  
+                                $roomtotal_int2 = intval($roomdata2['roomtotal2']);
+                                $total_int2 = $roomtotal_int2 - $roomDailyFantotal_int;
+                                if($total_int2 > 1){
+                                    $sql2 = "SELECT * FROM roomdetail WHERE type = 'พัดลม'";
+                                    $result2 = $conn->query($sql2);
+                                    $row4 = $result2->fetch_assoc();
+                            ?>
+                            <div class="card">
+                                <div class="container">
+                                    <?php
+                                    $getImg3 = "SELECT * FROM fan_gal";
+                                    $resultImg3 = $conn->query($getImg3);
+                                    if ($resultImg3->num_rows > 0) {
+                                        while($row5 = $resultImg3->fetch_assoc()) {
+                                    ?>
+                                    <div class="mySlides2">
+                                        <img src="../../images/roomdetail/fan/<?php echo $row5['gal_name']; ?>"
+                                            style="width:100%">
+                                    </div>
+                                    <?php }} ?>
+                                    <a class="prev" onclick="plusSlides2(-1)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides2(1)">&#10095;</a>
+                                </div>
+                                <div class="detail">
+                                    <div>
+                                        <h3>ห้องพัดลม</h3>
+                                        <div class="user-grid">
+                                            <img src="../../../img/tool/user.png" alt="">
+                                            <label>2 คน</label>
+                                        </div>
+                                        <p>รายเดือน : <label
+                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row4['price']); ?></strong></label> บาท
+                                        </p>
+                                        <p>รายวัน : <label
+                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row4['daily_price']); ?></strong></label> บาท
+                                        </p>
+                                    </div>
+
+                                    <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int2; ?> ห้อง</p>
+                                </div>
+                            </div>
+                            <?php }}}else{ echo "ไม่มีห้องว่างให้เช่า";} ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script src="../../../js/admin/roomList.js"></script>
+        <script src="../../../js/admin/roomList.js"></script>
 </body>
 
 </html>

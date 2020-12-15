@@ -1,7 +1,8 @@
 function searchDate() {
     let x = document.getElementById("check_in").value
     let y = document.getElementById("check_out").value
-    location.assign(`index.php?check_in=${x}&check_out=${y}`)
+    let z = document.getElementById("people").value
+    location.assign(`index.php?check_in=${x}&check_out=${y}&people=${z}`)
     console.log(x)
 }
 
@@ -87,6 +88,75 @@ function del(room) {
     }
 }
 
+
+if (document.getElementById("check_in").value != "" && document.getElementById("check_out").value != "" && document.getElementById("people").value != null) {
+    var slideIndex1 = 1;
+    var slideIndex2 = 2;
+    showSlides1(slideIndex1);
+    showSlides2(slideIndex2);
+
+    function plusSlides1(n) {
+        showSlides1(slideIndex1 += n);
+    }
+
+    function currentSlide1(n) {
+        showSlides1(slideIndex1 = n);
+    }
+
+    function plusSlides2(n) {
+        showSlides2(slideIndex2 += n);
+    }
+
+    function currentSlide2(n) {
+        showSlides2(slideIndex2 = n);
+    }
+
+    function showSlides1(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides1");
+        // let dots = document.getElementsByClassName("demo1");
+        //   var captionText = document.getElementById("caption");
+        if (n > slides.length) {
+            slideIndex1 = 1
+        }
+        if (n < 1) {
+            slideIndex1 = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        // for (i = 0; i < dots.length; i++) {
+        //     dots[i].className = dots[i].className.replace(" active", "");
+        // }
+        slides[slideIndex1 - 1].style.display = "block";
+        // dots[slideIndex1 - 1].className += " active";
+        //   captionText.innerHTML = dots[slideIndex-1].alt;
+    }
+
+    function showSlides2(m) {
+        let j;
+        let slides = document.getElementsByClassName("mySlides2");
+        // let dots = document.getElementsByClassName("demo2");
+        //   var captionText = document.getElementById("caption");
+        if (m > slides.length) {
+            slideIndex2 = 1
+        }
+        if (m < 1) {
+            slideIndex2 = slides.length
+        }
+        for (j = 0; j < slides.length; j++) {
+            slides[j].style.display = "none";
+        }
+        // for (j = 0; j < dots.length; j++) {
+        //     dots[j].className = dots[j].className.replace(" active", "");
+        // }
+        slides[slideIndex2 - 1].style.display = "block";
+        // dots[slideIndex2 - 1].className += " active";
+        //   captionText.innerHTML = dots[slideIndex-1].alt;
+    }
+}
+
+
 function formatDate(date) {
     var monthNames = [
         "ม.ค.", "ก.พ.", "มี.ค.",
@@ -101,6 +171,7 @@ function formatDate(date) {
 }
 
 $(document).ready(function () {
+    document.getElementById("people").defaultValue = 1
     let check_in = document.getElementById("check_in")
     let check_out = document.getElementById("check_out")
     let check_in_date = document.getElementById("check_in_date")
@@ -172,12 +243,12 @@ $(document).ready(function () {
             }
             $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
             $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
-    
-        }else{
+
+        } else {
             $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
         }
     })
-    
+
     $('#check_out').change(function () {
         if (new Date($("#check_in").val()) >= new Date($("#check_out").val())) {
             let nDate = new Date($("#check_in").val())
@@ -192,7 +263,7 @@ $(document).ready(function () {
             }
             $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
             $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
-    
+
         } else {
             $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
         }

@@ -83,7 +83,7 @@
                         $roomdata= mysqli_fetch_assoc($countroom);  
                         $roomtotal_int = intval($roomdata['roomtotal']);
                         $total_int = $roomtotal_int - $roomDailyAirtotal_int;
-                        if($total_int != 0){
+                        if($total_int > 3){
                             $sql = "SELECT * FROM roomdetail WHERE type = 'แอร์'";
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
@@ -201,7 +201,7 @@
                         $roomdata2= mysqli_fetch_assoc($countroom2);  
                         $roomtotal_int2 = intval($roomdata2['roomtotal2']);
                         $total_int2 = $roomtotal_int2 - $roomDailyFantotal_int;
-                        if($total_int2 != 0){
+                        if($total_int2 > 1){
                             $sql2 = "SELECT * FROM roomdetail WHERE type = 'พัดลม'";
                             $result2 = $conn->query($sql2);
                             $row2 = $result2->fetch_assoc();
@@ -309,12 +309,15 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <?php } ?>
                     <div style="padding-top:32px;display:flex;justify-content:flex-end;align-items:center">
                         <button class="rent">จองเลย</button>
                     </div>
-                    <?php }}}else{
-                echo "ไม่มีห้องว่างให้เช่า";
-                } ?>
+                    <?php
+                    }}else{
+                        echo "ไม่มีห้องว่างให้เช่า";
+                    } ?>
                 </div>
             </form>
             <?php
