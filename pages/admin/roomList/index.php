@@ -3,6 +3,8 @@ session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
     include('../../../components/sidebar.php');
+    $from = @$_REQUEST['from'];
+    $to = @$_REQUEST['to'];
     $check = @$_REQUEST['Status'];
     $check_in = @$_REQUEST['check_in'];
     $check_out = @$_REQUEST['check_out'];
@@ -67,7 +69,6 @@ if($_SESSION['level'] == 'admin'){
                             </div>
                         </div>
                     </div>
-
                     <div class="hr"></div>
                     <div style="display:flex;align-items:center;">
                         <div style="padding:32px 16px;display:flex;align-items:center;">
@@ -87,8 +88,24 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                         <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
                     </div>
-
-
+                    <?php
+                    if($check == "daily"){
+                    ?> 
+                    <div style="display:flex;align-items:center;padding:16px 0;">
+                        <label style="padding-right:8px;">ค้นหาตามเดือน</label>
+                        <div style="position:relative;">
+                            <input type="text" class="roundtrip-input1" id="date_from" value="<?php echo $from; ?>">
+                            <p id="from_date" class="dateText"></p>
+                        </div>
+                        <label style="padding: 0 8px;">~</label>
+                        <div style="position:relative;">
+                            <input type="text" class="roundtrip-input1" id="date_to" value="<?php echo $to; ?>">
+                            <p id="to_date" class="dateText"></p>
+                            <button type="button" style="margin:0 8px;" onclick="searchDate2()">ค้นหา</button>
+                        </div>
+                    </div>
+                    <div class="hr"></div>
+                    <?php } ?>
                     <?php
                     $perpage = 8;
                     if(isset($_GET['page'])){
@@ -105,7 +122,11 @@ if($_SESSION['level'] == 'admin'){
                         $roomlist = "SELECT * FROM  roomList WHERE room_status = '$status' ORDER BY room_id LIMIT {$start} , {$perpage}";
                     }else if($check == "daily"){
                         $status = "เช่ารายวัน";
-                        $roomlist = "SELECT * FROM  roomList WHERE room_status = '$status' ORDER BY room_id LIMIT {$start} , {$perpage}";
+                        if(isset($from) && isset($to)){
+                            $roomlist = "SELECT * FROM  roomList WHERE room_status = '$status' AND ((check_in BETWEEN '$from' AND '$to') OR (check_out BETWEEN '$from' AND '$to') OR ('$from' BETWEEN check_in AND check_out) OR ('$to' BETWEEN check_in AND check_out )) ORDER BY room_id LIMIT {$start} , {$perpage}";
+                        }else{
+                            $roomlist = "SELECT * FROM  roomList WHERE room_status = '$status' ORDER BY room_id LIMIT {$start} , {$perpage}";
+                        }
                     }else{
                         $roomlist = "SELECT * FROM  roomList ORDER BY room_id LIMIT {$start} , {$perpage}";
                     }
@@ -229,7 +250,7 @@ if($_SESSION['level'] == 'admin'){
 
                     <?php
                     }else{
-                        echo "0 result";
+                        echo "<div style='padding:32px 0'>ไม่มีรายการห้องพัก</div>";
                     }
                     // mysqli_close($conn);
                     ?>
@@ -256,13 +277,13 @@ if($_SESSION['level'] == 'admin'){
                     <label>ค้นหาตามวันที่</label>
                     <div style="display:flex;align-items:center;padding-top:8px;">
                         <div style="position:relative;">
-                            <input type="text" class="roundtrip-input" id="check_in" value="<?php echo $check_in ?>"
+                            <input type="text" class="roundtrip-input2" id="check_in" value="<?php echo $check_in ?>"
                                 required>
                             <p id="check_in_date" class="dateText"></p>
                         </div>
                         <label style="padding:0 8px;">~</label>
                         <div style="position:relative;">
-                            <input type="text" class="roundtrip-input" id="check_out" value="<?php echo $check_out ?>"
+                            <input type="text" class="roundtrip-input2" id="check_out" value="<?php echo $check_out ?>"
                                 required>
                             <p id="check_out_date" class="dateText"></p>
                         </div>
@@ -271,8 +292,7 @@ if($_SESSION['level'] == 'admin'){
                         <div style="display:flex;align-items:center;">
                             <label>จำนวนผู้พัก : </label>
                             <div style="position:relative;padding:0 8px;height:40px;">
-                                <input type="number" id="people" name="people" min="1" max="10"
-                                    value="<?php echo $people; ?>"
+                                <input type="number" id="people" name="people" min="1" max="10" value="<?php echo $people; ?>"
                                     oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
                             </div>
                             <label>(สูงสุด : 10)</label>

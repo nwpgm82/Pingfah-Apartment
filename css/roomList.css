@@ -21,6 +21,8 @@
     width: 1610px;
 }
 
+.roomList-box input#date_from,
+.roomList-box input#date_to,
 .roomList-box input#check_in,
 .roomList-box input#check_out {
     position: relative;
@@ -44,8 +46,8 @@
 .roomList-box .dateText {
     position: absolute;
     top: 1px;
-    left: 20px;
-    width: 144px;
+    left: 12px;
+    width: 152px;
     height: 38px;
     display: flex;
     align-items: center;
