@@ -71,11 +71,11 @@
                 <a href="/Pingfah/pages/admin/package/index.php">
                     <li id="package">รายการพัสดุ</li>
                 </a>
-                <a href="/Pingfah/pages/admin/rule/index.php">
-                    <li id="rule">กฎระเบียบหอพัก</li>
-                </a>
                 <a href="/Pingfah/pages/admin/appeal/index.php">
                     <li id="appeal">รายการร้องเรียน</li>
+                </a>
+                <a href="/Pingfah/pages/admin/rule/index.php">
+                    <li id="rule">กฎระเบียบหอพัก</li>
                 </a>
                 <a href="/Pingfah/pages/logout.php">
                     <li class="logout">ออกจากระบบ</li>
