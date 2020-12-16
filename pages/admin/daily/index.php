@@ -287,7 +287,7 @@ if($_SESSION['level'] == 'admin'){
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี', 'จำนวนผู้เช่า'],
+            ['วัน / เดือน / ปี', 'จำนวนผู้เช่า (คน)'],
             <?php echo $datax;?>
         ]);
 
@@ -305,7 +305,7 @@ if($_SESSION['level'] == 'admin'){
     function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี', 'แอร์', 'พัดลม'],
+            ['วัน / เดือน / ปี', 'แอร์ (ห้อง)', 'พัดลม (ห้อง)'],
             <?php echo $datax2;?>
         ]);
 

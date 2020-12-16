@@ -2,6 +2,8 @@ let available = document.getElementById("available")
 let unavailable = document.getElementById("unavailable")
 let daily = document.getElementById("daily")
 
+
+
 function searchDate() {
     let x = document.getElementById("check_in").value
     let y = document.getElementById("check_out").value
@@ -182,15 +184,15 @@ function formatDate2(inputDate) {
 }
 
 $(document).ready(function () {
-    let date_from = document.getElementById("date_from")
-    let date_to = document.getElementById("date_to")
-    let from_date = document.getElementById("from_date")
-    let to_date = document.getElementById("to_date")
-    let check_in = document.getElementById("check_in")
-    let check_out = document.getElementById("check_out")
-    let check_in_date = document.getElementById("check_in_date")
-    let check_out_date = document.getElementById("check_out_date")
-    let people = document.getElementById("people")
+    let date_from = $("#date_from")
+    let date_to = $("#date_to")
+    let from_date = $("#from_date")
+    let to_date = $("#to_date")
+    let check_in = $("#check_in")
+    let check_out = $("#check_out")
+    let check_in_date = $("#check_in_date")
+    let check_out_date = $("#check_out_date")
+    let people = $("#people")
     let today_monthNames = [
         "ม.ค.", "ก.พ.", "มี.ค.",
         "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
@@ -220,22 +222,20 @@ $(document).ready(function () {
     }
     let current_day = today_year + '-' + today_month + '-' + today_day
     let next_day = tomorrow_year + '-' + tomorrow_month + '-' + tomorrow_day
-    if (check_in.value == "" && check_out.value == "" && people.value == "") {
-        check_in.value = current_day
-        // check_in.setAttribute("min", current_day)
-        check_out.value = next_day
-        // check_out.setAttribute("min", check_out.value)
-        check_in_date.innerHTML = current_dayShow
-        check_out_date.innerHTML = next_dayShow
-        people.defaultValue = 1
+    if (check_in.val() == "" && check_out.val() == "" && people.val() == "") {
+        check_in.val(current_day)
+        check_out.val(next_day)
+        check_in_date.html(current_dayShow)
+        check_out_date.html(next_dayShow)
+        people.val(1)
     } else {
-        check_in_date.innerHTML = formatDate(new Date(check_in.value))
-        check_out_date.innerHTML = formatDate(new Date(check_out.value))
+        check_in_date.html(formatDate(new Date(check_in.val())))
+        check_out_date.html(formatDate(new Date(check_out.val())))
     }
-    if (document.getElementById("date_from") && document.getElementById("date_to")) {
-        if (date_from.value != "" && date_to.value != "") {
-            from_date.innerHTML = formatDate(new Date(date_from.value))
-            to_date.innerHTML = formatDate(new Date(date_to.value))
+    if ($("#date_from") && $("#date_to")) {
+        if (date_from.val() != "" && date_to.val() != "") {
+            from_date.html(formatDate(new Date(date_from.value)))
+            to_date.html(formatDate(new Date(date_to.value)))
         }
     }
     $('.roundtrip-input1').dateDropper({
