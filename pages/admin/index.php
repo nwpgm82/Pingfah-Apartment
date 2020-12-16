@@ -100,9 +100,14 @@ if($_SESSION['level'] == 'admin'){
                                     <h4>รายได้ต่อเดือน</h4>
                                     <?php
                                     $sql = mysqli_query($conn,"SELECT SUM(total) as total_cost FROM cost WHERE date = '".date("Y-m")."'");
+                                    $sql2 = mysqli_query($conn,"SELECT SUM(price_total) as total_dailycost FROM dailycost WHERE YEAR(check_in) = '".date("Y")."' AND MONTH(check_in) = '".date("m")."'");
+                                    $sql3 = mysqli_query($conn,"SELECT SUM(repair_income - repair_expenses) as total_repaircost FROM repair WHERE YEAR(repair_successdate) = '".date("Y")."' AND MONTH(repair_successdate) = '".date("m")."'");
                                     $data = mysqli_fetch_assoc($sql);  
+                                    $data2 = mysqli_fetch_assoc($sql2);
+                                    $data3 = mysqli_fetch_assoc($sql3);
+                                    $total_cost = floatval($data['total_cost']) + floatval($data2['total_dailycost']) + floatval($data3['total_repaircost']);
                                     ?>
-                                    <p id="total_cost"><?php echo number_format($data['total_cost']); ?> บาท</p>
+                                    <p id="total_cost"><?php echo number_format($total_cost); ?> บาท</p>
                                 </div>
                             </div>
                             <div class="search-box">
