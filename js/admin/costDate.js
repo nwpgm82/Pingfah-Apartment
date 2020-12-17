@@ -4,7 +4,7 @@ function searchDate(){
     if(x != "" && y != ""){
        location.assign(`index.php?from=${x}&to=${y}`) 
     }else{
-        alert("กรุณากรอกเดือนที่ต้องการค้นหา")
+        alert("กรุณาระบุเดือนที่ต้องการค้นหา")
     }
     
 }

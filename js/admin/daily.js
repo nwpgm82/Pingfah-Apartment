@@ -4,7 +4,7 @@ function searchDate() {
     if (x != "" && y != "") {
         location.assign(`index.php?check_in=${x}&check_out=${y}`)
     } else {
-        alert("กรุณากรอกวันที่ที่ต้องการค้นหา")
+        alert("กรุณาระบุวันที่ที่ต้องการค้นหา")
     }
 }
 
@@ -13,7 +13,7 @@ function searchCode() {
     if (z != "") {
         location.assign(`index.php?Code=${z}`)
     } else {
-        alert("กรุณากรอกเลขที่ในการจองที่ต้องการค้นหา")
+        alert("กรุณาระบุเลขที่ในการจองที่ต้องการค้นหา")
     }
 }
 
