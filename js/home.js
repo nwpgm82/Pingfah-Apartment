@@ -1,4 +1,4 @@
-$(document).ready(function () {
+// $(document).ready(function () {
     let today = new Date()
     let today_day = today.getDate()
     let today_month = today.getMonth() + 1
@@ -62,4 +62,4 @@ $(document).ready(function () {
         }
         return x1 + x2;
     }
-})
+// })

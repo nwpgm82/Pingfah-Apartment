@@ -63,7 +63,11 @@ if($_SESSION['level'] == 'admin'){
                             <p id="to_date" class="dateText"></p>
                             <button type="button" style="margin:0 8px;" onclick="searchDate()">ค้นหา</button>
                         </div>
-                        <button style="margin:0 8px;" onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        <?php
+                        if(isset($from) || isset($to) || isset($check)){
+                        ?>
+                        <button style="margin:0 8px;" onclick="unCheckAll()" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button>
+                        <?php } ?>
                     </div>
                     <a href="../cost/addcost.php"><button>เพิ่มรายการชำระเงิน</button></a>
                 </div>
@@ -90,6 +94,12 @@ if($_SESSION['level'] == 'admin'){
                     <div class="hr"></div>
                     <h3>รายการชำระเงินห้องพักรายเดือนทั้งหมด</h3>
                     <div style="display:flex;align-items:center;">
+                        <div style="padding:32px 16px;display: flex;align-items: center;">
+                            <input type="checkbox" id="all"
+                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
+                                <?php if(!isset($check)){ echo "checked";} ?>>
+                            <label for="scales">ทั้งหมด</label>
+                        </div>
                         <div style="padding:32px 16px;display: flex;align-items: center;">
                             <input type="checkbox" id="success"
                                 onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"

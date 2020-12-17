@@ -88,6 +88,16 @@
     transition: 0.3s;
 }
 
+.dailycost-box .cancel-sort{
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
+}
+
+.dailycost-box .cancel-sort:hover{
+    background-color: rgb(235, 235, 235);
+}
+
 .dailycost-box input#check_in,.dailycost-box input#check_out{
     position: relative;
     color: transparent;

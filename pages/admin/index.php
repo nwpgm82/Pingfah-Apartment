@@ -80,11 +80,13 @@ if($_SESSION['level'] == 'admin'){
                             <div>
                                 <h4>รายได้ทั้งหมด</h4>
                                 <?php
-                                    $sql = mysqli_query($conn,"SELECT SUM(total) as total_cost FROM cost");
+                                    $sql = mysqli_query($conn,"SELECT SUM(total) as total_cost FROM cost WHERE cost_status = 'ชำระเงินแล้ว'");
                                     $sql2 = mysqli_query($conn,"SELECT SUM(price_total) as total_cost2 FROM dailycost");
+                                    $sql3 = mysqli_query($conn,"SELECT SUM(repair_income - repair_expenses) as total_cost3 FROM repair");
                                     $data = mysqli_fetch_assoc($sql);  
                                     $data2 = mysqli_fetch_assoc($sql2);
-                                    $total_ALL = $data['total_cost'] + $data2['total_cost2'];
+                                    $data3 = mysqli_fetch_assoc($sql3);
+                                    $total_ALL = $data['total_cost'] + $data2['total_cost2'] + $data3['total_cost3'];
                                     ?>
                                 <p><?php echo number_format($total_ALL); ?> บาท</p>
                             </div>
@@ -99,13 +101,13 @@ if($_SESSION['level'] == 'admin'){
                                 <div>
                                     <h4>รายได้ต่อเดือน</h4>
                                     <?php
-                                    $sql = mysqli_query($conn,"SELECT SUM(total) as total_cost FROM cost WHERE date = '".date("Y-m")."'");
+                                    $sql = mysqli_query($conn,"SELECT SUM(total) as total_cost FROM cost WHERE date = '".date("Y-m")."' AND cost_status = 'ชำระเงินแล้ว'");
                                     $sql2 = mysqli_query($conn,"SELECT SUM(price_total) as total_dailycost FROM dailycost WHERE YEAR(check_in) = '".date("Y")."' AND MONTH(check_in) = '".date("m")."'");
                                     $sql3 = mysqli_query($conn,"SELECT SUM(repair_income - repair_expenses) as total_repaircost FROM repair WHERE YEAR(repair_successdate) = '".date("Y")."' AND MONTH(repair_successdate) = '".date("m")."'");
-                                    $data = mysqli_fetch_assoc($sql);  
-                                    $data2 = mysqli_fetch_assoc($sql2);
-                                    $data3 = mysqli_fetch_assoc($sql3);
-                                    $total_cost = floatval($data['total_cost']) + floatval($data2['total_dailycost']) + floatval($data3['total_repaircost']);
+                                    $datam = mysqli_fetch_assoc($sql);  
+                                    $datam2 = mysqli_fetch_assoc($sql2);
+                                    $datam3 = mysqli_fetch_assoc($sql3);
+                                    $total_cost = floatval($datam['total_cost']) + floatval($datam2['total_dailycost']) + floatval($datam3['total_repaircost']);
                                     ?>
                                     <p id="total_cost"><?php echo number_format($total_cost); ?> บาท</p>
                                 </div>

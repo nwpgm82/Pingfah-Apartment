@@ -81,9 +81,13 @@ if($_SESSION['level'] == 'admin'){
                         <input type="text" id="code" value="<?php echo $code?>">
                         <button type="button" onclick="searchCode()">ค้นหา</button>
                     </div>
+                    <?php
+                    if(isset($check_in) || isset($check_out) || isset($check) || isset($code)){
+                    ?>
                     <div>
-                        <a href="index.php"><button type="button">ยกเลิกการกรองทั้งหมด</button></a>
+                        <a href="index.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
                     </div>
+                    <?php } ?>
                 </div>
 
                 <div class="hr"></div>
@@ -120,7 +124,7 @@ if($_SESSION['level'] == 'admin'){
                         $page = 1;
                     }
                     $start = ($page - 1) * $perpage;
-                    if(isset($check_in) && isset($check_out)){
+                    if(isset($check_in) && isset($check_out) && !isset($check)){
                         $sql = "SELECT * FROM daily WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) LIMIT {$start} , {$perpage}";
                     }else if(!isset($check_in) && !isset($check_out) && isset($check)){
                         if($check == "come"){
@@ -144,6 +148,7 @@ if($_SESSION['level'] == 'admin'){
                             $check_s = "ยกเลิกการจอง";
                         }
                         $sql = "SELECT * FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status = '$check_s' LIMIT {$start} , {$perpage}";
+                        
                     }else if(isset($code)){
                         $sql = "SELECT * FROM daily WHERE code = '$code'";
                     }else{
@@ -157,6 +162,12 @@ if($_SESSION['level'] == 'admin'){
                     }
                     ?>
                         <div style="display:flex;align-items:center;">
+                            <div style="padding:32px 16px 32px 0;display: flex;align-items: center;">
+                                <input type="checkbox" id="all"
+                                    onchange="<?php if(isset($check_in) && isset($check_out)){ echo "searchCheck2('$check_in','$check_out',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
+                                    <?php if(!isset($check)){ echo "checked";} ?>>
+                                <label for="scales">ทั้งหมด</label>
+                            </div>
                             <div style="padding:32px 16px;display: flex;align-items: center;">
                                 <input type="checkbox" id="come"
                                     onchange="<?php if(isset($check_in) && isset($check_out)){ echo "searchCheck2('$check_in','$check_out',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
@@ -182,19 +193,19 @@ if($_SESSION['level'] == 'admin'){
                                 <label for="scales">ยกเลิกการจอง</label>
                             </div>
                         </div>
-                    <?php
+                        <?php
                     if ($result->num_rows > 0) {
                     ?>
                         <table>
                             <tr>
                                 <th>ลำดับ</th>
                                 <th>ชื่อผู้เช่า</th>
-                                <th>ห้องแอร์</th>
-                                <th>ห้องพัดลม</th>
+                                <th>จำนวน (ท่าน)</th>
+                                <th>ห้องแอร์ (ห้อง)</th>
+                                <th>ห้องพัดลม (ห้อง)</th>
                                 <th>วันที่เข้าพัก</th>
                                 <th>เลขที่ในการจอง</th>
                                 <th>สถานะ</th>
-                                <th>ห้องที่เลือก</th>
                                 <th>เพิ่มเติม</th>
                             </tr>
                             <?php
@@ -203,6 +214,7 @@ if($_SESSION['level'] == 'admin'){
                             <tr>
                                 <td><?php echo $num; ?></td>
                                 <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
+                                <td><?php echo $row['people']; ?></td>
                                 <td><?php echo $row['air_room']; ?></td>
                                 <td><?php echo $row['fan_room']; ?></td>
                                 <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?>
@@ -210,7 +222,6 @@ if($_SESSION['level'] == 'admin'){
                                 <td><?php echo $row['code']; ?></td>
                                 <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอ้าท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอ้าท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else{ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; } ?>
                                 </td>
-                                <td><?php echo $row['room_select']; ?></td>
                                 <td>
                                     <?php
                                     if($row['daily_status'] == 'รอการเข้าพัก'){
@@ -226,13 +237,16 @@ if($_SESSION['level'] == 'admin'){
                                     <?php 
                                     }else if($row['daily_status'] == 'เข้าพักแล้ว'){
                                     ?>
-                                    <button class="checkout-btn" onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอ้าท์</button>
-                                    <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
+                                    <button class="checkout-btn"
+                                        onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอ้าท์</button>
+                                    <a
+                                        href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
                                     <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
                                     <?php 
                                     }else{
                                     ?>
-                                    <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
+                                    <a
+                                        href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
                                     <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
                                     <?php    
                                     } 
@@ -284,6 +298,7 @@ if($_SESSION['level'] == 'admin'){
     ?>
     google.charts.setOnLoadCallback(drawChart2);
     <?php } ?>
+
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([

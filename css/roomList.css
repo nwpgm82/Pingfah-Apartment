@@ -91,7 +91,7 @@
 }
 
 .roomList-box table {
-    width: auto;
+    width: 100%;
     border-radius: 4px;
     overflow: hidden;
     border-collapse: collapse;
@@ -116,37 +116,29 @@
     background-color: rgb(131, 120, 47, 0.7);
 }
 
-.roomList-box table th:first-child {
-    width: 10%;
+.roomList-box table th:nth-child(1) {
+    width: 15%;
 }
 
 .roomList-box table th:nth-child(2) {
-    width: 10%;
+    width: 15%;
 }
 
 .roomList-box table th:nth-child(3) {
-    width: 10%;
-}
-
-.roomList-box table th:nth-child(4) {
     width: 40%;
 }
 
-.roomList-box table th:nth-child(5) {
+.roomList-box table th:nth-child(4) {
     width: 10%;
 }
 
-.roomList-box table th:nth-child(6) {
+.roomList-box table th:nth-child(5) {
     width: 20%;
 }
 
 .roomList-box table td p {
     font-size: 16px;
     font-weight: 500;
-}
-
-.roomList-box table td:first-child {
-    text-align: center;
 }
 
 .roomList-box table a {
@@ -469,7 +461,7 @@
 input[type=checkbox] {
     width: 20px;
     height: 20px;
-    margin: 0 8px;
+    margin-right: 8px;
     cursor: pointer;
 }
 

@@ -1,9 +1,7 @@
+let all = document.getElementById("all")
 let available = document.getElementById("available")
 let unavailable = document.getElementById("unavailable")
 let daily = document.getElementById("daily")
-
-
-
 function searchDate() {
     let x = document.getElementById("check_in").value
     let y = document.getElementById("check_out").value
@@ -14,16 +12,26 @@ function searchDate() {
 function searchDate2() {
     var x = document.getElementById("date_from").value
     var y = document.getElementById("date_to").value
-    location.assign(`index.php?Status=daily&from=${x}&to=${y}`)
+    if(x != "" || y != ""){
+        location.assign(`index.php?Status=daily&from=${x}&to=${y}`)
+    }else{
+        alert("กรุณาระบุวันที่ที่ต้องการค้นหา")
+    }
 }
 
 function searchCheck(id) {
     let check = document.getElementById(id)
+    all.checked = false
     available.checked = false
     unavailable.checked = false
     daily.checked = false
     check.checked = true
-    location.href = `index.php?Status=${check.id}`
+    if(id != "all"){
+        location.href = `index.php?Status=${check.id}`
+    }else{
+        location.href = "index.php"
+    }
+    
 }
 
 function unCheckAll() {
@@ -234,8 +242,8 @@ $(document).ready(function () {
     }
     if ($("#date_from") && $("#date_to")) {
         if (date_from.val() != "" && date_to.val() != "") {
-            from_date.html(formatDate(new Date(date_from.value)))
-            to_date.html(formatDate(new Date(date_to.value)))
+            from_date.html(formatDate(new Date(date_from.val())))
+            to_date.html(formatDate(new Date(date_to.val())))
         }
     }
     $('.roundtrip-input1').dateDropper({

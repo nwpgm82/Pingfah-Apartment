@@ -120,7 +120,6 @@ if($_SESSION['level'] == 'admin'){
                                         <input id="birthday" name="birthday" type="text" value="<?php echo $birthday; ?>" disabled required>
                                         <p id="birth_date" class="dateText"></p>
                                     </div>
-                                    <!-- <input type="date" value="<?php echo $birthday; ?>" name="birthday" id="birthday" placeholder="เกิดวันที่" disabled required> -->
                                 </div>
                                 <div class="col-3">
                                     <p>อายุ</p>

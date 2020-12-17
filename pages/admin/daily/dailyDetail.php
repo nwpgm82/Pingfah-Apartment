@@ -77,11 +77,15 @@ if($_SESSION['level'] == 'admin'){
                             <input type="text" value="<?php echo DateThai($check_out); ?>" disabled>
                         </div>
                         <div class="col-1">
-                            <p>ห้องแอร์</p>
+                            <p>จำนวน (ท่าน)</p>
+                            <input type="number" value="<?php echo $people; ?>" disabled>
+                        </div>
+                        <div class="col-1">
+                            <p>ห้องแอร์ (ห้อง)</p>
                             <input type="number" value="<?php echo $air_room; ?>" disabled>
                         </div>
                         <div class="col-1">
-                            <p>ห้องพัดลม</p>
+                            <p>ห้องพัดลม (ห้อง)</p>
                             <input type="number" value="<?php echo $fan_room; ?>" disabled>
                         </div>
                         <div class="col-2">

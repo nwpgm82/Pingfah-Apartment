@@ -100,7 +100,7 @@
 .daily-box input[type=checkbox]{
     width: 20px;
     height: 20px;
-    margin: 0 8px;
+    margin: 0 8px 0 0;
     cursor: pointer;
 }
 
@@ -116,6 +116,16 @@
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.daily-box .cancel-sort{
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
+}
+
+.daily-box .cancel-sort:hover{
+    background-color: rgb(235, 235, 235);
 }
 
 .daily-box .select_room{
@@ -216,6 +226,43 @@
     border-radius: 4px;
     overflow: hidden;
     border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.daily-box table th:first-child{
+    width: 5%;
+}
+
+.daily-box table th:nth-child(2){
+    width: 18%;
+}
+
+.daily-box table th:nth-child(3){
+    width: 7%;
+}
+
+.daily-box table th:nth-child(4){
+    width: 7%;
+}
+
+.daily-box table th:nth-child(5){
+    width: 7%;
+}
+
+.daily-box table th:nth-child(6){
+    width: 16%;
+}
+
+.daily-box table th:nth-child(7){
+    width: 10%;
+}
+
+.daily-box table th:nth-child(8){
+    width: 10%;
+}
+
+.daily-box table th:nth-child(9){
+    width: 20%;
 }
 
 .daily-box table tr {

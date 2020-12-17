@@ -61,7 +61,7 @@
                             <li id="cost">- รายเดือน</li>
                         </a>
                         <a href="/Pingfah/pages/admin/repair/repairReport.php">
-                            <li id="repair_report">- ค่าใช้จ่ายจากการแจ้งซ่อม</li>
+                            <li id="repair_report">- การซ่อมแซม</li>
                         </a>
                     </ul>
                 </div>

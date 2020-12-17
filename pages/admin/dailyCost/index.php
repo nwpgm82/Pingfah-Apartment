@@ -72,9 +72,13 @@ if($_SESSION['level'] == 'admin'){
                         <input type="text" id="code" value="<?php echo $code?>">
                         <button type="button" onclick="searchCode()">ค้นหา</button>
                     </div>
+                    <?php
+                    if(isset($check_in) || isset($check_out) || isset($code)){
+                    ?>
                     <div>
-                        <a href="index.php"><button type="button">ยกเลิกการกรองทั้งหมด</button></a>
+                        <a href="index.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
                     </div>
+                    <?php } ?>
                 </div>
                 <div class="hr"></div>
                 <div class="card">
@@ -181,7 +185,7 @@ if($_SESSION['level'] == 'admin'){
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี', 'รายได้'],
+            ['วัน / เดือน / ปี', 'รายได้ (บาท)'],
             <?php echo $datax;?>
         ]);
 

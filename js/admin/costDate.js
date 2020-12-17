@@ -1,7 +1,12 @@
 function searchDate(){
     var x = document.getElementById("date_from").value
     var y = document.getElementById("date_to").value
-    location.assign(`index.php?from=${x}&to=${y}`)
+    if(x != "" && y != ""){
+       location.assign(`index.php?from=${x}&to=${y}`) 
+    }else{
+        alert("กรุณากรอกเดือนที่ต้องการค้นหา")
+    }
+    
 }
 
 function confirmStatus(room,date){
@@ -18,7 +23,12 @@ function searchCheck(id){
     success.checked = false
     unsuccess.checked = false 
     check.checked = true
-    location.href = `index.php?Status=${check.id}`
+    if(id != "all"){
+       location.href = `index.php?Status=${check.id}` 
+    }else{
+        location.href = "index.php"
+    }
+    
 }
 
 function searchCheck2(from,to,id){
@@ -29,7 +39,12 @@ function searchCheck2(from,to,id){
     success.checked = false
     unsuccess.checked = false 
     check.checked = true
-    location.href = `index.php?from=${from}&to=${to}&Status=${check.id}`
+    if(id != "all"){
+       location.href = `index.php?from=${from}&to=${to}&Status=${check.id}` 
+    }else{
+        location.href = `index.php?from=${from}&to=${to}`
+    }
+    
 }
 
 
@@ -69,7 +84,6 @@ function formatDate(date) {
         "ส.ค.", "ก.ย.", "ต.ค.",
         "พ.ค.", "ธ.ค."
     ];
-    var day = date.getDate();
     var monthIndex = date.getMonth();
     var year = date.getFullYear();
     return monthNames[monthIndex] + ' ' + year;
@@ -84,50 +98,13 @@ function formatDate2(inputDate) {
 }
 
 $(document).ready(function () {
-    let from = document.getElementById("date_from")
-    let to = document.getElementById("date_to")
-    let from_date = document.getElementById("from_date")
-    let to_date = document.getElementById("to_date")
-    if(from.value == "" && to.value == ""){
-        let today_monthNames = [
-            "ม.ค.", "ก.พ.", "มี.ค.",
-            "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
-            "ส.ค.", "ก.ย.", "ต.ค.",
-            "พ.ค.", "ธ.ค."
-        ];
-        let today = new Date()
-        let today_day = today.getDate()
-        let today_month = today.getMonth() + 1
-        let today_year = today.getFullYear()
-        let tomorrow_day = today.getDate() + 1
-        let tomorrow_month = today.getMonth() + 1
-        let tomorrow_year = today.getFullYear()
-        if (today_day < 10) {
-            today_day = '0' + today_day.toString()
-        }
-        if (today_month < 10) {
-            today_month = '0' + today_month.toString()
-        }
-        if (tomorrow_day < 10) {
-            tomorrow_day = '0' + tomorrow_day.toString()
-        }
-        if (tomorrow_month < 10) {
-            tomorrow_month = '0' + tomorrow_month.toString()
-        }
-        let current_dayShow = today_monthNames[today_month - 1] + ' ' + today_year
-        let next_dayShow =  today_monthNames[tomorrow_month - 1] + ' ' + tomorrow_year
-        let current_day = today_year + '-' + today_month
-    
-        let next_day = tomorrow_year + '-' + tomorrow_month
-        from.value = current_day
-        // check_in.setAttribute("min", current_day)
-        to.value = next_day
-        // check_out.setAttribute("min", check_out.value)
-        from_date.innerHTML = current_dayShow
-        to_date.innerHTML = next_dayShow
-    }else{
-        from_date.innerHTML = formatDate(new Date(from.value))
-        to_date.innerHTML = formatDate(new Date(to.value))
+    let from = $("#date_from")
+    let to = $("#date_to")
+    let from_date = $("#from_date")
+    let to_date = $("#to_date")
+    if(from.val() != "" && to.val() != ""){
+        from_date.html(formatDate(new Date(from.val())))
+        to_date.html(formatDate(new Date(to.val())))
     }
     
     $('#date_from').dateDropper({

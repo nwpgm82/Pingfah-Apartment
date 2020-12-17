@@ -117,6 +117,16 @@
     background-color: rgb(131, 120, 47, 1);
 }
 
+.repairReport-box .cancel-sort{
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
+}
+
+.repairReport-box .cancel-sort:hover{
+    background-color: rgb(235, 235, 235);
+}
+
 .repairReport-box .del-btn {
     background-color: #FF4646;
 }

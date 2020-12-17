@@ -55,7 +55,11 @@ if($_SESSION["level"] == "admin"){
                             <p id="to_date" class="dateText"></p>
                             <button type="button" style="margin:0 8px;" onclick="searchDate()">ค้นหา</button>
                         </div>
-                        <button style="margin:0 8px;" onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        <?php
+                        if(isset($from) || isset($to)){
+                        ?>
+                        <button class="cancel-sort" style="margin:0 8px;" onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        <?php } ?>
                     </div>
                     <a href="addRepair.php"><button>เพิ่มรายการแจ้งซ่อม</button></a>
                 </div>
@@ -168,7 +172,7 @@ if($_SESSION["level"] == "admin"){
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี', 'รายได้', 'รายจ่าย'],
+            ['วัน / เดือน / ปี', 'รายได้ (บาท)', 'รายจ่าย (บาท)'],
             <?php echo $datax;?>
         ]);
 

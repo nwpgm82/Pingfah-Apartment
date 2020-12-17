@@ -71,28 +71,32 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <div class="hr"></div>
                     <div style="display:flex;align-items:center;">
-                        <div style="padding:32px 16px;display:flex;align-items:center;">
+                        <div style="padding:16px 16px 32px 0px;display:flex;align-items:center;">
+                           <input type="checkbox" id="all" onchange="searchCheck(this.id)" <?php if(!isset($check)){ echo "checked"; } ?>>
+                            <label for="scales">ทั้งหมด</label>
+                        </div>
+                        <div style="padding:16px 16px 32px 16px;display:flex;align-items:center;">
                             <input type="checkbox" id="available" onchange="searchCheck(this.id)"
                                 <?php if(isset($check)){ if($check == "available"){ echo "checked";}} ?>>
                             <label for="scales">ว่าง</label>
                         </div>
-                        <div style="padding:32px 16px;display:flex;align-items:center;">
+                        <div style="padding:16px 16px 32px 16px;display:flex;align-items:center;">
                             <input type="checkbox" id="unavailable" onchange="searchCheck(this.id)"
                                 <?php if(isset($check)){ if($check == "unavailable"){ echo "checked";}} ?>>
                             <label for="scales">รายเดือน (ไม่ว่าง)</label>
                         </div>
-                        <div style="padding:32px 16px;display:flex;align-items:center;">
+                        <div style="padding:16px 16px 32px 16px;display:flex;align-items:center;">
                             <input type="checkbox" id="daily" onchange="searchCheck(this.id)"
                                 <?php if(isset($check)){ if($check == "daily"){ echo "checked";}} ?>>
                             <label for="scales">รายวัน (ไม่ว่าง)</label>
                         </div>
-                        <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        <!-- <button onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button> -->
                     </div>
                     <?php
                     if($check == "daily"){
-                    ?> 
+                    ?>
                     <div style="display:flex;align-items:center;padding:16px 0;">
-                        <label style="padding-right:8px;">ค้นหาตามเดือน</label>
+                        <label style="padding-right:8px;">ค้นหาตามวันที่</label>
                         <div style="position:relative;">
                             <input type="text" class="roundtrip-input1" id="date_from" value="<?php echo $from; ?>">
                             <p id="from_date" class="dateText"></p>
@@ -135,7 +139,6 @@ if($_SESSION['level'] == 'admin'){
                     ?>
                     <table>
                         <tr>
-                            <th>ลำดับ</th>
                             <th>เลขห้อง</th>
                             <th>ประเภท</th>
                             <th>วันที่เข้าอยู่</th>
@@ -148,7 +151,6 @@ if($_SESSION['level'] == 'admin'){
                         <form action="../roomList/function/editType.php?ID=<?php echo $row["room_id"]; ?>"
                             method='POST'>
                             <tr>
-                                <td><?php echo $num; ?></td>
                                 <td><a
                                         href="../roomList/room_id.php?ID=<?php echo $row[0] ?>"><?php echo $row["room_id"]; ?></a>
                                 </td>
@@ -292,7 +294,8 @@ if($_SESSION['level'] == 'admin'){
                         <div style="display:flex;align-items:center;">
                             <label>จำนวนผู้พัก : </label>
                             <div style="position:relative;padding:0 8px;height:40px;">
-                                <input type="number" id="people" name="people" min="1" max="10" value="<?php echo $people; ?>"
+                                <input type="number" id="people" name="people" min="1" max="10"
+                                    value="<?php echo $people; ?>"
                                     oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
                             </div>
                             <label>(สูงสุด : 10)</label>
@@ -349,10 +352,12 @@ if($_SESSION['level'] == 'admin'){
                                             <label>2 คน</label>
                                         </div>
                                         <p>รายเดือน : <label
-                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['price']); ?></strong></label> บาท
+                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['price']); ?></strong></label>
+                                            บาท
                                         </p>
                                         <p>รายวัน : <label
-                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['daily_price']); ?></strong></label> บาท
+                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['daily_price']); ?></strong></label>
+                                            บาท
                                         </p>
                                     </div>
                                     <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int; ?> ห้อง</p>
@@ -397,10 +402,12 @@ if($_SESSION['level'] == 'admin'){
                                             <label>2 คน</label>
                                         </div>
                                         <p>รายเดือน : <label
-                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row4['price']); ?></strong></label> บาท
+                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row4['price']); ?></strong></label>
+                                            บาท
                                         </p>
                                         <p>รายวัน : <label
-                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row4['daily_price']); ?></strong></label> บาท
+                                                style="font-size:20px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row4['daily_price']); ?></strong></label>
+                                            บาท
                                         </p>
                                     </div>
 

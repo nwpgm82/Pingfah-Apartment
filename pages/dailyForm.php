@@ -74,15 +74,15 @@
                         <input type="text" name="check_out_input" value="<?php echo DateThai($check_out); ?>" readonly>
                     </div>
                     <div class="col-1">
-                        <p>จำนวนผู้พัก</p>
+                        <p>จำนวน (ท่าน)</p>
                         <input type="text" name="people" value="<?php echo $people; ?>" readonly>
                     </div>
                     <div class="col-1">
-                        <p>ห้องแอร์</p>
+                        <p>ห้องแอร์ (ห้อง)</p>
                         <input type="number" name="air" value="<?php echo $air; ?>" readonly>
                     </div>
                     <div class="col-1">
-                        <p>ห้องพัดลม</p>
+                        <p>ห้องพัดลม (ห้อง)</p>
                         <input type="number" name="fan" value="<?php echo $fan; ?>" readonly>
                     </div>
                 </div>

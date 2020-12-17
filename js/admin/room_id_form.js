@@ -47,6 +47,7 @@ function editData(num) {
         document.getElementById("email").disabled = false
         document.getElementById("line").disabled = false
         document.getElementById("birthday").disabled = false
+        document.getElementById("birth_date").style.backgroundColor = "#fff"
         document.getElementById("age").disabled = false
         document.getElementById("race").disabled = false
         document.getElementById("nationality").disabled = false
@@ -79,6 +80,7 @@ function editData(num) {
         document.getElementById("email2").disabled = false
         document.getElementById("line2").disabled = false
         document.getElementById("birthday2").disabled = false
+        document.getElementById("birth_date2").style.backgroundColor = "#fff"
         document.getElementById("age2").disabled = false
         document.getElementById("race2").disabled = false
         document.getElementById("nationality2").disabled = false
@@ -114,6 +116,7 @@ function cancelEditData(num) {
         document.getElementById("email").disabled = true
         document.getElementById("line").disabled = true
         document.getElementById("birthday").disabled = true
+        document.getElementById("birth_date").style.backgroundColor = "#fafafa"
         document.getElementById("age").disabled = true
         document.getElementById("race").disabled = true
         document.getElementById("nationality").disabled = true
@@ -145,6 +148,7 @@ function cancelEditData(num) {
         document.getElementById("email2").disabled = true
         document.getElementById("line2").disabled = true
         document.getElementById("birthday2").disabled = true
+        document.getElementById("birth_date2").style.backgroundColor = "#fafafa"
         document.getElementById("age2").disabled = true
         document.getElementById("race2").disabled = true
         document.getElementById("nationality2").disabled = true
@@ -164,3 +168,58 @@ function cancelEditData(num) {
         }
     }
 }
+
+function formatDate(date) {
+    var monthNames = [
+        "ม.ค.", "ก.พ.", "มี.ค.",
+        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
+        "ส.ค.", "ก.ย.", "ต.ค.",
+        "พ.ค.", "ธ.ค."
+    ];
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+
+function formatDate2(inputDate) {
+    var date = new Date(inputDate);
+    if (!isNaN(date.getTime())) {
+        // Months use 0 index.
+        return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+    }
+}
+
+if($('#birthday').val() != ""){
+    $('#birth_date').html(formatDate(new Date($('#birthday').val())))
+}
+if($('#birthday2').val() != ""){
+    $('#birth_date2').html(formatDate(new Date($('#birthday2').val())))
+}
+$('#birthday').dateDropper({
+    theme: "my-style",
+    large: true,
+    largeDefault: true,
+    format: "Y-m-d",
+    lang: "th",
+    startFromMonday: false,
+    defaultDate: formatDate2($('#birthday').val())
+});
+
+$('#birthday2').dateDropper({
+    theme: "my-style",
+    large: true,
+    largeDefault: true,
+    format: "Y-m-d",
+    lang: "th",
+    startFromMonday: false,
+    defaultDate: formatDate2($('#birthday2').val())
+});
+
+$('#birthday').change(function () {
+    $('#birth_date').html(formatDate(new Date($('#birthday').val())))
+})
+
+$('#birthday2').change(function () {
+    $('#birth_date2').html(formatDate(new Date($('#birthday2').val())))
+})
