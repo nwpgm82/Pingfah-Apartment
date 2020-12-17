@@ -205,8 +205,7 @@
     cursor: pointer;
 }
 
-.roomList-box table .del-btn,
-.roomList-box .cancel-btn {
+.roomList-box table .del-btn{
     margin: 0 4px;
     width: 70px;
     height: 40px;
@@ -220,9 +219,18 @@
     cursor: pointer;
 }
 
-.roomList-box table .del-btn:hover,
-.roomList-box .cancel-btn:hover {
+.roomList-box table .del-btn:hover{
     background-color: rgb(216, 40, 40);
+}
+
+.roomList-box .cancel-btn{
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
+}
+
+.roomList-box .cancel-btn:hover{
+    background-color: rgb(235, 235, 235);
 }
 
 .roomList-box table .accept-btn {
