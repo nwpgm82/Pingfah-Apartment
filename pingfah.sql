@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2020 at 07:21 PM
+-- Generation Time: Dec 18, 2020 at 11:33 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -92,7 +92,7 @@ CREATE TABLE `cost` (
 --
 
 INSERT INTO `cost` (`cost_id`, `room_id`, `type`, `cost_status`, `date`, `room_cost`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `total`) VALUES
-(5, '201', '', 'ยังไม่ได้ชำระ', '2020-11', 2700.00, 80.00, 750.00, 105.00, 0.00, '3635'),
+(5, '201', '', 'ชำระเงินแล้ว', '2020-11', 2700.00, 80.00, 750.00, 105.00, 0.00, '3635'),
 (6, '202', '', 'ชำระเงินแล้ว', '2020-12', 2700.00, 80.00, 600.00, 105.00, 0.00, '3485'),
 (8, '201', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 160.00, 375.00, 105.00, 0.00, '3340');
 
@@ -129,7 +129,8 @@ INSERT INTO `daily` (`daily_id`, `firstname`, `lastname`, `id_card`, `email`, `t
 (32, 'พงศธร', 'สร้อยอินต๊ะ', '5556667778889', 'blackfrostier@gmail.com', '45611216156', 'a8smqzdkphh', '2020-12-10', '2020-12-11', '3', 2, 1, 'เช็คเอ้าท์แล้ว', '2020-12-10', NULL, '203, 204, 206'),
 (33, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'ytm447v4phn', '2020-12-12', '2020-12-13', '3', 3, 0, 'เข้าพักแล้ว', '2020-12-12', '115829682_3345399482178668_7710700474312287945_o.jpg', '203, 205, 208'),
 (34, 'เกม1', 'เกม2', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'jqq064w5et7', '2020-12-13', '2020-12-14', '1', 0, 1, 'ยกเลิกการจอง', '2020-12-13', NULL, NULL),
-(35, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'xf7ft2pzuts', '2020-12-13', '2020-12-14', '1', 1, 0, 'ยกเลิกการจอง', '2020-12-13', NULL, NULL);
+(35, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'xf7ft2pzuts', '2020-12-13', '2020-12-14', '1', 1, 0, 'ยกเลิกการจอง', '2020-12-13', NULL, NULL),
+(36, 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'nncvxn4eotf', '2020-12-15', '2020-12-30', '2', 1, 0, 'ยกเลิกการจอง', '2020-12-15', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -228,8 +229,7 @@ INSERT INTO `fan_gal` (`gal_id`, `gal_name`) VALUES
 (13, 'submain-banner.png'),
 (14, 'wifi2.png'),
 (15, 'topbar-bg2.png'),
-(16, 'sub9.jpg'),
-(19, 'convenient-banner.jpg');
+(16, 'sub9.jpg');
 
 -- --------------------------------------------------------
 
@@ -259,7 +259,7 @@ INSERT INTO `gallery` (`gallery_id`, `gallery_name`) VALUES
 (38, 'rabbit.jpg'),
 (40, 'Rabbit-01.jpg'),
 (41, 'kda-more-kaisa-ahri-lol-uhdpaper.com-hd-8.721.jpg'),
-(48, '404570.jpg');
+(59, '404570.jpg');
 
 -- --------------------------------------------------------
 
@@ -280,7 +280,7 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`username`, `name`, `password`, `email`, `level`) VALUES
-('201', '201', '475e1c39acbf5b4aff05495b8c1d18f5', 'blackfrostier@gmail.com', 'guest'),
+('201', '201', 'ef16b5fe40a49934ad40c0b059090b14', 'blackfrostier@gmail.com', 'guest'),
 ('202', '202', '1cbf2e9cd7eba3b7dd32cf2565d57908', 'supisra45.30@gmail.com', 'guest'),
 ('205', '', '1cbf2e9cd7eba3b7dd32cf2565d57908', '', 'guest'),
 ('admin', 'admin', '81dc9bdb52d04dc20036dbd8313ed055', '', 'admin'),
@@ -455,7 +455,7 @@ CREATE TABLE `roommember` (
 --
 
 INSERT INTO `roommember` (`room_member`, `name_title`, `firstname`, `lastname`, `nickname`, `id_card`, `phone`, `email`, `birthday`, `age`, `race`, `nationality`, `job`, `address`, `pic_idcard`, `pic_home`, `id_line`, `name_title2`, `firstname2`, `lastname2`, `nickname2`, `id_card2`, `phone2`, `email2`, `birthday2`, `age2`, `race2`, `nationality2`, `job2`, `address2`, `pic_idcard2`, `pic_home2`, `id_line2`) VALUES
-('201', 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '1998-12-21', 21, 'ไทย', 'ไทย', 'นักศึกษา', '140/40 หมู่ 2 ต. หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', '404365.jpg', 'ข้อเสนอแนะบ้านพักพิงฟ้า.jpg', 'blackfrostier', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
+('201', 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', '1509966011521', '0956722914', 'seagame_prc@hotmail.com', '1998-12-21', 21, 'ไทย', 'ไทย', 'นักศึกษา', '140/40 หมู่ 2 ต. หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000                        ', '404365.jpg', 'ข้อเสนอแนะบ้านพักพิงฟ้า.jpg', 'blackfrostier', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
 ('202', 'นางสาว', 'สุภิศรา', 'เตชนันท์', 'แยม', '5556667778889', '0956766976', 'supisra45.30@gmail.com', '1998-04-22', 21, 'ไทย', 'ไทย', 'นักศึกษา', 'เลขที่ 288 หมู่ที่ 5 ตำบล ริมกก อำเภอ เมืองเชียงราย จังหวัด เชียงราย 57100', '117094314_3466888280022757_1501037714692968577_o.jpg', '115829682_3345399482178668_7710700474312287945_o.jpg', 'Yammy', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
 ('203', '', 'นวพล', 'นรเดชานันท์', '', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
 ('204', '', 'พงศธร', 'สร้อยอินต๊ะ', '', '5556667778889', '4561121615', 'blackfrostier@gmail.com', '', 0, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', '', 0, '', '', '', '', NULL, NULL, ''),
@@ -634,7 +634,7 @@ ALTER TABLE `cost`
 -- AUTO_INCREMENT for table `daily`
 --
 ALTER TABLE `daily`
-  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -652,7 +652,7 @@ ALTER TABLE `fan_gal`
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `gallery_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `gallery_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `package`
