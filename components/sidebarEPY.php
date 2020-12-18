@@ -75,20 +75,23 @@
             <div style="padding:16px 24px">
                 <h3 id="topbar-page"></h3>
             </div>
-            <div class="profile">
-                <?php
-                $user = $_SESSION['ID'];
-                $sql = "SELECT * FROM employee WHERE username = '$user'";
-                $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
-                $row = mysqli_fetch_array($result);
-                if($row != null){
-                extract($row);
-                }    
-                ?>
-                <img src="/Pingfah/pages/images/employee/<?php echo $user; ?>/<?php echo $profile_img; ?>"
-                    alt="profile_logo" class="profile-logo">
-                <p class="profile-text">ยินดีต้อนรับ <?php echo $_SESSION['name']; ?></p>
-            </div>
+            <a href="<?php if($_SESSION['level'] == 'employee'){ echo '/Pingfah/pages/employee/myprofile/index.php'; }else if($_SESSION['level'] == 'guest'){ echo '/Pingfah/pages/guest/myprofile/index.php'; } ?>">
+                <div class="profile">
+                    <?php
+                    $user = $_SESSION['ID'];
+                    $sql = "SELECT * FROM employee WHERE username = '$user'";
+                    $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
+                    $row = mysqli_fetch_array($result);
+                    if($row != null){
+                    extract($row);
+                    }    
+                    ?>
+                    <img src="<?php if(isset($profile_img)){ echo "/Pingfah/pages/images/employee/$user/$profile_img"; }else{ echo "https://sites.google.com/site/rabbiteieicom/_/rsrc/1467891358746/home/image8.jpg"; } ?>"
+                        alt="profile_logo" class="profile-logo">  
+                    <p class="profile-text">ยินดีต้อนรับ <?php echo $_SESSION['name']; ?></p>
+                </div>
+            </a>
+            
         </div>
     </div>
 

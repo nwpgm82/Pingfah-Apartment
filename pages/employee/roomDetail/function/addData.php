@@ -9,6 +9,8 @@ if($_SESSION['level'] == 'employee'){
     }else if($type == "air"){
       $type_show = "แอร์";
     }
+    $price = $_POST['price'];
+    $daily_price = $_POST['daily_price'];
     $water = $_POST['water_bill'];
     $elec = $_POST['elec_bill'];
     $cable = $_POST['cable_charge'];
@@ -38,7 +40,7 @@ if($_SESSION['level'] == 'employee'){
     }else{
       $sv_readtable = null;
     }
-    $sql = "UPDATE roomdetail SET water_bill = $water, elec_bill = $elec, cable_charge = $cable, fines = $fines, sv_fan ='$sv_fan', sv_air ='$sv_air', sv_wifi ='$sv_wifi', sv_furniture ='$sv_furniture', sv_readtable ='$sv_readtable'  WHERE type = '$type_show' ";
+    $sql = "UPDATE roomdetail SET price = $price, daily_price = $daily_price, water_bill = $water, elec_bill = $elec, cable_charge = $cable, fines = $fines, sv_fan ='$sv_fan', sv_air ='$sv_air', sv_wifi ='$sv_wifi', sv_furniture ='$sv_furniture', sv_readtable ='$sv_readtable' WHERE type = '$type_show' ";
     if ($conn->query($sql) === TRUE) {
       echo "<script>";
       echo "alert('แก้ไขข้อมูลสำเร็จ');";

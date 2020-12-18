@@ -210,12 +210,10 @@ if($_SESSION['level'] == 'employee'){
                             </td>
                             <td class="flex-more">
                                 <div>
-                                    <a
-                                        href="../repair/repairDetail.php?repair_id=<?php echo $row['repair_id'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                    <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
                                 </div>
                                 <div>
-                                    <button class="del-btn"
-                                        onclick="repair_del(<?php echo $row['repair_id']; ?>)">ลบ</button>
+                                    <button class="del-btn" onclick="repair_del(<?php echo $row['repair_id']; ?>)">ลบ</button>
                                 </div>
                             </td>
                         </tr>

@@ -57,7 +57,7 @@ if($_SESSION['level'] == 'admin'){
                             </div>
                             <div>
                                 <p>ค่าเช่าห้อง(รายวัน)</p>
-                                <input type="text" name="price"
+                                <input type="text" name="daily_price"
                                     value="<?php if(isset($row['daily_price'])){ echo $row['daily_price']; }else{ echo 0; } ?>"
                                     disabled>
                                 <label>บาท/วัน</label>

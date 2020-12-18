@@ -116,10 +116,8 @@ if($_SESSION["level"] == "employee"){
                             </td>
                             <td>
                                 <div class="flex-more">
-                                    <a
-                                        href="../repair/repairDetail.php?room_id=<?php echo $row['room_id'];?>&repairappliance=<?php echo $row['repair_appliance'];?>&repaircategory=<?php echo $row['repair_category'];?>&repairdate=<?php echo $row['repair_date'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
-                                    <button class="del-btn"
-                                        onclick="repair_del(<?php echo "'".$row['room_id']."','".$row['repair_appliance']."','".$row['repair_category']."','".$row['repair_date']."'"?>)">ลบ</button>
+                                <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                <button class="del-btn" onclick="repair_del(<?php echo $row['repair_id']; ?>)">ลบ</button>
                                 </div>
                             </td>
                         </tr>

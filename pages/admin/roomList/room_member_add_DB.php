@@ -31,7 +31,8 @@ if($_SESSION['level'] == 'admin'){
     $result = $conn->query($checkData);
     if ($result->num_rows > 0) {
       $updateData = "UPDATE roommember SET name_title = '$name_title', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', id_card = '$id_card', phone = '$phone', email = '$email', birthday = '$birthday', age = '$age', race = '$race', nationality = '$nationality', job = '$job', address = '$address', id_line = '$line' WHERE room_member = '$id' ";
-      if ($conn->query($updateData) === TRUE) {
+      $updateUser = "UPDATE login SET email = '$email' WHERE username = '$id'";
+      if ($conn->query($updateData) === TRUE && $conn->query($updateUser) === TRUE) {
         for($i = 1;$i <= 2;$i++){ 
           if($pic_idcard != ""){
             $update_pic1 = "UPDATE roommember SET pic_idcard = '$pic_idcard' WHERE room_member = '$id' ";

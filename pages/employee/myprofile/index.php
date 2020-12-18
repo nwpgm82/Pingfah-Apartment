@@ -1,8 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    include('../../../components/sidebarEPY.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,24 +22,31 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="emDetail-box">
-                <h3>รายละเอียดพนักงาน</h3>
-                <div class="hr"></div>
-                <?php
-                $user = $_REQUEST["username"]; 
-                $sql = "SELECT * FROM employee WHERE username = '$user'";
-                $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
-                $row = mysqli_fetch_array($result);
-                if($row != null){
-                extract($row);
-                }     
-                ?>
-                <form action="../employee/function/editEm.php?username=<?php echo $username?>" method='POST'
-                    enctype="multipart/form-data">
+                <form action="function/editEm.php" method='POST' enctype="multipart/form-data">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <h3>รายละเอียดพนักงาน</h3>
+                        <div>
+                            <button type="button" id="edit_data" class="edit-btn" onclick="edit()">แก้ไข</button>
+                            <div id="option" style="display:none;">
+                                <button type="submit" name="accept_edit">ยืนยัน</button>
+                                <button type="button" class="cancel-btn" onclick="cancel_edit()">ยกเลิก</button>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="hr"></div>
+                    <?php
+                    $sql = "SELECT * FROM employee WHERE username = '".$_SESSION['ID']."'";
+                    $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
+                    $row = mysqli_fetch_array($result);
+                    if($row != null){
+                    extract($row);
+                    }     
+                    ?>
                     <div class="row" style="padding-top: 32px;">
                         <div class="col-2">
                             <div style="padding-top:8px">
                                 <div class="profile-box">
-                                <img src="<?php if(isset($profile_img)){ echo "../../images/employee/$username/$profile_img"; } ?>" id="output_imagepic1" class="profile">
+                                    <img src="<?php if(isset($profile_img)){ echo "../../images/employee/$username/$profile_img"; } ?>" id="output_imagepic1" class="profile">
                                     <div style="display:none" id="del1">
                                         <?php
                                         if(isset($profile_img)){ ?>
@@ -149,40 +156,15 @@ if($_SESSION['level'] == 'admin'){
                                         <div class="img-box">
                                             <img src="../../images/employee/<?php echo $username; ?>/<?php echo $pic_idcard; ?>"
                                                 id="output_imagepic2">
-                                            <div style="display:none" id="del2">
-                                                <?php
-                                                if(isset($pic_idcard)){ ?>
-                                                <button class="del-btn" type="button"
-                                                    onclick="delImg('<?php echo $username ?>','pic_idcard')">X</button>
-                                                <?php } ?>
-                                            </div>
-
                                         </div>
-                                        <?php if(!isset($pic_idcard)){ ?>
-                                        <input type="file" accept="image/*" name="pic_idcard" id="pic_idcard"
-                                            onchange="preview_image(event,'pic2')" style="padding-top:16px" disabled
-                                            required>
-                                        <?php } ?>
                                     </div>
                                     <div class="col-6">
                                         <p>สำเนาทะเบียนบ้าน</p>
                                         <div class="img-box">
                                             <img src="../../images/employee/<?php echo $username; ?>/<?php echo $pic_home; ?>"
                                                 id="output_imagepic3">
-                                            <div style="display:none" id="del3">
-                                                <?php
-                                                if(isset($pic_home)){ ?>
-                                                <button class="del-btn" type="button"
-                                                    onclick="delImg('<?php echo $username ?>','pic_home')">X</button>
-                                                <?php } ?>
-                                            </div>
 
                                         </div>
-                                        <?php if(!isset($pic_home)){ ?>
-                                        <input type="file" accept="image/*" name="pic_home" id="pic_home"
-                                            onchange="preview_image(event,'pic3')" style="padding-top:16px" disabled
-                                            required>
-                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -196,20 +178,13 @@ if($_SESSION['level'] == 'admin'){
                                     </div>
                                 </div>
                             </div>
-                            <div style="padding-top:64px;display:flex;justify-content:center;">
-                                <button type="button" id="edit_data" class="edit-btn" onclick="edit()">แก้ไข</button>
-                                <div id="option" style="display:none;">
-                                    <button type="submit" name="accept_edit">ยืนยัน</button>
-                                    <button type="button" class="cancel-btn" onclick="cancel_edit()">ยกเลิก</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/emDetail.js"></script>
+    <script src="../../../js/employee/emDetail.js"></script>
 </body>
 
 </html>

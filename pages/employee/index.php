@@ -146,26 +146,6 @@ if($_SESSION['level'] == 'employee'){
                     <div class="card">
                         <div class="detail">
                             <div>
-                                <h4>จำนวนพนักงาน</h4>
-                                <?php
-                                    $employee = mysqli_query($conn,"SELECT COUNT(*) as total_em FROM employee");
-                                    $em = mysqli_fetch_assoc($employee);  
-                                    ?>
-                                <p><?php echo $em['total_em']; ?> คน</p>
-                            </div>
-                        </div>
-                        <a href="employee/index.php">
-                            <div class="search-box">
-                                <p class="dateText1">พนักงานทั้งหมด</p>
-                            </div>
-                        </a>
-                        <div class="icon-box">
-                            <img src="../../img/tool/employee_icon.png" alt="">
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="detail">
-                            <div>
                                 <h4>จำนวนที่ค้างชำระ</h4>
                                 <?php
                                     $overdue_cost = mysqli_query($conn,"SELECT COUNT(*) as total_overdue FROM cost WHERE cost_status = 'ยังไม่ได้ชำระ'");
