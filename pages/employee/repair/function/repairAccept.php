@@ -8,9 +8,9 @@ if($_SESSION['level'] == 'employee'){
       $cate = $_POST['repair_category'];
       $detail = $_POST['repair_detail'];
       $date = $_POST['repair_date'];
-      $status = $_POST['repair_status'];
+      // $status = $_POST['repair_status'];
       // echo $room_id .$app .$cate .$detail .$date .$status;
-      $sql = "INSERT INTO repair (room_id, repair_appliance, repair_category, repair_detail, repair_date, repair_status) VALUES ('$room_id', '$app', '$cate', '$detail', '$date', '$status')";
+      $sql = "INSERT INTO repair (room_id, repair_appliance, repair_category, repair_detail, repair_date, repair_status) VALUES ('$room_id', '$app', '$cate', '$detail', '$date', 'รอดำเนินการ')";
       if ($conn->query($sql) === TRUE) {
           echo "<script>";
           echo "alert('ลงรายการแจ้งซ่อมเรียบร้อย');";

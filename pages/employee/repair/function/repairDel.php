@@ -2,12 +2,9 @@
 session_start();
 if($_SESSION['level'] == 'employee'){
   include('../../../connection.php');
-  $room_id = $_REQUEST['room_id'];
-  $appliance = $_REQUEST['repairappliance'];
-  $category = $_REQUEST['repaircategory'];
-  $date = $_REQUEST['repairdate']; 
+  $repair_id = $_REQUEST["repair_id"];
 
-  $sql = "DELETE FROM repair WHERE room_id = '$room_id' AND repair_appliance = '$appliance' AND repair_category = '$category' AND repair_date = '$date' ";
+  $sql = "DELETE FROM repair WHERE repair_id = $repair_id ";
 
   if ($conn->query($sql) === TRUE) {
       echo "<script>";

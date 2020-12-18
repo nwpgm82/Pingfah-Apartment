@@ -76,7 +76,7 @@
 .cost-box input[type=checkbox]{
     width: 20px;
     height: 20px;
-    margin: 0 8px;
+    margin-right: 8px;
     cursor: pointer;
 }
 
@@ -129,7 +129,7 @@
     overflow: hidden;
     border-collapse: collapse;
     border-radius: 4px;
-    table-layout: auto;
+    table-layout: fixed;
 }
 
 .cost-box table tr {
@@ -141,11 +141,55 @@
     cursor: pointer;
 }
 
+.cost-box table th:nth-child(1){
+    width: 5%;
+}
+.cost-box table th:nth-child(2){
+    width: 8%;
+}
+.cost-box table th:nth-child(3){
+    width: 10%;
+}
+.cost-box table th:nth-child(4){
+    width: 7%;
+}
+.cost-box table th:nth-child(5){
+    width: 7%;
+}
+.cost-box table th:nth-child(6){
+    width: 7%;
+}
+.cost-box table th:nth-child(7){
+    width: 7%;
+}
+.cost-box table th:nth-child(8){
+    width: 7%;
+}
+.cost-box table th:nth-child(9){
+    width: 7%;
+}
+.cost-box table th:nth-child(10){
+    width: 15%;
+}
+.cost-box table th:nth-child(11){
+    width: 20%;
+}
+
+.cost-box table td:first-child{
+    text-align: center;
+}
+
 .cost-box table th,
 .cost-box table td {
     height: 60px;
     border: 1px solid #ddd;
     padding: 0 16px;
+}
+
+.cost-box table td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cost-box table td:last-child{

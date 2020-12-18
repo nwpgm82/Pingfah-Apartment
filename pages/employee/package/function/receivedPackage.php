@@ -8,7 +8,7 @@ if($_SESSION['level'] == 'employee'){
     $sql = "UPDATE package SET package_status ='รับพัสดุแล้ว', package_received = '$received' WHERE package_num = '$num'";
     if ($conn->query($sql) === TRUE) {
         echo "<script type='text/javascript'>alert('รับพัสดุเรียบร้อย')</script>";
-        echo "<script type='text/javascript'>location.assign('/Pingfah/pages/admin/package/index.php')</script>";
+        echo "<script type='text/javascript'>location.assign('../index.php')</script>";
     } else {
         echo "Error updating record: " . $conn->error;
     }

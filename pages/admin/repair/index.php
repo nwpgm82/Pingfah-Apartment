@@ -6,6 +6,7 @@ if($_SESSION['level'] == 'admin'){
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
     $check = @$_REQUEST['Status'];
+    $num = 1;
     function DateThai($strDate)
     {
         $strYear = date("Y",strtotime($strDate))+543;
@@ -15,8 +16,14 @@ if($_SESSION['level'] == 'admin'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    $query_data = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
-    $query_data2 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
+    if(isset($from) && isset($to)){
+        $query_data = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') GROUP BY repair_category";
+        $query_data2 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') GROUP BY repair_status";
+    }else{
+        $query_data = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
+        $query_data2 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
+    }
+   
     $result = mysqli_query($conn, $query_data);
     $result2 = mysqli_query($conn, $query_data2);
     $datax = array();
@@ -63,7 +70,11 @@ if($_SESSION['level'] == 'admin'){
                             <p id="to_date" class="dateText"></p>
                             <button type="button" style="margin:0 8px;" onclick="searchDate()">ค้นหา</button>
                         </div>
-                        <button style="margin:0 8px;" onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        <?php
+                        if(isset($from) || isset($to) || isset($check)){
+                        ?>
+                        <button class="cancel-sort" style="margin:0 8px;" onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        <?php } ?>
                     </div>
                     <a href="addRepair.php"><button>เพิ่มรายการแจ้งซ่อม</button></a>
                 </div>
@@ -71,13 +82,35 @@ if($_SESSION['level'] == 'admin'){
                 <div>
                     <div class="card">
                         <div class="sub-grid">
+                            <?php
+                            if(strlen($datax) != 0){
+                            ?>
                             <div id="piechart" class="chart"></div>
+                            <?php 
+                            }else{
+                                 echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>";
+                            } 
+                            ?>
+                            <?php
+                            if(strlen($datax2) != 0){
+                            ?>
                             <div id="piechart2" class="chart"></div>
+                            <?php 
+                            }else{
+                                 echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>";
+                            } 
+                            ?>
                         </div>
                     </div>
                     <div class="hr"></div>
                     <h3>รายการแจ้งซ่อมทั้งหมด</h3>
                     <div style="display:flex;align-items:center;">
+                        <div style="padding:32px 16px 32px 0;display:flex;">
+                            <input type="checkbox" id="all"
+                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
+                                <?php if(!isset($check)){ echo "checked"; } ?>>
+                            <label for="scales">ทั้งหมด</label>
+                        </div>
                         <div style="padding:32px 16px;display:flex;">
                             <input type="checkbox" id="success"
                                 onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
@@ -96,7 +129,7 @@ if($_SESSION['level'] == 'admin'){
                                 <?php if(isset($check)){ if($check == "pending"){ echo "checked";}} ?>>
                             <label for="scales">รอดำเนินการ</label>
                         </div>
-                        
+
                     </div>
                     <?php
                     $perpage = 5;
@@ -106,6 +139,7 @@ if($_SESSION['level'] == 'admin'){
                         $page = 1;
                     }
                     $start = ($page - 1) * $perpage;
+                    $num = $start + 1;
                     if(isset($from) && isset($to) && !isset($check)){
                         $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') ORDER BY repair_date";
                     }else if(!isset($from) && !isset($to) && isset($check)){
@@ -134,20 +168,20 @@ if($_SESSION['level'] == 'admin'){
                 ?>
                     <table>
                         <tr>
+                            <th>ลำดับ</th>
                             <th>เลขห้อง</th>
                             <th>อุปกรณ์</th>
                             <th>หมวดหมู่</th>
-                            <th>รายละเอียด</th>
                             <th>เวลาที่ลง</th>
                             <th>สถานะ</th>
                             <th>เพิ่มเติม</th>
                         </tr>
                         <?php while($row = $result->fetch_assoc()){ ?>
                         <tr>
+                            <td><?php echo $num; ?></td>
                             <td><?php echo $row['room_id']; ?></td>
                             <td><?php echo $row['repair_appliance']; ?></td>
                             <td><?php echo $row['repair_category']; ?></td>
-                            <td><?php echo $row['repair_detail']; ?></td>
                             <td><?php echo DateThai($row['repair_date']); ?></td>
                             <td>
                                 <?php
@@ -185,7 +219,7 @@ if($_SESSION['level'] == 'admin'){
                                 </div>
                             </td>
                         </tr>
-                        <?php } ?>
+                        <?php $num++; } ?>
                     </table>
                     <?php
                     ///////pagination
@@ -204,7 +238,8 @@ if($_SESSION['level'] == 'admin'){
                             <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $i; ?>"
                                 <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
-                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <a
+                                href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
                         }else if(!isset($from) && !isset($to) && isset($check)){
                         ?>
@@ -263,8 +298,12 @@ if($_SESSION['level'] == 'admin'){
         var options = {
             title: 'รายการแจ้งซ่อมแยกตามประเภท',
             is3D: true,
-            fontName: "Sarabun"
-            // colors: ['rgb(131, 120, 47)']
+            fontName: "Sarabun",
+            slices: {
+                0: { color: 'rgb(131, 120, 47)' },
+                1: { color: '#c6b66b' },
+                2: { color: '#e5d170'}
+            }
         };
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);
@@ -278,8 +317,12 @@ if($_SESSION['level'] == 'admin'){
         var options = {
             title: 'รายการแจ้งซ่อมแยกตามสถานะ',
             is3D: true,
-            fontName: "Sarabun"
-            // colors: ['rgb(131, 120, 47)']
+            fontName: "Sarabun",
+            slices: {
+                0: { color: 'rgb(131, 120, 47)' },
+                1: { color: '#c6b66b' },
+                2: { color: '#e5d170'}
+            }
         };
         var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
         chart.draw(data, options);

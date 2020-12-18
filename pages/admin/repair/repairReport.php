@@ -5,6 +5,7 @@ if($_SESSION["level"] == "admin"){
     include("../../../components/sidebar.php");
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
+    $num = 1;
     function DateThai($strDate)
     {
         $strYear = date("Y",strtotime($strDate))+543;
@@ -78,6 +79,7 @@ if($_SESSION["level"] == "admin"){
                         $page = 1;
                     }
                     $start = ($page - 1) * $perpage;
+                    $num = $start + 1;
                     if(isset($from) && isset($to)){
                         $sql = "SELECT * FROM repair WHERE (repair_successdate BETWEEN '$from' AND '$to') AND repair_status = 'ซ่อมเสร็จแล้ว' ORDER BY repair_date";
                     }else{
@@ -88,6 +90,7 @@ if($_SESSION["level"] == "admin"){
                 ?>
                     <table>
                         <tr>
+                            <th>ลำดับ</th>
                             <th>เลขห้อง</th>
                             <th>อุปกรณ์</th>
                             <th>หมวดหมู่</th>
@@ -99,6 +102,7 @@ if($_SESSION["level"] == "admin"){
                         </tr>
                         <?php while($row = $result->fetch_assoc()){ ?>
                         <tr>
+                            <td><?php echo $num; ?></td>
                             <td><?php echo $row['room_id']; ?></td>
                             <td><?php echo $row['repair_appliance']; ?></td>
                             <td><?php echo $row['repair_category']; ?></td>
@@ -119,7 +123,7 @@ if($_SESSION["level"] == "admin"){
                                 </div>
                             </td>
                         </tr>
-                        <?php } ?>
+                        <?php $num++; } ?>
                     </table>
                     <?php
                     ///////pagination
@@ -178,7 +182,7 @@ if($_SESSION["level"] == "admin"){
 
         var options = {
             title: 'ค่าใช้จ่ายจากการแจ้งซ่อม',
-            colors: ['rgb(131, 120, 47)', '#a8a06d'],
+            colors: ['rgb(131, 120, 47)', '#c6b66b'],
             fontName: "Sarabun"
         };
 

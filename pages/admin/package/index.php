@@ -6,6 +6,7 @@ if($_SESSION['level'] == 'admin'){
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
     $check = @$_REQUEST['Status'];
+    $num = 1;
     function DateThai($strDate){
         $strYear = date("Y",strtotime($strDate))+543;
         $strMonth= date("n",strtotime($strDate));
@@ -60,7 +61,11 @@ if($_SESSION['level'] == 'admin'){
                             <p id="to_date" class="dateText"></p>
                             <button type="button" style="margin:0 8px;"onclick="searchDate()">ค้นหา</button>
                         </div>
-                        <button style="margin:0 8px;"onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        <?php
+                        if(isset($from) || isset($to) || isset($check)){
+                        ?>
+                        <button class="cancel-sort" style="margin:0 8px;"onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        <?php } ?>
                     </div>
                     <a href="addPackage.php"><button type="button">เพิ่มรายการพัสดุ</button></a>
                 </div>
@@ -80,6 +85,12 @@ if($_SESSION['level'] == 'admin'){
                     <div class="hr"></div>
                     <h3>รายการพัสดุทั้งหมด</h3>
                     <div style="display:flex;align-items:center;">
+                    <div style="padding:32px 16px 32px 0;">
+                            <input type="checkbox" id="all"
+                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
+                                <?php if(!isset($check)){ echo "checked"; } ?>>
+                            <label for="scales">ทั้งหมด</label>
+                        </div>
                         <div style="padding:32px 16px;">
                             <input type="checkbox" id="success"
                                 onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
@@ -102,6 +113,7 @@ if($_SESSION['level'] == 'admin'){
                         $page = 1;
                     }
                     $start = ($page - 1) * $perpage;
+                    $num = $start + 1;
                     if(isset($from) && isset($to) && !isset($check)){
                         $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') ORDER BY package_arrived LIMIT {$start} , {$perpage}";
                     }else if(!isset($from) && !isset($to) && isset($check)){
@@ -126,6 +138,7 @@ if($_SESSION['level'] == 'admin'){
                     ?>
                     <table>
                         <tr>
+                            <th>ลำดับ</th>
                             <th>เลขพัสดุ</th>
                             <th>บริษัท</th>
                             <th>พัสดุมาถึง</th>
@@ -141,7 +154,7 @@ if($_SESSION['level'] == 'admin'){
                         <form action="../package/function/receivedPackage.php?ID=<?php echo $row["package_num"]; ?>"
                             onsubmit="return confirm('คุณต้องการยืนยันการรับพัสดุใช่หรือไม่ ? ');" method="POST">
                             <tr>
-                                <!-- <td style="width:70px;text-align:center"></td> -->
+                                <td><?php echo $num; ?></td>
                                 <td><?php echo $row["package_num"] ?></td>
                                 <td><?php echo $row["package_company"] ?></td>
                                 <td><?php echo DateThai($row["package_arrived"]) ?></td>
@@ -174,20 +187,12 @@ if($_SESSION['level'] == 'admin'){
                                     if(strlen($row["package_received"]) == 0){
                                     ?>
                                     <button type="submit" class="received-btn">รับพัสดุ</button>
-                                    <button type="button" class="del-btn"
-                                        onclick="del('<?php echo $row['package_num'] ?>')">ลบ</button>
-                                    <?php
-                                    }else{
-                                    ?>
-                                    <button type="button" class="del-btn"
-                                        onclick="del('<?php echo $row['package_num'] ?>')">ลบ</button>
-                                    <?php
-                                    }
-                                    ?>
+                                    <?php } ?>
+                                    <button type="button" class="del-btn" onclick="del('<?php echo $row['package_num'] ?>')">ลบ</button>
                                 </td>
                             </tr>
                         </form>
-                        <?php } ?>
+                        <?php $num++; } ?>
                     </table>
                     <?php
                     ///////pagination
@@ -271,7 +276,7 @@ if($_SESSION['level'] == 'admin'){
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี', 'รับพัสดุแล้ว', 'ยังไม่ได้รับพัสดุ'],
+            ['วัน / เดือน / ปี', 'รับพัสดุแล้ว (ชิ้น)', 'ยังไม่ได้รับพัสดุ (ชิ้น)'],
             <?php echo $datax;?>
         ]);
 

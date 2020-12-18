@@ -101,6 +101,7 @@ if($_SESSION['level'] == 'admin'){
                     $page = 1;
                 }
                 $start = ($page - 1) * $perpage;
+                $num = $start + 1;
                 if(isset($check_in) && isset($check_out)){
                     $sql = "SELECT * FROM dailycost WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) LIMIT {$start} , {$perpage}";
                 }else if(isset($code)){
@@ -118,14 +119,14 @@ if($_SESSION['level'] == 'admin'){
                 ?>
                 <table class="fixed">
                     <tr>
-                        <th style="width:4%">ลำดับ</th>
-                        <th style="width:15%">เลขห้องที่จอง</th>
-                        <th style="width:18%">ชื่อผู้เช่า</th>
-                        <th style="width:18%">วันที่เข้าพัก</th>
-                        <th style="width:10%">เลขที่ในการจอง</th>
-                        <th style="width:8%">ราคารวม</th>
-                        <th style="width:12%">สถานะการชำระเงิน</th>
-                        <th style="width:15%">เพิ่มเติม</th>
+                        <th>ลำดับ</th>
+                        <th>เลขห้องที่จอง</th>
+                        <th>ชื่อผู้เช่า</th>
+                        <th>วันที่เข้าพัก</th>
+                        <th>เลขที่ในการจอง</th>
+                        <th>ราคารวม</th>
+                        <th>สถานะการชำระเงิน</th>
+                        <th>เพิ่มเติม</th>
                     </tr>
                     <?php
                         while($row = $result->fetch_assoc()) {

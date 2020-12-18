@@ -52,6 +52,9 @@
                         <a href="/Pingfah/pages/employee/cost/index.php">
                             <li id="cost">- รายเดือน</li>
                         </a>
+                        <a href="/Pingfah/pages/employee/repair/repairReport.php">
+                            <li id="repair_report">- การซ่อมแซม</li>
+                        </a>
                     </ul>
                 </div>
                 <a href="/Pingfah/pages/employee/repair/index.php">
@@ -62,9 +65,6 @@
                 </a>
                 <a href="/Pingfah/pages/employee/rule/index.php">
                     <li id="rule">กฎระเบียบหอพัก</li>
-                </a>
-                <a href="/Pingfah/pages/employee/appeal/index.php">
-                    <li id="appeal">รายการร้องเรียน</li>
                 </a>
                 <a href="/Pingfah/pages/logout.php">
                     <li class="logout">ออกจากระบบ</li>

@@ -3,25 +3,47 @@ session_start();
 if($_SESSION['level'] == 'employee'){
   include('../../../connection.php');
   $type = $_REQUEST['type'];
-  $pic = $_REQUEST['pic'];
-  $searchpic = "SELECT $pic FROM roomdetail WHERE type = '$type'";
-  $pic_result = $conn->query($searchpic);
-  if ($pic_result->num_rows > 0) {
-    $row = $pic_result->fetch_assoc();
-    $picData = $row["$pic"];
+  $gal_id = $_REQUEST['gal_id'];
+  $gal_name = $_REQUEST['gal_name'];
+  $folder_path = "../../../images/roomdetail/$type/$gal_name";
+  if($type == "fan"){
+      $countCheck = mysqli_query($conn,"SELECT COUNT(gal_name) AS total FROM fan_gal WHERE gal_name = '$gal_name' GROUP BY gal_name HAVING COUNT(gal_name)");
+  }else if($type == "air"){
+      $countCheck = mysqli_query($conn,"SELECT COUNT(gal_name) AS total FROM air_gal WHERE gal_name = '$gal_name' GROUP BY gal_name HAVING COUNT(gal_name)");
   }
-  $sql = "UPDATE roomdetail SET $pic = null WHERE type = '$type'";
-  $pic_location = "../../../images/roomdetail/$picData";
-  // "UPDATE MyGuests SET lastname='Doe' WHERE id=2"
-  if ($conn->query($sql) === TRUE && unlink($pic_location)) {
-      echo "<script>";
+  $countTotal = mysqli_fetch_assoc($countCheck);
+  // echo $countTotal['total'];
+  if($countTotal['total'] > 1){
+      if($type == "fan"){
+          $sql = "DELETE FROM fan_gal WHERE gal_id = $gal_id";
+      }else if($type == "air"){
+          $sql = "DELETE FROM air_gal WHERE gal_id = $gal_id";
+      }
+      if($conn->query($sql) === TRUE){
+        echo "<script>";      
+        echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
+        echo "location.assign('../detail.php?type=$type');";
+        echo "</script>";
+      }else{
+          echo "Error deleting record: " . $conn->error;
+      }
+  }else{
+    if($type == "fan"){
+      $sql = "DELETE FROM fan_gal WHERE gal_id = $gal_id";
+    }else if($type == "air"){
+      $sql = "DELETE FROM air_gal WHERE gal_id = $gal_id";
+    }
+    if($conn->query($sql) === TRUE && unlink($folder_path)){
+      echo "<script>";      
       echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
-      echo "window.location.assign('/Pingfah/pages/admin/roomDetail/detail.php?type=$type'); ";
+      echo "location.assign('../detail.php?type=$type');";
       echo "</script>";
-    } else {
+    }else{
       echo "Error deleting record: " . $conn->error;
     }
-    
-    $conn->close();
+  }
+  $conn->close();
+}else{
+    Header("Location : ../../../login.php");
 }
 ?>

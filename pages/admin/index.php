@@ -76,7 +76,7 @@ if($_SESSION['level'] == 'admin'){
                 <div class="hr"></div>
                 <div class="grid">
                     <div class="card">
-                        <div class="detail">
+                        <div class="detail" style="border-bottom:none;">
                             <div>
                                 <h4>รายได้ทั้งหมด</h4>
                                 <?php
@@ -276,13 +276,13 @@ if($_SESSION['level'] == 'admin'){
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['เดือน / ปี', 'ชำระเงินแล้ว', 'ยังไม่ได้ชำระ'],
+            ['เดือน / ปี', 'ชำระเงินแล้ว (บาท)', 'ยังไม่ได้ชำระ (บาท)'],
             <?php echo $datax;?>
         ]);
 
         var options = {
             title: 'รายการชำระเงินรายเดือน',
-            colors: ['rgb(131, 120, 47)', '#a8a06d'],
+            colors: ['rgb(131, 120, 47)', '#c6b66b'],
             fontName: "Sarabun",
             vAxis: { format: "decimal"}
         };
@@ -295,7 +295,7 @@ if($_SESSION['level'] == 'admin'){
     function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี', 'รายได้'],
+            ['วัน / เดือน / ปี', 'รายได้ (บาท)'],
             <?php echo $datax2;?>
         ]);
 
@@ -324,8 +324,8 @@ if($_SESSION['level'] == 'admin'){
             fontName: "Sarabun",
             slices: {
                 0: { color: 'rgb(131, 120, 47)' },
-                1: { color: '#a8a06d' },
-                2: { color: '#b7ad7b'}
+                1: { color: '#c6b66b' },
+                2: { color: '#e5d170'}
             }
         };
 
@@ -347,8 +347,8 @@ if($_SESSION['level'] == 'admin'){
             fontName: "Sarabun",
             slices: {
                 0: { color: 'rgb(131, 120, 47)' },
-                1: { color: '#a8a06d' },
-                2: { color: '#b7ad7b'}
+                1: { color: '#c6b66b' },
+                2: { color: '#e5d170'}
             }
         };
 

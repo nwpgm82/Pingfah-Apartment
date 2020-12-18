@@ -11,14 +11,21 @@ if($_SESSION['level'] == 'employee'){
     if($row != null){
         extract($row);
     }
-    $search2 = "SELECT * FROM roomdetail WHERE type = '$room_type'";
-    $result2 = mysqli_query($conn, $search2)or die ("Error in query: $search2 " . mysqli_error());
-    $row2 = mysqli_fetch_array($result2);
-    if($row2 != null){
-        extract($row2);
+    $search2 = "SELECT * FROM roomdetail";
+    $result2 = $conn->query($search2);
+    if ($result2->num_rows > 0) {
+        // output data of each row
+        while($row2 = $result2->fetch_assoc()) {
+            if($row2["type"] == "แอร์"){
+                $airtotal_price = $row2["daily_price"] * $air_room;
+            }else if($row2["type"] == "พัดลม"){
+                $fantotal_price = $row2["daily_price"] * $fan_room;
+            }
+        }
     }
-    $sql2 = "INSERT INTO dailycost (room_id, firstname, lastname, id_card, email, tel, check_in, check_out, price_total, daily_status,code) VALUES ('$room_str', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$check_in','$check_out',($daily_price*$room_count),'ชำระเงินแล้ว','$code')";
-    $update2 = "UPDATE daily SET daily_status = 'เข้าพักแล้ว' WHERE daily_id = $daily_id";
+    $total_price = $airtotal_price + $fantotal_price;
+    $sql2 = "INSERT INTO dailycost (dailycost_id, room_id, firstname, lastname, id_card, email, tel, check_in, check_out, price_total, daily_status,code) VALUES ($daily_id, '$room_str', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$check_in','$check_out',$total_price,'ชำระเงินแล้ว','$code')";
+    $update2 = "UPDATE daily SET daily_status = 'เข้าพักแล้ว', room_select = '$room_str' WHERE daily_id = $daily_id";
     for($i = 0 ; $i < sizeof($room) ; $i++){
         $sql = "INSERT INTO roommember (room_member, firstname, lastname, id_card, phone, email) VALUES ('$room[$i]','$firstname','$lastname','$id_card','$tel','$email')";
         $update = "UPDATE roomlist SET room_status = 'เช่ารายวัน', check_in = '$check_in', check_out = '$check_out' WHERE room_id = '$room[$i]'";

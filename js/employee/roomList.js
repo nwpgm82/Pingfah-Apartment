@@ -1,0 +1,315 @@
+let all = document.getElementById("all")
+let available = document.getElementById("available")
+let unavailable = document.getElementById("unavailable")
+let daily = document.getElementById("daily")
+function searchDate() {
+    let x = document.getElementById("check_in").value
+    let y = document.getElementById("check_out").value
+    let z = document.getElementById("people").value
+    location.assign(`index.php?check_in=${x}&check_out=${y}&people=${z}`)
+}
+
+function searchDate2() {
+    var x = document.getElementById("date_from").value
+    var y = document.getElementById("date_to").value
+    if(x != "" || y != ""){
+        location.assign(`index.php?Status=daily&from=${x}&to=${y}`)
+    }else{
+        alert("กรุณาระบุวันที่ที่ต้องการค้นหา")
+    }
+}
+
+function searchCheck(id) {
+    let check = document.getElementById(id)
+    all.checked = false
+    available.checked = false
+    unavailable.checked = false
+    daily.checked = false
+    check.checked = true
+    if(id != "all"){
+        location.href = `index.php?Status=${check.id}`
+    }else{
+        location.href = "index.php"
+    }
+    
+}
+
+function unCheckAll() {
+    available.checked = false
+    unavailable.checked = false
+    daily.checked = false
+    location.href = "index.php"
+}
+
+function editType(room) {
+    var typeShow = document.getElementById(`typeShow${room.toString()}`)
+    var typeEdit = document.getElementById(`typeEdit${room.toString()}`)
+    var typeShow_btn = document.getElementById(`typeShow-btn${room.toString()}`)
+    var typeEdit_btn = document.getElementById(`typeEdit-btn${room.toString()}`)
+    if (typeShow.style.display == '') {
+        typeShow.style.display = 'none'
+        typeEdit.style.display = ''
+        typeShow_btn.style.display = 'none'
+        typeEdit_btn.style.display = ''
+    } else {
+        typeShow.style.display = ''
+        typeEdit.style.display = 'none'
+        typeShow_btn.style.display = ''
+        typeEdit_btn.style.display = 'none'
+    }
+}
+
+function acceptEdit(room) {
+    var typeShow = document.getElementById(`typeShow${room.toString()}`)
+    var typeEdit = document.getElementById(`typeEdit${room.toString()}`)
+    var typeShow_btn = document.getElementById(`typeShow-btn${room.toString()}`)
+    var typeEdit_btn = document.getElementById(`typeEdit-btn${room.toString()}`)
+    typeShow.style.display = ''
+    typeEdit.style.display = 'none'
+    typeShow_btn.style.display = ''
+    typeEdit_btn.style.display = 'none'
+}
+
+function cancelEdit(room) {
+    var typeShow = document.getElementById(`typeShow${room.toString()}`)
+    var typeEdit = document.getElementById(`typeEdit${room.toString()}`)
+    var typeShow_btn = document.getElementById(`typeShow-btn${room.toString()}`)
+    var typeEdit_btn = document.getElementById(`typeEdit-btn${room.toString()}`)
+    typeShow.style.display = ''
+    typeEdit.style.display = 'none'
+    typeShow_btn.style.display = ''
+    typeEdit_btn.style.display = 'none'
+}
+
+function addRoom() {
+    let addRoom_btn = document.getElementById("addRoom-btn")
+    let add = document.getElementById("addRoom")
+    add.style.display = 'flex'
+    addRoom_btn.style.display = 'none'
+}
+
+function canceladdRoom() {
+    let addRoom_btn = document.getElementById("addRoom-btn")
+    let add = document.getElementById("addRoom")
+    add.style.display = 'none'
+    addRoom_btn.style.display = ''
+}
+
+function del(room) {
+    if (confirm(`คุณต้องการลบห้อง ${room} ใช่หรือไม่ ?`)) {
+        location.href = `function/delRoom.php?ID=${room}`
+    }
+}
+
+
+if (document.getElementById("check_in").value != "" && document.getElementById("check_out").value != "" && document.getElementById("people").value != "") {
+    var slideIndex1 = 1;
+    var slideIndex2 = 2;
+    showSlides1(slideIndex1);
+    showSlides2(slideIndex2);
+
+    function plusSlides1(n) {
+        showSlides1(slideIndex1 += n);
+    }
+
+    function currentSlide1(n) {
+        showSlides1(slideIndex1 = n);
+    }
+
+    function plusSlides2(n) {
+        showSlides2(slideIndex2 += n);
+    }
+
+    function currentSlide2(n) {
+        showSlides2(slideIndex2 = n);
+    }
+
+    function showSlides1(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides1");
+        // let dots = document.getElementsByClassName("demo1");
+        //   var captionText = document.getElementById("caption");
+        if (n > slides.length) {
+            slideIndex1 = 1
+        }
+        if (n < 1) {
+            slideIndex1 = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        // for (i = 0; i < dots.length; i++) {
+        //     dots[i].className = dots[i].className.replace(" active", "");
+        // }
+        slides[slideIndex1 - 1].style.display = "block";
+        // dots[slideIndex1 - 1].className += " active";
+        //   captionText.innerHTML = dots[slideIndex-1].alt;
+    }
+
+    function showSlides2(m) {
+        let j;
+        let slides = document.getElementsByClassName("mySlides2");
+        // let dots = document.getElementsByClassName("demo2");
+        //   var captionText = document.getElementById("caption");
+        if (m > slides.length) {
+            slideIndex2 = 1
+        }
+        if (m < 1) {
+            slideIndex2 = slides.length
+        }
+        for (j = 0; j < slides.length; j++) {
+            slides[j].style.display = "none";
+        }
+        // for (j = 0; j < dots.length; j++) {
+        //     dots[j].className = dots[j].className.replace(" active", "");
+        // }
+        slides[slideIndex2 - 1].style.display = "block";
+        // dots[slideIndex2 - 1].className += " active";
+        //   captionText.innerHTML = dots[slideIndex-1].alt;
+    }
+}
+
+
+function formatDate(date) {
+    var monthNames = [
+        "ม.ค.", "ก.พ.", "มี.ค.",
+        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
+        "ส.ค.", "ก.ย.", "ต.ค.",
+        "พ.ค.", "ธ.ค."
+    ];
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+
+function formatDate2(inputDate) {
+    var date = new Date(inputDate);
+    if (!isNaN(date.getTime())) {
+        // Months use 0 index.
+        return date.getMonth() + 1 + '/1/' + date.getFullYear();
+    }
+}
+
+$(document).ready(function () {
+    let date_from = $("#date_from")
+    let date_to = $("#date_to")
+    let from_date = $("#from_date")
+    let to_date = $("#to_date")
+    let check_in = $("#check_in")
+    let check_out = $("#check_out")
+    let check_in_date = $("#check_in_date")
+    let check_out_date = $("#check_out_date")
+    let people = $("#people")
+    let today_monthNames = [
+        "ม.ค.", "ก.พ.", "มี.ค.",
+        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
+        "ส.ค.", "ก.ย.", "ต.ค.",
+        "พ.ค.", "ธ.ค."
+    ];
+    let today = new Date()
+    let today_day = today.getDate()
+    let today_month = today.getMonth() + 1
+    let today_year = today.getFullYear()
+    let tomorrow_day = today.getDate() + 1
+    let tomorrow_month = today.getMonth() + 1
+    let tomorrow_year = today.getFullYear()
+    let current_dayShow = today_day + ' ' + today_monthNames[today_month - 1] + ' ' + today_year
+    let next_dayShow = tomorrow_day + ' ' + today_monthNames[tomorrow_month - 1] + ' ' + tomorrow_year
+    if (today_day < 10) {
+        today_day = '0' + today_day.toString()
+    }
+    if (today_month < 10) {
+        today_month = '0' + today_month.toString()
+    }
+    if (tomorrow_day < 10) {
+        tomorrow_day = '0' + tomorrow_day.toString()
+    }
+    if (tomorrow_month < 10) {
+        tomorrow_month = '0' + tomorrow_month.toString()
+    }
+    let current_day = today_year + '-' + today_month + '-' + today_day
+    let next_day = tomorrow_year + '-' + tomorrow_month + '-' + tomorrow_day
+    if (check_in.val() == "" && check_out.val() == "" && people.val() == "") {
+        check_in.val(current_day)
+        check_out.val(next_day)
+        check_in_date.html(current_dayShow)
+        check_out_date.html(next_dayShow)
+        people.val(1)
+    } else {
+        check_in_date.html(formatDate(new Date(check_in.val())))
+        check_out_date.html(formatDate(new Date(check_out.val())))
+    }
+    if ($("#date_from") && $("#date_to")) {
+        if (date_from.val() != "" && date_to.val() != "") {
+            from_date.html(formatDate(new Date(date_from.val())))
+            to_date.html(formatDate(new Date(date_to.val())))
+        }
+    }
+    $('.roundtrip-input1').dateDropper({
+        roundtrip: "my-trip",
+        theme: "my-style",
+        format: "Y-m-d",
+        lang: "th",
+        startFromMonday: false,
+    });
+
+    $('.roundtrip-input2').dateDropper({
+        roundtrip: "my-trip2",
+        theme: "my-style",
+        format: "Y-m-d",
+        lang: "th",
+        lock: "from",
+        startFromMonday: false,
+    });
+
+    $('#date_from').change(function () {
+        $('#from_date').html(formatDate(new Date($('#date_from').val())))
+    })
+
+    $('#date_to').change(function () {
+        $('#to_date').html(formatDate(new Date($('#date_to').val())))
+    })
+
+    $('#check_in').change(function () {
+        console.log("check in :", $('#check_in').val())
+        $('#check_in_date').html(formatDate(new Date($('#check_in').val())))
+        if (new Date($("#check_in").val()) >= new Date($("#check_out").val())) {
+            let nDate = new Date($("#check_in").val())
+            nDate.setDate(nDate.getDate() + 1)
+            let nDate_date = nDate.getDate()
+            let nDate_month = nDate.getMonth() + 1
+            if (nDate_date < 10) {
+                nDate_date = "0" + nDate_date.toString()
+            }
+            if (nDate_month < 10) {
+                nDate_month = "0" + nDate_month.toString()
+            }
+            $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
+            $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
+
+        } else {
+            $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+        }
+    })
+
+    $('#check_out').change(function () {
+        if (new Date($("#check_in").val()) >= new Date($("#check_out").val())) {
+            let nDate = new Date($("#check_in").val())
+            nDate.setDate(nDate.getDate() + 1)
+            let nDate_date = nDate.getDate()
+            let nDate_month = nDate.getMonth() + 1
+            if (nDate_date < 10) {
+                nDate_date = "0" + nDate_date.toString()
+            }
+            if (nDate_month < 10) {
+                nDate_month = "0" + nDate_month.toString()
+            }
+            $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
+            $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
+
+        } else {
+            $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+        }
+    })
+})

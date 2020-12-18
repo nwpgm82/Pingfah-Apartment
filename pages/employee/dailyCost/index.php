@@ -16,6 +16,18 @@ if($_SESSION['level'] == 'employee'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
+    if($check_in != "" && $check_out != ""){
+        $query = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in";
+    }else{
+        $query = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost GROUP BY check_in";
+    }
+    
+    $query_result = mysqli_query($conn, $query);
+    $datax = array();
+    foreach ($query_result as $k) {
+        $datax[] = "['".DateThai($k['check_in'])."'".", ".$k['daily_price']."]";
+    }
+    $datax = implode(",", $datax);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +36,11 @@ if($_SESSION['level'] == 'employee'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/dailyCost.css">
+    <link rel="stylesheet" href="../../../css/my-style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -34,20 +51,46 @@ if($_SESSION['level'] == 'employee'){
                 <h3>ค้นหารายการชำระเงินรายวัน</h3>
                 <div class="search">
                     <div style="padding-right:16px;">
-                        <label>ค้นหาตามวันที่</label>
-                        <input type="date" id="check_in" value="<?php echo $check_in; ?>" required>
-                        <label>~</label>
-                        <input type="date" id="check_out" value="<?php echo $check_out; ?>" required>
-                        <button type="button" onclick="searchDate()">ค้นหา</button>
+                        <div style="display:flex;align-items:center;">
+                            <label>ค้นหาตามวันที่</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="check_in"
+                                    value="<?php echo $check_in; ?>" required>
+                                <p id="check_in_date" class="dateText"></p>
+                            </div>
+                            <label>~</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="check_out"
+                                    value="<?php echo $check_out; ?>" required>
+                                <p id="check_out_date" class="dateText"></p>
+                            </div>
+                            <button type="button" onclick="searchDate()">ค้นหา</button>
+                        </div>
                     </div>
                     <div style="padding-right:16px;">
                         <label>ค้นหาเลขในการจอง</label>
                         <input type="text" id="code" value="<?php echo $code?>">
                         <button type="button" onclick="searchCode()">ค้นหา</button>
                     </div>
+                    <?php
+                    if(isset($check_in) || isset($check_out) || isset($code)){
+                    ?>
                     <div>
-                        <a href="index.php"><button type="button">ยกเลิกการกรองทั้งหมด</button></a>
+                        <a href="index.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
                     </div>
+                    <?php } ?>
+                </div>
+                <div class="hr"></div>
+                <div class="card">
+                    <?php
+                    if(strlen($datax) != 0){
+                    ?>
+                    <div id="columnchart_material1" class="chart"></div>
+                    <?php
+                    }else{
+                        echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>";
+                    }
+                    ?>
                 </div>
                 <div class="hr"></div>
                 <?php
@@ -58,6 +101,7 @@ if($_SESSION['level'] == 'employee'){
                     $page = 1;
                 }
                 $start = ($page - 1) * $perpage;
+                $num = $start + 1;
                 if(isset($check_in) && isset($check_out)){
                     $sql = "SELECT * FROM dailycost WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) LIMIT {$start} , {$perpage}";
                 }else if(isset($code)){
@@ -69,20 +113,20 @@ if($_SESSION['level'] == 'employee'){
                 if(isset($code)){
                     echo "<h3>ผลลัพธ์การค้นหา : $code</h3>";
                 }else{
-                    echo "<h3>รายการชำระเงินทั้งหมด</h3>";
+                    echo "<h3>รายการชำระเงินห้องพักรายวันทั้งหมด</h3>";
                 }
                 if ($result->num_rows > 0) {
                 ?>
-                <table>
+                <table class="fixed">
                     <tr>
                         <th>ลำดับ</th>
                         <th>เลขห้องที่จอง</th>
-                        <th>ชื่อผู้จอง</th>
-                        <th>เบอร์โทรศัพท์</th>
+                        <th>ชื่อผู้เช่า</th>
                         <th>วันที่เข้าพัก</th>
                         <th>เลขที่ในการจอง</th>
                         <th>ราคารวม</th>
                         <th>สถานะการชำระเงิน</th>
+                        <th>เพิ่มเติม</th>
                     </tr>
                     <?php
                         while($row = $result->fetch_assoc()) {
@@ -91,14 +135,16 @@ if($_SESSION['level'] == 'employee'){
                         <td><?php echo $num; ?></td>
                         <td><?php echo $row['room_id']; ?></td>
                         <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
-                        <td><?php echo $row['tel']; ?></td>
-                        <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?></td>
+                        <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?>
+                        </td>
                         <td><?php echo $row['code']; ?></td>
                         <td><?php echo $row['price_total']; ?></td>
+                        <td><button class="status-success"><?php echo $row['daily_status']; ?></button></td>
                         <td>
-                            <button class="status-success"><?php echo $row['daily_status']; ?></button>
-                            <a href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
-                            <button type="button" class="del" onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
+                            <a
+                                href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
+                            <button type="button" class="del"
+                                onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
                         </td>
                     </tr>
                     <?php $num++; } ?>
@@ -128,6 +174,33 @@ if($_SESSION['level'] == 'employee'){
         </div>
     </div>
     <script src="../../../js/employee/dailyCost.js"></script>
+    <script>
+    google.charts.load('current', {
+        'packages': ['bar']
+    });
+    <?php
+    if(strlen($datax) != 0){
+    ?>
+    google.charts.setOnLoadCallback(drawChart);
+    <?php } ?>
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['วัน / เดือน / ปี', 'รายได้ (บาท)'],
+            <?php echo $datax;?>
+        ]);
+
+        var options = {
+            title: 'รายการชำระเงินรายวัน',
+            colors: ['rgb(131, 120, 47)'],
+            fontName: "Sarabun"
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+    </script>
 </body>
 
 </html>

@@ -85,7 +85,7 @@
 .package-box input[type=checkbox]{
     width: 20px;
     height: 20px;
-    margin: 0 8px;
+    margin-right: 8px;
     cursor: pointer;
 }
 
@@ -114,7 +114,11 @@
 }
 
 .package-box table td:last-child,.package-box table th:last-child{
-    width: auto;
+    width: 190px;
+}
+
+.package-box table td:last-child{
+    text-align:right;
 }
 
 .package-box table th {
@@ -122,6 +126,46 @@
     font-weight: 500;
     color: #fff;
     background-color: rgb(131, 120, 47, 0.7);
+}
+
+.package-box table th:nth-child(1){
+    width:5%;
+}
+
+.package-box table th:nth-child(2){
+    width:15%;
+}
+
+.package-box table th:nth-child(3){
+    width:10%
+}
+
+.package-box table th:nth-child(4){
+    width:10%
+}
+
+.package-box table th:nth-child(5){
+    width:15%
+}
+
+.package-box table th:nth-child(6){
+    width:8%
+}
+
+.package-box table th:nth-child(7){
+    width:12%
+}
+
+.package-box table th:nth-child(8){
+    width:12%
+}
+
+.package-box table th:nth-child(9){
+    width:13%
+}
+
+.package-box table td:first-child{
+    text-align:center;
 }
 
 .package-box .status_received{
@@ -257,6 +301,16 @@
 
 .package-box button:hover{
     background-color:  rgb(131, 120, 47, 1);
+}
+
+.package-box .cancel-sort{
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
+}
+
+.package-box .cancel-sort:hover{
+    background-color: rgb(235, 235, 235);
 }
 
 .pagination {

@@ -43,6 +43,7 @@ function menubar() {
     let daily = document.querySelector("#daily")
     let dailycost = document.querySelector("#dailycost")
     let cost = document.querySelector("#cost")
+    let repair_report = document.querySelector("#repair_report")
     let repair = document.querySelector("#repair")
     let package = document.querySelector("#package")
     let rule = document.querySelector("#rule")
@@ -89,6 +90,11 @@ function menubar() {
         cost.style.color = "#fff"
         header.innerHTML = "รายการชำระเงินรายเดือน"
         document.querySelector("#dropdown2").style.display = "block"
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/employee/repair/repairReport.php") {
+        repair_report.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
+        repair_report.style.color = "#fff"
+        header.innerHTML = "รายการค่าใช้จ่ายจากการแจ้งซ่อม"
+        document.querySelector("#dropdown2").style.display = "block"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/employee/repair/index.php" || localStorage.getItem("i") == "/Pingfah/pages/employee/repair/addRepair.php" || localStorage.getItem("i") == "/Pingfah/pages/employee/repair/repairDetail.php") {
         repair.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         repair.style.color = "#fff"
@@ -101,9 +107,5 @@ function menubar() {
         rule.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         rule.style.color = "#fff"
         header.innerHTML = "กฎระเบียบหอพัก"
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/employee/appeal/index.php" || localStorage.getItem("i") == "/Pingfah/pages/employee/appeal/appealDetail.php") {
-        appeal.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        appeal.style.color = "#fff"
-        header.innerHTML = "รายการร้องเรียน"
     }
 }

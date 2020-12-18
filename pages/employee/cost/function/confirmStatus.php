@@ -12,7 +12,7 @@ if($_SESSION['level'] == 'employee'){
   if ($result->num_rows > 0) {
       echo "<script>";
       echo "alert('ไม่สามารถยืนยันได้เนื่องจากได้ยืนยันการชำระเรียบร้อยแล้วแล้ว');";
-      echo "location.href = '/Pingfah/pages/admin/cost/index.php?ID=$room&Date=$date';";
+      echo "location.href = '../index.php?ID=$room&Date=$date';";
       echo "</script>";
   } else {
       $sql2 = "UPDATE cost SET cost_status = 'ชำระเงินแล้ว' WHERE room_id= '$room' AND date ='$date'";

@@ -6,6 +6,7 @@ if($_SESSION['level'] == 'admin'){
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
     $check = @$_REQUEST['Status'];
+    $num = 1;
     function DateThai($strDate){
     	$strYear = date("Y",strtotime($strDate))+543;
     	$strMonth= date("n",strtotime($strDate));
@@ -94,7 +95,7 @@ if($_SESSION['level'] == 'admin'){
                     <div class="hr"></div>
                     <h3>รายการชำระเงินห้องพักรายเดือนทั้งหมด</h3>
                     <div style="display:flex;align-items:center;">
-                        <div style="padding:32px 16px;display: flex;align-items: center;">
+                        <div style="padding:32px 16px 32px 0px;display: flex;align-items: center;">
                             <input type="checkbox" id="all"
                                 onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
                                 <?php if(!isset($check)){ echo "checked";} ?>>
@@ -121,6 +122,7 @@ if($_SESSION['level'] == 'admin'){
                             $page = 1;
                         }
                         $start = ($page - 1) * $perpage;
+                        $num = $start + 1;
                         if(isset($from) && isset($to) && !isset($check)){
                             $sql ="SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') ORDER BY date LIMIT {$start} , {$perpage}";
                         }else if(!isset($from) && !isset($to) && isset($check)){
@@ -145,6 +147,7 @@ if($_SESSION['level'] == 'admin'){
                         ?>
                     <table>
                         <tr>
+                            <th>ลำดับ</th>
                             <th>เลขห้อง</th>
                             <!-- <th>ประเภท</th> -->
                             <th>ประจำเดือน</th>
@@ -159,6 +162,7 @@ if($_SESSION['level'] == 'admin'){
                         </tr>
                         <?php while($row = $result->fetch_assoc()){ ?>
                         <tr>
+                            <td><?php echo $num; ?></td>
                             <td><?php echo $row["room_id"];?></td>
                             <!-- <td><?php echo $row["type"]?></td> -->
                             <td><?php echo DateThai($row["date"]);?></td>
@@ -204,7 +208,7 @@ if($_SESSION['level'] == 'admin'){
                             </td>
                             <?php } ?>
                         </tr>
-                        <?php } ?>
+                        <?php $num++; } ?>
                     </table>
                     <?php
                         ///////pagination
@@ -291,7 +295,7 @@ if($_SESSION['level'] == 'admin'){
         ]);
         var options = {
             title: 'รายการชำระเงินห้องพักรายเดือน',
-            colors: ['rgb(131, 120, 47)', '#a8a06d'],
+            colors: ['rgb(131, 120, 47)', '#c6b66b'],
             fontName: "Sarabun"
         };
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));

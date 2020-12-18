@@ -27,6 +27,9 @@ if($_SESSION['level'] == 'employee'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/dailyCostDetail.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -51,7 +54,6 @@ if($_SESSION['level'] == 'employee'){
                             <p>นามสกุล</p>
                             <input type="text" value="<?php echo $lastname ?>" disabled>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-4">
@@ -86,10 +88,32 @@ if($_SESSION['level'] == 'employee'){
                         </div>
                     </div>
                 </div>
-
+                <div style="padding-top:32px;">
+                    <h3>หลักฐานการชำระเงินค่าห้องพัก</h3>
+                    <div class="hr"></div>
+                    <div class="img-box">
+                        <?php
+                        if($payment_img != null || $payment_img != ""){
+                        ?>
+                        <img src="../../images/daily/<?php echo $dailycost_id; ?>/<?php echo $payment_img; ?>" alt="">
+                        <button class="del-btn"
+                            onclick="delImg(<?php echo $dailycost_id; ?>,'<?php echo $payment_img; ?>')">X</button>
+                        <?php } ?>
+                    </div>
+                    <?php
+                    if($payment_img == null){
+                    ?>
+                    <div style="padding-top:16px;">
+                        <form id="submitForm" enctype="multipart/form-data">
+                            <input type="file" name="file" id="file" class="inputfile" />
+                        </form>
+                    </div>
+                    <?php } ?>
+                </div>
             </div>
         </div>
     </div>
+    <script src="../../../js/employee/dailyCostDetail.js"></script>
 </body>
 
 </html>

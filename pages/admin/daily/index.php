@@ -124,6 +124,7 @@ if($_SESSION['level'] == 'admin'){
                         $page = 1;
                     }
                     $start = ($page - 1) * $perpage;
+                    $num = $start + 1;
                     if(isset($check_in) && isset($check_out) && !isset($check)){
                         $sql = "SELECT * FROM daily WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) LIMIT {$start} , {$perpage}";
                     }else if(!isset($check_in) && !isset($check_out) && isset($check)){
@@ -326,7 +327,7 @@ if($_SESSION['level'] == 'admin'){
 
         var options = {
             title: 'จำนวนผู้เช่าห้องพักรายวันในแต่ละประเภท',
-            colors: ['rgb(131, 120, 47)', '#a8a06d'],
+            colors: ['rgb(131, 120, 47)', '#c6b66b'],
             fontName: "Sarabun"
         };
 

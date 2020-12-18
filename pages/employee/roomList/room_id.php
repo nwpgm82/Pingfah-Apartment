@@ -3,21 +3,21 @@ session_start();
 if($_SESSION['level'] == 'employee'){
     include('../../connection.php');
     include('../../../components/sidebarEPY.php'); 
-    $room_id = $_REQUEST["ID"];
+    $room_id = $_REQUEST["ID"]; 
     $path1 = "../../images/roommember/$room_id/";
     $subpath1 = "../../images/roommember/$room_id/1/";
     $subpath2 = "../../images/roommember/$room_id/2/";
     if(is_dir($path1)){
-        echo "<script>console.log('มีโฟลเดอร์ $path1')</script>";
+        // echo "<script>console.log('มีโฟลเดอร์ $path1')</script>";
     }else{
-        echo "<script>console.log('ไม่มีโฟลเดอร์ $path1')</script>";
+        // echo "<script>console.log('ไม่มีโฟลเดอร์ $path1')</script>";
         mkdir($path1);
         if(is_dir($path1)){
             mkdir($subpath1);
             mkdir($subpath2);
         }
         
-    } 
+    }
     $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
     $check_result = $conn->query($check_status);
     $status = $check_result->fetch_assoc();
@@ -30,6 +30,11 @@ if($_SESSION['level'] == 'employee'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/roomform.css">
+    <link rel="stylesheet" href="../../../css/my-style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -51,7 +56,19 @@ if($_SESSION['level'] == 'employee'){
                 ?>
                     <form action='room_member_add_DB.php?ID=<?php echo $room_id; ?>' method='POST' id="form"
                         enctype="multipart/form-data">
-                        <h3>ห้อง <?php echo $room_id; ?></h3>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <h3>ห้อง <?php echo $room_id; ?> (คนที่ 1)</h3>
+                            <div>
+                                <div id="edit-1" style="display:flex;">
+                                    <button type="button" class="edit-btn" onclick="editData(1)">แก้ไข</button>
+                                </div>
+                                <div id="btn-1" style="display:none;">
+                                    <button type="submit" name='formSubmit' class="confirm">ยืนยัน</button>
+                                    <button type="button" class="delData" onclick="cancelEditData(1)">ยกเลิก</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="hr"></div>
                         <div class="row">
                             <div class="col-2 select-box">
@@ -113,7 +130,8 @@ if($_SESSION['level'] == 'employee'){
                             <div class="col-3 input-box">
                                 <p>อีเมล์</p>
                                 <input type="text" required name="email" id="email"
-                                    value="<?php if(isset($email)){echo $email;}; ?>" placeholder="Email" minlength="2" disabled>
+                                    value="<?php if(isset($email)){echo $email;}; ?>" placeholder="Email" minlength="2"
+                                    disabled>
                             </div>
                             <div class="col-3 input-box">
                                 <p>Line</p>
@@ -126,8 +144,11 @@ if($_SESSION['level'] == 'employee'){
                         <div class="row">
                             <div class="col-3 input-box">
                                 <p>เกิดวันที่</p>
-                                <input type="date" required name="birthday" id="birthday"
-                                    value="<?php if(isset($birthday)){echo $birthday;}; ?>" disabled>
+                                <div style="position:relative;">
+                                    <input id="birthday" name="birthday" type="text"
+                                        value="<?php if(isset($birthday)){ echo $birthday; }?>" disabled required>
+                                    <p id="birth_date" class="dateText"></p>
+                                </div>
                             </div>
                             <div class="col-2 input-box">
                                 <p>อายุ</p>
@@ -167,7 +188,7 @@ if($_SESSION['level'] == 'employee'){
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box">
                                         <img id="output_imagepic1"
-                                            src="../../images/roommember/<?php echo $room_id; ?>/1/<?php echo $pic_idcard; ?>" />
+                                            src="<?php if(isset($pic_idcard)){ echo '../../images/roommember/'.$room_id.'/1/'.$pic_idcard;} ?>" />
                                         <?php
                                         if(isset($pic_idcard)){ ?>
                                         <button class="del-btn" type="button" id="del-btn1" style="display:none;"
@@ -176,15 +197,15 @@ if($_SESSION['level'] == 'employee'){
                                     </div>
                                     <?php
                                     if(!isset($pic_idcard)){ ?>
-                                    <input type="file" id="pic_idcard1" accept="image/*" onchange="preview_image(event,'pic1')"
-                                        name="pic_idcard" disabled>
+                                    <input type="file" id="pic_idcard1" accept="image/*"
+                                        onchange="preview_image(event,'pic1')" name="pic_idcard" disabled>
                                     <?php } ?>
                                 </div>
                                 <div>
                                     <p>สำเนาทะเบียนบ้าน</p>
                                     <div class="img-box">
                                         <img id="output_imagepic2"
-                                            src="../../images/roommember/<?php echo $room_id; ?>/1/<?php echo $pic_home; ?>" />
+                                            src="<?php if(isset($pic_home)){ echo '../../images/roommember/'.$room_id.'/1/'.$pic_home;} ?>" />
                                         <?php
                                     if(isset($pic_home)){ ?>
                                         <button class="del-btn" type="button" id="del-btn2" style="display:none;"
@@ -193,8 +214,8 @@ if($_SESSION['level'] == 'employee'){
                                     </div>
                                     <?php
                                 if(!isset($pic_home)){ ?>
-                                    <input type="file" id="pic_home1" accept="image/*" onchange="preview_image(event,'pic2')"
-                                        name="pic_home" disabled>
+                                    <input type="file" id="pic_home1" accept="image/*"
+                                        onchange="preview_image(event,'pic2')" name="pic_home" disabled>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -204,30 +225,16 @@ if($_SESSION['level'] == 'employee'){
                         <div style="display:flex;justify-content:flex-end;">
                             <button type="button" onclick="navigation()">คนที่ 2</button>
                         </div>
-                        <div id="edit-1" style="padding-top:32px;display:flex;justify-content:center;">
-                            <button type="button" class="edit-btn" onclick="editData(1)">แก้ไข</button>
-                        </div>
-                        <div id="btn-1" style="padding-top:32px;display:none;justify-content:center;">
-                            <button type="submit" name='formSubmit' class="confirm">ยืนยัน</button>
-                            <button type="button" class="delData" onclick="cancelEditData(1)">ยกเลิก</button>
-                        </div>
                         <hr />
                         <div style="padding-top:32px;display:flex;justify-content:flex-end">
                             <button type="button" class="delData"
                                 onclick="delData(<?php echo $room_id; ?>)">ลบข้อมูล</button>
                         </div>
-                        <?php }else{ ?>
-                            <div id="edit-1" style="padding-top:32px;display:flex;justify-content:center;">
-                            <button type="button" class="edit-btn" onclick="editData(1)">แก้ไข</button>
-                        </div>
-                        <div id="btn-1" style="padding-top:32px;display:none;justify-content:center;">
-                            <button type="submit" name='formSubmit' class="confirm">ยืนยัน</button>
-                            <button type="button" class="delData" onclick="cancelEditData(1)">ยกเลิก</button>
-                        </div>
+                        <?php } ?>
                         <!-- <div style="display:flex;justify-content:center;">
                             <button type="submit" name='formSubmit' class="confirm">ยืนยัน</button>
                         </div> -->
-                        <?php } ?>
+
 
                     </form>
                 </div>
@@ -245,7 +252,19 @@ if($_SESSION['level'] == 'employee'){
                 ?>
                     <form action='room_member_add_DB.php?ID=<?php echo $room_id; ?>' method='POST' id="form"
                         enctype="multipart/form-data">
-                        <h3>ห้อง <?php echo $room_id; ?></h3>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <h3>ห้อง <?php echo $room_id; ?> (คนที่ 2)</h3>
+                        <div>
+                            <div id="edit-2" style="display:flex;">
+                                <button type="button" class="edit-btn" onclick="editData(2)">แก้ไข</button>
+                            </div>
+                            <div id="btn-2" style="display:none;">
+                                <button type="submit" name='formSubmit2' class="confirm">ยืนยัน</button>
+                                <button type="button" class="delData" onclick="cancelEditData(2)">ยกเลิก</button>
+                            </div>
+                        </div>
+                        </div>
+                        
                         <div class="hr"></div>
                         <div class="row">
                             <div class="col-2 select-box">
@@ -264,7 +283,7 @@ if($_SESSION['level'] == 'employee'){
                                 <select name="name_title2" id="name_title2" disabled>
                                     <option value="นาย" <?php if($name_title2 == 'นาย'){ echo "selected";} ?>>นาย
                                     </option>
-                                    <option value="นาง" <?php if($name_titl2e == 'นาง'){ echo "selected";} ?>>นาง
+                                    <option value="นาง" <?php if($name_title2 == 'นาง'){ echo "selected";} ?>>นาง
                                     </option>
                                     <option value="นางสาว" <?php if($name_title2 == 'นางสาว'){ echo "selected";} ?>>
                                         นางสาว</option>
@@ -321,8 +340,11 @@ if($_SESSION['level'] == 'employee'){
                         <div class="row">
                             <div class="col-3 input-box">
                                 <p>เกิดวันที่</p>
-                                <input type="date" required name="birthday2" id="birthday2"
-                                    value="<?php if(isset($birthday2)){echo $birthday2;}; ?>" disabled>
+                                <div style="position:relative;">
+                                    <input id="birthday2" name="birthday2" type="text"
+                                        value="<?php if(isset($birthday2)){ echo $birthday2; }?>" disabled required>
+                                    <p id="birth_date2" class="dateText"></p>
+                                </div>
                             </div>
                             <div class="col-2 input-box">
                                 <p>อายุ</p>
@@ -362,34 +384,34 @@ if($_SESSION['level'] == 'employee'){
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box">
                                         <img id="output_imagepic3"
-                                            src="../../images/roommember/<?php echo $room_id; ?>/2/<?php echo $pic_idcard2; ?>" />
+                                            src="<?php if(isset($pic_idcard2)){ echo '../../images/roommember/'.$room_id.'/2/'.$pic_idcard2;} ?>>" />
                                         <?php
-                                    if(isset($pic_idcard2)){ ?>
+                                        if(isset($pic_idcard2)){ ?>
                                         <button class="del-btn" type="button" id="del-btn3" style="display:none;"
                                             onclick="delImg('<?php echo $room_id ?>','pic_idcard2',2)">X</button>
                                         <?php } ?>
                                     </div>
                                     <?php
-                                if(!isset($pic_idcard2)){ ?>
-                                    <input type="file" id="pic_idcard2" accept="image/*" onchange="preview_image(event,'pic3')"
-                                        name="pic_idcard2" disabled>
+                                    if(!isset($pic_idcard2)){ ?>
+                                    <input type="file" id="pic_idcard2" accept="image/*"
+                                        onchange="preview_image(event,'pic3')" name="pic_idcard2" disabled>
                                     <?php } ?>
                                 </div>
                                 <div>
                                     <p>สำเนาทะเบียนบ้าน</p>
                                     <div class="img-box">
                                         <img id="output_imagepic4"
-                                            src="../../images/roommember/<?php echo $room_id; ?>/2/<?php echo $pic_home2; ?>" />
+                                            src="<?php if(isset($pic_home2)){ echo '../../images/roommember/'.$room_id.'/2/'.$pic_home2;} ?>" />
                                         <?php
-                                    if(isset($pic_home2)){ ?>
+                                        if(isset($pic_home2)){ ?>
                                         <button class="del-btn" type="button" id="del-btn4" style="display:none;"
                                             onclick="delImg('<?php echo $room_id; ?>','pic_home2',2)">X</button>
                                         <?php } ?>
                                     </div>
                                     <?php
-                                if(!isset($pic_home2)){ ?>
-                                    <input type="file" id="pic_home2" accept="image/*" onchange="preview_image(event,'pic4')"
-                                        name="pic_home2" disabled>
+                                    if(!isset($pic_home2)){ ?>
+                                    <input type="file" id="pic_home2" accept="image/*"
+                                        onchange="preview_image(event,'pic4')" name="pic_home2" disabled>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -397,13 +419,6 @@ if($_SESSION['level'] == 'employee'){
                         <hr />
                         <div style="display:flex;justify-content:flex-start;">
                             <button type="button" onclick="navigation()">คนที่ 1</button>
-                        </div>
-                        <div id="edit-2" style="padding-top:32px;display:flex;justify-content:center;">
-                            <button type="button" onclick="editData(2)">แก้ไข</button>
-                        </div>
-                        <div id="btn-2" style="padding-top:32px;display:none;justify-content:center">
-                            <button type="submit" name='formSubmit2'>ยืนยัน</button>
-                            <button type="button" class="delData" onclick="cancelEditData(2)">ยกเลิก</button>
                         </div>
                         <div class="hr" style="margin: 32px 0;"></div>
                         <div style="padding-top:32px;display:flex;justify-content:flex-end">
@@ -513,7 +528,7 @@ if($_SESSION['level'] == 'employee'){
         ?>
         </div>
     </div>
-    <script src="../../../js/employee/room_id_form.js"></script>
+    <script src="../../../js/admin/room_id_form.js"></script>
 </body>
 
 </html>

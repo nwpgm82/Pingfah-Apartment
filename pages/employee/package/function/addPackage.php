@@ -9,7 +9,7 @@ if($_SESSION['level'] == 'employee'){
   $room = $_POST['room'];
       $sql = "INSERT INTO package (package_num, package_company, package_arrived, package_status, package_name, package_room, package_received) VALUES ('$num', '$company', '$arrived', 'ยังไม่ได้รับพัสดุ', '$name', '$room', '')";
       if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('เพิ่มพัสดุเรียบร้อยแล้ว');location.assign('/Pingfah/pages/admin/package/index.php');</script>";
+        echo "<script>alert('เพิ่มพัสดุเรียบร้อยแล้ว');location.assign('../index.php');</script>";
       } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
       }
