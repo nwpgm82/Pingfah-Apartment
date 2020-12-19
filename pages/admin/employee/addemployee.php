@@ -11,6 +11,10 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/addEmployee.css">
+    <link rel="stylesheet" href="../../../css/my-style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -80,7 +84,10 @@ if($_SESSION['level'] == 'admin'){
                             <div class="row" style="padding-top: 32px;">
                                 <div class="col-3">
                                     <p>เกิดวันที่</p>
-                                    <input type="date" name="birthday" id="" placeholder="เกิดวันที่" required>
+                                    <div style="position:relative;">
+                                        <input id="birthday" name="birthday" type="text" required>
+                                        <p id="birth_date" class="dateText"></p>
+                                    </div>
                                 </div>
                                 <div class="col-3">
                                     <p>อายุ</p>

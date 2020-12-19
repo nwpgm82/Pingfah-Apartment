@@ -33,7 +33,12 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="employee-box">
-                <h3>รายชื่อพนักงาน</h3>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <h3>รายชื่อพนักงาน</h3>
+                    <div style="display:flex;justify-content:flex-end;">
+                        <a href="../employee/addemployee.php"><button>เพิ่มพนักงาน</button></a>
+                    </div>
+                </div>
                 <div class="hr"></div>
                 <?php
                 $perpage = 5;
@@ -100,7 +105,8 @@ if($_SESSION['level'] == 'admin'){
                     <div class="pagination">
                         <a href="index.php?page=1">&laquo;</a>
                         <?php for($i=1;$i<=$total_page;$i++){ ?>
-                        <a href="index.php?page=<?php echo $i; ?>" <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                        <a href="index.php?page=<?php echo $i; ?>"
+                            <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                         <?php } ?>
                         <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
                     </div>
@@ -108,9 +114,6 @@ if($_SESSION['level'] == 'admin'){
                 <?php }else{
                     echo "ไม่มีรายชื่อพนักงาน";
                 } ?>
-                <div style="display:flex;justify-content:flex-end;">
-                    <a href="../employee/addemployee.php"><button>เพิ่มพนักงาน</button></a>
-                </div>
             </div>
         </div>
     </div>

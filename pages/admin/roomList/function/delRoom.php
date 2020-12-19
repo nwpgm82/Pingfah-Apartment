@@ -19,7 +19,7 @@ if($_SESSION['level'] == 'admin'){
         }
         rmdir("../../../images/roommember/$id");
         echo "<script type='text/javascript'>alert('ลบห้อง $id เรียบร้อย')</script>";
-        echo "<script type='text/javascript'>location.assign('../index.php')</script>";
+        echo "<script type='text/javascript'>window.history.back();</script>";
     } else {
         echo "Error updating record: " . $conn->error;
     }

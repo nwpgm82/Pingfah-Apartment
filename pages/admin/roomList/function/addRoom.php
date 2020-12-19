@@ -7,13 +7,18 @@ if($_SESSION['level'] == 'admin'){
     // echo $room;
     // echo $type;
     $sql = "INSERT INTO roomlist (room_id, room_type, room_status) VALUES ('$room', '$type', 'ว่าง')";
+    $main_target = "../../../images/roommember/";
     $create = "../../../images/roommember/$room";
-    if ($conn->query($sql) === TRUE && mkdir($create) === TRUE) {
+    if(!is_dir($main_target)){
+        mkdir($main_target);
+    }
+    mkdir($create);
+    if ($conn->query($sql) === TRUE) {
         $create2 = mkdir("../../../images/roommember/$room/1");
         $create3 = mkdir("../../../images/roommember/$room/2");
         if($create2 === TRUE && $create3 === TRUE){
             echo "<script type='text/javascript'>alert('เพิ่มห้อง $room ประเภท $type เรียบร้อย')</script>";
-            echo "<script type='text/javascript'>location.assign('../index.php')</script>";
+            echo "<script type='text/javascript'>window.history.back();</script>";
         }
     } else {
         echo "<script>";
