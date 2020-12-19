@@ -75,7 +75,7 @@
             <div style="padding:16px 24px">
                 <h3 id="topbar-page"></h3>
             </div>
-            <a href="<?php if($_SESSION['level'] == 'employee'){ echo '/Pingfah/pages/employee/myprofile/index.php'; }else if($_SESSION['level'] == 'guest'){ echo '/Pingfah/pages/guest/myprofile/index.php'; } ?>">
+            <a href="/Pingfah/pages/employee/myprofile/index.php">
                 <div class="profile">
                     <?php
                     $user = $_SESSION['ID'];
