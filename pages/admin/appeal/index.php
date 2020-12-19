@@ -3,6 +3,8 @@ session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
     include('../../../components/sidebar.php');
+    $from = @$_REQUEST['from'];
+    $to = @$_REQUEST['to'];
     $date = @$_REQUEST['Date'];
     $num = 1;
     function DateThai($strDate)
@@ -21,7 +23,12 @@ if($_SESSION['level'] == 'admin'){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Pingfah/css/appeal.css">
+    <link rel="stylesheet" href="../../../css/appeal.css">
+    <link rel="stylesheet" href="../../../css/my-style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -31,13 +38,28 @@ if($_SESSION['level'] == 'admin'){
             <div class="appeal-box">
                 <h3>ค้นหารายการร้องเรียน</h3>
                 <div class="search">
-                    <div style="padding-right:16px;">
-                        <label>ค้นหาตามวันที่</label>
-                        <input type="date" value="<?php echo $date; ?>" onchange="searchDate(value)">
+                    <div style="padding-right:16px">
+                        <div style="display:flex;align-items:center;">
+                            <label>ค้นหาตามวันที่</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="date_from" value="<?php echo $from; ?>"
+                                    required>
+                                <p id="from_date" class="dateText"></p>
+                            </div>
+                            <label>~</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="date_to" value="<?php echo $to; ?>"
+                                    required>
+                                <p id="to_date" class="dateText"></p>
+                            </div>
+                            <button type="button" onclick="searchDate()">ค้นหา</button>
+                        </div>
                     </div>
-                    <div>
-                        <a href="index.php"><button type="button">ยกเลิกการกรองทั้งหมด</button></a>
-                    </div>
+                    <?php
+                        if(isset($from) || isset($to)){
+                        ?>
+                    <button class="cancel-sort" style="margin:0 8px;" onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                    <?php } ?>
                 </div>
                 <div class="hr"></div>
                 <div>
@@ -49,8 +71,9 @@ if($_SESSION['level'] == 'admin'){
                         $page = 1;
                     }
                     $start = ($page - 1) * $perpage;
-                    if(isset($date)){
-                        $sql = "SELECT * FROM appeal WHERE appeal_date = '$date' LIMIT {$start} , {$perpage}";
+                    $num = $start + 1;
+                    if(isset($from) && isset($to)){
+                        $sql = "SELECT * FROM appeal WHERE (appeal_date BETWEEN '$from' AND '$to') LIMIT {$start} , {$perpage}";
                     }else{
                         $sql = "SELECT * FROM appeal LIMIT {$start} , {$perpage}";
                     }
@@ -75,7 +98,8 @@ if($_SESSION['level'] == 'admin'){
                             <td><?php echo $row['appeal_topic']; ?></td>
                             <td><?php echo DateThai($row['appeal_date']); ?></td>
                             <td>
-                                <a href="appealDetail.php?appeal_id=<?php echo $row['appeal_id']; ?>"><button>รายละเอียด</button></a>
+                                <a
+                                    href="appealDetail.php?appeal_id=<?php echo $row['appeal_id']; ?>"><button>รายละเอียด</button></a>
                                 <button class="del-btn" onclick="del(<?php echo $row['appeal_id']; ?>)">ลบ</button>
                             </td>
                         </tr>

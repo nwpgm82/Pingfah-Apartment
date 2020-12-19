@@ -276,7 +276,8 @@ if($_SESSION['level'] == 'guest'){
         var options = {
             title: 'รายการชำระเงินห้องพักรายเดือน',
             colors: ['rgb(131, 120, 47)', '#c6b66b'],
-            fontName: "Sarabun"
+            fontName: "Sarabun",
+            vAxis: { format: "decimal"}
         };
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
 

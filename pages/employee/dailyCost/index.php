@@ -193,7 +193,8 @@ if($_SESSION['level'] == 'employee'){
         var options = {
             title: 'รายการชำระเงินรายวัน',
             colors: ['rgb(131, 120, 47)'],
-            fontName: "Sarabun"
+            fontName: "Sarabun",
+            vAxis: { format: "decimal"}
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));

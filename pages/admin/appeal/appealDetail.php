@@ -4,7 +4,15 @@ if($_SESSION["level"] == "admin"){
     include("../../connection.php");
     include("../../../components/sidebar.php");
     $id = $_REQUEST["appeal_id"];
-    
+    function DateThai($strDate)
+    {
+        $strYear = date("Y",strtotime($strDate))+543;
+        $strMonth= date("n",strtotime($strDate));
+        $strDay= date("j",strtotime($strDate));
+        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strDay $strMonthThai $strYear";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +47,7 @@ if($_SESSION["level"] == "admin"){
                     </div>
                     <div class="col-5">
                         <label>วันที่ร้องเรียน</label>
-                        <input type="text" value="<?php echo $row['appeal_date']; ?>" disabled>
+                        <input type="text" value="<?php echo DateThai($row['appeal_date']); ?>" disabled>
                     </div>
                 </div>
                 <div style="padding-top:32px;">

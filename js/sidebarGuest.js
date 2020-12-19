@@ -1,7 +1,7 @@
 function menubar() {
     // localStorage.removeItem("i");
     let main = document.querySelector("#main")
-    let profile = document.querySelector("#profile")
+    // let profile = document.querySelector("#profile")
     let cost = document.querySelector("#cost")
     let repair = document.querySelector("#repair")
     let package = document.querySelector("#package")
@@ -15,9 +15,7 @@ function menubar() {
         main.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         main.style.color = "#fff"
         header.innerHTML = "หน้าหลัก"
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/guest/profile/index.php") {
-        profile.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        profile.style.color = "#fff"
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/guest/myprofile/index.php") {
         header.innerHTML = "ประวัติส่วนตัว"
     }else if (localStorage.getItem("i") == "/Pingfah/pages/guest/cost/index.php") {
         cost.style.backgroundColor = "rgba(131, 120, 47, 0.7)"

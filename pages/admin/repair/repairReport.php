@@ -181,7 +181,8 @@ if($_SESSION["level"] == "admin"){
         var options = {
             title: 'ค่าใช้จ่ายจากการแจ้งซ่อม',
             colors: ['rgb(131, 120, 47)', '#c6b66b'],
-            fontName: "Sarabun"
+            fontName: "Sarabun",
+            vAxis: { format: "decimal"}
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));

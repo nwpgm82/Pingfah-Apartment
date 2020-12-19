@@ -1,11 +1,24 @@
 <?php
 session_start();
-if($_SESSION["level"] === 'guest'){
-    include("../../connection.php");
-    include("../rule-modal.php");
-    include("../../../components/sidebarGuest.php");
+if($_SESSION['level'] == 'guest'){
+    include('../../connection.php');
+    include('../../../components/sidebarGuest.php'); 
+    $path1 = "../../images/roommember/".$_SESSION['ID']."/";
+    $subpath1 = "../../images/roommember/".$_SESSION['ID']."/1/";
+    $subpath2 = "../../images/roommember/".$_SESSION['ID']."/2/";
+    if(is_dir($path1)){
+        // echo "<script>console.log('มีโฟลเดอร์ $path1')</script>";
+    }else{
+        // echo "<script>console.log('ไม่มีโฟลเดอร์ $path1')</script>";
+        mkdir($path1);
+        if(is_dir($path1)){
+            mkdir($subpath1);
+            mkdir($subpath2);
+        }
+        
+    }
+    // echo $status['room_status'];
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +26,11 @@ if($_SESSION["level"] === 'guest'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/roomform.css">
+    <link rel="stylesheet" href="../../../css/my-style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -21,8 +39,8 @@ if($_SESSION["level"] === 'guest'){
         <div style="padding:24px;">
             <div id="month" class="roomform-box">
                 <div id="first">
-                <?php
-                $sql = "SELECT * FROM roommember WHERE room_member='".$_SESSION['ID']."' ";
+                    <?php
+                $sql = "SELECT room_member, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, id_line FROM roommember WHERE room_member='".$_SESSION['ID']."' ";
                 $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
                 $row = mysqli_fetch_array($result);
                 if($row != null){
@@ -30,7 +48,9 @@ if($_SESSION["level"] === 'guest'){
                 }    
                 ?>
                     <form>
-                        <h3>ห้อง <?php echo $_SESSION["ID"]; ?></h3>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <h3>ห้อง <?php echo $_SESSION['ID']; ?> (คนที่ 1)</h3>
+                        </div>
                         <div class="hr"></div>
                         <div class="row">
                             <div class="col-2 select-box">
@@ -106,8 +126,11 @@ if($_SESSION["level"] === 'guest'){
                         <div class="row">
                             <div class="col-3 input-box">
                                 <p>เกิดวันที่</p>
-                                <input type="date" required name="birthday" id="birthday"
-                                    value="<?php if(isset($birthday)){echo $birthday;}; ?>" disabled>
+                                <div style="position:relative;">
+                                    <input id="birthday" name="birthday" type="text"
+                                        value="<?php if(isset($birthday)){ echo $birthday; }?>" disabled required>
+                                    <p id="birth_date" class="dateText"></p>
+                                </div>
                             </div>
                             <div class="col-2 input-box">
                                 <p>อายุ</p>
@@ -146,31 +169,68 @@ if($_SESSION["level"] === 'guest'){
                                 <div>
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box">
-                                        <img id="output_imagepic1" src="../../images/roommember/<?php echo $_SESSION["ID"]; ?>/1/<?php echo $pic_idcard; ?>" />
+                                        <img id="output_imagepic1"
+                                            src="<?php if(isset($pic_idcard)){ echo '../../images/roommember/'.$_SESSION['ID'].'/1/'.$pic_idcard;} ?>" />
+                                        <?php
+                                        if(isset($pic_idcard)){ ?>
+                                        <button class="del-btn" type="button" id="del-btn1" style="display:none;"
+                                            onclick="delImg('<?php echo $room_id ?>','pic_idcard',1)">X</button>
+                                        <?php } ?>
                                     </div>
+                                    <?php
+                                    if(!isset($pic_idcard)){ ?>
+                                    <input type="file" id="pic_idcard1" accept="image/*"
+                                        onchange="preview_image(event,'pic1')" name="pic_idcard" disabled>
+                                    <?php } ?>
                                 </div>
                                 <div>
                                     <p>สำเนาทะเบียนบ้าน</p>
                                     <div class="img-box">
-                                        <img id="output_imagepic2" src="../../images/roommember/<?php echo $_SESSION["ID"]; ?>/1/<?php echo $pic_home; ?>" />
+                                        <img id="output_imagepic2"
+                                            src="<?php if(isset($pic_home)){ echo '../../images/roommember/'.$_SESSION['ID'].'/1/'.$pic_home;} ?>" />
+                                        <?php
+                                    if(isset($pic_home)){ ?>
+                                        <button class="del-btn" type="button" id="del-btn2" style="display:none;"
+                                            onclick="delImg('<?php echo $room_id; ?>','pic_home',1)">X</button>
+                                        <?php } ?>
                                     </div>
+                                    <?php
+                                if(!isset($pic_home)){ ?>
+                                    <input type="file" id="pic_home1" accept="image/*"
+                                        onchange="preview_image(event,'pic2')" name="pic_home" disabled>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
                         <div class="hr" style="margin: 32px 0;"></div>
-                        <?php if($id_card2 != ""){ ?>
+                        <?php if($row != null){ ?>
                         <div style="display:flex;justify-content:flex-end;">
                             <button type="button" onclick="navigation()">คนที่ 2</button>
                         </div>
                         <?php } ?>
+                        <!-- <div style="display:flex;justify-content:center;">
+                            <button type="submit" name='formSubmit' class="confirm">ยืนยัน</button>
+                        </div> -->
+
 
                     </form>
                 </div>
                 <!--  -->
-                <?php if($id_card2 != null){ ?>
+                <?php if($row != null){ ?>
                 <div id="second" style="display:none">
+                <?php
+                $sql2 = "SELECT room_member, name_title2, firstname2, lastname2, nickname2, id_card2, phone2, email2, birthday2, age2, race2, nationality2, job2, address2, pic_idcard2, pic_home2, id_line2 FROM roommember WHERE room_member='".$_SESSION['ID']."' ";
+                $result2 = mysqli_query($conn, $sql2)or die ("Error in query: $sql2 " . mysqli_error());
+                $row2 = mysqli_fetch_array($result2);
+                if($row2 != null){
+                extract($row2);
+                }     
+                ?>
                     <form>
-                        <h3>ห้อง <?php echo $_SESSION["ID"]; ?></h3>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <h3>ห้อง <?php echo $_SESSION['ID']; ?> (คนที่ 2)</h3>
+                        </div>
+                        
                         <div class="hr"></div>
                         <div class="row">
                             <div class="col-2 select-box">
@@ -246,8 +306,11 @@ if($_SESSION["level"] === 'guest'){
                         <div class="row">
                             <div class="col-3 input-box">
                                 <p>เกิดวันที่</p>
-                                <input type="date" required name="birthday2" id="birthday2"
-                                    value="<?php if(isset($birthday2)){echo $birthday2;}; ?>" disabled>
+                                <div style="position:relative;">
+                                    <input id="birthday2" name="birthday2" type="text"
+                                        value="<?php if(isset($birthday2)){ echo $birthday2; }?>" disabled required>
+                                    <p id="birth_date2" class="dateText"></p>
+                                </div>
                             </div>
                             <div class="col-2 input-box">
                                 <p>อายุ</p>
@@ -286,14 +349,36 @@ if($_SESSION["level"] === 'guest'){
                                 <div>
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box">
-                                        <img id="output_imagepic3" src="../../images/roommember/<?php echo $_SESSION["ID"]; ?>/2/<?php echo $pic_idcard2; ?>" />
+                                        <img id="output_imagepic3"
+                                            src="<?php if(isset($pic_idcard2)){ echo '../../images/roommember/'.$_SESSION['ID'].'/2/'.$pic_idcard2;} ?>>" />
+                                        <?php
+                                        if(isset($pic_idcard2)){ ?>
+                                        <button class="del-btn" type="button" id="del-btn3" style="display:none;"
+                                            onclick="delImg('<?php echo $room_id ?>','pic_idcard2',2)">X</button>
+                                        <?php } ?>
                                     </div>
+                                    <?php
+                                    if(!isset($pic_idcard2)){ ?>
+                                    <input type="file" id="pic_idcard2" accept="image/*"
+                                        onchange="preview_image(event,'pic3')" name="pic_idcard2" disabled>
+                                    <?php } ?>
                                 </div>
                                 <div>
                                     <p>สำเนาทะเบียนบ้าน</p>
                                     <div class="img-box">
-                                        <img id="output_imagepic4" src="../../images/roommember/<?php echo $_SESSION["ID"]; ?>/2/<?php echo $pic_home2; ?>" />
+                                        <img id="output_imagepic4"
+                                            src="<?php if(isset($pic_home2)){ echo '../../images/roommember/'.$_SESSION['ID'].'/2/'.$pic_home2;} ?>" />
+                                        <?php
+                                        if(isset($pic_home2)){ ?>
+                                        <button class="del-btn" type="button" id="del-btn4" style="display:none;"
+                                            onclick="delImg('<?php echo $room_id; ?>','pic_home2',2)">X</button>
+                                        <?php } ?>
                                     </div>
+                                    <?php
+                                    if(!isset($pic_home2)){ ?>
+                                    <input type="file" id="pic_home2" accept="image/*"
+                                        onchange="preview_image(event,'pic4')" name="pic_home2" disabled>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -313,6 +398,6 @@ if($_SESSION["level"] === 'guest'){
 </html>
 <?php
 }else{
-    header("Location: ../../login.php");
+    Header("Location: ../../login.php"); 
 }
 ?>

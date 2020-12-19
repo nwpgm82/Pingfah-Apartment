@@ -283,7 +283,8 @@ if($_SESSION['level'] == 'employee'){
         var options = {
             title: 'รายการพัสดุ',
             colors: ['rgb(131, 120, 47)', '#a8a06d'],
-            fontName: "Sarabun"
+            fontName: "Sarabun",
+            vAxis: { format: "decimal"}
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));

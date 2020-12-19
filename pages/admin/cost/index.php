@@ -290,13 +290,14 @@ if($_SESSION['level'] == 'admin'){
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['เดือน / ปี', 'ชำระเงินแล้ว', 'ยังไม่ได้ชำระ'],
+            ['เดือน / ปี', 'ชำระเงินแล้ว (บาท)', 'ยังไม่ได้ชำระ (บาท)'],
             <?php echo $datax;?>
         ]);
         var options = {
             title: 'รายการชำระเงินห้องพักรายเดือน',
             colors: ['rgb(131, 120, 47)', '#c6b66b'],
-            fontName: "Sarabun"
+            fontName: "Sarabun",
+            vAxis: { format: "decimal"}
         };
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
 

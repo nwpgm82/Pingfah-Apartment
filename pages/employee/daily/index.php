@@ -310,7 +310,8 @@ if($_SESSION['level'] == 'employee'){
         var options = {
             title: 'จำนวนผู้เช่าห้องพักรายวันในแต่ละวัน',
             colors: ['rgb(131, 120, 47)'],
-            fontName: "Sarabun"
+            fontName: "Sarabun",
+            vAxis: { format: "decimal"}
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
@@ -328,7 +329,8 @@ if($_SESSION['level'] == 'employee'){
         var options = {
             title: 'จำนวนผู้เช่าห้องพักรายวันในแต่ละประเภท',
             colors: ['rgb(131, 120, 47)', '#c6b66b'],
-            fontName: "Sarabun"
+            fontName: "Sarabun",
+            vAxis: { format: "decimal"}
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));

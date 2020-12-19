@@ -5,6 +5,14 @@ if($_SESSION['level'] == 'guest'){
     include("../rule-modal.php");
     include("../../../components/sidebarGuest.php");
     $id = $_REQUEST["appeal_id"];
+    function DateThai($strDate){
+    	$strYear = date("Y",strtotime($strDate))+543;
+    	$strMonth= date("n",strtotime($strDate));
+    	$strDay= date("j",strtotime($strDate));
+    	$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+    	$strMonthThai=$strMonthCut[$strMonth];
+    	return "$strDay $strMonthThai $strYear";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,9 +40,10 @@ if($_SESSION['level'] == 'guest'){
                             <label>หัวข้อร้องเรียน</label>
                             <input type="text" name="appeal_topic" required>
                         </div>
-                        <div class="col-5">
+                        <div class="col-5" style="position:relative;">
                             <label>วันที่ร้องเรียน</label>
-                            <input type="text" value="<?php echo date("Y-m-d"); ?>" name="appeal_date" readonly required>
+                            <input type="text" id="date" value="<?php echo date("Y-m-d"); ?>" name="appeal_date" disabled required>
+                            <p class="dateText"><?php echo DateThai(date("Y-m-d"))?></p>
                         </div>
                     </div>
                     <div style="padding-top:32px;">
