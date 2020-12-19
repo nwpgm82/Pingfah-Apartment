@@ -41,11 +41,19 @@ if($_SESSION['level'] == 'admin'){
                                 while($row2 = $resultImg->fetch_assoc()) { 
                             ?>
                             <div class="mySlides<?php echo $num; ?>">
-                                <img src="<?php if(isset($row2['gal_name'])){ echo "../../images/roomdetail/$type_show/" .$row2['gal_name']; }else{ echo "https://i.pinimg.com/originals/c5/45/2a/c5452a51a5bd54f08b5b3bfb80882cf5.jpg"; } ?>">
+                                <img src="../../images/roomdetail/<?php echo $type_show; ?>/<?php echo $row2['gal_name']; ?>">
                             </div>
-                            <?php } } ?>
+                            <?php } }else{ ?>
+                            <div class="mySlides<?php echo $num; ?>">
+                                <img src="../../../img/tool/no-img.png">
+                            </div>
+                            <?php } ?>
+                            <?php
+                            if($resultImg->num_rows > 1){
+                            ?>
                             <a class="prev" onclick="plusSlides<?php echo $num; ?>(-1)">&#10094;</a>
                             <a class="next" onclick="plusSlides<?php echo $num; ?>(1)">&#10095;</a>
+                            <?php } ?>
                         </div>
                         <div class="detail">
                             <div>
