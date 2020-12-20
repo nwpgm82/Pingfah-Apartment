@@ -519,13 +519,13 @@ if($_SESSION['level'] == 'admin'){
                                     <img id="output_imagepic1"
                                         src="../../images/roommember/<?php echo $room_id; ?>/1/<?php echo $pic_idcard; ?>" />
                                     <?php
-                                        if(isset($pic_idcard)){ ?>
+                                        if($pic_idcard != ""){ ?>
                                     <button class="del-btn" type="button"
                                         onclick="delImg('<?php echo $room_id ?>','pic_idcard',1)">X</button>
                                     <?php } ?>
                                 </div>
                                 <?php
-                                    if(!isset($pic_idcard)){ ?>
+                                    if($pic_idcard == ""){ ?>
                                 <input type="file" accept="image/*" onchange="preview_image(event,'pic1')"
                                     name="pic_idcard">
                                 <?php } ?>
