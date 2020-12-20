@@ -79,11 +79,11 @@
                     </div>
                     <div class="col-1">
                         <p>ห้องแอร์ (ห้อง)</p>
-                        <input type="number" name="air" value="<?php echo $air; ?>" readonly>
+                        <input type="number" name="air" value="<?php if($air != 0){ echo $air; }else{ echo 0; } ?>" readonly>
                     </div>
                     <div class="col-1">
                         <p>ห้องพัดลม (ห้อง)</p>
-                        <input type="number" name="fan" value="<?php echo $fan; ?>" readonly>
+                        <input type="number" name="fan" value="<?php if($fan != 0){ echo $fan; }else{ echo 0; } ?>" readonly>
                     </div>
                 </div>
                 <div style="line-height:40px;">
