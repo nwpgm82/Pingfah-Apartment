@@ -8,9 +8,9 @@ if($_SESSION['level'] == 'employee'){
     $subpath1 = "../../images/roommember/$room_id/1/";
     $subpath2 = "../../images/roommember/$room_id/2/";
     if(is_dir($path1)){
-        // echo "<script>console.log('มีโฟลเดอร์ $path1')</script>";
+        echo "<script>console.log('มีโฟลเดอร์ $path1')</script>";
     }else{
-        // echo "<script>console.log('ไม่มีโฟลเดอร์ $path1')</script>";
+        echo "<script>console.log('ไม่มีโฟลเดอร์ $path1')</script>";
         mkdir($path1);
         if(is_dir($path1)){
             mkdir($subpath1);
@@ -528,7 +528,7 @@ if($_SESSION['level'] == 'employee'){
         ?>
         </div>
     </div>
-    <script src="../../../js/admin/room_id_form.js"></script>
+    <script src="../../../js/employee/room_id_form.js"></script>
 </body>
 
 </html>

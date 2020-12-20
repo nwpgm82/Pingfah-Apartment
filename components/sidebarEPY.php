@@ -80,18 +80,16 @@
                     <?php
                     $user = $_SESSION['ID'];
                     $sql = "SELECT * FROM employee WHERE username = '$user'";
-                    $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
-                    $row = mysqli_fetch_array($result);
-                    if($row != null){
-                    extract($row);
-                    }    
+                    $profile_result = $conn->query($sql);
+                    if ($profile_result->num_rows > 0) {
+                        while($profile = $profile_result->fetch_assoc()) {
                     ?>
-                    <img src="<?php if(isset($profile_img)){ echo "/Pingfah/pages/images/employee/$user/$profile_img"; }else{ echo "https://sites.google.com/site/rabbiteieicom/_/rsrc/1467891358746/home/image8.jpg"; } ?>"
+                    <img src="<?php if(isset($profile['profile_img'])){ echo "/Pingfah/pages/images/employee/".$_SESSION['ID']."/".$profile['profile_img']; }else{ echo "https://sites.google.com/site/rabbiteieicom/_/rsrc/1467891358746/home/image8.jpg"; } ?>"
                         alt="profile_logo" class="profile-logo">  
                     <p class="profile-text">ยินดีต้อนรับ <?php echo $_SESSION['name']; ?></p>
+                    <?php }} ?>
                 </div>
             </a>
-            
         </div>
     </div>
 
