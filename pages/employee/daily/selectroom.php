@@ -140,6 +140,8 @@
                 alert("ไม่สามารถเลือกห้องได้")
             }
         } else {
+            room_arr.splice(room_arr.findIndex((el) => el === room),1)
+            console.log(room_arr)
             room_select.style.backgroundColor = ""
             air = air + 1
         }
