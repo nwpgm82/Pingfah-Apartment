@@ -291,7 +291,7 @@ if($_SESSION['level'] == 'employee'){
                                         $result = $conn->query($sql);
                                         $row2 = $result->fetch_assoc();
                             ?>
-                            <div class="card">
+                            <div id="air" class="card">
                                 <div class="container">
                                     <?php
                                     $getImg = "SELECT * FROM air_gal";
@@ -350,7 +350,7 @@ if($_SESSION['level'] == 'employee'){
                                     $result2 = $conn->query($sql2);
                                     $row4 = $result2->fetch_assoc();
                             ?>
-                            <div class="card">
+                            <div id="fan" class="card">
                                 <div class="container">
                                     <?php
                                     $getImg3 = "SELECT * FROM fan_gal";

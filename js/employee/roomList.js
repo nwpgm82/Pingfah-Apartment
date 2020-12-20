@@ -2,6 +2,7 @@ let all = document.getElementById("all")
 let available = document.getElementById("available")
 let unavailable = document.getElementById("unavailable")
 let daily = document.getElementById("daily")
+
 function searchDate() {
     let x = document.getElementById("check_in").value
     let y = document.getElementById("check_out").value
@@ -12,9 +13,9 @@ function searchDate() {
 function searchDate2() {
     var x = document.getElementById("date_from").value
     var y = document.getElementById("date_to").value
-    if(x != "" || y != ""){
+    if (x != "" || y != "") {
         location.assign(`index.php?Status=daily&from=${x}&to=${y}`)
-    }else{
+    } else {
         alert("กรุณาระบุวันที่ที่ต้องการค้นหา")
     }
 }
@@ -26,12 +27,12 @@ function searchCheck(id) {
     unavailable.checked = false
     daily.checked = false
     check.checked = true
-    if(id != "all"){
+    if (id != "all") {
         location.href = `index.php?Status=${check.id}`
-    }else{
+    } else {
         location.href = "index.php"
     }
-    
+
 }
 
 function unCheckAll() {
@@ -105,8 +106,13 @@ function del(room) {
 if (document.getElementById("check_in").value != "" && document.getElementById("check_out").value != "" && document.getElementById("people").value != "") {
     var slideIndex1 = 1;
     var slideIndex2 = 2;
-    showSlides1(slideIndex1);
-    showSlides2(slideIndex2);
+    if (document.getElementById("air")) {
+        showSlides1(slideIndex1);
+    }
+    if (document.getElementById("fan")) {
+        showSlides2(slideIndex2);
+    }
+
 
     function plusSlides1(n) {
         showSlides1(slideIndex1 += n);

@@ -105,8 +105,15 @@ function del(room) {
 if (document.getElementById("check_in").value != "" && document.getElementById("check_out").value != "" && document.getElementById("people").value != "") {
     var slideIndex1 = 1;
     var slideIndex2 = 2;
-    showSlides1(slideIndex1);
-    showSlides2(slideIndex2);
+    if(document.getElementById("air")){
+        showSlides1(slideIndex1);
+    }
+
+    if(document.getElementById("fan")){
+        showSlides2(slideIndex2);
+    }
+    
+    
 
     function plusSlides1(n) {
         showSlides1(slideIndex1 += n);
