@@ -98,9 +98,13 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                     </div>
                     <div class="hr" style="margin:32px 0;"></div>
+                    <?php
+                    if($row['repair_status'] != 'ซ่อมเสร็จแล้ว'){
+                    ?>
                     <div style="display:flex;justify-content:center;align-items:center;">
                         <button type="submit">ยืนยัน</button>
                     </div>
+                    <?php } ?>
                 </form>
             </div>
         </div>

@@ -76,14 +76,6 @@ if($_SESSION['level'] == 'guest'){
                                 name="success_date" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "style='background: #fafafa' disabled"; } ?>>
                             <p class="dateText" id="repair_successdate" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "style='background: #fafafa'"; } ?>></p>
                         </div>
-                        <div>
-                            <p>รายได้จากการซ่อม</p>
-                            <input type="text" name="income" value="<?php echo $row['repair_income']; ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
-                        </div>
-                        <div>
-                            <p>รายจ่ายจากการซ่อม</p>
-                            <input type="text" name="expenses" value="<?php echo $row['repair_expenses']; ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
-                        </div>
                     </div>
                     <div class="hr" style="margin:32px 0;"></div>
                 </form>

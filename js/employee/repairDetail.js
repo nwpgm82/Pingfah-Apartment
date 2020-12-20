@@ -6,6 +6,19 @@ function changeStatus(room,app,cat,date){
     }
 }
 
+function formatDate(date) {
+    var monthNames = [
+        "ม.ค.", "ก.พ.", "มี.ค.",
+        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
+        "ส.ค.", "ก.ย.", "ต.ค.",
+        "พ.ค.", "ธ.ค."
+    ];
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+
 $(document).ready(function(){
     function formatDate(date) {
         var monthNames = [
@@ -44,8 +57,12 @@ $(document).ready(function(){
         today_month = '0' + today_month.toString()
     }
     let current_day = today_year + '-' + today_month + '-' + today_day
-    $("#success_date").val(current_day)
-    $("#repair_successdate").html(current_dayShow)
+    if($("#success_date").val() == ""){
+        $("#success_date").val(current_day)
+        $("#repair_successdate").html(current_dayShow)
+    }else{
+        $("#repair_successdate").html(formatDate(new Date($("#success_date").val())))
+    }
     $("#success_date").dateDropper({
         theme: "my-style",
         lang: "th",

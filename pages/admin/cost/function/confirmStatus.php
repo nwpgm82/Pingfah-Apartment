@@ -17,7 +17,7 @@ if($_SESSION['level'] == 'admin'){
   } else {
       $sql2 = "UPDATE cost SET cost_status = 'ชำระเงินแล้ว' WHERE room_id= '$room' AND date ='$date'";
       if ($conn->query($sql2) === TRUE) {
-          echo "Record updated successfully";
+          // echo "Record updated successfully";
           echo "<script>";
           echo "alert('ยืนยันการชำระเงินเรียบร้อยแล้ว');";
           echo "location.href = '../index.php';";
