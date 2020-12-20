@@ -153,7 +153,7 @@ include('pages/connection.php');
             <div class="gallery-grid">
                 <?php
                     $num = 1;
-                    $sql = "SELECT * FROM gallery ORDER BY gallery_id DESC LIMIT 8";
+                    $sql = "SELECT * FROM gallery ORDER BY gallery_id ASC LIMIT 8";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
