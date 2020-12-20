@@ -11,15 +11,28 @@ function checkRoomLoad() {
     check_out_date.innerHTML = formatDate(new Date(check_out.value))
 }
 
-function search(){
+function search() {
     let people = document.getElementById("people").value
     location.href = `checkRoom.php?check_in=${check_in.value}&check_out=${check_out.value}&people=${people}`
 }
 
 var slideIndex1 = 1;
 var slideIndex2 = 1;
-showSlides1(slideIndex1);
-showSlides2(slideIndex2);
+if (document.getElementById("air")) {
+    showSlides1(slideIndex1);
+    document.getElementById('row1').addEventListener('mousewheel', function (e) {
+        this.scrollLeft -= (e.wheelDelta) * 4;
+        e.preventDefault();
+    }, false);
+}
+if (document.getElementById("fan")) {
+    showSlides2(slideIndex2);
+    document.getElementById('row2').addEventListener('mousewheel', function (e) {
+        this.scrollLeft -= (e.wheelDelta) * 4;
+        e.preventDefault();
+    }, false);
+}
+
 
 function plusSlides1(n) {
     showSlides1(slideIndex1 += n);
@@ -39,15 +52,9 @@ function currentSlide2(n) {
     showSlides2(slideIndex2 = n);
 }
 
-document.getElementById('row1').addEventListener('mousewheel', function (e) {
-    this.scrollLeft -= (e.wheelDelta)*4;
-    e.preventDefault();
-}, false);
 
-document.getElementById('row2').addEventListener('mousewheel', function (e) {
-    this.scrollLeft -= (e.wheelDelta)*4;
-    e.preventDefault();
-}, false);
+
+
 
 function showSlides1(n) {
     let i;
@@ -167,10 +174,10 @@ function decrease(num) {
     }
 }
 
-function checkform(){
-    let people_check = Math.ceil(parseInt(document.getElementById("people").value)/2)
+function checkform() {
+    let people_check = Math.ceil(parseInt(document.getElementById("people").value) / 2)
     let room_check = parseInt(document.getElementById("people1").value) + parseInt(document.getElementById("people2").value)
-    if(people_check > room_check){
+    if (people_check > room_check) {
         alert("กรุณาเลือกห้องพักให้เพียงพอกับผู้พัก")
         return false
     }

@@ -88,7 +88,7 @@
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
                 ?>
-                    <div class="card">
+                    <div id="air" class="card">
                         <div class="container">
                             <?php
                             $column1 = 1;
@@ -206,7 +206,7 @@
                             $result2 = $conn->query($sql2);
                             $row2 = $result2->fetch_assoc();
                     ?>
-                    <div class="card">
+                    <div id="fan" class="card">
                         <div class="container">
                             <?php
                             $column2 = 1;
