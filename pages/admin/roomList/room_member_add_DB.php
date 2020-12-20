@@ -7,6 +7,7 @@ if($_SESSION['level'] == 'admin'){
   // $name_title = $_POST['name_title'];
   
   if(isset($_POST['formSubmit'])){
+    $come = $_POST['come'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $nickname = $_POST['nickname'];
@@ -61,7 +62,7 @@ if($_SESSION['level'] == 'admin'){
     }else{
         if(move_uploaded_file($_FILES['pic_idcard']['tmp_name'], $target) && move_uploaded_file($_FILES['pic_home']['tmp_name'], $target2)){
           $sql = "INSERT INTO roommember (room_member, name_title, firstname, lastname, nickname, id_card, phone, email, id_line, birthday, age, race, nationality, job, address, pic_idcard, pic_home) VALUES ('$id', '$name_title', '$firstname', '$lastname', '$nickname', '$id_card', '$phone', '$email', '$line', '$birthday', '$age', '$race', '$nationality', '$job', '$address', '$pic_idcard', '$pic_home')";
-          $roomlist = "UPDATE roomlist SET room_status = 'ไม่ว่าง',come = '$date' WHERE room_id = '$id' ";
+          $roomlist = "UPDATE roomlist SET room_status = 'ไม่ว่าง',come = '$come' WHERE room_id = '$id' ";
           $insertUser = "INSERT INTO login (username, name, password, email, level) VALUES ('$id', '$id', md5('$id_card'), '$email', 'guest')";
           if ($conn->query($sql) === TRUE && $conn->query($roomlist) === TRUE && $conn->query($insertUser) === TRUE) {  
             echo "<script>";

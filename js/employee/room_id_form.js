@@ -190,12 +190,36 @@ function formatDate2(inputDate) {
     }
 }
 
+if($('#come').val() != ""){
+    $('#come_date').html(formatDate(new Date($('#come').val())))
+    $('#come_date2').html(formatDate(new Date($('#come').val())))
+}
 if($('#birthday').val() != ""){
     $('#birth_date').html(formatDate(new Date($('#birthday').val())))
 }
 if($('#birthday2').val() != ""){
     $('#birth_date2').html(formatDate(new Date($('#birthday2').val())))
 }
+
+$('#come').dateDropper({
+    theme: "my-style",
+    large: true,
+    largeDefault: true,
+    format: "Y-m-d",
+    lang: "th",
+    startFromMonday: false,
+});
+
+$('#come2').dateDropper({
+    theme: "my-style",
+    large: true,
+    largeDefault: true,
+    format: "Y-m-d",
+    lang: "th",
+    startFromMonday: false,
+});
+
+
 $('#birthday').dateDropper({
     theme: "my-style",
     large: true,
@@ -215,6 +239,10 @@ $('#birthday2').dateDropper({
     startFromMonday: false,
     defaultDate: formatDate2($('#birthday2').val())
 });
+
+$('#come').change(function () {
+    $('#come_date').html(formatDate(new Date($('#come').val())))
+})
 
 $('#birthday').change(function () {
     $('#birth_date').html(formatDate(new Date($('#birthday').val())))

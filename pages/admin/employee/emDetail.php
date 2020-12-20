@@ -69,12 +69,12 @@ if($_SESSION['level'] == 'admin'){
                                             นางสาว</option>
                                     </select>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <p>ชื่อ</p>
                                     <input type="text" value="<?php echo $firstname; ?>" name="firstname" id="firstname"
                                         placeholder="ชื่อ" disabled required>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <p>นามสกุล</p>
                                     <input type="text" value="<?php echo $lastname; ?>" name="lastname" id="lastname"
                                         placeholder="นามสกุล" disabled required>
@@ -83,11 +83,6 @@ if($_SESSION['level'] == 'admin'){
                                     <p>ชื่อเล่น</p>
                                     <input type="text" value="<?php echo $nickname; ?>" name="nickname" id="nickname"
                                         placeholder="ชื่อเล่น" disabled required>
-                                </div>
-                                <div class="col-2">
-                                    <p>ตำแหน่ง</p>
-                                    <input type="text" value="<?php echo $position; ?>" name="position" id="position"
-                                        placeholder="ตำแหน่ง" disabled required>
                                 </div>
                             </div>
                             <div class="row" style="padding-top: 32px;">

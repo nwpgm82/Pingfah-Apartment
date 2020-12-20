@@ -285,8 +285,8 @@ if($_SESSION['level'] == 'employee'){
                                     $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = 'แอร์' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
                                     $roomdata= mysqli_fetch_assoc($countroom);  
                                     $roomtotal_int = intval($roomdata['roomtotal']);
-                                    $total_int = $roomtotal_int - $roomDailyAirtotal_int;
-                                    if($total_int > 3){
+                                    $total_int = $roomtotal_int - $roomDailyAirtotal_int - 3;
+                                    if($total_int > 0){
                                         $sql = "SELECT * FROM roomdetail WHERE type = 'แอร์'";
                                         $result = $conn->query($sql);
                                         $row2 = $result->fetch_assoc();
@@ -344,8 +344,8 @@ if($_SESSION['level'] == 'employee'){
                                 $countroom2 = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal2 FROM roomlist WHERE room_type = 'พัดลม' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
                                 $roomdata2= mysqli_fetch_assoc($countroom2);  
                                 $roomtotal_int2 = intval($roomdata2['roomtotal2']);
-                                $total_int2 = $roomtotal_int2 - $roomDailyFantotal_int;
-                                if($total_int2 > 1){
+                                $total_int2 = $roomtotal_int2 - $roomDailyFantotal_int - 1;
+                                if($total_int2 > 0){
                                     $sql2 = "SELECT * FROM roomdetail WHERE type = 'พัดลม'";
                                     $result2 = $conn->query($sql2);
                                     $row4 = $result2->fetch_assoc();

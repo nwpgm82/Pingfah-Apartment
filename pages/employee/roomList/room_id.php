@@ -18,6 +18,8 @@ if($_SESSION['level'] == 'employee'){
         }
         
     }
+    $come = mysqli_query($conn,"SELECT * FROM roomlist WHERE room_id = '$room_id'");
+    $come_result = mysqli_fetch_assoc($come); 
     $check_status = "SELECT room_status FROM roomlist WHERE room_id = '$room_id'";
     $check_result = $conn->query($check_status);
     $status = $check_result->fetch_assoc();
@@ -46,7 +48,7 @@ if($_SESSION['level'] == 'employee'){
         ?>
             <div id="month" class="roomform-box">
                 <div id="first">
-                    <?php
+                <?php
                 $sql = "SELECT room_member, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, id_line FROM roommember WHERE room_member='$room_id' ";
                 $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
                 $row = mysqli_fetch_array($result);
@@ -70,6 +72,16 @@ if($_SESSION['level'] == 'employee'){
                         </div>
 
                         <div class="hr"></div>
+                        <div class="row">
+                            <div class="col-3 input-box">
+                                <p>วันที่เข้าพัก</p>
+                                <div style="position:relative;">
+                                    <input id="come" name="come" type="text"
+                                        value="<?php if(isset($come_result['come'])){ echo $come_result['come']; }?>" required <?php if(isset($come_result['come'])){ echo "disabled"; } ?> >
+                                    <p id="come_date" class="dateText"></p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-2 select-box">
                                 <p>คำนำหน้าชื่อ</p>
@@ -253,19 +265,29 @@ if($_SESSION['level'] == 'employee'){
                     <form action='room_member_add_DB.php?ID=<?php echo $room_id; ?>' method='POST' id="form"
                         enctype="multipart/form-data">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <h3>ห้อง <?php echo $room_id; ?> (คนที่ 2)</h3>
-                        <div>
-                            <div id="edit-2" style="display:flex;">
-                                <button type="button" class="edit-btn" onclick="editData(2)">แก้ไข</button>
-                            </div>
-                            <div id="btn-2" style="display:none;">
-                                <button type="submit" name='formSubmit2' class="confirm">ยืนยัน</button>
-                                <button type="button" class="delData" onclick="cancelEditData(2)">ยกเลิก</button>
+                            <h3>ห้อง <?php echo $room_id; ?> (คนที่ 2)</h3>
+                            <div>
+                                <div id="edit-2" style="display:flex;">
+                                    <button type="button" class="edit-btn" onclick="editData(2)">แก้ไข</button>
+                                </div>
+                                <div id="btn-2" style="display:none;">
+                                    <button type="submit" name='formSubmit2' class="confirm">ยืนยัน</button>
+                                    <button type="button" class="delData" onclick="cancelEditData(2)">ยกเลิก</button>
+                                </div>
                             </div>
                         </div>
-                        </div>
-                        
+
                         <div class="hr"></div>
+                        <div class="row">
+                            <div class="col-3 input-box">
+                                <p>วันที่เข้าพัก</p>
+                                <div style="position:relative;">
+                                    <input id="come2" name="come" type="text"
+                                        value="<?php if(isset($come_result['come'])){ echo $come_result['come']; }?>" required <?php if(isset($come_result['come'])){ echo "disabled"; } ?> >
+                                    <p id="come_date2" class="dateText"></p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-2 select-box">
                                 <p>คำนำหน้าชื่อ</p>
@@ -374,9 +396,9 @@ if($_SESSION['level'] == 'employee'){
                         <div style="padding:32px 8px 0 0;">
                             <p>ที่อยู่</p>
                             <textarea cols="30" rows="10" required name="address2" id="address2" placeholder="ที่อยู่"
-                                minlength="2" disabled><?php if(isset($address2)){echo $address2;} ?>
-                        </textarea>
+                                minlength="2" disabled><?php if(isset($address2)){echo $address2;} ?></textarea>
                         </div>
+                        
                         <div style="padding-top:32px;">
                             <h3>สำเนาเอกสาร</h3>
                             <div class="grid">
@@ -384,7 +406,7 @@ if($_SESSION['level'] == 'employee'){
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box">
                                         <img id="output_imagepic3"
-                                            src="<?php if(isset($pic_idcard2)){ echo '../../images/roommember/'.$room_id.'/2/'.$pic_idcard2;} ?>>" />
+                                            src="<?php if(isset($pic_idcard2)){ echo '../../images/roommember/'.$room_id.'/2/'.$pic_idcard2;} ?>" />
                                         <?php
                                         if(isset($pic_idcard2)){ ?>
                                         <button class="del-btn" type="button" id="del-btn3" style="display:none;"

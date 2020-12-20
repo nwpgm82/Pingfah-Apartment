@@ -46,21 +46,17 @@ if($_SESSION['level'] == 'admin'){
                                         <option value="นางสาว">นางสาว</option>
                                     </select>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <p>ชื่อ</p>
                                     <input type="text" name="firstname" id="" placeholder="ชื่อ" required>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <p>นามสกุล</p>
                                     <input type="text" name="lastname" id="" placeholder="นามสกุล" required>
                                 </div>
                                 <div class="col-2">
                                     <p>ชื่อเล่น</p>
                                     <input type="text" name="nickname" id="" placeholder="ชื่อเล่น" required>
-                                </div>
-                                <div class="col-2">
-                                    <p>ตำแหน่ง</p>
-                                    <input type="text" name="position" id="" placeholder="ตำแหน่ง" required>
                                 </div>
                             </div>
                             <div class="row" style="padding-top: 32px;">
