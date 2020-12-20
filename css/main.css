@@ -56,6 +56,8 @@ body::after{
 
 .banner img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     opacity: 0;
     transition: 1s ease;
     transform: scale(1.1);

@@ -67,7 +67,11 @@ if($_SESSION["level"] == "employee"){
                 <div class="hr"></div>
                 <div>
                     <div class="card">
+                        <?php
+                        if(strlen($datax)){
+                        ?>
                         <div id="columnchart_material1" class="chart"></div>
+                        <?php }else{ echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>"; } ?>
                     </div>
                     <div class="hr"></div>
                     <h3>รายการแจ้งซ่อมทั้งหมด</h3>
@@ -169,7 +173,11 @@ if($_SESSION["level"] == "employee"){
     google.charts.load('current', {
         'packages': ['bar']
     });
+    <?php
+    if(strlen($datax) != 0){
+    ?>
     google.charts.setOnLoadCallback(drawChart);
+    <?php } ?>
 
     function drawChart() {
 

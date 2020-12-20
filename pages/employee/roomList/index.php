@@ -47,7 +47,8 @@ if($_SESSION['level'] == 'employee'){
                     <div class="hr"></div>
                     <div style="display:flex;align-items:center;">
                         <div style="padding:16px 16px 32px 0px;display:flex;align-items:center;">
-                           <input type="checkbox" id="all" onchange="searchCheck(this.id)" <?php if(!isset($check)){ echo "checked"; } ?>>
+                            <input type="checkbox" id="all" onchange="searchCheck(this.id)"
+                                <?php if(!isset($check)){ echo "checked"; } ?>>
                             <label for="scales">ทั้งหมด</label>
                         </div>
                         <div style="padding:16px 16px 32px 16px;display:flex;align-items:center;">
@@ -302,9 +303,18 @@ if($_SESSION['level'] == 'employee'){
                                         <img src="../../images/roomdetail/air/<?php echo $row3['gal_name']; ?>"
                                             style="width:100%">
                                     </div>
-                                    <?php }} ?>
+                                    <?php }}else{ ?>
+                                        <div class="mySlides1">
+                                        <img src="../../../img/tool/no-img.png"
+                                            style="width:100%">
+                                    </div>
+                                    <?php } ?>
+                                    <?php
+                                    if ($resultImg->num_rows > 1){
+                                    ?>
                                     <a class="prev" onclick="plusSlides1(-1)">&#10094;</a>
                                     <a class="next" onclick="plusSlides1(1)">&#10095;</a>
+                                    <?php } ?>
                                 </div>
                                 <div class="detail">
                                     <div>
@@ -352,9 +362,18 @@ if($_SESSION['level'] == 'employee'){
                                         <img src="../../images/roomdetail/fan/<?php echo $row5['gal_name']; ?>"
                                             style="width:100%">
                                     </div>
-                                    <?php }} ?>
+                                    <?php }}else{ ?>
+                                        <div class="mySlides2">
+                                        <img src="../../../img/tool/no-img.png"
+                                            style="width:100%">
+                                    </div>
+                                    <?php } ?>
+                                    <?php
+                                    if ($resultImg3->num_rows > 1) {
+                                    ?>
                                     <a class="prev" onclick="plusSlides2(-1)">&#10094;</a>
                                     <a class="next" onclick="plusSlides2(1)">&#10095;</a>
+                                    <?php } ?>
                                 </div>
                                 <div class="detail">
                                     <div>

@@ -134,7 +134,7 @@ if($_SESSION['level'] == 'employee'){
                                 <p><?php echo $room['total_room']; ?> ห้อง</p>
                             </div>
                         </div>
-                        <a href="roomlist/index.php?Status=available">
+                        <a href="roomList/index.php?Status=available">
                             <div class="search-box">
                                 <p class="dateText1">ห้องว่างทั้งหมด</p>
                             </div>

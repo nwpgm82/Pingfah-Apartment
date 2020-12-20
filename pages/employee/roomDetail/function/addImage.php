@@ -3,6 +3,10 @@ session_start();
 if($_SESSION["level"] == "employee"){
     include("../../../connection.php");
     $type = $_REQUEST["type"];
+    $main_path = "../../../images/roomdetail/";
+    if(!is_dir($main_path)){
+        mkdir($main_path);
+    }
     if($type == "fan"){
         $folder_path = "../../../images/roomdetail/fan/";
     }else if($type == "air"){

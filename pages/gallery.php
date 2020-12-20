@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/gallery.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <title>Document</title>
 </head>
@@ -21,7 +22,7 @@
             <div class="hr"></div>
             <div class="grid">
                 <?php
-                    $sql = "SELECT * FROM gallery ORDER BY gallery_id DESC";
+                    $sql = "SELECT * FROM gallery ORDER BY gallery_id ASC";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
