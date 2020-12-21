@@ -55,6 +55,12 @@ function searchCheck2(checkIn, checkOut, id) {
 
 }
 
+function acceptRent(id){
+    if(confirm("คุณต้องการยืนยันการเข้าอยู่ของลูกค้าท่านนี้ใช่หรือไม่")){
+        location.href = `function/acceptRent.php?daily_id=${id}`
+    }
+}
+
 function selectRoom(num) {
     let btn = document.getElementById(`btn${num}`)
     let room = document.getElementById(`select${num}`)

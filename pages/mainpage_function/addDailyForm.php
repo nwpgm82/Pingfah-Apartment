@@ -106,7 +106,7 @@ function DateThai($strDate){
 
 function sendEmail(){
     global $conn, $firstname, $lastname, $id_card, $email, $tel, $check_in, $check_in_show, $check_out, $check_out_show, $people, $air, $fan, $payment_datebefore, $payment_datebeforeEmail, $code;
-    $sql = "INSERT INTO daily (firstname, lastname, id_card, email, tel, code, check_in, check_out, people, air_room, fan_room, daily_status, payment_datebefore) VALUES ('$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '$check_in', '$check_out', '$people', $air, $fan , 'รอการเข้าพัก', '$payment_datebefore')";
+    $sql = "INSERT INTO daily (firstname, lastname, id_card, email, tel, code, check_in, check_out, people, air_room, fan_room, daily_status, payment_datebefore) VALUES ('$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '$check_in', '$check_out', '$people', $air, $fan , 'รอการยืนยัน', '$payment_datebefore')";
     ///////////////////// อีเมล ////////////////////////
     require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
     header('Content-Type: text/html; charset=utf-8');

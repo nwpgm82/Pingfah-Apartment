@@ -221,11 +221,19 @@ if($_SESSION['level'] == 'admin'){
                                 <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?>
                                 </td>
                                 <td><?php echo $row['code']; ?></td>
-                                <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอ้าท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอ้าท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else{ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; } ?>
+                                <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอ้าท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอ้าท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else if($row['daily_status'] == "รอการเข้าพัก"){ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; }else{ echo "<button type='button' class='waiting-btn'>รอการยืนยัน</button>";} ?>
                                 </td>
                                 <td>
                                     <?php
-                                    if($row['daily_status'] == 'รอการเข้าพัก'){
+                                    if($row['daily_status'] == 'รอการยืนยัน'){
+                                    ?>
+                                     <button class="acceptRent-btn"
+                                        onclick="acceptRent(<?php echo $row['daily_id']; ?>)">ยืนยัน</button>
+                                    <a
+                                        href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
+                                    <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
+                                    <?php
+                                    }else if($row['daily_status'] == 'รอการเข้าพัก'){
                                     ?>
                                     <div id="btn<?php echo $num; ?>">
                                         <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button

@@ -118,6 +118,14 @@
     transition: 0.3s;
 }
 
+.daily-box .acceptRent-btn{
+    background-color: rgb(82, 185, 82);
+}
+
+.daily-box .acceptRent-btn:hover{
+    background-color:  rgb(74, 165, 74);
+}
+
 .daily-box .cancel-sort{
     background-color: #fff;
     border: 1px solid gray;
@@ -165,12 +173,22 @@
 }
 
 .daily-box .pending-btn{
-    background-color: rgb(170, 170, 170);
+    background-color: #c76ec1;
     cursor: default;
     width:100%;
 }
 
 .daily-box .pending-btn:hover{
+    background-color: #c76ec1;
+}
+
+.daily-box .waiting-btn{
+    background-color: rgb(170, 170, 170);
+    cursor: default;
+    width:100%;
+}
+
+.daily-box .waiting-btn:hover{
     background-color: rgb(170, 170, 170);
 }
 
