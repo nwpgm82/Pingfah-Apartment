@@ -3,7 +3,6 @@ session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../../connection.php');
     $id = $_REQUEST["ID"];
-    // echo $id;
     $room_data = "DELETE FROM roommember WHERE room_member = '$id'";
     $room_list = "DELETE FROM roomlist WHERE room_id = '$id'";
     if ($conn->query($room_list) === TRUE && $conn->query($room_data) === TRUE) {
@@ -18,8 +17,10 @@ if($_SESSION['level'] == 'admin'){
             rmdir("../../../images/roommember/$id/$i");
         }
         rmdir("../../../images/roommember/$id");
-        echo "<script type='text/javascript'>alert('ลบห้อง $id เรียบร้อย')</script>";
-        echo "<script type='text/javascript'>window.history.back();</script>";
+        echo "<script>";
+        echo "alert('ลบห้อง $id เรียบร้อย');";
+        echo "location.href = '../index.php';";
+        echo "</script>";
     } else {
         echo "Error updating record: " . $conn->error;
     }

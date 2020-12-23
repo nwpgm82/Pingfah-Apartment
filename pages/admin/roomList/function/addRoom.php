@@ -18,8 +18,10 @@ if($_SESSION['level'] == 'admin'){
         $create2 = mkdir("../../../images/roommember/$room/1");
         $create3 = mkdir("../../../images/roommember/$room/2");
         if($create2 === TRUE && $create3 === TRUE){
-            echo "<script type='text/javascript'>alert('เพิ่มห้อง $room ประเภท $type เรียบร้อย')</script>";
-            echo "<script type='text/javascript'>window.history.back();</script>";
+            echo "<script>";
+            echo "alert('เพิ่มห้อง $room เรียบร้อยแล้ว');";
+            echo "location.href = '../index.php';";
+            echo "</script>";
         }
     } else {
         echo "<script>";

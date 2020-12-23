@@ -16,7 +16,7 @@
 
 .box-grid {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr 0.8fr;
+    grid-template-columns: 1.2fr 1.2fr 0.6fr;
     column-gap: 16px;
 }
 
@@ -69,6 +69,11 @@
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.roomList-box .input-grid button{
+    position: relative;
+    top: 29px;
 }
 
 .roomList-box button:hover {
@@ -153,7 +158,12 @@
     color: rgb(131, 120, 47, 1);
 }
 
-.roomList-box table td .status-available {
+.roomList-box table td img{
+    display: block;
+    margin: auto;
+}
+
+.roomList-box .status-available {
     width: 36px;
     height: 36px;
     background-color: rgb(82, 185, 82);
@@ -165,7 +175,7 @@
     margin: auto;
 }
 
-.roomList-box table td .status-unavailable {
+.roomList-box .status-unavailable {
     width: 36px;
     height: 36px;
     background-color: rgb(255, 70, 70);
@@ -221,6 +231,7 @@
 
 .roomList-box .popover {
     width: 500px;
+    height: 183px;
     padding: 16px;
     border-radius: 4px;
     background-color: #fff;
@@ -235,9 +246,8 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 8px;
     row-gap: 16px;
-    align-items: flex-end;
 }
-.roomList-box select, .roomList-box input {
+.roomList-box select, .roomList-box input[type=text], .roomList-box input[type=number] {
     margin-top: 8px;
     width: 100%;
     height: 40px;
@@ -247,6 +257,10 @@
     border: 1px solid rgb(131, 120, 47, 0.5);
     font-size: 16px;
     transition: 0.3s;
+}
+
+.roomList-box .input_placeholder_error::-webkit-input-placeholder {
+    color: red
 }
 
 .roomList-box select{
@@ -277,4 +291,58 @@
 .pagination a:hover:not(.active) {
     background-color: rgb(131, 120, 47, 0.7);
     border: 1px solid rgb(131, 120, 47, 0.7);
+}
+
+.roomList-box .search{
+    margin-top: 8px;
+   
+}
+
+.roomList-box .search input[type=text]{
+    margin: 0;
+}
+
+.roomList-box .search input[type=number]{
+    width: 70px;
+    margin: 0;
+}
+
+.roomList-box .search input[type=number]::-webkit-inner-spin-button, 
+.roomList-box .search input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+
+.roomList-box .search input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.roomList-box .search button{
+    width: auto;
+    margin: 0 8px;
+}
+
+.roomList-box .card{
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    width: 100%;
+    height: 200px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.roomList-box .card img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.roomList-box .icon-grid{
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: 36px auto;
+    align-items: center;
+    column-gap: 16px;
 }
