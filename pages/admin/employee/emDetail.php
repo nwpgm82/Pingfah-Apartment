@@ -146,14 +146,14 @@ if($_SESSION['level'] == 'admin'){
                                                 id="output_imagepic2">
                                             <div style="display:none" id="del2">
                                                 <?php
-                                                if(isset($pic_idcard)){ ?>
+                                                if($pic_idcard != ""){ ?>
                                                 <button class="del-btn" type="button"
                                                     onclick="delImg('<?php echo $username ?>','pic_idcard')">X</button>
                                                 <?php } ?>
                                             </div>
 
                                         </div>
-                                        <?php if(!isset($pic_idcard)){ ?>
+                                        <?php if($pic_idcard == ""){ ?>
                                         <input type="file" accept="image/*" name="pic_idcard" id="pic_idcard"
                                             onchange="preview_image(event,'pic2')" style="padding-top:16px" disabled
                                             required>
@@ -166,14 +166,14 @@ if($_SESSION['level'] == 'admin'){
                                                 id="output_imagepic3">
                                             <div style="display:none" id="del3">
                                                 <?php
-                                                if(isset($pic_home)){ ?>
+                                                if($pic_home != ""){ ?>
                                                 <button class="del-btn" type="button"
                                                     onclick="delImg('<?php echo $username ?>','pic_home')">X</button>
                                                 <?php } ?>
                                             </div>
 
                                         </div>
-                                        <?php if(!isset($pic_home)){ ?>
+                                        <?php if($pic_home == ""){ ?>
                                         <input type="file" accept="image/*" name="pic_home" id="pic_home"
                                             onchange="preview_image(event,'pic3')" style="padding-top:16px" disabled
                                             required>

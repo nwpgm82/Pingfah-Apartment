@@ -24,7 +24,7 @@ if($_SESSION['level'] == 'admin'){
         @$target1 = "../../../images/employee/$username/".basename($pic_idcard);
         @$target2 = "../../../images/employee/$username/".basename($pic_home);
         @$target3 = "../../../images/employee/$username/".basename($profile_img);
-        $update = "UPDATE employee SET title_name = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', position = '$position', id_card = '$id_card', tel = '$tel', email = '$email', id_line = '$id_line', birthday = '$birthday', age = '$age', race = '$race', nationality = '$nat', address = '$add' WHERE username = '$username' ";
+        $update = "UPDATE employee SET title_name = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', position = 'พนักงาน', id_card = '$id_card', tel = '$tel', email = '$email', id_line = '$id_line', birthday = '$birthday', age = '$age', race = '$race', nationality = '$nat', address = '$add' WHERE username = '$username' ";
         if ($conn->query($update) === TRUE) {
             if($pic_idcard != ""){
                 $update_pic1 = "UPDATE employee SET pic_idcard = '$pic_idcard' WHERE username = '$username' ";

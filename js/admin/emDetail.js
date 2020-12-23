@@ -10,7 +10,7 @@ function edit() {
     document.getElementById("firstname").disabled = false
     document.getElementById("lastname").disabled = false
     document.getElementById("nickname").disabled = false
-    document.getElementById("position").disabled = false
+    // document.getElementById("position").disabled = false
     document.getElementById("id_card").disabled = false
     document.getElementById("tel").disabled = false
     document.getElementById("email").disabled = false
@@ -43,7 +43,7 @@ function cancel_edit() {
     document.getElementById("firstname").disabled = true
     document.getElementById("lastname").disabled = true
     document.getElementById("nickname").disabled = true
-    document.getElementById("position").disabled = true
+    // document.getElementById("position").disabled = true
     document.getElementById("id_card").disabled = true
     document.getElementById("tel").disabled = true
     document.getElementById("email").disabled = true

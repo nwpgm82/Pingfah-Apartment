@@ -2,11 +2,12 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../../connection.php');
-    $room = $_POST['room'];
-    $type = $_POST['type'];
+    $room = $_POST['room_id'];
+    $type = $_POST['room_type'];
+    $cat = $_POST['room_cat'];
     // echo $room;
     // echo $type;
-    $sql = "INSERT INTO roomlist (room_id, room_type, room_status) VALUES ('$room', '$type', 'ว่าง')";
+    $sql = "INSERT INTO roomlist (room_id, room_type, room_cat, room_status) VALUES ('$room', '$type', '$cat', 'ว่าง')";
     $main_target = "../../../images/roommember/";
     $create = "../../../images/roommember/$room";
     if(!is_dir($main_target)){

@@ -1,0 +1,280 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(../fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+.box {
+    padding: 80px 0 0 260px;
+}
+
+.box-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 0.8fr;
+    column-gap: 16px;
+}
+
+.roomList-box {
+    width: 100%;
+    min-height: 800px;
+    padding: 36px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.hr {
+    margin: 16px auto 0px auto;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.4);
+}
+
+.roomList-box .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.roomList-box .header .addRoom {
+    display: flex;
+    align-items: center;
+}
+
+.roomList-box .addRoom .cancel-btn {
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
+}
+
+.roomList-box .addRoom .cancel-btn:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.roomList-box button {
+    width: 100%;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.roomList-box button:hover {
+    background-color: rgb(131, 120, 47, 1);
+}
+
+.roomList-box .checkbox-grid {
+    padding: 32px 0;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 8px;
+    row-gap: 32px;
+    align-items: center;
+}
+
+.roomList-box .checkbox-grid .sub-checkbox-grid {
+    display: grid;
+    grid-template-columns: 20px auto;
+    column-gap: 8px;
+    align-items: center;
+}
+
+.roomList-box .checkbox-grid input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.roomList-box table {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.roomList-box table tr {
+    height: 50px;
+}
+
+.roomList-box table th,
+.roomList-box table td {
+    border: 1px solid #ddd;
+    padding: 0 16px;
+    overflow: hidden;
+}
+
+.roomList-box table th {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: rgb(131, 120, 47, 0.7);
+}
+
+.roomList-box table th:nth-child(1) {
+    width: 20%;
+}
+
+.roomList-box table th:nth-child(2) {
+    width: 20%;
+}
+
+.roomList-box table th:nth-child(3) {
+    width: 20%;
+}
+
+.roomList-box table th:nth-child(4) {
+    width: 15%;
+}
+
+.roomList-box table th:nth-child(5) {
+    width: 25%;
+}
+
+.roomList-box table td a {
+    color: rgb(131, 120, 47, 0.7);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.roomList-box table td a:hover {
+    color: rgb(131, 120, 47, 1);
+}
+
+.roomList-box table td .status-available {
+    width: 36px;
+    height: 36px;
+    background-color: rgb(82, 185, 82);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin: auto;
+}
+
+.roomList-box table td .status-unavailable {
+    width: 36px;
+    height: 36px;
+    background-color: rgb(255, 70, 70);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    cursor: default;
+    margin: auto;
+}
+
+.roomList-box table td .edit-btn {
+    width: 40px;
+    padding: 0;
+    display: block;
+    margin: 0 8px;
+    background-image: url(../img/tool/edit-icon.png);
+    background-color: darkturquoise;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.roomList-box table td .edit-btn:hover {
+    background-color: rgb(0, 165, 165);
+}
+
+.roomList-box table td .del-btn {
+    width: 40px;
+    padding: 0;
+    display: block;
+    margin: 0 8px;
+    background-image: url(../img/tool/trash-icon.png);
+    background-color: rgb(255, 70, 70);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.roomList-box table td .del-btn:hover {
+    background-color: rgb(216, 40, 40);
+}
+
+.roomList-box .arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid rgb(131, 120, 47, 0.7);
+    margin-left: auto;
+    position: relative;
+    right: 42px;
+}
+
+.roomList-box .popover {
+    width: 500px;
+    padding: 16px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.roomList-box .popover .input-grid{
+    padding-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 8px;
+    row-gap: 16px;
+    align-items: flex-end;
+}
+.roomList-box select, .roomList-box input {
+    margin-top: 8px;
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.roomList-box select{
+    cursor: pointer;
+}
+
+.pagination {
+    padding: 32px 0;
+    display: inline-block;
+}
+
+.pagination a {
+    color: #fff;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    background-color: rgb(131, 120, 47, 0.5);
+}
+
+.pagination a.active {
+    background-color: rgb(131, 120, 47, 1);
+    color: #fff;
+    border: 1px solid rgb(131, 120, 47, 1);
+}
+
+.pagination a:hover:not(.active) {
+    background-color: rgb(131, 120, 47, 0.7);
+    border: 1px solid rgb(131, 120, 47, 0.7);
+}
