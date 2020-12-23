@@ -340,7 +340,7 @@ if($_SESSION["level"] == "admin"){
                         </div>
                         <div class="icon-grid">
                             <img src="../../../img/tool/calendar-icon.png" alt="">
-                            <p>ห้องพักรายวัน</p>
+                            <p>ห้องพักรายเดือน</p>
                         </div>
                     </div>
                     <div style="padding-top:32px;">
