@@ -6,6 +6,10 @@ if($_SESSION["level"] == "admin"){
     $check2 = @$_REQUEST['style'];
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
+    $people = @$_REQUEST['people'];
+    if($people > 8){
+        $people = 8;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -15,9 +19,10 @@ if($_SESSION["level"] == "admin"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/roomList2.css">
+    <link rel="stylesheet" href="../../../css/my-style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/roomList2.js"></script>
     <title>Document</title>
 </head>
@@ -144,12 +149,11 @@ if($_SESSION["level"] == "admin"){
                         while($row = $result->fetch_assoc()) {
                         ?>
                         <tr>
-                            <td><a
-                                    href="room_id.php?ID=<?php echo $row['room_id']; ?>"><?php echo $row["room_id"]; ?></a>
-                            </td>
+                            <td><a href="room_id.php?ID=<?php echo $row['room_id']; ?>"><?php echo $row["room_id"]; ?></a></td>
                             <td><?php echo $row["room_type"]; ?></td>
-                            <td><img src="<?php if($row['room_cat'] == 'รายวัน'){ echo '../../../img/tool/clock-icon.png'; }else if($row['room_cat'] == 'รายเดือน'){ echo '../../../img/tool/calendar-icon.png'; } ?>"
-                                    alt="category-icon"></td>
+                            <td>
+                                <img id="cat" src="<?php if($row['room_cat'] == 'รายวัน'){ echo '../../../img/tool/clock-icon.png'; }else if($row['room_cat'] == 'รายเดือน'){ echo '../../../img/tool/calendar-icon.png'; } ?>" alt="category-icon">
+                            </td>
                             <td><?php if($row["room_status"] == "ว่าง"){ echo "<div class='status-available'></div>"; }else{ echo "<div class='status-unavailable'></div>"; } ?>
                             </td>
                             <td>
@@ -270,41 +274,41 @@ if($_SESSION["level"] == "admin"){
                     }
                     ?>
                 </div>
-
-
-
                 <div class="roomList-box">
                     <h3>ค้นหาห้องพักที่ว่าง</h3>
                     <div class="hr"></div>
                     <div style="padding-top:32px;">
                         <div class="search">
-                            <div style="display:flex;align-items:center;">
-                                <p style="padding-right:8px;">ค้นหาตามวันที่</p>
-                                <div>
-                                    <input type="text" id="date_from">
+                            <div style="display:flex;align-items:flex-start;">
+                                <p style="padding:10px 8px 0 0;">ค้นหาตามวันที่</p>
+                                <div style="position:relative;">
+                                    <input type="text" id="date_from" class="roundtrip-input" value="<?php echo $from; ?>">
+                                    <p id="from_date" class="dateText"></p>
+                                    <h5 id="error-text" style="color:red;padding-top:4px;"></h5>
                                 </div>
-                                <label style="padding:0 8px;">~</label>
-                                <div>
-                                    <input type="text" id="date_to">
+                                <label style="padding:10px 8px 0 8px;">~</label>
+                                <div style="position:relative;">
+                                    <input type="text" id="date_to" class="roundtrip-input" value="<?php echo $to; ?>">
+                                    <p id="to_date" class="dateText"></p>
                                 </div>
+                                
                             </div>
-                            <div style="padding-top:20px;display:flex;align-items:center;">
-                                <label>จำนวนผู้พัก :</label>
-                                <input id="people" type="number" style="margin:0 8px;" min="1" max="10" value="1"
-                                    oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
-                                <label>(สูงสุด : 10)</label>
-                                <button>ค้นหา</button>
+                            <div style="padding-top:20px;display:flex;align-items:flex-start;">
+                                <label style="padding-top:8px;">จำนวนผู้พัก :</label>
+                                <div>
+                                    <input id="people" type="number" style="margin:0 8px;" min="1" max="8"
+                                    oninput="this.value = this.value > 8 ? 8 : Math.abs(this.value)" value="<?php echo $people; ?>" >
+                                    <h5 id="error-number" style="color:red;padding:4px 0 0 8px;"></h5>
+                                </div>
+                                
+                                <label style="padding-top:8px;">(สูงสุด : 8)</label>
+                                <button id="search_room" type="button">ค้นหา</button>
                             </div>
                         </div>
                         <div class="checkbox-grid">
                             <div class="sub-checkbox-grid">
-                                <input type="checkbox" name="" id="all_search"
-                                    <?php if($check2 == ""){ echo "checked"; }?>>
-                                <label>ทั้งหมด</label>
-                            </div>
-                            <div class="sub-checkbox-grid">
                                 <input type="checkbox" name="" id="daily_search"
-                                    <?php if($check2 == "daily"){ echo "checked"; }?>>
+                                    <?php if(!isset($check2) || $check2 == "daily"){ echo "checked"; }?>>
                                 <label>รายวัน</label>
                             </div>
                             <div class="sub-checkbox-grid">
@@ -314,18 +318,73 @@ if($_SESSION["level"] == "admin"){
                             </div>
                         </div>
                         <div>
+                            <?php
+                            $total_air_avai = 0;
+                            $total_fan_avai = 0;
+                            if(isset($from) && isset($to) && $check2 == "daily"){
+                                $count_all_dailyRoom = mysqli_query($conn, "SELECT SUM(room_type = 'แอร์') AS room_daily_air, SUM(room_type = 'พัดลม') AS room_daily_fan FROM roomlist WHERE room_status = 'ว่าง' AND room_cat = 'รายวัน' ");
+                                $result_all_dailyRoom = mysqli_fetch_assoc($count_all_dailyRoom);
+                                $count_daily = mysqli_query($conn, "SELECT SUM(air_room) AS daily_count_air, SUM(fan_room) AS daily_count_fan FROM daily WHERE (check_in BETWEEN '$from' AND '$to') OR (check_out BETWEEN '$from' AND '$to') OR ('$from' BETWEEN check_in AND check_out) OR ('$to' BETWEEN check_in AND check_out )");
+                                $result_daily = mysqli_fetch_assoc($count_daily);
+                                $total_air_avai = intval($result_all_dailyRoom["room_daily_air"]) - intval($result_daily["daily_count_air"]);
+                                $total_fan_avai = intval($result_all_dailyRoom["room_daily_fan"]) - intval($result_daily["daily_count_fan"]); 
+                                
+                            }else if(isset($from) && isset($to) && $check2 == "month"){
+                                $count_all_monthRoom = mysqli_query($conn, "SELECT SUM(room_type = 'แอร์') AS room_month_air, SUM(room_type = 'พัดลม') AS room_month_fan FROM roomlist WHERE room_status = 'ว่าง' AND room_cat = 'รายเดือน' ");
+                                $result_all_monthRoom = mysqli_fetch_assoc($count_all_monthRoom);
+                                $total_air_avai = intval($result_all_monthRoom["room_month_air"]);
+                                $total_fan_avai = intval($result_all_monthRoom["room_month_fan"]);
+                            }else{
+                                echo '<div style="padding-top:32px;">กรุณาคลิกปุ่ม "ค้นหา" เพื่อทำการค้นหาห้องว่าง</div>';
+                            }
+                            if($people <= ($total_air_avai + $total_fan_avai)*2){
+                                if($total_air_avai > 0 && $total_fan_avai > 0){
+                                    $get_room = "SELECT * FROM roomdetail ORDER BY type DESC";
+                                }else if($total_air_avai > 0 && $total_fan_avai <= 0){
+                                    $get_room = "SELECT * FROM roomdetail WHERE type = 'แอร์' ORDER BY type DESC";
+                                }else if($total_air_avai <= 0 && $total_fan_avai > 0){
+                                    $get_room = "SELECT * FROM roomdetail WHERE type = 'พัดลม' ORDER BY type DESC";
+                                }else{
+                                    // echo "<div style='padding-top:32px;'>ไม่มีห้องว่าง</div>";
+                                }
+                                if($total_air_avai > 0 || $total_fan_avai > 0){
+                                    $get_result = $conn->query($get_room);
+                                    if ($get_result->num_rows > 0) {
+                                        while($roomdetail = $get_result->fetch_assoc()) {
+                            ?>
                             <div class="card">
-                                <img src="../../../img/main_logo.png" alt="">
+                                <?php
+                                    if($roomdetail["type"] == "แอร์"){
+                                        $get_img = "SELECT * FROM air_gal LIMIT 1";
+                                    }else if($roomdetail["type"] == "พัดลม"){
+                                        $get_img = "SELECT * FROM fan_gal LIMIT 1";
+                                    }
+                                    $get_img_result = $conn->query($get_img);
+                                    if ($get_img_result->num_rows > 0) {
+                                        while($room_img = $get_img_result->fetch_assoc()) {
+                                ?>
+                                <img src="../../images/roomdetail/<?php if($roomdetail['type'] == 'แอร์'){ echo 'air'; }else if($roomdetail['type'] == 'พัดลม'){ echo 'fan'; } ?>/<?php echo $room_img['gal_name']; ?>" alt="">
+                                <?php } } ?>
                                 <div style="padding:16px;">
-                                    <h3>ห้องแอร์</h3>
+                                    <h3>ห้อง<?php echo $roomdetail['type']; ?></h3>
+                                    <div style="padding-top:16px;line-height:30px;">
+                                        <div class="user-grid">
+                                            <img src="../../../img/tool/user.png" alt="">
+                                            <label>2 คน</label>
+                                        </div>
+                                        <div class="room-text">
+                                            <div>
+                                                <p>รายวัน : <strong style="color:rgb(131, 120, 47, 1);"><?php echo number_format($roomdetail['daily_price']); ?></strong> บาท</p>
+                                                <p>รายเดือน : <strong style="color:rgb(131, 120, 47, 1);"><?php echo number_format($roomdetail['price']); ?></strong> บาท</p>
+                                            </div>
+                                            <div>
+                                                <p>จำนวนห้องพักคงเหลือ <?php if($roomdetail['type'] == 'แอร์'){ echo $total_air_avai; }else if($roomdetail['type'] == 'พัดลม'){ echo $total_fan_avai; } ?> ห้อง</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card">
-                                <img src="../../../img/main_logo.png" alt="">
-                                <div style="padding:16px;">
-                                    <h3>ห้องพัดลม</h3>
-                                </div>
-                            </div>
+                            <?php }}}}else{ echo "<div style='padding-top:32px;'>ไม่มีห้องว่าง</div>"; } ?>
                         </div>
                     </div>
                 </div>
