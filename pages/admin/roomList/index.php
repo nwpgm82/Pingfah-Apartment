@@ -18,7 +18,7 @@ if($_SESSION["level"] == "admin"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../css/roomList2.css">
+    <link rel="stylesheet" href="../../../css/roomList.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>

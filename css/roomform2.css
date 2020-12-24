@@ -1,0 +1,344 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(../fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+.box {
+    padding: 80px 0 0 260px;
+}
+
+.roomform-box {
+    width: 100%;
+    min-height: 800px;
+    padding: 36px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.hr {
+    margin: 16px auto 0px auto;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.7);
+    opacity: 0.5;
+}
+
+.roomform-box h2 {
+    margin-bottom: 16px;
+}
+
+.roomform-box .row {
+    display: flex;
+    padding-top: 32px;
+}
+
+.roomform-box .col-1 {
+    flex: 0 0 auto;
+    width: 8.333333%;
+}
+
+.roomform-box .col-2 {
+    flex: 0 0 auto;
+    width: 16.666667%;
+}
+
+.roomform-box .col-3 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+
+.roomform-box .col-4 {
+    flex: 0 0 auto;
+    width: 33.333333%;
+}
+
+.roomform-box .col-5 {
+    flex: 0 0 auto;
+    width: 41.666667%;
+}
+
+.roomform-box .col-6 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+
+.roomform-box .col-7 {
+    flex: 0 0 auto;
+    width: 58.333333%;
+}
+
+.roomform-box .col-8 {
+    flex: 0 0 auto;
+    width: 66.666667%;
+}
+
+.roomform-box .col-9 {
+    flex: 0 0 auto;
+    width: 75%;
+}
+
+.roomform-box .col-10 {
+    flex: 0 0 auto;
+    width: 83.333333%;
+}
+
+.roomform-box .col-11 {
+    flex: 0 0 auto;
+    width: 91.666667%;
+}
+
+.roomform-box .col-12 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.roomform-box select {
+    margin-top: 8px;
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.roomform-box .select-box,
+.roomform-box .input-box {
+    padding-right: 8px;
+}
+
+.roomform-box input[type="text"],
+.roomform-box input[type="date"] {
+    margin-top: 8px;
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.roomform-box input#birthday,
+.roomform-box input#birthday2,.roomform-box input#come,.roomform-box input#come2 {
+    color: transparent;
+    background-color: transparent;
+    background-image: url("../img/tool/calendar.png");
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 96% 50%;
+    cursor: pointer;
+}
+
+.roomform-box input#birthday:disabled,
+.roomform-box input#birthday2:disabled,
+.roomform-box input#come:disabled,
+.roomform-box input#come2:disabled {
+    background-color: #fafafa;
+    cursor: default;
+}
+
+.roomform-box .dateText {
+    position: absolute;
+    top: 9px;
+    left: 14px;
+    width: 245px;
+    height: 38px;
+    display: flex;
+    align-items: center;   
+    cursor: default;
+}
+
+.roomform-box .dateText#birth_date,
+.roomform-box .dateText#birth_date2{
+    background-color: #fafafa;
+}
+
+.roomform-box textarea {
+    margin-top: 8px;
+    width: 100%;
+    height: 80px;
+    padding: 8px 12px;
+    resize: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    outline: none;
+    transition: 0.3s;
+}
+
+.roomform-box select:hover,
+.roomform-box input[type="text"]:hover,
+.roomform-box input[type="date"]:hover,
+.roomform-box select:focus,
+.roomform-box input[type="text"]:focus,
+.roomform-box input[type="date"]:focus,
+.roomform-box textarea:hover,
+.roomform-box textarea:focus {
+    border: 1px solid rgb(131, 120, 47, 1);
+}
+
+.roomform-box button {
+    width: 80px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.roomform-box button:hover {
+    background-color: rgb(131, 120, 47, 1);
+}
+
+.roomform-box .confirm {
+    margin: 0px 8px;
+}
+
+.roomform-box .delData {
+    /* margin: 0px 8px; */
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(255, 70, 70);
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.roomform-box .delData:hover,
+.roomform-box form .grid .del-btn:hover {
+    background-color: rgb(216, 40, 40);
+}
+
+.roomform-box .edit-btn {
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: darkturquoise;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.roomform-box .edit-btn:hover {
+    background-color: rgb(0, 165, 165);
+}
+
+.roomform-box form .grid {
+    display: grid;
+    grid-template-columns: 750px 750px;
+    grid-gap: 16px;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.roomform-box form input[type="file"] {
+    padding-top: 16px;
+    width: 100%;
+}
+
+.roomform-box form .grid .img-box img {
+    max-width: 100%;
+    height: 500px;
+    display: block;
+    margin: auto;
+    object-fit: cover;
+    /* border-radius: 4px; */
+}
+
+.roomform-box form .grid .img-box {
+    margin-top: 8px;
+    width: 100%;
+    height: 500px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.roomform-box form .grid .del-btn {
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    background-color: rgb(255, 70, 70);
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+hr {
+    margin: 32px 0;
+    opacity: 0.5;
+}
+
+@media screen and (max-width: 1199px) {
+    .roomform-box {
+        min-height: 100%;
+        padding: 24px;
+    }
+
+    .roomList-box table {
+        width: 100%;
+    }
+
+    .roomform-box .select-box,
+    .roomform-box .input-box {
+        padding-right: 6px;
+    }
+
+    .roomform-box input,
+    .roomform-box select {
+        padding: 0 8px;
+    }
+
+    .roomform-box input[type="file"] {
+        width: 50%;
+    }
+
+    .roomform-box p {
+        font-size: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .box {
+        padding: 80px 0 0 200px;
+    }
+}
