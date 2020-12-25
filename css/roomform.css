@@ -72,6 +72,7 @@
 
 .come {
     grid-area: come;
+    height: 86px;
 }
 
 /* .out {
@@ -80,54 +81,67 @@
 
 .status {
     grid-area: status;
+    height: 86px;
 }
 
 .title_name {
     grid-area: title_name;
+    height: 86px;
 }
 
 .firstname {
     grid-area: firstname;
+    height: 86px;
 }
 
 .lastname {
     grid-area: lastname;
+    height: 86px;
 }
 
 .nickname {
     grid-area: nickname;
+    height: 86px;
 }
 
 .id_card {
     grid-area: id_card;
+    height: 86px;
 }
 
 .birthday {
     grid-area: birthday;
+    height: 86px;
 }
 
 .phone {
     grid-area: phone;
+    height: 86px;
 }
 
 .age {
     grid-area: age;
+    height: 86px;
 }
 
 .email {
     grid-area: email;
+    height: 86px;
 }
 
 .race {
     grid-area: race;
+    height: 86px;
 }
 
 .nationality {
     grid-area: nationality;
+    height: 86px;
 }
 
 .job {
     grid-area: job;
+    height: 86px;
 }
 
 .roomform-box input:not([type=file]),
@@ -181,4 +195,8 @@
     height: 400px;
     border: 1px solid rgb(131, 120, 47, 0.5);
     border-radius: 4px;
+}
+
+.roomform-box .placeholder-error::-webkit-input-placeholder {
+    color: red
 }
