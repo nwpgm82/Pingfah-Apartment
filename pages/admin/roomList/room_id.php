@@ -3,8 +3,12 @@ session_start();
 if($_SESSION["level"] == "admin"){
     include("../../connection.php");
     $room_id = $_REQUEST["ID"];
-    $sql = "SELECT * FROM roommember WHERE room_id = '$room_id'";
-
+    $sql = "SELECT * FROM roommember WHERE room_id = '$room_id' LIMIT 1";
+    $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
+    $row = mysqli_fetch_array($result);
+    if($row != null){
+    extract($row);
+    }    
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +31,7 @@ if($_SESSION["level"] == "admin"){
     <div class="box">
         <div style="padding:24px;">
             <div class="roomform-box">
+                <?php if($row == null){ ?>
                 <div class="new_customer">
                     <div>
                         <h3>ห้อง <?php echo $room_id; ?> ยังว่างอยู่ ต้องการเพิ่มข้อมูลผู้พักใช่หรือไม่ ?</h3>
@@ -35,14 +40,16 @@ if($_SESSION["level"] == "admin"){
                         </div>
                     </div>
                 </div>
-                <div id="form-box" style="display:none;">
-                    <form action="function/addData.php?ID=<?php echo $room_id; ?>" method="POST" enctype="multipart/form-data">
+                <?php } ?>
+                <div id="form-box" <?php if($row == null){ echo "style='display:none;'"; }?> >
+                    <form action="function/addData.php?ID=<?php echo $room_id; ?>" method="POST"
+                        enctype="multipart/form-data">
                         <h3>ห้อง <?php echo $room_id; ?></h3>
                         <div class="hr"></div>
                         <div class="grid-container">
-                            <div class="come">
+                            <div class="come" style="position:relative;">
                                 <p>วันที่เริ่มเข้าพัก</p>
-                                <input type="text" name="come" id="come_date">
+                                <input type="text" name="come" id="come_date" placeholder="วันที่เริ่มเข้าพัก">
                                 <h5 id="come_error" style="color:red;"></h5>
                             </div>
                             <!-- <div class="status">
@@ -74,17 +81,20 @@ if($_SESSION["level"] == "admin"){
                             </div>
                             <div class="id_card">
                                 <p>เลขบัตรประชาชน / Passport No.</p>
-                                <input type="text" name="id_card" id="id_card" placeholder="เลขบัตรประชาชน / Passport No." maxlength="13">
+                                <input type="text" name="id_card" id="id_card"
+                                    placeholder="เลขบัตรประชาชน / Passport No." maxlength="13">
                                 <h5 id="id_error" style="color:red;"></h5>
                             </div>
                             <div class="birthday">
                                 <p>วัน / เดือน / ปีเกิด</p>
-                                <input type="text" name="birthday" id="birthday">
+                                <input type="text" name="birthday" id="birthday" placeholder="วัน / เดือน / ปีเกิด">
                                 <h5 id="bd_error" style="color:red;"></h5>
                             </div>
                             <div class="age">
                                 <p>อายุ</p>
-                                <input type="number" name="age" id="age" min="23" max="60" oninput="this.value = this.value > 60 ? 60 : Math.abs(this.value)" placeholder="อายุ" readonly>
+                                <input type="number" name="age" id="age" min="23" max="60"
+                                    oninput="this.value = this.value > 60 ? 60 : Math.abs(this.value)"
+                                    placeholder="อายุ" readonly>
                                 <h5 id="ag_error" style="color:red;"></h5>
                             </div>
                             <div class="phone">
@@ -125,7 +135,7 @@ if($_SESSION["level"] == "admin"){
                                 <div>
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box" id="id_box">
-
+                                        <img src="" id="img_id" alt="">
                                     </div>
                                     <h5 id="idimg_error" style="color:red;"></h5>
                                     <input type="file" name="id_img" id="id_img">
@@ -133,7 +143,7 @@ if($_SESSION["level"] == "admin"){
                                 <div>
                                     <p>สำเนาทะเบียนบ้าน</p>
                                     <div class="img-box" id="home_box">
-
+                                        <img src="" id="img_home" alt="">
                                     </div>
                                     <h5 id="homeimg_error" style="color:red;"></h5>
                                     <input type="file" name="home_img" id="home_img">

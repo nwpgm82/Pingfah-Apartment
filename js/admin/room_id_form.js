@@ -15,12 +15,61 @@ $(document).ready(function () {
     let address = $("#address")
     let id_img = $("#id_img")
     let home_img = $("#home_img")
+
+    function BasicDate(date) {
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1
+        let day = date.getDate()
+        if (day < 10) {
+            day = "0" + day.toString()
+        }
+        if (month < 10) {
+            month = "0" + month.toString()
+        }
+        return year + "-" + month + "-" + day
+    }
+
+    function get_age(born, now) {
+        let birthday = new Date(now.getFullYear(), born.getMonth(), born.getDate());
+        if (now >= birthday) {
+            return now.getFullYear() - born.getFullYear();
+        } else {
+            return now.getFullYear() - born.getFullYear() - 1;
+        }
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img_id').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+            case 'pdf':
+            case 'png':
+                //etc
+                return true;
+        }
+        return false;
+    }
     $("#add-btn").click(function () {
         $(".new_customer").remove()
         $("#form-box").show()
     })
     come.dateDropper({
-        format: "Y-m-d",
+        format: "d M Y",
         lang: "th",
         theme: "my-style",
         large: true,
@@ -28,6 +77,15 @@ $(document).ready(function () {
         largeOnly: true,
         lock: "to"
     });
+    birthday.dateDropper({
+        format: "d M Y",
+        lang: "th",
+        theme: "my-style",
+        large: true,
+        largeDefault: true,
+        largeOnly: true,
+        lock: "to"
+    })
     come.change(function () {
         if (come.val() == "") {
             come.css("border-color", "red")
@@ -74,12 +132,7 @@ $(document).ready(function () {
             $("#nk_error").html("")
         }
     })
-    id_card.keyup(function (event) {
-        // if (event.which !== 8 && event.which !== 0 && event.which < 48 || event.which > 57) {
-        //     $(this).val(function (index, value) {
-        //         return value.replace(/\D/g, "");
-        //     });
-        // }
+    id_card.keyup(function () {
         if (id_card.val() == "") {
             id_card.css("border-color", "red")
             id_card.addClass("placeholder-error")
@@ -90,15 +143,40 @@ $(document).ready(function () {
             $("#id_error").html("")
         }
     });
-    birthday.keyup(function () {
+    birthday.change(function () {
         if (birthday.val() == "") {
             birthday.css("border-color", "red")
+            birthday.css("background-image", "url('../../../img/tool/calendar-error.png')")
             birthday.addClass("placeholder-error")
             $("#bd_error").html("โปรดระบุวันเกิดของผู้เข้าพัก")
         } else {
             birthday.css("border-color", "")
+            birthday.css("background-image", "")
             birthday.removeClass("placeholder-error")
             $("#bd_error").html("")
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let birth = birthday.val()
+            birth = birth.split(" ")
+            birth[1] = search.findIndex(el => el === birth[1])
+            birth[1] = replace[birth[1]]
+            birth = birth.join(" ")
+            birth = BasicDate(new Date(birth))
+            let now = new Date()
+            let birthdate = birth.split("-")
+            let born = new Date(birthdate[0], birthdate[1] - 1, birthdate[2])
+            age.val(get_age(born, now))
+            if (age.val() == "" || age.val() == "0") {
+                age.css("border-color", "red")
+                age.css("color", "red")
+                age.addClass("placeholder-error")
+                $("#ag_error").html("โปรดระบุวันเกิดของผู้เข้าพัก")
+            } else {
+                age.css("border-color", "")
+                age.css("color", "")
+                age.removeClass("placeholder-error")
+                $("#ag_error").html("")
+            }
         }
     })
     tel.keyup(function (event) {
@@ -179,16 +257,61 @@ $(document).ready(function () {
             $("#ad_error").html("")
         }
     })
+    id_img.change(function () {
+        if (id_img.val() == "") {
+            $("#id_box").css("border-color", "red")
+            $("#idimg_error").html("โปรดเพิ่มรูปภาพสำเนาบัตรประชาชน")
+        } else if (isImage(id_img.val()) == false) {
+            $("#id_box").css("border-color", "red")
+            $("#idimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png เท่านั้น")
+            id_img.val("")
+        } else {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#img_id').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]); // convert to base64 string
+            }
+            $("#id_box").css("border-color", "")
+            $("#idimg_error").html("")
+        }
+    })
+    home_img.change(function () {
+        if (home_img.val() == "") {
+            $("#home_box").css("border-color", "red")
+            $("#homeimg_error").html("โปรดเพิ่มรูปภาพสำเนาทะเบียนบ้าน")
+        } else if (isImage(home_img.val()) == false) {
+            $("#home_box").css("border-color", "red")
+            $("#homeimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png เท่านั้น")
+            id_img.val("")
+        } else {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#img_home').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]); // convert to base64 string
+            }
+            $("#home_box").css("border-color", "")
+            $("#homeimg_error").html("")
+        }
+    })
     $("button[type=submit]").click(function (event) {
         var inputs = $("input");
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         inputs.each(function () {
-            if ($(this).val() == "") {
+            if ($(this).val() == "" || $(this).val() == 0) {
                 if ($(this).attr("id") == "come_date") {
                     $(this).css("border-color", "red")
                     $(this).css("background-image", "url('../../../img/tool/calendar-error.png')")
                     $(this).addClass("placeholder-error")
                     $("#come_error").html("โปรดระบุวันที่เริ่มเข้าพักของผู้เข้าพัก")
+                } else if ($(this).attr("id") == "birthday") {
+                    $(this).css("border-color", "red")
+                    $(this).css("background-image", "url('../../../img/tool/calendar-error.png')")
+                    $(this).addClass("placeholder-error")
+                    $("#bd_error").html("โปรดระบุวันเกิดของผู้เข้าพัก")
                 } else if ($(this).attr("id") == "id_img") {
                     $("#id_box").css("border-color", "red")
                     $("#idimg_error").html("โปรดเพิ่มรูปภาพสำเนาบัตรประชาชน")
@@ -206,10 +329,9 @@ $(document).ready(function () {
                         $("#nk_error").html("โปรดระบุชื่อเล่นของผู้เข้าพัก")
                     } else if ($(this).attr("id") == "id_card") {
                         $("#id_error").html("โปรดระบุเลขบัตรประชาชน หรือ Passport No.")
-                    } else if ($(this).attr("id") == "birthday") {
-                        $("#bd_error").html("โปรดระบุวันเกิดของผู้เข้าพัก")
                     } else if ($(this).attr("id") == "age") {
                         $("#ag_error").html("โปรดระบุอายุของผู้เข้าพัก")
+                        age.css("color", "red")
                     } else if ($(this).attr("id") == "tel") {
                         $("#tel_error").html("โปรดระบุเบอร์โทรศัพท์ของผู้เข้าพัก")
                     } else if ($(this).attr("id") == "email") {
