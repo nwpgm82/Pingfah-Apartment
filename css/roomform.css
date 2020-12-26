@@ -25,6 +25,32 @@
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
+.roomform-box .edit-btn {
+    width: 40px;
+    padding: 0;
+    background-image: url(../img/tool/edit-icon.png);
+    background-color: darkturquoise;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.roomform-box .edit-btn:hover {
+    background-color: rgb(0, 165, 165);
+}
+
+.roomform-box .del-btn {
+    width: 40px;
+    padding: 0;
+    background-image: url(../img/tool/trash-icon.png);
+    background-color: rgb(255, 70, 70);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.roomform-box .del-btn:hover {
+    background-color: rgb(216, 40, 40);
+}
+
 .hr {
     margin: 16px auto 0px auto;
     border-bottom: 1px solid rgb(131, 120, 47, 0.7);
@@ -169,6 +195,10 @@
     cursor: pointer;
 }
 
+.roomform-box input#come_date:disabled,.roomform-box input#birthday:disabled{
+    cursor: default;
+}
+
 .roomform-box textarea {
     margin-top: 8px;
     width: 100%;
@@ -195,6 +225,7 @@
     height: 400px;
     border: 1px solid rgb(131, 120, 47, 0.5);
     border-radius: 4px;
+    overflow: hidden;
 }
 
 .roomform-box .img-grid .img-box img{
