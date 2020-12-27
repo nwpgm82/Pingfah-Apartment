@@ -50,15 +50,21 @@ if($_SESSION["level"] == "admin"){
                 </div>
                 <?php } ?>
                 <div id="form-box" <?php if($row == null){ echo "style='display:none;'"; }?> >
-                    <form action="function/addData.php?ID=<?php echo $room_id; ?>" method="POST"
+                    <form action="function/action.php?ID=<?php echo $room_id; ?>" method="POST"
                         enctype="multipart/form-data">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
                            <h3>ห้อง <?php echo $room_id; ?></h3>
-                           <div style="width:160px;display:flex;justify-content:space-between;align-items:center;">
-                                <button>Quit</button>
-                                <button class="edit-btn"></button>
-                                <button class="del-btn"></button>
+                           <?php if($row != null){ ?>
+                           <div id="option-btn" style="width:160px;display:flex;justify-content:space-between;align-items:center;">
+                                <button type="submit" class="quit-btn" id="quit" name="quit" title="แจ้งออก"></button>
+                                <button type="button" class="edit-btn" id="edit" title="แก้ไข"></button>
+                                <button type="submit" class="del-btn" id="del_data" name="del_data" title="ลบข้อมูล"></button>
                            </div> 
+                           <div id="edit-option" style="width:95px;display:none;justify-content:space-between;align-items:center;">
+                                <button type="submit" class="correct-btn" id="accept-edit" name="accept-edit" title="ยืนยันการแก้ไข"></button>
+                                <button type="button" class="cancel-btn" id="cancel-edit" title="ยกเลิกการแก้ไข"></button>
+                           </div>
+                           <?php } ?>
                         </div>
                         <div class="hr"></div>
                         <div class="grid-container">
@@ -107,9 +113,9 @@ if($_SESSION["level"] == "admin"){
                             </div>
                             <div class="age">
                                 <p>อายุ</p>
-                                <input type="number" name="age" id="age" min="23" max="60"
+                                <input type="number" name="age" id="age"
                                     oninput="this.value = this.value > 60 ? 60 : Math.abs(this.value)"
-                                    placeholder="อายุ" value="<?php if($row != null){ echo $age; }?>" readonly>
+                                    placeholder="อายุ" value="<?php if($row != null){ echo $age; }?>" <?php if($row != null){ echo "disabled"; }else{ echo "readonly"; } ?> >
                                 <h5 id="ag_error" style="color:red;"></h5>
                             </div>
                             <div class="phone">
@@ -150,25 +156,31 @@ if($_SESSION["level"] == "admin"){
                                 <div>
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box" id="id_box">
-                                        <img <?php if($row != null){ echo "src='../../images/roommember/$room_id/$come_date/$pic_idcard'"; } ?> id="img_id" alt="">
+                                        <img <?php if($row != null && $pic_idcard != ""){ echo "src='../../images/roommember/$room_id/$come_date/$pic_idcard'"; } ?> id="img_id" alt="" <?php if($row == null || $pic_idcard == ""){ echo "style='display:none;'"; }?> >
+                                        <?php if($row != null && $pic_idcard != ""){ ?>
+                                        <button type="submit" id="del-idimg" class="delimg-btn" name="del-idimg" style="display:none;"></button>
+                                        <?php } ?>
                                     </div>
                                     <h5 id="idimg_error" style="color:red;"></h5>
                                     <?php
                                     if($row == null || $pic_idcard == ""){
                                     ?>
-                                    <input type="file" name="id_img" id="id_img">
+                                    <input type="file" name="id_img" id="id_img" <?php if($row != null){ echo "disabled"; } ?> >
                                     <?php } ?>
                                 </div>
                                 <div>
                                     <p>สำเนาทะเบียนบ้าน</p>
                                     <div class="img-box" id="home_box">
-                                        <img <?php if($row != null){ echo "src='../../images/roommember/$room_id/$come_date/$pic_home'"; } ?> id="img_home" alt="">
+                                        <img <?php if($row != null && $pic_home != ""){ echo "src='../../images/roommember/$room_id/$come_date/$pic_home'"; } ?> id="img_home" alt="" <?php if($row == null || $pic_home == ""){ echo "style='display:none;'"; }?> >
+                                        <?php if($row != null && $pic_home != ""){ ?>
+                                        <button type="submit" id="del-homeimg" class="delimg-btn" name="del-homeimg" style="display:none;"></button>
+                                        <?php } ?>
                                     </div>
                                     <h5 id="homeimg_error" style="color:red;"></h5>
                                     <?php
                                     if($row == null || $pic_home == ""){
                                     ?>
-                                    <input type="file" name="home_img" id="home_img">
+                                    <input type="file" name="home_img" id="home_img" <?php if($row != null){ echo "disabled"; } ?>>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -178,7 +190,7 @@ if($_SESSION["level"] == "admin"){
                         ?>
                         <div class="hr"></div>
                         <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
-                            <button type="submit" name="addData-btn" >เพิ่มผู้พัก</button>
+                            <button type="submit" name="addData-btn" id="addData-btn" >เพิ่มผู้พัก</button>
                         </div>
                         <?php } ?>
                     </form>

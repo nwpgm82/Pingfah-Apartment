@@ -38,16 +38,6 @@ $(document).ready(function () {
         }
     }
 
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#img_id').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
-        }
-    }
-
     function getExtension(filename) {
         var parts = filename.split('.');
         return parts[parts.length - 1];
@@ -263,18 +253,25 @@ $(document).ready(function () {
             $("#idimg_error").html("โปรดเพิ่มรูปภาพสำเนาบัตรประชาชน")
         } else if (isImage(id_img.val()) == false) {
             $("#id_box").css("border-color", "red")
-            $("#idimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png เท่านั้น")
+            $("#idimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 1 MB เท่านั้น")
             id_img.val("")
         } else {
             if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#img_id').attr('src', e.target.result);
+                if (this.files[0].size < 1048576) {
+                    $("#img_id").show()
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#img_id').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]); // convert to base64 string
+                    $("#id_box").css("border-color", "")
+                    $("#idimg_error").html("")
+                } else {
+                    $("#id_box").css("border-color", "red")
+                    $("#idimg_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 1 MB)")
+                    id_img.val("")
                 }
-                reader.readAsDataURL(this.files[0]); // convert to base64 string
             }
-            $("#id_box").css("border-color", "")
-            $("#idimg_error").html("")
         }
     })
     home_img.change(function () {
@@ -283,22 +280,29 @@ $(document).ready(function () {
             $("#homeimg_error").html("โปรดเพิ่มรูปภาพสำเนาทะเบียนบ้าน")
         } else if (isImage(home_img.val()) == false) {
             $("#home_box").css("border-color", "red")
-            $("#homeimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png เท่านั้น")
-            id_img.val("")
+            $("#homeimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 1 MB เท่านั้น")
+            home_img.val("")
         } else {
             if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#img_home').attr('src', e.target.result);
+                if (this.files[0].size < 1048576) {
+                    $("#img_home").show()
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#img_home').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]); // convert to base64 string
+                    $("#home_box").css("border-color", "")
+                    $("#homeimg_error").html("")
+                }else{
+                    $("#home_box").css("border-color", "red")
+                    $("#homeimg_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 1 MB)")
+                    home_img.val("")
                 }
-                reader.readAsDataURL(this.files[0]); // convert to base64 string
             }
-            $("#home_box").css("border-color", "")
-            $("#homeimg_error").html("")
         }
     })
-    $("button[type=submit]").click(function (event) {
-        var inputs = $("input");
+    $("#addData-btn").click(function (event) {
+        let inputs = $("input");
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         inputs.each(function () {
             if ($(this).val() == "" || $(this).val() == 0) {
@@ -357,6 +361,140 @@ $(document).ready(function () {
             address.css("border-color", "red")
             address.addClass("placeholder-error")
             $("#ad_error").html("โปรดระบุที่อยู่ของผู้เข้าพัก")
+            event.preventDefault()
+        }
+    })
+    $("#edit").click(function () {
+        $("#option-btn").hide()
+        $("#title_name").prop("disabled", false)
+        let inputs = $("input")
+        inputs.each(function (i) {
+            if (i == 0) {
+                return true
+            } else if ($(this).attr("id") == "age") {
+                $(this).prop("disabled", false)
+                $(this).prop("readonly", true)
+            } else {
+                $(this).prop("disabled", false)
+            }
+        })
+        address.prop("disabled", false)
+        $("#edit-option").css("display", "flex")
+        $("#del-idimg").show()
+        $("#del-homeimg").show()
+    })
+    $("#accept-edit").click(function (event) {
+        if (confirm("คุณต้องการบันทึกการแก้ไขนี้ใช่หรือไม่")) {
+            let inputs = $("input");
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            inputs.each(function () {
+                if ($(this).val() == "" || $(this).val() == 0) {
+                    if ($(this).attr("id") == "come_date") {
+                        $(this).css("border-color", "red")
+                        $(this).css("background-image", "url('../../../img/tool/calendar-error.png')")
+                        $(this).addClass("placeholder-error")
+                        $("#come_error").html("โปรดระบุวันที่เริ่มเข้าพักของผู้เข้าพัก")
+                    } else if ($(this).attr("id") == "birthday") {
+                        $(this).css("border-color", "red")
+                        $(this).css("background-image", "url('../../../img/tool/calendar-error.png')")
+                        $(this).addClass("placeholder-error")
+                        $("#bd_error").html("โปรดระบุวันเกิดของผู้เข้าพัก")
+                    } else if ($(this).attr("id") == "id_img") {
+                        $("#id_box").css("border-color", "red")
+                        $("#idimg_error").html("โปรดเพิ่มรูปภาพสำเนาบัตรประชาชน")
+                    } else if ($(this).attr("id") == "home_img") {
+                        $("#home_box").css("border-color", "red")
+                        $("#homeimg_error").html("โปรดเพิ่มรูปภาพสำเนาทะเบียนบ้าน")
+                    } else {
+                        $(this).css("border-color", "red")
+                        $(this).addClass("placeholder-error")
+                        if ($(this).attr("id") == "firstname") {
+                            $("#fs_error").html("โปรดระบุชื่อของผู้เข้าพัก")
+                        } else if ($(this).attr("id") == "lastname") {
+                            $("#ls_error").html("โปรดระบุนามสกุลของผู้เข้าพัก")
+                        } else if ($(this).attr("id") == "nickname") {
+                            $("#nk_error").html("โปรดระบุชื่อเล่นของผู้เข้าพัก")
+                        } else if ($(this).attr("id") == "id_card") {
+                            $("#id_error").html("โปรดระบุเลขบัตรประชาชน หรือ Passport No.")
+                        } else if ($(this).attr("id") == "age") {
+                            $("#ag_error").html("โปรดระบุอายุของผู้เข้าพัก")
+                            age.css("color", "red")
+                        } else if ($(this).attr("id") == "tel") {
+                            $("#tel_error").html("โปรดระบุเบอร์โทรศัพท์ของผู้เข้าพัก")
+                        } else if ($(this).attr("id") == "email") {
+                            $("#em_error").html("โปรดระบุอีเมล")
+                        } else if ($(this).attr("id") == "race") {
+                            $("#rc_error").html("โปรดระบุเชื้อชาติของผู้เข้าพัก")
+                        } else if ($(this).attr("id") == "nation") {
+                            $("#na_error").html("โปรดระบุสัญชาติของผู้เข้าพัก")
+                        } else if ($(this).attr("id") == "job") {
+                            $("#job_error").html("โปรดระบุอาชีพของผู้เข้าพัก")
+                        }
+                    }
+                    event.preventDefault()
+                }
+            })
+            if (email.val() != "") {
+                if (!re.test(String(email.val()))) {
+                    $("#em_error").html("รูปแบบไม่ตรงกัน")
+                    event.preventDefault()
+                }
+            }
+            if (address.val() == "") {
+                address.css("border-color", "red")
+                address.addClass("placeholder-error")
+                $("#ad_error").html("โปรดระบุที่อยู่ของผู้เข้าพัก")
+                event.preventDefault()
+            }
+        } else {
+            event.preventDefault()
+        }
+
+    })
+    $("#cancel-edit").click(function () {
+        $("#option-btn").show()
+        $("#title_name").prop("disabled", true)
+        let inputs = $("input")
+        inputs.each(function (i) {
+            if (i == 0) {
+                return 0
+            } else if ($(this).attr("id") == "age") {
+                $(this).prop("disabled", true)
+                $(this).prop("readonly", false)
+            } else {
+                $(this).prop("disabled", true)
+            }
+        })
+        address.prop("disabled", true)
+        $("#edit-option").hide()
+        $("#del-idimg").hide()
+        $("#del-homeimg").hide()
+    })
+    $("#del-idimg").click(function (event) {
+        if (confirm("คุณต้องการลบรูปภาพใช่หรือไม่ ?")) {
+            $("#form-box").submit()
+        } else {
+            event.preventDefault()
+        }
+    })
+    $("#del-homeimg").click(function (event) {
+        if (confirm("คุณต้องการลบรูปภาพใช่หรือไม่ ?")) {
+            $("#form-box").submit()
+        } else {
+            event.preventDefault()
+        }
+    })
+    $("#del_data").click(function (event) {
+        if (confirm("คุณต้องการลบข้อมูลใช่หรือไม่")) {
+            $("#form-box").submit()
+        } else {
+            event.preventDefault()
+        }
+    })
+    $("#quit").click(function (event) {
+        if (confirm("คุณต้องการแจ้งออกใช่หรือไม่")) {
+            $("#form-box").submit()
+        } else {
             event.preventDefault()
         }
     })

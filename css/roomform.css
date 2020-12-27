@@ -51,6 +51,62 @@
     background-color: rgb(216, 40, 40);
 }
 
+.roomform-box .quit-btn{
+    width: 50px;
+    padding: 0;
+    background-image: url(../img/tool/quit-icon.png);
+    background-size: 30px;
+    background-color: #8c8c8c;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.roomform-box .quit-btn:hover{
+    background-color: #7d7d7d;
+}
+
+.roomform-box .correct-btn{
+    width: 40px;
+    padding: 0;
+    background-image: url(../img/tool/correct-icon.png);
+    background-color: #88BC45;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.roomform-box .correct-btn:hover{
+    background-color: #719c39;
+}
+
+.roomform-box .cancel-btn {
+    width: 40px;
+    padding: 0;
+    background-image: url(../img/tool/cancel-icon.png);
+    background-color: rgb(255, 70, 70);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.roomform-box .cancel-btn:hover {
+    background-color: rgb(216, 40, 40);
+}
+
+.roomform-box .delimg-btn{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 40px;
+    padding: 0;
+    background-image: url(../img/tool/trash-icon.png);
+    background-color: rgb(255, 70, 70);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.roomform-box .delimg-btn:hover {
+    background-color: rgb(216, 40, 40);
+}
+
 .hr {
     margin: 16px auto 0px auto;
     border-bottom: 1px solid rgb(131, 120, 47, 0.7);
@@ -220,6 +276,7 @@
 }
 
 .roomform-box .img-grid .img-box {
+    position: relative;
     margin: 8px 0;
     width: 100%;
     height: 400px;
