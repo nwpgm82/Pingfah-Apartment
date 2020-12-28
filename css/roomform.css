@@ -25,6 +25,34 @@
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
+.roomform-box .option-grid{
+    display: grid;
+    grid-template-columns: auto 40px 40px 40px;
+    column-gap: 8px;
+    grid-template-areas:
+    "plus quit edit del"
+    ". . . ."
+    ". . . .";
+}
+
+.plus { grid-area: plus; }
+.quit { grid-area: quit; }
+.edit { grid-area: edit; }
+.del { grid-area: del; }
+
+.roomform-box a{
+    height: 40px;
+}
+
+.roomform-box .plus-btn{
+    width: 40px;
+    padding: 0;
+    background-image: url(../img/tool/plus-icon.png);
+    background-color:#88BC45;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .roomform-box .edit-btn {
     width: 40px;
     padding: 0;
@@ -52,7 +80,7 @@
 }
 
 .roomform-box .quit-btn{
-    width: 50px;
+    width: 40px;
     padding: 0;
     background-image: url(../img/tool/quit-icon.png);
     background-size: 30px;
@@ -74,7 +102,7 @@
     background-position: center;
 }
 
-.roomform-box .correct-btn:hover{
+.roomform-box .plus-btn:hover,.roomform-box .correct-btn:hover{
     background-color: #719c39;
 }
 
