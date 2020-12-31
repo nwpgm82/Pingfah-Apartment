@@ -52,7 +52,7 @@ if($_SESSION["level"] == "admin"){
             } 
             if(is_dir($roommember_folder_path) && is_dir($room_folder) && is_dir($come_folder)){
                 if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $id_target) && move_uploaded_file($_FILES["home_img"]["tmp_name"], $home_target)){
-                    $addData = "INSERT INTO roommember (room_id, come_date, member_status, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, people) VALUES ('$room_id','$come','กำลังเข้าพัก','$title_name','$firstname', '$lastname', '$nickname', '$id_card', '$tel', '$email', '$birthday' , $age, '$race', '$nation', '$job', '$address', '$id_img', '$home_img', 1)";
+                    $addData = "INSERT INTO roommember (room_id, come_date, member_cat, member_status, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, people) VALUES ('$room_id','$come','รายเดือน','กำลังเข้าพัก','$title_name','$firstname', '$lastname', '$nickname', '$id_card', '$tel', '$email', '$birthday' , $age, '$race', '$nation', '$job', '$address', '$id_img', '$home_img', 1)";
                     $change_status = "UPDATE roomlist SET room_status = 'ไม่ว่าง' WHERE room_id = '$room_id' ";
                     if($conn->query($addData) === TRUE && $conn->query($change_status) === TRUE){
                         echo "<script>";
@@ -117,16 +117,16 @@ if($_SESSION["level"] == "admin"){
         $homeimg_path = "../../../images/roommember/$room_id/".$result_search["come_date"]."/".basename($home_img);
         if($id_img == "" && $home_img == ""){
             if(intval($get_people) == 1){
-                $update_data = "UPDATE roommember SET name_title = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', id_card = '$id_card', phone = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nation', job = '$job', address = '$address' ";
+                $update_data = "UPDATE roommember SET name_title = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', id_card = '$id_card', phone = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nation', job = '$job', address = '$address' WHERE room_id = '$room_id'";
             }else if(intval($get_people) == 2){
-                $update_data = "UPDATE roommember SET name_title2 = '$title_name', firstname2 = '$firstname', lastname2 = '$lastname', nickname2 = '$nickname', id_card2 = '$id_card', phone2 = '$tel', email2 = '$email', birthday2 = '$birthday', age2 = $age, race2 = '$race', nationality2 = '$nation', job2 = '$job', address2 = '$address' ";
+                $update_data = "UPDATE roommember SET name_title2 = '$title_name', firstname2 = '$firstname', lastname2 = '$lastname', nickname2 = '$nickname', id_card2 = '$id_card', phone2 = '$tel', email2 = '$email', birthday2 = '$birthday', age2 = $age, race2 = '$race', nationality2 = '$nation', job2 = '$job', address2 = '$address' WHERE room_id = '$room_id'";
             }
         }else if($id_img != "" && $home_img == ""){
             if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $idimg_path)){
                 if(intval($get_people) == 1){
-                    $update_data = "UPDATE roommember SET name_title = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', id_card = '$id_card', phone = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nation', job = '$job', address = '$address', pic_idcard = '$id_img' ";
+                    $update_data = "UPDATE roommember SET name_title = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', id_card = '$id_card', phone = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nation', job = '$job', address = '$address', pic_idcard = '$id_img' WHERE room_id = '$room_id'";
                 }else if(intval($get_people) == 2){
-                    $update_data = "UPDATE roommember SET name_title2 = '$title_name', firstname2 = '$firstname', lastname2 = '$lastname', nickname2 = '$nickname', id_card2 = '$id_card', phone2 = '$tel', email2 = '$email', birthday2 = '$birthday', age2 = $age, race2 = '$race', nationality2 = '$nation', job2 = '$job', address2 = '$address', pic_idcard2 = '$id_img' ";
+                    $update_data = "UPDATE roommember SET name_title2 = '$title_name', firstname2 = '$firstname', lastname2 = '$lastname', nickname2 = '$nickname', id_card2 = '$id_card', phone2 = '$tel', email2 = '$email', birthday2 = '$birthday', age2 = $age, race2 = '$race', nationality2 = '$nation', job2 = '$job', address2 = '$address', pic_idcard2 = '$id_img' WHERE room_id = '$room_id'";
                 }
             }else{
                 echo $conn->error;
@@ -134,9 +134,9 @@ if($_SESSION["level"] == "admin"){
         }else if($id_img == "" && $home_img != ""){
             if(move_uploaded_file($_FILES["home_img"]["tmp_name"], $homeimg_path)){
                 if(intval($get_people) == 1){
-                    $update_data = "UPDATE roommember SET name_title = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', id_card = '$id_card', phone = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nation', job = '$job', address = '$address', pic_home = '$home_img' ";
+                    $update_data = "UPDATE roommember SET name_title = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', id_card = '$id_card', phone = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nation', job = '$job', address = '$address', pic_home = '$home_img' WHERE room_id = '$room_id'";
                 }else if(intval($get_people) == 2){
-                    $update_data = "UPDATE roommember SET name_title2 = '$title_name', firstname2 = '$firstname', lastname2 = '$lastname', nickname2 = '$nickname', id_card2 = '$id_card', phone2 = '$tel', email2 = '$email', birthday2 = '$birthday', age2 = $age, race2 = '$race', nationality2 = '$nation', job2 = '$job', address2 = '$address', pic_home2 = '$home_img' ";
+                    $update_data = "UPDATE roommember SET name_title2 = '$title_name', firstname2 = '$firstname', lastname2 = '$lastname', nickname2 = '$nickname', id_card2 = '$id_card', phone2 = '$tel', email2 = '$email', birthday2 = '$birthday', age2 = $age, race2 = '$race', nationality2 = '$nation', job2 = '$job', address2 = '$address', pic_home2 = '$home_img' WHERE room_id = '$room_id'";
                 }
             }else{
                 echo $conn->error;
@@ -144,9 +144,9 @@ if($_SESSION["level"] == "admin"){
         }else{
             if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $idimg_path) && move_uploaded_file($_FILES["home_img"]["tmp_name"], $homeimg_path)){
                 if(intval($get_people) == 1){
-                    $update_data = "UPDATE roommember SET name_title = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', id_card = '$id_card', phone = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nation', job = '$job', address = '$address', pic_idcard = '$id_img', pic_home = '$home_img' ";
+                    $update_data = "UPDATE roommember SET name_title = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', id_card = '$id_card', phone = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nation', job = '$job', address = '$address', pic_idcard = '$id_img', pic_home = '$home_img' WHERE room_id = '$room_id'";
                 }else if(intval($get_people) == 2){
-                    $update_data = "UPDATE roommember SET name_title2 = '$title_name', firstname2 = '$firstname', lastname2 = '$lastname', nickname2 = '$nickname', id_card2 = '$id_card', phone2 = '$tel', email2 = '$email', birthday2 = '$birthday', age2 = $age, race2 = '$race', nationality2 = '$nation', job2 = '$job', address2 = '$address', pic_idcard2 = '$id_img', pic_home2 = '$home_img' ";
+                    $update_data = "UPDATE roommember SET name_title2 = '$title_name', firstname2 = '$firstname', lastname2 = '$lastname', nickname2 = '$nickname', id_card2 = '$id_card', phone2 = '$tel', email2 = '$email', birthday2 = '$birthday', age2 = $age, race2 = '$race', nationality2 = '$nation', job2 = '$job', address2 = '$address', pic_idcard2 = '$id_img', pic_home2 = '$home_img' WHERE room_id = '$room_id'";
                 }
             }else{
                 echo $conn->error;

@@ -1,0 +1,232 @@
+@font-face {
+    font-family: Sarabun;
+    src: url(../fonts/Sarabun-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Sarabun;
+}
+
+.box {
+    padding: 80px 0 0 260px;
+}
+
+.history-box {
+    width: 100%;
+    min-height: 800px;
+    padding: 36px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.history-box .search {
+    padding-top: 32px;
+    display: flex;
+}
+
+.history-box input {
+    position: relative;
+    width: 200px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.history-box .search input.roundtrip-input {
+    background-image: url("../img/tool/calendar.png");
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 92% 50%;
+    cursor: pointer;
+}
+
+.history-box button {
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(131, 120, 47, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.history-box button:hover {
+    background-color: rgb(131, 120, 47, 1);
+}
+
+.history-box .search .cancel-sort {
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
+}
+
+.history-box .cancel-sort:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.hr {
+    margin: 32px 0;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.7);
+    opacity: 0.5;
+}
+
+.history-box .card {
+    display: flex;
+    width: 100%;
+    min-height: 400px;
+    padding: 16px;
+    border: 1px solid rgb(131, 120, 47, 0.7);
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.history-box .card .chart {
+    width: 100%;
+    height: 366px;
+}
+
+.history-box input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    margin: 0 8px 0 0;
+    cursor: pointer;
+}
+
+.history-box table {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.history-box table tr {
+    height: 50px;
+}
+
+.history-box table th {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: rgb(131, 120, 47, 0.7);
+}
+
+.history-box table th:first-child {
+    width: 5%;
+}
+
+.history-box table th:nth-child(2) {
+    width: 10%;
+}
+
+.history-box table th:nth-child(3) {
+    width: 20%;
+}
+
+.history-box table th:nth-child(4) {
+    width: 15%;
+}
+
+.history-box table th:nth-child(5) {
+    width: 15%;
+}
+
+.history-box table th:nth-child(6) {
+    width: 10%;
+}
+
+.history-box table th:nth-child(7) {
+    width: 10%;
+}
+
+.history-box table th:nth-child(8) {
+    width: 15%;
+}
+
+.history-box table th,
+.history-box table td {
+    border: 1px solid #ddd;
+    padding: 0 16px;
+    overflow: hidden;
+    height: 60px;
+}
+
+.history-box table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.history-box table td:first-child {
+    text-align: center;
+}
+
+.history-box table td .option-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 8px;
+}
+
+.history-box table td .option-grid .del-btn {
+    width: 40px;
+    padding: 0;
+    display: block;
+    margin: 0 8px;
+    background-image: url(../img/tool/trash-icon.png);
+    background-color: rgb(255, 70, 70);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.history-box table td .option-grid .del-btn:hover {
+    background-color: rgb(216, 40, 40);
+}
+
+.history-box table td img {
+    display: block;
+    margin: auto;
+}
+
+.pagination {
+    padding: 32px 0;
+    display: inline-block;
+}
+
+.pagination a {
+    color: #fff;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    background-color: rgb(131, 120, 47, 0.5);
+}
+
+.pagination a.active {
+    background-color: rgb(131, 120, 47, 1);
+    color: #fff;
+    border: 1px solid rgb(131, 120, 47, 1);
+}
+
+.pagination a:hover:not(.active) {
+    background-color: rgb(131, 120, 47, 0.7);
+    border: 1px solid rgb(131, 120, 47, 0.7);
+}

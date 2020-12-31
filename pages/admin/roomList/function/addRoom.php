@@ -5,8 +5,6 @@ if($_SESSION['level'] == 'admin'){
     $room = $_POST['room_id'];
     $type = $_POST['room_type'];
     $cat = $_POST['room_cat'];
-    // echo $room;
-    // echo $type;
     $sql = "INSERT INTO roomlist (room_id, room_type, room_cat, room_status) VALUES ('$room', '$type', '$cat', 'ว่าง')";
     $main_target = "../../../images/roommember/";
     $create = "../../../images/roommember/$room";
@@ -15,14 +13,10 @@ if($_SESSION['level'] == 'admin'){
     }
     mkdir($create);
     if ($conn->query($sql) === TRUE) {
-        $create2 = mkdir("../../../images/roommember/$room/1");
-        $create3 = mkdir("../../../images/roommember/$room/2");
-        if($create2 === TRUE && $create3 === TRUE){
-            echo "<script>";
-            echo "alert('เพิ่มห้อง $room เรียบร้อยแล้ว');";
-            echo "location.href = '../index.php';";
-            echo "</script>";
-        }
+        echo "<script>";
+        echo "alert('เพิ่มห้อง $room เรียบร้อยแล้ว');";
+        echo "location.href = '../index.php';";
+        echo "</script>";
     } else {
         echo "<script>";
         echo "alert('ไม่สามารถเพิ่มห้องได้เนื่องจากมีห้องพักนี้อยู่แล้ว');";

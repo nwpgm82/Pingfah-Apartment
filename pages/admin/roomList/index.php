@@ -36,7 +36,10 @@ if($_SESSION["level"] == "admin"){
                     <div class="header">
                         <h3>รายการห้องพักทั้งหมด</h3>
                         <div style="position:relative;">
-                            <button id="addRoom">เพิ่มห้องพัก</button>
+                            <div class="option-grid">
+                                <a href="roomHistory.php"><button class="history-btn"></button></a>
+                                <button id="addRoom">เพิ่มห้องพัก</button>
+                            </div>
                             <div id="add" style="position:absolute;top:45px;right:0;display:none;">
                                 <div class="arrow-up"></div>
                                 <div class="popover">
@@ -149,10 +152,14 @@ if($_SESSION["level"] == "admin"){
                         while($row = $result->fetch_assoc()) {
                         ?>
                         <tr>
-                            <td><a href="room_id.php?ID=<?php echo $row['room_id']; ?>"><?php echo $row["room_id"]; ?></a></td>
+                            <td><a
+                                    href="room_id.php?ID=<?php echo $row['room_id']; ?>"><?php echo $row["room_id"]; ?></a>
+                            </td>
                             <td><?php echo $row["room_type"]; ?></td>
                             <td>
-                                <img id="cat" src="<?php if($row['room_cat'] == 'รายวัน'){ echo '../../../img/tool/clock-icon.png'; }else if($row['room_cat'] == 'รายเดือน'){ echo '../../../img/tool/calendar-icon.png'; } ?>" alt="category-icon">
+                                <img id="cat"
+                                    src="<?php if($row['room_cat'] == 'รายวัน'){ echo '../../../img/tool/clock-icon.png'; }else if($row['room_cat'] == 'รายเดือน'){ echo '../../../img/tool/calendar-icon.png'; } ?>"
+                                    alt="category-icon">
                             </td>
                             <td><?php if($row["room_status"] == "ว่าง"){ echo "<div class='status-available'></div>"; }else{ echo "<div class='status-unavailable'></div>"; } ?>
                             </td>
@@ -282,7 +289,8 @@ if($_SESSION["level"] == "admin"){
                             <div style="display:flex;align-items:flex-start;">
                                 <p style="padding:10px 8px 0 0;">ค้นหาตามวันที่</p>
                                 <div style="position:relative;">
-                                    <input type="text" id="date_from" class="roundtrip-input" value="<?php echo $from; ?>">
+                                    <input type="text" id="date_from" class="roundtrip-input"
+                                        value="<?php echo $from; ?>">
                                     <p id="from_date" class="dateText"></p>
                                     <h5 id="error-text" style="color:red;padding-top:4px;"></h5>
                                 </div>
@@ -291,16 +299,17 @@ if($_SESSION["level"] == "admin"){
                                     <input type="text" id="date_to" class="roundtrip-input" value="<?php echo $to; ?>">
                                     <p id="to_date" class="dateText"></p>
                                 </div>
-                                
+
                             </div>
                             <div style="padding-top:20px;display:flex;align-items:flex-start;">
                                 <label style="padding-top:8px;">จำนวนผู้พัก :</label>
                                 <div>
                                     <input id="people" type="number" style="margin:0 8px;" min="1" max="8"
-                                    oninput="this.value = this.value > 8 ? 8 : Math.abs(this.value)" value="<?php echo $people; ?>" >
+                                        oninput="this.value = this.value > 8 ? 8 : Math.abs(this.value)"
+                                        value="<?php echo $people; ?>">
                                     <h5 id="error-number" style="color:red;padding:4px 0 0 8px;"></h5>
                                 </div>
-                                
+
                                 <label style="padding-top:8px;">(สูงสุด : 8)</label>
                                 <button id="search_room" type="button">ค้นหา</button>
                             </div>
@@ -363,7 +372,8 @@ if($_SESSION["level"] == "admin"){
                                     if ($get_img_result->num_rows > 0) {
                                         while($room_img = $get_img_result->fetch_assoc()) {
                                 ?>
-                                <img src="../../images/roomdetail/<?php if($roomdetail['type'] == 'แอร์'){ echo 'air'; }else if($roomdetail['type'] == 'พัดลม'){ echo 'fan'; } ?>/<?php echo $room_img['gal_name']; ?>" alt="">
+                                <img src="../../images/roomdetail/<?php if($roomdetail['type'] == 'แอร์'){ echo 'air'; }else if($roomdetail['type'] == 'พัดลม'){ echo 'fan'; } ?>/<?php echo $room_img['gal_name']; ?>"
+                                    alt="">
                                 <?php } } ?>
                                 <div style="padding:16px;">
                                     <h3>ห้อง<?php echo $roomdetail['type']; ?></h3>
@@ -374,11 +384,17 @@ if($_SESSION["level"] == "admin"){
                                         </div>
                                         <div class="room-text">
                                             <div>
-                                                <p>รายวัน : <strong style="color:rgb(131, 120, 47, 1);"><?php echo number_format($roomdetail['daily_price']); ?></strong> บาท</p>
-                                                <p>รายเดือน : <strong style="color:rgb(131, 120, 47, 1);"><?php echo number_format($roomdetail['price']); ?></strong> บาท</p>
+                                                <p>รายวัน : <strong
+                                                        style="color:rgb(131, 120, 47, 1);"><?php echo number_format($roomdetail['daily_price']); ?></strong>
+                                                    บาท</p>
+                                                <p>รายเดือน : <strong
+                                                        style="color:rgb(131, 120, 47, 1);"><?php echo number_format($roomdetail['price']); ?></strong>
+                                                    บาท</p>
                                             </div>
                                             <div>
-                                                <p>จำนวนห้องพักคงเหลือ <?php if($roomdetail['type'] == 'แอร์'){ echo $total_air_avai; }else if($roomdetail['type'] == 'พัดลม'){ echo $total_fan_avai; } ?> ห้อง</p>
+                                                <p>จำนวนห้องพักคงเหลือ
+                                                    <?php if($roomdetail['type'] == 'แอร์'){ echo $total_air_avai; }else if($roomdetail['type'] == 'พัดลม'){ echo $total_fan_avai; } ?>
+                                                    ห้อง</p>
                                             </div>
                                         </div>
                                     </div>
