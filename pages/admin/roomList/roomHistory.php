@@ -100,23 +100,23 @@ if($_SESSION["level"] == "admin"){
                         $start = ($page - 1) * $perpage;
                         $num = $start + 1;
                         if(isset($from) && isset($to) && !isset($check)){
-                            $sql = "SELECT room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to'";
+                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to'";
                         }else if(!isset($from) && !isset($to) && isset($check)){
                             if($check == "daily"){
                                 $check_s = "รายวัน";
                             }else if($check == "month"){
                                 $check_s = "รายเดือน";
                             }
-                            $sql = "SELECT room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE member_cat = '$check_s'";
+                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE member_cat = '$check_s'";
                         }else if(isset($from) && isset($to) && isset($check)){
                             if($check == "daily"){
                                 $check_s = "รายวัน";
                             }else if($check == "month"){
                                 $check_s = "รายเดือน";
                             }
-                            $sql = "SELECT room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to' AND member_cat = '$check_s'";
+                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to' AND member_cat = '$check_s'";
                         }else{
-                            $sql = "SELECT room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember";
+                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember";
                         }
                         $result = $conn->query($sql);
                         ?>
@@ -163,7 +163,7 @@ if($_SESSION["level"] == "admin"){
                                 <td><?php echo $row["member_status"]; ?></td>
                                 <td>
                                     <div class="option-grid">
-                                        <button>ดูข้อมูลเพิ่มเติม</button>
+                                        <a href="memberDetail.php?member_id=<?php echo $row["member_id"];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
                                         <button class="del-btn"></button>
                                     </div>
                                 </td>
