@@ -125,4 +125,9 @@ $(document).ready(function () {
             location.href = `roomHistory.php?style=month`
         }
     })
+    $(".del-btn").click(function(event){
+        if(confirm("คุณต้องการลบประวัตินี้ใช่หรือไม่ ?")){
+            location.href = `function/delHistory.php?member_id=${event.target.id}`
+        }
+    })
 })
