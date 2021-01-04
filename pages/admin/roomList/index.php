@@ -2,6 +2,14 @@
 session_start();
 if($_SESSION["level"] == "admin"){
     include("../../connection.php");
+    function DateThai($strDate){
+        $strYear = date("Y",strtotime($strDate));
+        $strMonth= date("n",strtotime($strDate));
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strDay $strMonthThai $strYear";
+    }
     $check = @$_REQUEST['Status'];
     $check2 = @$_REQUEST['style'];
     $from = @$_REQUEST['from'];
@@ -23,7 +31,7 @@ if($_SESSION["level"] == "admin"){
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
-    <script src="../../../js/admin/roomList2.js"></script>
+    <script src="../../../js/admin/roomList.js"></script>
     <title>Document</title>
 </head>
 
@@ -165,7 +173,6 @@ if($_SESSION["level"] == "admin"){
                             </td>
                             <td>
                                 <div style="display:flex;justify-content:center;">
-                                    <button id="<?php echo $row['room_id']; ?>" class="edit-btn"></button>
                                     <button id="<?php echo $row['room_id']; ?>" class="del-btn"></button>
                                 </div>
                             </td>
@@ -286,27 +293,26 @@ if($_SESSION["level"] == "admin"){
                     <div class="hr"></div>
                     <div style="padding-top:32px;">
                         <div class="search">
-                            <div style="display:flex;align-items:flex-start;">
+                            <div style="height:61px;display:flex;align-items:flex-start;">
                                 <p style="padding:10px 8px 0 0;">ค้นหาตามวันที่</p>
                                 <div style="position:relative;">
                                     <input type="text" id="date_from" class="roundtrip-input"
-                                        value="<?php echo $from; ?>">
-                                    <p id="from_date" class="dateText"></p>
+                                        value="<?php if(isset($from)){ echo DateThai($from); }?>">
+                                    <!-- <p id="from_date" class="dateText"></p> -->
                                     <h5 id="error-text" style="color:red;padding-top:4px;"></h5>
                                 </div>
                                 <label style="padding:10px 8px 0 8px;">~</label>
                                 <div style="position:relative;">
-                                    <input type="text" id="date_to" class="roundtrip-input" value="<?php echo $to; ?>">
-                                    <p id="to_date" class="dateText"></p>
+                                    <input type="text" id="date_to" class="roundtrip-input" value="<?php if(isset($to)){ echo DateThai($to); }?>">
+                                    <!-- <p id="to_date" class="dateText"></p> -->
                                 </div>
-
                             </div>
-                            <div style="padding-top:20px;display:flex;align-items:flex-start;">
+                            <div style="height:81px;padding-top:20px;display:flex;align-items:flex-start;">
                                 <label style="padding-top:8px;">จำนวนผู้พัก :</label>
                                 <div>
                                     <input id="people" type="number" style="margin:0 8px;" min="1" max="8"
                                         oninput="this.value = this.value > 8 ? 8 : Math.abs(this.value)"
-                                        value="<?php echo $people; ?>">
+                                        value="<?php if(isset($people)){ echo $people; }else{ echo 1; } ?>">
                                     <h5 id="error-number" style="color:red;padding:4px 0 0 8px;"></h5>
                                 </div>
 
@@ -314,6 +320,9 @@ if($_SESSION["level"] == "admin"){
                                 <button id="search_room" type="button">ค้นหา</button>
                             </div>
                         </div>
+                        <?php
+                        if(isset($from) && isset($to) && isset($people)){
+                        ?>
                         <div class="checkbox-grid">
                             <div class="sub-checkbox-grid">
                                 <input type="checkbox" name="" id="daily_search"
@@ -326,6 +335,7 @@ if($_SESSION["level"] == "admin"){
                                 <label>รายเดือน</label>
                             </div>
                         </div>
+                        <?php } ?>
                         <div>
                             <?php
                             $total_air_avai = 0;

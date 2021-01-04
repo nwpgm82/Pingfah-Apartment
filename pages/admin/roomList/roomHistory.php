@@ -5,7 +5,7 @@ if($_SESSION["level"] == "admin"){
     function DateThai($strDate){
         $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
+        $strDay= date("d",strtotime($strDate));
         $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
@@ -159,7 +159,7 @@ if($_SESSION["level"] == "admin"){
                                 <td><?php if(isset($row["out_date"])){ echo DataThai($row["out_date"]); } ?></td>
                                 <td><img id="cat"
                                     src="<?php if($row['member_cat'] == 'รายวัน'){ echo '../../../img/tool/clock-icon.png'; }else if($row['member_cat'] == 'รายเดือน'){ echo '../../../img/tool/calendar-icon.png'; } ?>"
-                                    alt="category-icon"></td>
+                                    alt="category-icon" title="<?php if($row['member_cat'] == 'รายวัน'){ echo "รายวัน"; }else if($row['member_cat'] == 'รายเดือน'){ echo "รายเดือน"; } ?>"></td>
                                 <td><?php echo $row["member_status"]; ?></td>
                                 <td>
                                     <div class="option-grid">

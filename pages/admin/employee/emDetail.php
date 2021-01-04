@@ -2,7 +2,14 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    function DateThai($strDate){
+        $strYear = date("Y",strtotime($strDate));
+        $strMonth= date("n",strtotime($strDate));
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strDay $strMonthThai $strYear";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +26,7 @@ if($_SESSION['level'] == 'admin'){
 </head>
 
 <body>
+    <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
         <div style="padding:24px;">
             <div class="emDetail-box">
@@ -111,8 +119,7 @@ if($_SESSION['level'] == 'admin'){
                                 <div class="col-3">
                                     <p>เกิดวันที่</p>
                                     <div style="position:relative;">
-                                        <input id="birthday" name="birthday" type="text" value="<?php echo $birthday; ?>" disabled required>
-                                        <p id="birth_date" class="dateText"></p>
+                                        <input id="birthday" name="birthday" type="text" value="<?php echo DateThai($birthday); ?>" disabled required>
                                     </div>
                                 </div>
                                 <div class="col-3">

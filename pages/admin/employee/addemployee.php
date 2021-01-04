@@ -1,8 +1,7 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
-    include('../../connection.php');
-    include('../../../components/sidebar.php');
+if($_SESSION["level"] == "admin"){
+    include("../../connection.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,133 +14,132 @@ if($_SESSION['level'] == 'admin'){
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
+    <script src="../../../js/admin/addEmployee.js"></script>
     <title>Document</title>
 </head>
 
 <body>
+    <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
         <div style="padding:24px;">
             <div class="addEmployee-box">
-                <h3>เพิ่มพนักงาน</h3>
-                <form action="../employee/function/addEm.php" method='POST'
-                    enctype="multipart/form-data">
-                    <div class="row" style="padding-top: 32px;">
-                        <div class="col-2">
-                            <p>อัพโหลดรูปภาพ</p>
-                            <div style="padding-top:8px">
-                                <div class="profile-box">
-                                    <img id="output_imagepic1" class="profile">
-                                </div>
-                                <input type="file" accept="image/*" name="profile_img"
-                                    onchange="preview_image(event,'pic1')" style="padding-top:16px" required>
+                <h3>ข้อมูลพนักงาน</h3>
+                <div class="hr"></div>
+                <form action="function/addEm.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div>
+                            <div class="profile-box" id="profile_box">
+                                <img id="img_profile" style="display:none;">
                             </div>
+                            <h5 id="profileimg_error" style="color:red;"></h5>
+                            <input type="file" name="profile_img" id="profile_img">
                         </div>
-                        <div class="col-10">
-                            <div class="row">
-                                <div class="col-2">
+                        <div>
+                            <div class="grid-container">
+                                <div class="come">
+                                    <p>วันที่เริ่มงาน</p>
+                                    <input type="text" name="come" id="come_date">
+                                    <h5 id="come_error" style="color:red;"></h5>
+                                </div>
+                                <div class="title_name">
                                     <p>คำนำหน้าชื่อ</p>
-                                    <select name="title_name">
+                                    <select name="title_name" id="title_name">
                                         <option value="นาย">นาย</option>
                                         <option value="นาง">นาง</option>
                                         <option value="นางสาว">นางสาว</option>
                                     </select>
                                 </div>
-                                <div class="col-4">
+                                <div class="firstname">
                                     <p>ชื่อ</p>
-                                    <input type="text" name="firstname" id="" placeholder="ชื่อ" required>
+                                    <input type="text" name="firstname" id="firstname" placeholder="ชื่อ">
+                                    <h5 id="fs_error" style="color:red;"></h5>
                                 </div>
-                                <div class="col-4">
+                                <div class="lastname">
                                     <p>นามสกุล</p>
-                                    <input type="text" name="lastname" id="" placeholder="นามสกุล" required>
+                                    <input type="text" name="lastname" id="lastname" placeholder="นามสกุล">
+                                    <h5 id="ls_error" style="color:red;"></h5>
                                 </div>
-                                <div class="col-2">
+                                <div class="nickname">
                                     <p>ชื่อเล่น</p>
-                                    <input type="text" name="nickname" id="" placeholder="ชื่อเล่น" required>
+                                    <input type="text" name="nickname" id="nickname" placeholder="ชื่อเล่น">
+                                    <h5 id="nk_error" style="color:red;"></h5>
                                 </div>
-                            </div>
-                            <div class="row" style="padding-top: 32px;">
-                                <div class="col-3">
-                                    <p>เลขบัตรประชาชน</p>
-                                    <input type="text" name="id_card" id="" placeholder="เลขบัตรประชาชน" required>
+                                <div class="id_card">
+                                    <p>เลขบัตรประชาชน / Passport No.</p>
+                                    <input type="text" name="id_card" id="id_card"
+                                        placeholder="เลขบัตรประชาชน / Passport No." maxlength="13">
+                                    <h5 id="id_error" style="color:red;"></h5>
                                 </div>
-                                <div class="col-3">
-                                    <p>เบอรโทรศัพท์</p>
-                                    <input type="tel" name="tel" id="" placeholder="เบอร์โทรศัพท์" required>
+                                <div class="birthday">
+                                    <p>วัน / เดือน / ปีเกิด</p>
+                                    <input type="text" name="birthday" id="birthday" placeholder="วัน / เดือน / ปีเกิด">
+                                    <h5 id="bd_error" style="color:red;"></h5>
                                 </div>
-                                <div class="col-3">
-                                    <p>อีเมล์</p>
-                                    <input type="email" name="email" id="" placeholder="อีเมล์" required>
-                                </div>
-                                <div class="col-3">
-                                    <p>Line</p>
-                                    <input type="text" name="id_line" id="" placeholder="ID Line" required>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-top: 32px;">
-                                <div class="col-3">
-                                    <p>เกิดวันที่</p>
-                                    <div style="position:relative;">
-                                        <input id="birthday" name="birthday" type="text" required>
-                                        <p id="birth_date" class="dateText"></p>
-                                    </div>
-                                </div>
-                                <div class="col-3">
+                                <div class="age">
                                     <p>อายุ</p>
-                                    <input type="text" name="age" id="" placeholder="อายุ" required>
+                                    <input type="number" name="age" id="age"
+                                        oninput="this.value = this.value > 60 ? 60 : Math.abs(this.value)"
+                                        placeholder="อายุ" readonly>
+                                    <h5 id="ag_error" style="color:red;"></h5>
                                 </div>
-                                <div class="col-3">
+                                <div class="phone">
+                                    <p>เบอร์โทรศัพท์</p>
+                                    <input type="text" name="tel" id="tel" maxlength="10" placeholder="เบอร์โทรศัพท์">
+                                    <h5 id="tel_error" style="color:red;"></h5>
+                                </div>
+                                <div class="email">
+                                    <p>อีเมล</p>
+                                    <input type="email" name="email" id="email" placeholder="อีเมล">
+                                    <h5 id="em_error" style="color:red;"></h5>
+                                </div>
+                                <div class="race">
                                     <p>เชื้อชาติ</p>
-                                    <input type="text" name="race" id="" placeholder="เชื้อชาติ" required>
+                                    <input type="text" name="race" id="race" value="ไทย" placeholder="เชื้อชาติ">
+                                    <h5 id="rc_error" style="color:red;"></h5>
                                 </div>
-                                <div class="col-3">
+                                <div class="nation">
                                     <p>สัญชาติ</p>
-                                    <input type="text" name="nationality" id="" placeholder="สัญชาติ" required>
+                                    <input type="text" name="nation" id="nation" value="ไทย" placeholder="สัญชาติ">
+                                    <h5 id="na_error" style="color:red;"></h5>
+                                </div>
+                                <div class="position">
+                                    <p>ตำแหน่ง</p>
+                                    <select name="position" id="position">
+                                        <option value="employee">พนักงาน</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div style="padding: 32px 8px 0 0;">
+                            <div style="padding-top:16px;height:146px;">
                                 <p>ที่อยู่</p>
-                                <textarea name="address" id="" placeholder="ที่อยู่" required></textarea>
+                                <textarea name="address" id="address" placeholder="ที่อยู่"></textarea>
+                                <h5 id="ad_error" style="color:red;"></h5>
                             </div>
                             <div style="padding-top:32px;">
                                 <h3>สำเนาเอกสาร</h3>
-                                <div class="row" style="padding-top:16px">
-                                    <div class="col-6">
+                                <div class="hr"></div>
+                                <div class="img-grid">
+                                    <div>
                                         <p>สำเนาบัตรประชาชน</p>
-                                        <div class="img-box">
-                                            <img id="output_imagepic2">
+                                        <div class="img-box" id="id_box">
+                                            <img id="img_id" style="display:none;">
                                         </div>
-                                        <input type="file" accept="image/*" name="pic_idcard"
-                                            onchange="preview_image(event,'pic2')" style="padding-top:16px" required>
+                                        <h5 id="idimg_error" style="color:red;"></h5>
+                                        <input type="file" name="id_img" id="id_img">
                                     </div>
-                                    <div class="col-6">
+                                    <div>
                                         <p>สำเนาทะเบียนบ้าน</p>
-                                        <div class="img-box">
-                                            <img id="output_imagepic3">
+                                        <div class="img-box" id="home_box">
+                                            <img id="img_home" style="display:none;">
                                         </div>
-                                        <input type="file" accept="image/*" name="pic_home"
-                                            onchange="preview_image(event,'pic3')" style="padding-top:16px" required>
+                                        <h5 id="homeimg_error" style="color:red;"></h5>
+                                        <input type="file" name="home_img" id="home_img">
                                     </div>
                                 </div>
                             </div>
-                            <div style="padding-top:32px;">
-                                <h3>เพิ่มบัญชีผู้ใช้และรหัสผ่าน</h3>
-                                <div style="padding-top:16px;">
-                                    <div class="col-6">
-                                        <p>Username</p>
-                                        <input type="text" name="username" placeholder="บัญชีผู้ใช้" required>
-                                    </div>
-                                    <div class="col-6" style="padding-top:16px;">
-                                        <p>รหัสผ่าน</p>
-                                        <input type="password" name="password" pattern=".{6,20}" placeholder="รหัสผ่าน" required>
-                                    </div>
-                                    <div class="col-6" style="padding-top:16px;">
-                                        <p>ยืนยันรหัสผ่าน</p>
-                                        <input type="password" name="confirm_password" pattern=".{6,20}" placeholder="ยืนยันรหัสผ่าน" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="padding-top:32px;display:flex;justify-content:center;">
-                                <button name="addEm">ยืนยัน</button>
+                            <div class="hr"></div>
+                            <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
+                                <button type="submit" name="addData-btn" id="addData-btn">เพิ่มพนักงาน</button>
                             </div>
                         </div>
                     </div>
@@ -149,12 +147,10 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/addEmployee.js"></script>
 </body>
 
 </html>
 <?php
 }else{
-    Header("Location: ../../login.php"); 
+    Header("Location: ../../login.php");
 }
-?>

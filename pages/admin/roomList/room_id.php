@@ -7,7 +7,7 @@ if($_SESSION["level"] == "admin"){
     function DateThai($strDate){
         $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
+        $strDay= date("d",strtotime($strDate));
         $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
@@ -47,7 +47,7 @@ if($_SESSION["level"] == "admin"){
                 <?php if($row == null){ ?>
                 <div class="new_customer">
                     <div>
-                        <h3>ห้อง <?php echo $room_id; ?> ยังว่างอยู่ ต้องการเพิ่มข้อมูลผู้พักใช่หรือไม่ ?</h3>
+                        <h3>ห้อง <?php echo $room_id; ?> ยังว่างอยู่ กดปุ่ม "เพิ่มผู้พัก" เพื่อเพิ่มข้อมูลผู้พัก</h3>
                         <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
                             <button id="add-btn">เพิ่มผู้พัก</button>
                         </div>

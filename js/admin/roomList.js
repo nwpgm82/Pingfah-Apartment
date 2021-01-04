@@ -1,322 +1,247 @@
-let all = document.getElementById("all")
-let available = document.getElementById("available")
-let unavailable = document.getElementById("unavailable")
-let daily = document.getElementById("daily")
-function searchDate() {
-    let x = document.getElementById("check_in").value
-    let y = document.getElementById("check_out").value
-    let z = document.getElementById("people").value
-    location.assign(`index.php?check_in=${x}&check_out=${y}&people=${z}`)
-}
-
-function searchDate2() {
-    var x = document.getElementById("date_from").value
-    var y = document.getElementById("date_to").value
-    if(x != "" || y != ""){
-        location.assign(`index.php?Status=daily&from=${x}&to=${y}`)
-    }else{
-        alert("กรุณาระบุวันที่ที่ต้องการค้นหา")
-    }
-}
-
-function searchCheck(id) {
-    let check = document.getElementById(id)
-    all.checked = false
-    available.checked = false
-    unavailable.checked = false
-    daily.checked = false
-    check.checked = true
-    if(id != "all"){
-        location.href = `index.php?Status=${check.id}`
-    }else{
-        location.href = "index.php"
-    }
-    
-}
-
-function unCheckAll() {
-    available.checked = false
-    unavailable.checked = false
-    daily.checked = false
-    location.href = "index.php"
-}
-
-function editType(room) {
-    var typeShow = document.getElementById(`typeShow${room.toString()}`)
-    var typeEdit = document.getElementById(`typeEdit${room.toString()}`)
-    var typeShow_btn = document.getElementById(`typeShow-btn${room.toString()}`)
-    var typeEdit_btn = document.getElementById(`typeEdit-btn${room.toString()}`)
-    if (typeShow.style.display == '') {
-        typeShow.style.display = 'none'
-        typeEdit.style.display = ''
-        typeShow_btn.style.display = 'none'
-        typeEdit_btn.style.display = ''
-    } else {
-        typeShow.style.display = ''
-        typeEdit.style.display = 'none'
-        typeShow_btn.style.display = ''
-        typeEdit_btn.style.display = 'none'
-    }
-}
-
-function acceptEdit(room) {
-    var typeShow = document.getElementById(`typeShow${room.toString()}`)
-    var typeEdit = document.getElementById(`typeEdit${room.toString()}`)
-    var typeShow_btn = document.getElementById(`typeShow-btn${room.toString()}`)
-    var typeEdit_btn = document.getElementById(`typeEdit-btn${room.toString()}`)
-    typeShow.style.display = ''
-    typeEdit.style.display = 'none'
-    typeShow_btn.style.display = ''
-    typeEdit_btn.style.display = 'none'
-}
-
-function cancelEdit(room) {
-    var typeShow = document.getElementById(`typeShow${room.toString()}`)
-    var typeEdit = document.getElementById(`typeEdit${room.toString()}`)
-    var typeShow_btn = document.getElementById(`typeShow-btn${room.toString()}`)
-    var typeEdit_btn = document.getElementById(`typeEdit-btn${room.toString()}`)
-    typeShow.style.display = ''
-    typeEdit.style.display = 'none'
-    typeShow_btn.style.display = ''
-    typeEdit_btn.style.display = 'none'
-}
-
-function addRoom() {
-    let addRoom_btn = document.getElementById("addRoom-btn")
-    let add = document.getElementById("addRoom")
-    add.style.display = 'flex'
-    addRoom_btn.style.display = 'none'
-}
-
-function canceladdRoom() {
-    let addRoom_btn = document.getElementById("addRoom-btn")
-    let add = document.getElementById("addRoom")
-    add.style.display = 'none'
-    addRoom_btn.style.display = ''
-}
-
-function del(room) {
-    if (confirm(`คุณต้องการลบห้อง ${room} ใช่หรือไม่ ?`)) {
-        location.href = `function/delRoom.php?ID=${room}`
-    }
-}
-
-
-if (document.getElementById("check_in").value != "" && document.getElementById("check_out").value != "" && document.getElementById("people").value != "") {
-    var slideIndex1 = 1;
-    var slideIndex2 = 2;
-    if(document.getElementById("air")){
-        showSlides1(slideIndex1);
-    }
-
-    if(document.getElementById("fan")){
-        showSlides2(slideIndex2);
-    }
-    
-    
-
-    function plusSlides1(n) {
-        showSlides1(slideIndex1 += n);
-    }
-
-    function currentSlide1(n) {
-        showSlides1(slideIndex1 = n);
-    }
-
-    function plusSlides2(n) {
-        showSlides2(slideIndex2 += n);
-    }
-
-    function currentSlide2(n) {
-        showSlides2(slideIndex2 = n);
-    }
-
-    function showSlides1(n) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides1");
-        // let dots = document.getElementsByClassName("demo1");
-        //   var captionText = document.getElementById("caption");
-        if (n > slides.length) {
-            slideIndex1 = 1
-        }
-        if (n < 1) {
-            slideIndex1 = slides.length
-        }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        // for (i = 0; i < dots.length; i++) {
-        //     dots[i].className = dots[i].className.replace(" active", "");
-        // }
-        slides[slideIndex1 - 1].style.display = "block";
-        // dots[slideIndex1 - 1].className += " active";
-        //   captionText.innerHTML = dots[slideIndex-1].alt;
-    }
-
-    function showSlides2(m) {
-        let j;
-        let slides = document.getElementsByClassName("mySlides2");
-        // let dots = document.getElementsByClassName("demo2");
-        //   var captionText = document.getElementById("caption");
-        if (m > slides.length) {
-            slideIndex2 = 1
-        }
-        if (m < 1) {
-            slideIndex2 = slides.length
-        }
-        for (j = 0; j < slides.length; j++) {
-            slides[j].style.display = "none";
-        }
-        // for (j = 0; j < dots.length; j++) {
-        //     dots[j].className = dots[j].className.replace(" active", "");
-        // }
-        slides[slideIndex2 - 1].style.display = "block";
-        // dots[slideIndex2 - 1].className += " active";
-        //   captionText.innerHTML = dots[slideIndex-1].alt;
-    }
-}
-
-
-function formatDate(date) {
-    var monthNames = [
-        "ม.ค.", "ก.พ.", "มี.ค.",
-        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
-        "ส.ค.", "ก.ย.", "ต.ค.",
-        "พ.ค.", "ธ.ค."
-    ];
-    var day = date.getDate();
-    var monthIndex = date.getMonth();
-    var year = date.getFullYear();
-    return day + ' ' + monthNames[monthIndex] + ' ' + year;
-}
-
-function formatDate2(inputDate) {
-    var date = new Date(inputDate);
-    if (!isNaN(date.getTime())) {
-        // Months use 0 index.
-        return date.getMonth() + 1 + '/1/' + date.getFullYear();
-    }
-}
-
 $(document).ready(function () {
-    let date_from = $("#date_from")
-    let date_to = $("#date_to")
-    let from_date = $("#from_date")
-    let to_date = $("#to_date")
-    let check_in = $("#check_in")
-    let check_out = $("#check_out")
-    let check_in_date = $("#check_in_date")
-    let check_out_date = $("#check_out_date")
-    let people = $("#people")
-    let today_monthNames = [
-        "ม.ค.", "ก.พ.", "มี.ค.",
-        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
-        "ส.ค.", "ก.ย.", "ต.ค.",
-        "พ.ค.", "ธ.ค."
-    ];
-    let today = new Date()
-    let today_day = today.getDate()
-    let today_month = today.getMonth() + 1
-    let today_year = today.getFullYear()
-    let tomorrow_day = today.getDate() + 1
-    let tomorrow_month = today.getMonth() + 1
-    let tomorrow_year = today.getFullYear()
-    let current_dayShow = today_day + ' ' + today_monthNames[today_month - 1] + ' ' + today_year
-    let next_dayShow = tomorrow_day + ' ' + today_monthNames[tomorrow_month - 1] + ' ' + tomorrow_year
-    if (today_day < 10) {
-        today_day = '0' + today_day.toString()
-    }
-    if (today_month < 10) {
-        today_month = '0' + today_month.toString()
-    }
-    if (tomorrow_day < 10) {
-        tomorrow_day = '0' + tomorrow_day.toString()
-    }
-    if (tomorrow_month < 10) {
-        tomorrow_month = '0' + tomorrow_month.toString()
-    }
-    let current_day = today_year + '-' + today_month + '-' + today_day
-    let next_day = tomorrow_year + '-' + tomorrow_month + '-' + tomorrow_day
-    if (check_in.val() == "" && check_out.val() == "" && people.val() == "") {
-        check_in.val(current_day)
-        check_out.val(next_day)
-        check_in_date.html(current_dayShow)
-        check_out_date.html(next_dayShow)
-        people.val(1)
-    } else {
-        check_in_date.html(formatDate(new Date(check_in.val())))
-        check_out_date.html(formatDate(new Date(check_out.val())))
-    }
-    if ($("#date_from") && $("#date_to")) {
-        if (date_from.val() != "" && date_to.val() != "") {
-            from_date.html(formatDate(new Date(date_from.val())))
-            to_date.html(formatDate(new Date(date_to.val())))
+    (function ($) {
+        $.fn.inputFilter = function (inputFilter) {
+            return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value
+                    this.oldSelectionStart = this.selectionStart
+                    this.oldSelectionEnd = this.selectionEnd
+                } else if (this.hasOwnProperty("oldValue")) {
+                    this.value = this.oldValue;
+                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                } else {
+                    this.value = ""
+                }
+            })
         }
+    }(jQuery));
+    function BasicDate(date) {
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1
+        let day = date.getDate()
+        if (day < 10) {
+            day = "0" + day.toString()
+        }
+        if (month < 10) {
+            month = "0" + month.toString()
+        }
+        return year + "-" + month + "-" + day
     }
-    $('.roundtrip-input1').dateDropper({
+    $("#addRoom").click(function () {
+        $("#add").toggle()
+    })
+    $("#room_id").inputFilter(function (value) {
+        return /^\d*$/.test(value); // Allow digits only, using a RegExp
+    });
+    $("#room_id").keyup(function () {
+        if ($("#room_id").val().length >= 1) {
+            $("#room_id_check").html("")
+            $("#room_id").css("border-color", "")
+        } else {
+            $("#room_id_check").html("กรุณากรอกเลขห้อง")
+            $("#room_id").css("border-color", "red")
+            $("input#room_id").addClass("input_placeholder_error")
+        }
+    })
+    $("button[type=submit]").click(function (event) {
+        if ($("#room_id").val().length < 1) {
+            $("#room_id_check").html("กรุณากรอกเลขห้อง")
+            $("#room_id").css("border-color", "red")
+            $("input#room_id").addClass("input_placeholder_error")
+            event.preventDefault()
+        }
+    })
+    $("#all").click(function () {
+        location.href = "index.php"
+    })
+    $("#avai_all").click(function () {
+        location.href = "index.php?Status=avai_all"
+    })
+    $("#unavai_all").click(function () {
+        location.href = "index.php?Status=unavai_all"
+    })
+    $("#avai_daily").click(function () {
+        location.href = "index.php?Status=avai_daily"
+    })
+    $("#unavai_daily").click(function () {
+        location.href = "index.php?Status=unavai_daily"
+    })
+    $("#avai_month").click(function () {
+        location.href = "index.php?Status=avai_month"
+    })
+    $("#unavai_month").click(function () {
+        location.href = "index.php?Status=unavai_month"
+    })
+    $(".del-btn").click(function (event) {
+        let room_id = event.target.id
+        if (confirm(`คุณต้องการลบห้อง ${room_id} ใช่หรือไม่ ? `)) {
+            location.href = `function/delRoom.php?ID=${room_id}`
+        }
+    })
+    $("#daily_search").click(function () {
+        let date_from = $("#date_from").val()
+        let date_to = $("#date_to").val()
+        let people = $("#people").val()
+        if (date_from != "" && date_to != "") {
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            date_from = date_from.split(" ")
+            date_from[1] = search.findIndex(el => el === date_from[1])
+            date_from[1] = replace[date_from[1]]
+            date_from = date_from.join(" ")
+            date_from = BasicDate(new Date(date_from))
+            date_to = date_to.split(" ")
+            date_to[1] = search.findIndex(el => el === date_to[1])
+            date_to[1] = replace[date_to[1]]
+            date_to = date_to.join(" ")
+            date_to = BasicDate(new Date(date_to))
+            location.href = `index.php?from=${date_from}&to=${date_to}&people=${people}&style=daily`
+        }
+    })
+    $("#month_search").click(function () {
+        let date_from = $("#date_from").val()
+        let date_to = $("#date_to").val()
+        let people = $("#people").val()
+        if (date_from != "" && date_to != "") {
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            date_from = date_from.split(" ")
+            date_from[1] = search.findIndex(el => el === date_from[1])
+            date_from[1] = replace[date_from[1]]
+            date_from = date_from.join(" ")
+            date_from = BasicDate(new Date(date_from))
+            date_to = date_to.split(" ")
+            date_to[1] = search.findIndex(el => el === date_to[1])
+            date_to[1] = replace[date_to[1]]
+            date_to = date_to.join(" ")
+            date_to = BasicDate(new Date(date_to))
+            location.href = `index.php?from=${date_from}&to=${date_to}&people=${people}&style=month`
+        }
+    })
+    $(".roundtrip-input").dateDropper({
         roundtrip: "my-trip",
         theme: "my-style",
-        format: "Y-m-d",
-        lang: "th",
-        startFromMonday: false,
-    });
-
-    $('.roundtrip-input2').dateDropper({
-        roundtrip: "my-trip2",
-        theme: "my-style",
-        format: "Y-m-d",
+        format: "d M Y",
         lang: "th",
         lock: "from",
         startFromMonday: false,
-    });
-
-    $('#date_from').change(function () {
-        $('#from_date').html(formatDate(new Date($('#date_from').val())))
     })
 
+    // function formatDate(date) {
+    //     var monthNames = [
+    //         "ม.ค.", "ก.พ.", "มี.ค.",
+    //         "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
+    //         "ส.ค.", "ก.ย.", "ต.ค.",
+    //         "พ.ค.", "ธ.ค."
+    //     ];
+    //     var day = date.getDate();
+    //     var monthIndex = date.getMonth();
+    //     var year = date.getFullYear();
+    //     return day + ' ' + monthNames[monthIndex] + ' ' + year;
+    // }
+    // if ($("#date_from").val() != "" && $("#date_to").val() != "") {
+    //     const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+    //     const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    //     let date_from = $("#date_from").val()
+    //     let date_to = $("#date_to").val()
+    //     date_from = date_from.split(" ")
+    //     date_from[1] = search.findIndex(el => el === date_from[1])
+    //     date_from[1] = replace[date_from[1]]
+    //     date_from = date_from.join(" ")
+    //     date_from = BasicDate(new Date(date_from))
+    //     date_to = date_to.split(" ")
+    //     date_to[1] = search.findIndex(el => el === date_to[1])
+    //     date_to[1] = replace[date_to[1]]
+    //     date_to = date_to.join(" ")
+    //     date_to = BasicDate(new Date(date_to))
+    //     $("#date_from").val(date_from)
+    //     $("#date_to").val(date_to)
+    // } else {
+    //     $("#people").val(1)
+    // }
+    $("#date_from").change(function () {
+        $("#date_from").css("border-color","")
+        $("#date_from").css("background-image", "url('../../../img/tool/calendar.png')")
+        $("#error-text").html("")
+        // $('#from_date').html(formatDate(new Date($('#date_from').val())))
+        // if (new Date($("#date_from").val()) >= new Date($("#date_to").val())) {
+        //     let nDate = new Date($("#date_from").val())
+        //     nDate.setDate(nDate.getDate() + 1)
+        //     let nDate_date = nDate.getDate()
+        //     let nDate_month = nDate.getMonth() + 1
+        //     if (nDate_date < 10) {
+        //         nDate_date = "0" + nDate_date.toString()
+        //     }
+        //     if (nDate_month < 10) {
+        //         nDate_month = "0" + nDate_month.toString()
+        //     }
+        //     $("#date_to").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
+        //     $("#to_date").html(formatDate(new Date($("#date_to").val())))
+        // } else {
+        //     $('#to_date').html(formatDate(new Date($('#date_to').val())))
+        // }
+    })
     $('#date_to').change(function () {
-        $('#to_date').html(formatDate(new Date($('#date_to').val())))
+        $("#date_to").css("border-color","")
+        $("#date_to").css("background-image", "url('../../../img/tool/calendar.png')")
+        $("#error-text").html("")
+        // if (new Date($("#date_from").val()) >= new Date($("#date_to").val())) {
+        //     let nDate = new Date($("#date_from").val())
+        //     nDate.setDate(nDate.getDate() + 1)
+        //     let nDate_date = nDate.getDate()
+        //     let nDate_month = nDate.getMonth() + 1
+        //     if (nDate_date < 10) {
+        //         nDate_date = "0" + nDate_date.toString()
+        //     }
+        //     if (nDate_month < 10) {
+        //         nDate_month = "0" + nDate_month.toString()
+        //     }
+        //     $("#date_to").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
+        //     $("#to_date").html(formatDate(new Date($("#date_to").val())))
+        // } else {
+        //     $('#to_date').html(formatDate(new Date($('#date_to').val())))
+        // }
     })
-
-    $('#check_in').change(function () {
-        console.log("check in :", $('#check_in').val())
-        $('#check_in_date').html(formatDate(new Date($('#check_in').val())))
-        if (new Date($("#check_in").val()) >= new Date($("#check_out").val())) {
-            let nDate = new Date($("#check_in").val())
-            nDate.setDate(nDate.getDate() + 1)
-            let nDate_date = nDate.getDate()
-            let nDate_month = nDate.getMonth() + 1
-            if (nDate_date < 10) {
-                nDate_date = "0" + nDate_date.toString()
-            }
-            if (nDate_month < 10) {
-                nDate_month = "0" + nDate_month.toString()
-            }
-            $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
-            $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
-
-        } else {
-            $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+    $("#people").keyup(function(){
+        if($("#people").val() <= 0){
+            $("#people").css("border-color","red")
+            $("#people").css("color","red")
+            $("#error-number").html("โปรดระบุจำนวน")
+        }else{
+            $("#people").css("border-color","")
+            $("#people").css("color","")
+            $("#error-number").html("")
         }
     })
-
-    $('#check_out').change(function () {
-        if (new Date($("#check_in").val()) >= new Date($("#check_out").val())) {
-            let nDate = new Date($("#check_in").val())
-            nDate.setDate(nDate.getDate() + 1)
-            let nDate_date = nDate.getDate()
-            let nDate_month = nDate.getMonth() + 1
-            if (nDate_date < 10) {
-                nDate_date = "0" + nDate_date.toString()
+    $("#search_room").click(function () {
+        let date_from = $("#date_from").val()
+        let date_to = $("#date_to").val()
+        let people = $("#people").val()
+        if (date_from == "" || date_to == "" || people == 0) {
+            if (date_from == "" && date_to == "") {
+                $(".roundtrip-input").css("border-color", "red")
+                $(".roundtrip-input").css("background-image", "url('../../../img/tool/calendar-error.png')")
+                $("#error-text").html("โปรดระบุวันที่ที่ต้องการค้นหา")
             }
-            if (nDate_month < 10) {
-                nDate_month = "0" + nDate_month.toString()
+            if(people == 0){
+                $("#people").css("border-color","red")
+                $("#people").css("color","red")
             }
-            $("#check_out").val(nDate.getFullYear() + "-" + nDate_month + "-" + nDate_date)
-            $("#check_out_date").html(formatDate(new Date($("#check_out").val())))
-
         } else {
-            $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            date_from = date_from.split(" ")
+            date_from[1] = search.findIndex(el => el === date_from[1])
+            date_from[1] = replace[date_from[1]]
+            date_from = date_from.join(" ")
+            date_from = BasicDate(new Date(date_from))
+            date_to = date_to.split(" ")
+            date_to[1] = search.findIndex(el => el === date_to[1])
+            date_to[1] = replace[date_to[1]]
+            date_to = date_to.join(" ")
+            date_to = BasicDate(new Date(date_to))
+            location.href = `index.php?from=${date_from}&to=${date_to}&people=${people}&style=daily`
         }
+
     })
 })

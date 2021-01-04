@@ -72,7 +72,7 @@ if($_SESSION['level'] == 'admin'){
                         </td>
                         <td>
                             <div class="grid">
-                                <img src="../../images/employee/<?php echo $row['username']; ?>/<?php echo $row["profile_img"]; ?>"
+                                <img src="../../images/employee/<?php echo $row['email']; ?>/<?php echo $row["profile_img"]; ?>"
                                     alt="">
                                 <p><?php echo $row["firstname"]; ?> <?php echo $row["lastname"]; ?></p>
                             </div>
