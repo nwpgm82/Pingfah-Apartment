@@ -26,25 +26,46 @@ if($_SESSION["level"] == "admin"){
     $race = $_POST['race'];
     $nat = $_POST['nation'];
     $add = $_POST['address'];
-    $profile_img = $_FILES['profile_img']['name'];
-    $pic_idcard = $_FILES["id_img"]["name"];
-    $pic_home = $_FILES["home_img"]["name"];
+    $profile_img = @$_FILES['profile_img']['name'];
+    $pic_idcard = @$_FILES["id_img"]["name"];
+    $pic_home = @$_FILES["home_img"]["name"];
     $main_target = "../../../images/employee/";
     $folder_target = "../../../images/employee/$id_card/";
     $target1 = "../../../images/employee/$id_card/".basename($pic_idcard);
     $target2 = "../../../images/employee/$id_card/".basename($pic_home);
     $target3 = "../../../images/employee/$id_card/".basename($profile_img);
     if(isset($_POST["accept-edit"])){
-        $update_data = "UPDATE employee SET title_name = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', position = '$position', id_card = '$id_card', tel = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nat', address = '$address', profile_img = '$profile_img', pic_idcard = '$pic_idcard', pic_home = '$pic_home' WHERE employee_id = $id";
-        if(move_uploaded_file($_FILES["profile_img"]["tmp_name"], $target3) && move_uploaded_file($_FILES["id_img"]["tmp_name"], $target1) && move_uploaded_file($_FILES["id_img"]["tmp_name"], $target2)){
-            if($conn->query($update_data) === TRUE){
-                echo "<script>";
-                echo "alert('อัปเดตข้อมูลเรียบร้อยแล้ว');";
-                echo "location.href = '../emDetail.php?employee_id=$id';";
-                echo "</script>";
+        $update_data = "UPDATE employee SET title_name = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', position = '$position', id_card = '$id_card', tel = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nat', address = '$address' WHERE employee_id = $id";
+        if(isset($pic_idcard)){
+            if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $target1)){
+                $update_idcard = "UPDATE employee SET pic_idcard = '$pic_idcard' WHERE employee_id = $id";
+                $conn->query($update_idcard);
             }
+        }
+        if(isset($pic_home)){
+            if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $target2)){
+                $update_home = "UPDATE employee SET pic_home = '$pic_home' WHERE employee_id = $id";
+                $conn->query($update_home);
+            }
+        }
+        if(isset($profile_img)){
+            if(move_uploaded_file($_FILES["profile_img"]["tmp_name"], $target3)){
+                $update_profile = "UPDATE employee SET profile_img = '$profile_img' WHERE employee_id = $id";
+                $conn->query($update_profile);
+            }
+        }
+        $check_rename = mysqli_query($conn,"SELECT id_card FROM employee WHERE employee_id = $id");
+        $result_check = mysqli_fetch_assoc($check_rename);
+        if($result_check["id_card"] != $id_card){
+            rename("../../../images/employee/".$result_check["id_card"]."/","../../../images/employee/$id_card/");
+        }
+        if($conn->query($update_data) === TRUE){
+            echo "<script>";
+            echo "alert('อัปเดตข้อมูลเรียบร้อยแล้ว');";
+            // echo "location.href = '../emDetail.php?employee_id=$id';";
+            echo "</script>";
         }else{
-            $conn->error;
+            echo $conn->error;
         }
     }
 }
