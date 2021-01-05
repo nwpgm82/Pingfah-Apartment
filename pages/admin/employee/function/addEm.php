@@ -32,10 +32,10 @@ if($_SESSION['level'] == 'admin'){
     $username = $email;
     $password = $id_card;
     $main_target = "../../../images/employee/";
-    $folder_target = "../../../images/employee/$username/";
-    $target1 = "../../../images/employee/$username/".basename($pic_idcard);
-    $target2 = "../../../images/employee/$username/".basename($pic_home);
-    $target3 = "../../../images/employee/$username/".basename($profile_img);
+    $folder_target = "../../../images/employee/$id_card/";
+    $target1 = "../../../images/employee/$id_card/".basename($pic_idcard);
+    $target2 = "../../../images/employee/$id_card/".basename($pic_home);
+    $target3 = "../../../images/employee/$id_card/".basename($profile_img);
     $checkData = "SELECT * FROM employee WHERE id_card = '$id_card'";
     $result = $conn->query($checkData);
     if ($result->num_rows > 0) {

@@ -49,8 +49,8 @@ if($_SESSION['level'] == 'admin'){
                 }
                 
                 $start = ($page - 1) * $perpage;
-                $num = 1;
-                $sql = "SELECT * FROM employee limit {$start} , {$perpage}";
+                $num = $start + 1;
+                $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee limit {$start} , {$perpage}";
                 $result = $conn->query($sql);  
                 if ($result->num_rows > 0) {
                 ?>
@@ -72,7 +72,7 @@ if($_SESSION['level'] == 'admin'){
                         </td>
                         <td>
                             <div class="grid">
-                                <img src="../../images/employee/<?php echo $row['email']; ?>/<?php echo $row["profile_img"]; ?>"
+                                <img src="../../images/employee/<?php echo $row['id_card']; ?>/<?php echo $row["profile_img"]; ?>"
                                     alt="">
                                 <p><?php echo $row["firstname"]; ?> <?php echo $row["lastname"]; ?></p>
                             </div>
@@ -86,10 +86,8 @@ if($_SESSION['level'] == 'admin'){
                         <td><?php echo $row["email"]; ?></td>
                         <td>
                             <div class="grid-btn">
-                                <a href="../employee/emDetail.php?username=<?php echo $row['username']; ?>"><button
-                                        type="button" class="more-btn">แสดงข้อมูลเพิ่มเติม</button></a>
-                                <button type="button" class="del-btn"
-                                    onclick="delEm(<?php echo $row['id']; ?>,'<?php echo $row['username']; ?>')">ลบ</button>
+                                <a href="../employee/emDetail.php?employee_id=<?php echo $row['employee_id']; ?>"><button type="button" class="more-btn">แสดงข้อมูลเพิ่มเติม</button></a>
+                                <button type="button" class="del-btn" onclick="delEm(<?php echo $row['id']; ?>,'<?php echo $row['username']; ?>')">ลบ</button>
                             </div>
                         </td>
                     </tr>
