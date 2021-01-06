@@ -26,6 +26,8 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/employee.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../../../js/admin/delEm.js"></script>
     <title>Document</title>
 </head>
 
@@ -35,7 +37,8 @@ if($_SESSION['level'] == 'admin'){
             <div class="employee-box">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <h3>รายชื่อพนักงาน</h3>
-                    <div style="display:flex;justify-content:flex-end;">
+                    <div class="option-grid">
+                    <a href="emHistory.php"><button class="history-btn"></button></a>
                         <a href="../employee/addemployee.php"><button>เพิ่มพนักงาน</button></a>
                     </div>
                 </div>
@@ -50,7 +53,7 @@ if($_SESSION['level'] == 'admin'){
                 
                 $start = ($page - 1) * $perpage;
                 $num = $start + 1;
-                $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee limit {$start} , {$perpage}";
+                $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee WHERE employee_status = 'กำลังทำงาน' limit {$start} , {$perpage}";
                 $result = $conn->query($sql);  
                 if ($result->num_rows > 0) {
                 ?>
@@ -60,7 +63,7 @@ if($_SESSION['level'] == 'admin'){
                         <th>ชื่อพนักงาน</th>
                         <th>ตำแหน่ง</th>
                         <th>เบอร์โทรศัพท์</th>
-                        <th>อีเมล์</th>
+                        <th>อีเมล</th>
                         <th>เพิ่มเติม</th>
                     </tr>
                     <?php while($row = $result->fetch_assoc()) { ?>
@@ -79,7 +82,7 @@ if($_SESSION['level'] == 'admin'){
                         </td>
                         <td>
                             <div>
-                                <p><?php echo $row["position"]; ?></p>
+                                <p><?php if($row["position"] == "employee"){ echo "พนักงาน"; }else{ echo $row["position"]; } ?></p>
                             </div>
                         </td>
                         <td><?php echo textFormat($row["tel"],"___-_______"); ?></td>
@@ -87,7 +90,7 @@ if($_SESSION['level'] == 'admin'){
                         <td>
                             <div class="grid-btn">
                                 <a href="../employee/emDetail.php?employee_id=<?php echo $row['employee_id']; ?>"><button type="button" class="more-btn">แสดงข้อมูลเพิ่มเติม</button></a>
-                                <button type="button" class="del-btn" onclick="delEm(<?php echo $row['id']; ?>,'<?php echo $row['username']; ?>')">ลบ</button>
+                                <button type="button" class="del-btn" id="<?php echo $row["employee_id"]; ?>">ลบ</button>
                             </div>
                         </td>
                     </tr>
@@ -115,7 +118,6 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/delEm.js"></script>
 </body>
 
 </html>

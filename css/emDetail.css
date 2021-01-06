@@ -149,7 +149,7 @@
     grid-template-rows: 1fr 1fr 1fr 1fr;
     gap: 16px 8px;
     grid-template-areas:
-        "come come status status . . . . ."
+        "come come out out status status . . ."
         "title_name firstname firstname firstname lastname lastname lastname nickname nickname"
         "id_card id_card birthday birthday age phone phone email email"
         "race race nation nation position . . . .";
@@ -157,6 +157,11 @@
 
 .come {
     grid-area: come;
+    height: 86px;
+}
+
+.out {
+    grid-area: out;
     height: 86px;
 }
 

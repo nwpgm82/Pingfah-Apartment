@@ -38,9 +38,13 @@ if($_SESSION["level"] == "admin"){
     <div class="box">
         <div style="padding:24px;">
             <div class="emDetail-box">
-                <form action="function/action.php?employee_id=<?php echo $id; ?>" method="POST" enctype="multipart/form-data">
+                <form action="function/action.php?employee_id=<?php echo $id; ?>" method="POST"
+                    enctype="multipart/form-data">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <h3>ข้อมูลพนักงาน</h3>
+                        <?php
+                        if($employee_status == "กำลังทำงาน"){
+                        ?>
                         <div class="option-grid" id="option-btn">
                             <button type="submit" class="quit quit-btn" id="quit" name="quit" title="ลาออก"></button>
                             <button type="button" class="edit edit-btn" id="edit" title="แก้ไข"></button>
@@ -53,6 +57,7 @@ if($_SESSION["level"] == "admin"){
                                 title="ยืนยันการแก้ไข"></button>
                             <button type="button" class="cancel-btn" id="cancel-edit" title="ยกเลิกการแก้ไข"></button>
                         </div>
+                        <?php } ?>
                     </div>
                     <div class="hr"></div>
                     <div class="form-grid">
@@ -81,6 +86,18 @@ if($_SESSION["level"] == "admin"){
                                     <input type="text" name="come" id="come_date"
                                         value="<?php echo DateThai($come_date); ?>" disabled>
                                     <h5 id="come_error" style="color:red;"></h5>
+                                </div>
+                                <?php
+                                if($employee_status == "ลาออก"){
+                                ?>
+                                <div class="out">
+                                    <p>วันที่ลาออก</p>
+                                    <input type="text" value="<?php echo DateThai($out_date); ?>" disabled>
+                                </div>
+                                <?php } ?>
+                                <div class="<?php if($employee_status == "กำลังทำงาน"){ echo "out"; }else if($employee_status == "ลาออก"){ echo "status"; } ?>">
+                                    <p>สถานะการทำงาน</p>
+                                    <input type="text" value="<?php echo $employee_status; ?>" disabled>
                                 </div>
                                 <div class="title_name">
                                     <p>คำนำหน้าชื่อ</p>

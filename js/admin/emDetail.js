@@ -506,7 +506,7 @@ $(document).ready(function(){
         }
     })
     $("#quit").click(function (event) {
-        if (confirm("คุณต้องการแจ้งออกใช่หรือไม่")) {
+        if (confirm('คุณต้องการเปลี่ยนสถานะเป็น "ลาออก" ใช่หรือไม่')) {
             $("#form-box").submit()
         } else {
             event.preventDefault()

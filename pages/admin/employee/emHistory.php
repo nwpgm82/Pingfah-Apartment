@@ -12,19 +12,18 @@ if($_SESSION["level"] == "admin"){
     }
     $from = @$_REQUEST["from"];
     $to = @$_REQUEST["to"];
-    $check = @$_REQUEST["style"];
+    $check = @$_REQUEST["status"];
     if(isset($from) && isset($to)){
-        $query = "SELECT come_date, COALESCE(SUM(member_cat = 'รายเดือน'),0) AS month_total, COALESCE(SUM(member_cat = 'รายวัน')) AS daily_total FROM roommember WHERE come_date BETWEEN '$from' AND '$to' GROUP BY come_date ORDER BY come_date ASC";
+        $query = "SELECT come_date, COALESCE(SUM(employee_status = 'กำลังทำงาน'),0) AS work_total, COALESCE(SUM(employee_status = 'ลาออก'),0) AS quit_total FROM employee WHERE come_date BETWEEN '$from' AND '$to' GROUP BY come_date ORDER BY come_date ASC";
     }else{
-        $query = "SELECT come_date, COALESCE(SUM(member_cat = 'รายเดือน'),0) AS month_total, COALESCE(SUM(member_cat = 'รายวัน')) AS daily_total FROM roommember GROUP BY come_date ORDER BY come_date ASC";
+        $query = "SELECT come_date, COALESCE(SUM(employee_status = 'กำลังทำงาน'),0) AS work_total, COALESCE(SUM(employee_status = 'ลาออก'),0) AS quit_total FROM employee GROUP BY come_date ORDER BY come_date ASC";
     }
     $query_result = mysqli_query($conn, $query);
     $datax = array();
     foreach ($query_result as $k) {
-        $datax[] = "['".DateThai($k['come_date'])."',".$k['daily_total'].",".$k['month_total']."]";
+        $datax[] = "['".DateThai($k['come_date'])."',".$k['work_total'].",".$k['quit_total']."]";
     }
     $datax = implode(",", $datax);
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,13 +31,12 @@ if($_SESSION["level"] == "admin"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../css/history.css">
+    <link rel="stylesheet" href="../../../css/history2.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
-    <script src="../../../js/admin/history.js"></script>
     <title>Document</title>
 </head>
 
@@ -47,7 +45,7 @@ if($_SESSION["level"] == "admin"){
     <div class="box">
         <div style="padding:24px;">
             <div class="history-box">
-                <h3>ประวัติการเข้าพัก</h3>
+                <h3>ประวัติการเข้าทำงานของพนักงาน</h3>
                 <div class="search">
                     <div style="padding-right:16px">
                         <div style="height:57px;display:flex;align-items:flex-start;">
@@ -89,7 +87,7 @@ if($_SESSION["level"] == "admin"){
                     </div>
                     <div class="hr"></div>
                     <div>
-                        <h3>รายการประวัติการเข้าพักทั้งหมด</h3>
+                        <h3>รายการประวัติการเข้าทำงานทั้งหมด</h3>
                         <?php
                         $perpage = 10;
                         if(isset($_GET['page'])){
@@ -100,23 +98,23 @@ if($_SESSION["level"] == "admin"){
                         $start = ($page - 1) * $perpage;
                         $num = $start + 1;
                         if(isset($from) && isset($to) && !isset($check)){
-                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to' ORDER BY come_date DESC";
+                            $sql = "SELECT employee_id, position, come_date, out_date, employee_status, title_name, firstname, lastname FROM employee WHERE come_date BETWEEN '$from' AND '$to' ORDER BY come_date DESC";
                         }else if(!isset($from) && !isset($to) && isset($check)){
-                            if($check == "daily"){
-                                $check_s = "รายวัน";
-                            }else if($check == "month"){
-                                $check_s = "รายเดือน";
+                            if($check == "work"){
+                                $check_s = "กำลังทำงาน";
+                            }else if($check == "quit"){
+                                $check_s = "ลาออก";
                             }
-                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE member_cat = '$check_s' ORDER BY come_date DESC";
+                            $sql = "SELECT employee_id, position, come_date, out_date, employee_status, title_name, firstname, lastname FROM employee WHERE employee_status = '$check_s' ORDER BY come_date DESC";
                         }else if(isset($from) && isset($to) && isset($check)){
-                            if($check == "daily"){
-                                $check_s = "รายวัน";
-                            }else if($check == "month"){
-                                $check_s = "รายเดือน";
+                            if($check == "work"){
+                                $check_s = "กำลังทำงาน";
+                            }else if($check == "quit"){
+                                $check_s = "ลาออก";
                             }
-                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to' AND member_cat = '$check_s' ORDER BY come_date DESC";
+                            $sql = "SELECT employee_id, position, come_date, out_date, employee_status, title_name, firstname, lastname FROM employee WHERE (come_date BETWEEN '$from' AND '$to') AND employee_status = '$check_s' ORDER BY come_date DESC";
                         }else{
-                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember ORDER BY come_date DESC";
+                            $sql = "SELECT employee_id, position, come_date, out_date, employee_status, title_name, firstname, lastname FROM employee ORDER BY come_date DESC";
                         }
                         $result = $conn->query($sql);
                         ?>
@@ -126,12 +124,12 @@ if($_SESSION["level"] == "admin"){
                                 <label for="scales">ทั้งหมด</label>
                             </div>
                             <div style="padding:32px 16px;display: flex;align-items: center;">
-                                <input type="checkbox" id="daily_check" <?php if($check == "daily"){ echo "checked"; } ?>>
-                                <label for="scales">รายวัน</label>
+                                <input type="checkbox" id="work_check" <?php if($check == "work"){ echo "checked"; } ?>>
+                                <label for="scales">กำลังทำงาน</label>
                             </div>
                             <div style="padding:32px 16px;display: flex;align-items: center;">
-                                <input type="checkbox" id="month_check" <?php if($check == "month"){ echo "checked"; } ?>>
-                                <label for="scales">รายเดือน</label>
+                                <input type="checkbox" id="quit_check" <?php if($check == "quit"){ echo "checked"; } ?>>
+                                <label for="scales">ลาออก</label>
                             </div>
                         </div>
                         <?php
@@ -140,11 +138,10 @@ if($_SESSION["level"] == "admin"){
                         <table>
                             <tr>
                                 <th>ลำดับ</th>
-                                <th>เลขห้อง</th>
-                                <th>ชื่อผู้พัก</th>
+                                <th>ชื่อพนักงาน</th>
+                                <th>ตำแหน่ง</th>
                                 <th>วันที่เข้าพัก</th>
                                 <th>วันที่ออกจากที่พัก</th>
-                                <th>ลักษณะ</th>
                                 <th>สถานะ</th>
                                 <th>เพิ่มเติม</th>
                             </tr>
@@ -153,17 +150,14 @@ if($_SESSION["level"] == "admin"){
                             ?>
                             <tr>
                                 <td><?php echo $num; ?></td>
-                                <td><?php echo $row["room_id"]; ?></td>
-                                <td><?php echo $row["name_title"].$row["firstname"] ." " .$row["lastname"]; ?></td>
+                                <td><?php echo $row["title_name"].$row["firstname"] ." " .$row["lastname"]; ?></td>
+                                <td><?php if($row["position"] == "employee"){ echo "พนักงาน"; }else{ echo $row["position"]; }?></td>
                                 <td><?php echo DateThai($row["come_date"]); ?></td>
                                 <td><?php if(isset($row["out_date"])){ echo DateThai($row["out_date"]); } ?></td>
-                                <td><img id="cat"
-                                    src="<?php if($row['member_cat'] == 'รายวัน'){ echo '../../../img/tool/clock-icon.png'; }else if($row['member_cat'] == 'รายเดือน'){ echo '../../../img/tool/calendar-icon.png'; } ?>"
-                                    alt="category-icon" title="<?php if($row['member_cat'] == 'รายวัน'){ echo "รายวัน"; }else if($row['member_cat'] == 'รายเดือน'){ echo "รายเดือน"; } ?>"></td>
-                                <td><?php echo $row["member_status"]; ?></td>
+                                <td><?php echo $row["employee_status"]; ?></td>
                                 <td>
                                     <div class="option-grid">
-                                        <a href="memberDetail.php?member_id=<?php echo $row["member_id"];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                        <a href="emDetail.php?employee_id=<?php echo $row["employee_id"];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
                                         <button class="del-btn" id="<?php echo $row["member_id"]; ?>"></button>
                                     </div>
                                 </td>
@@ -220,7 +214,7 @@ if($_SESSION["level"] == "admin"){
                         </div>
                         <?php
                         }else{
-                            echo "<div style='padding-top:32px;'>ไม่มีรายการประวัติการเข้าพัก</div>"; 
+                            echo "<div style='padding-top:32px;'>ไม่มีรายการประวัติการเข้าทำงาน</div>"; 
                         }
                         ?>
                     </div>
@@ -262,3 +256,4 @@ if($_SESSION["level"] == "admin"){
 }else{
     Header("Location : ../../login.php");
 }
+?>
