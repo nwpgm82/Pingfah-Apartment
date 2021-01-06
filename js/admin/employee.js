@@ -11,7 +11,7 @@ $(document).ready(function(){
             $("#firstname").addClass("placeholder-error")
             $("#lastname").css("border-color","red")
             $("#lastname").addClass("placeholder-error")
-            $("#input_error").html("โปรดระบุข้อความช่องใดช่องหนึ่ง")
+            $("#input_error").html("โปรดระบุข้อความที่ต้องการค้นหาช่องใดช่องหนึ่ง")
         }
     })
     $(".del-btn").click(function(event){

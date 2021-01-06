@@ -136,6 +136,16 @@
     transition: 0.3s;
 }
 
+.employee-box .search .cancel-sort {
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
+}
+
+.employee-box .cancel-sort:hover {
+    background-color: rgb(235, 235, 235);
+}
+
 .employee-box table td .del-btn{
     background-color: rgb(255, 70, 70);
 }

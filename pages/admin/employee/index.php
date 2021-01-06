@@ -45,20 +45,29 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                 </div>
                 <div class="hr"></div>
-                <div class="search">
-                    <div style="padding-right:8px;">
-                        <p>ชื่อ</p>
-                        <input type="text" id="firstname" value="<?php echo $firstname; ?>"
-                            placeholder="ค้นหาชื่อพนักงาน">
+                <div style="height:86px;">
+                    <div class="search">
+                        <div style="padding-right:8px;">
+                            <p>ชื่อ</p>
+                            <input type="text" id="firstname" value="<?php echo $firstname; ?>"
+                                placeholder="ค้นหาชื่อพนักงาน">
+                        </div>
+                        <div style="padding-right:8px;">
+                            <p>นามสกุล</p>
+                            <input type="text" id="lastname" value="<?php echo $lastname; ?>"
+                                placeholder="ค้นหานามสกุลพนักงาน">
+                        </div>
+                        <button id="search_em">ค้นหาพนักงาน</button>
+                        <?php
+                        if(isset($firstname) || isset($lastname)){
+                        ?>
+                        <div style="padding:0 16px;">
+                            <a href="index.php"><button type="button" class="cancel-sort">แสดงรายชื่อพนักงานทั้งหมด</button></a>
+                        </div>
+                        <?php } ?>
                     </div>
-                    <div style="padding-right:8px;">
-                        <p>นามสกุล</p>
-                        <input type="text" id="lastname" value="<?php echo $lastname; ?>"
-                            placeholder="ค้นหานามสกุลพนักงาน">
-                    </div>
-                    <button id="search_em">ค้นหาพนักงาน</button>
+                    <h5 id="input_error" style="color:red;"></h5>
                 </div>
-                <h5 id="input_error" style="color:red;"></h5>
                 <div style="padding-top:32px;">
                     <?php
                     if(isset($firstname) && !isset($lastname)){
