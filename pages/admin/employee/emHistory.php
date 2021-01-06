@@ -37,6 +37,7 @@ if($_SESSION["level"] == "admin"){
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
+    <script src="../../../js/admin/emHistory.js"></script>
     <title>Document</title>
 </head>
 
@@ -66,7 +67,7 @@ if($_SESSION["level"] == "admin"){
                             if(isset($from) || isset($to) || isset($check)){
                             ?>
                             <div style="padding:0 16px;">
-                                <a href="roomHistory.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
+                                <a href="emHistory.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
                             </div>
                             <?php } ?>
                         </div>
@@ -158,7 +159,7 @@ if($_SESSION["level"] == "admin"){
                                 <td>
                                     <div class="option-grid">
                                         <a href="emDetail.php?employee_id=<?php echo $row["employee_id"];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
-                                        <button class="del-btn" id="<?php echo $row["member_id"]; ?>"></button>
+                                        <button class="del-btn" id="<?php echo $row["employee_id"]; ?>"></button>
                                     </div>
                                 </td>
                             </tr>
@@ -176,39 +177,39 @@ if($_SESSION["level"] == "admin"){
                                 <?php
                                 if(isset($from) && isset($to) && !isset($check)){
                                 ?>
-                                <a href="roomHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=1">&laquo;</a>
+                                <a href="emHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=1">&laquo;</a>
                                 <?php for($i=1;$i<=$total_page;$i++){ ?>
-                                <a href="roomHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $i; ?>"
+                                <a href="emHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $i; ?>"
                                     <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                                 <?php } ?>
-                                <a href="roomHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                                <a href="emHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                                 <?php
                                 }else if(!isset($from) && !isset($to) && isset($check)){
                                 ?>
-                                <a href="roomHistory.php?style=<?php echo $check; ?>&page=1">&laquo;</a>
+                                <a href="emHistory.php?status=<?php echo $check; ?>&page=1">&laquo;</a>
                                 <?php for($i=1;$i<=$total_page;$i++){ ?>
-                                <a href="roomHistory.php?style=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                                <a href="emHistory.php?status=<?php echo $check; ?>&page=<?php echo $i; ?>"
                                     <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                                 <?php } ?>
-                                <a href="roomHistory.php?style=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                                <a href="emHistory.php?status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                                 <?php
                                 }else if(isset($from) && isset($to) && isset($check)){
                                 ?>
-                                <a href="roomHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&style=<?php echo $check; ?>&page=1">&laquo;</a>
+                                <a href="emHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&status=<?php echo $check; ?>&page=1">&laquo;</a>
                                 <?php for($i=1;$i<=$total_page;$i++){ ?>
-                                <a href="roomHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&style=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                                <a href="emHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&status=<?php echo $check; ?>&page=<?php echo $i; ?>"
                                     <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                                 <?php } ?>
-                                <a href="roomHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&style=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                                <a href="emHistory.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                                 <?php
                                 }else{
                                 ?>
-                                <a href="roomHistory.php?page=1">&laquo;</a>
+                                <a href="emHistory.php?page=1">&laquo;</a>
                                 <?php for($i=1;$i<=$total_page;$i++){ ?>
-                                <a href="roomHistory.php?page=<?php echo $i; ?>"
+                                <a href="emHistory.php?page=<?php echo $i; ?>"
                                     <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                                 <?php } ?>
-                                <a href="roomHistory.php?page=<?php echo $total_page; ?>">&raquo;</a>
+                                <a href="emHistory.php?page=<?php echo $total_page; ?>">&raquo;</a>
                                 <?php } ?>
                             </div>
                         </div>
