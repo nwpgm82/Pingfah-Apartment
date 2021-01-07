@@ -3,15 +3,6 @@ session_start();
 if($_SESSION['level'] == 'admin'){ 
     include('../../connection.php');
     include('../../../components/sidebar.php');
-    function DateThai($strDate)
-    {
-        $strYear = date("Y",strtotime($strDate))+543;
-        $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-        $strMonthThai=$strMonthCut[$strMonth];
-        return "$strDay $strMonthThai $strYear";
-    }
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +28,7 @@ if($_SESSION['level'] == 'admin'){
                 <form action="../repair/function/repairAccept.php" method="POST">
                     <div style="margin-top: 32px;">
                         <p>เลขห้อง</p>
-                        <select id="room_select" name="room_select" required>
+                        <select id="room_select" name="room_select">
                             <option value="">---</option>
                             <?php
                             $roomlist = "SELECT * FROM roomlist";
@@ -53,16 +44,18 @@ if($_SESSION['level'] == 'admin'){
                             }
                         ?>
                         </select>
+                        <h5 id="room_error" style="color:red;"></h5>
                     </div>
                     <div class="flex-detail">
                         <div>
                             <p>ประเภท</p>
-                            <select type="text" id="select" name="repair_category" onchange="categoryList()" required>
+                            <select type="text" id="select" name="repair_category" onchange="categoryList()">
                                 <option value="">---</option>
                                 <option value="เครื่องใช้ไฟฟ้า">เครื่องใช้ไฟฟ้า</option>
                                 <option value="เฟอร์นิเจอร์">เฟอร์นิเจอร์</option>
                                 <option value="สุขภัณฑ์">สุขภัณฑ์</option>
                             </select>
+                            <h5 id="cat_error" style="color:red;"></h5>
                         </div>
                         <div>
                             <p>อุปกรณ์</p>
@@ -75,13 +68,14 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <div>
                         <p>รายละเอียด</p>
-                        <textarea name="repair_detail" id="" cols="30" rows="10"></textarea>
+                        <textarea name="repair_detail" id="repair_detail" cols="30" rows="10"></textarea>
+                        <h5 id="detail_error" style="color:red"></h5>
                     </div>
                     <div class="flex-detail">
-                        <div style="position:relative;">
+                        <div>
                             <p>เวลาที่ลง</p>
                             <input type="text" id="repairDate" name="repair_date" readonly>
-                            <p id="repair_date" class="dateText"></p>
+                            <h5 id="date_error" style="color:red"></h5>
                         </div>
                         <!-- <div>
                             <p>สถานะ</p>

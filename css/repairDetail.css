@@ -15,7 +15,7 @@
 }
 
 .repairDetail-box {
-    width: 600px;
+    width: 100%;
     min-height: fit-content;
     padding: 36px;
     border-radius: 4px;
@@ -39,7 +39,7 @@
 
 .repairDetail-box .flex-detail {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 16px;
     width: 100%;
     margin-top: 32px;
@@ -47,7 +47,7 @@
 
 .repairDetail-box .flex-detail2 {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 16px;
     width: 100%;
     margin-top: 32px;
@@ -87,8 +87,9 @@
 }
 
 .repairDetail-box button{
-    width: 80px;
+    width: auto;
     height: 40px;
+    padding: 0 16px;
     border-radius: 4px;
     border: none;
     background-color: rgb(131, 120, 47, 0.7);
@@ -100,16 +101,14 @@
 }
 
 .repairDetail-box button:hover{
-    background-color: rgb(131, 120, 47, 0.7);
+    background-color: rgb(131, 120, 47, 1);
 }
 
 .repairDetail-box input[type=text]#success_date{
-    color: transparent;
-    background-color: transparent;
     background-image: url("../img/tool/calendar.png");
     background-repeat:no-repeat;
     background-size: 20px;
-    background-position: 92% 50%;
+    background-position: 96% 50%;
     cursor: pointer;
 }
 

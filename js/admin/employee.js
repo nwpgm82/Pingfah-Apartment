@@ -14,6 +14,21 @@ $(document).ready(function(){
             $("#input_error").html("โปรดระบุข้อความที่ต้องการค้นหาช่องใดช่องหนึ่ง")
         }
     })
+    $("input").keyup(function(){
+        if($("#firstname").val() != "" || $("#lastname").val() != ""){
+            $("#firstname").css("border-color","")
+            $("#firstname").removeClass("placeholder-error")
+            $("#lastname").css("border-color","")
+            $("#lastname").removeClass("placeholder-error")
+            $("#input_error").html("")
+        }else{
+            $("#firstname").css("border-color","red")
+            $("#firstname").addClass("placeholder-error")
+            $("#lastname").css("border-color","red")
+            $("#lastname").addClass("placeholder-error")
+            $("#input_error").html("โปรดระบุข้อความที่ต้องการค้นหาช่องใดช่องหนึ่ง")
+        }
+    })
     $(".del-btn").click(function(event){
         if(confirm("คุณต้องการลบข้อมูลใช่หรือไม่ ?")){
             location.href = `function/delEm.php?employee_id=${event.target.id}`

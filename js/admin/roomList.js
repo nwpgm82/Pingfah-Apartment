@@ -221,7 +221,7 @@ $(document).ready(function () {
             if (date_from == "" && date_to == "") {
                 $(".roundtrip-input").css("border-color", "red")
                 $(".roundtrip-input").css("background-image", "url('../../../img/tool/calendar-error.png')")
-                $("#error-text").html("โปรดระบุวันที่ที่ต้องการค้นหา")
+                $("#error-text").html("โปรดระบุวันที่ต้องการค้นหา")
             }
             if(people == 0){
                 $("#people").css("border-color","red")

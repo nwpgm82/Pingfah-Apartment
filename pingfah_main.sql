@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2020 at 08:47 PM
+-- Generation Time: Jan 07, 2021 at 07:47 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -91,11 +91,11 @@ CREATE TABLE `cost` (
 --
 
 INSERT INTO `cost` (`cost_id`, `room_id`, `type`, `cost_status`, `date`, `room_cost`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `total`) VALUES
-(1, '201', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 80.00, 570.00, 105.00, 0.00, '3455'),
+(1, '201', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 80.00, 570.00, 105.00, 150.00, '3455'),
 (2, '202', '', 'ชำระเงินแล้ว', '2020-12', 2700.00, 80.00, 375.00, 105.00, 0.00, '3260'),
-(3, '203', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 80.00, 600.00, 105.00, 0.00, '3485'),
+(3, '203', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 80.00, 600.00, 105.00, 150.00, '3485'),
 (4, '204', '', 'ชำระเงินแล้ว', '2020-12', 2700.00, 80.00, 315.00, 105.00, 0.00, '3200'),
-(5, '207', '', 'ยังไม่ได้ชำระ', '2020-12', 2300.00, 80.00, 225.00, 105.00, 0.00, '2710');
+(5, '207', '', 'ยังไม่ได้ชำระ', '2020-12', 2300.00, 80.00, 225.00, 105.00, 150.00, '2710');
 
 -- --------------------------------------------------------
 
@@ -159,7 +159,10 @@ INSERT INTO `dailycost` (`dailycost_id`, `room_id`, `firstname`, `lastname`, `id
 --
 
 CREATE TABLE `employee` (
-  `id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `come_date` varchar(20) NOT NULL,
+  `out_date` varchar(20) DEFAULT NULL,
+  `employee_status` varchar(20) NOT NULL,
   `title_name` varchar(200) NOT NULL,
   `firstname` varchar(200) NOT NULL,
   `lastname` varchar(200) NOT NULL,
@@ -168,27 +171,23 @@ CREATE TABLE `employee` (
   `id_card` varchar(200) NOT NULL,
   `tel` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
-  `id_line` varchar(200) NOT NULL,
   `birthday` varchar(200) NOT NULL,
-  `age` varchar(200) NOT NULL,
+  `age` int(11) NOT NULL,
   `race` varchar(200) NOT NULL,
   `nationality` varchar(200) NOT NULL,
   `address` varchar(200) NOT NULL,
   `pic_idcard` varchar(200) NOT NULL,
   `pic_home` varchar(200) NOT NULL,
-  `profile_img` varchar(200) NOT NULL,
-  `username` varchar(200) NOT NULL,
-  `password` varchar(200) NOT NULL
+  `profile_img` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`id`, `title_name`, `firstname`, `lastname`, `nickname`, `position`, `id_card`, `tel`, `email`, `id_line`, `birthday`, `age`, `race`, `nationality`, `address`, `pic_idcard`, `pic_home`, `profile_img`, `username`, `password`) VALUES
-(27, 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', 'พนักงาน', '1509966011521', '0956722914', 'blackfrostier@gmail.com', 'blackfrostier', '1998-12-21', '21', 'ไทย', 'ไทย', '140/40 หมู่ 2 ต. หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', 'id_em1.jpg', 'home_em1.jpg', '115774657_3345395698845713_2446905765721859802_o.jpg', 'nwpgm82', 'ef16b5fe40a49934ad40c0b059090b14'),
-(30, 'นาย', 'พงศธร', 'สร้อยอินต๊ะ', 'นนท์', 'พนักงาน', '1509966011882', '0643980405', 'phongsatron75@gmail.com', 'ืnornon1', '1998-12-23', '23', 'ไทย', 'ไทย', '92/22\r\n260', 'id_em2.jpg', 'home_em2.jpg', '21741087_1506812692740247_3032803359321722019_o.jpg', 'poople0506', '8671fb0fad48271393c65ae59aaae694'),
-(31, 'นาย', 'พงษ์ศักดิ์', 'พงตุ้ย', 'กันต์', 'พนักงาน', '150565564194984984984984984', '0643980405', 'phongsatron75@gmail.com', 'ืnornon1', '1998-12-30', '23', 'ไทย', 'ไทย', '92/22\r\n260', 'id_em3.jpg', 'home_em3.jpg', '_DSC1764.jpg', 'poople0201', '8671fb0fad48271393c65ae59aaae694');
+INSERT INTO `employee` (`employee_id`, `come_date`, `out_date`, `employee_status`, `title_name`, `firstname`, `lastname`, `nickname`, `position`, `id_card`, `tel`, `email`, `birthday`, `age`, `race`, `nationality`, `address`, `pic_idcard`, `pic_home`, `profile_img`) VALUES
+(36, '2021-01-05', NULL, 'กำลังทำงาน', 'นางสาว', 'สุภิศรา', 'เตชนันท์', 'แยม', 'employee', '5556667778889', '0620477145', 'supisra45.30@gmail.com', '1999-04-22', 21, 'ไทย', 'ไทย', 'เลขที่ 288 หมู่ที่ 5 ตำบล ริมกก อำเภอ เมืองเชียงราย จังหวัด เชียงราย 57100', '115829682_3345399482178668_7710700474312287945_o.jpg', 'Rabbit-01.jpg', '117094314_3466888280022757_1501037714692968577_o.jpg'),
+(37, '2021-01-06', '2021-01-06', 'ลาออก', 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', 'employee', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '1997-12-21', 23, 'ไทย', 'ไทย', '140/40 หมู่ 2 ต.หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', '404365.jpg', 'ข้อเสนอแนะบ้านพักพิงฟ้า.jpg', '404570.jpg');
 
 -- --------------------------------------------------------
 
@@ -267,9 +266,21 @@ INSERT INTO `login` (`username`, `name`, `password`, `email`, `level`) VALUES
 ('204', '204', '152f6d383d17f3827fee90a2909a75b8', 'somkid.madee@gmail.com', 'guest'),
 ('207', '207', 'a576d8b648a41aa7542e55ab5e12b48b', 'wandee.wonderful@gmail.com', 'guest'),
 ('admin', 'admin', '81dc9bdb52d04dc20036dbd8313ed055', '', 'admin'),
-('nwpgm82', 'นวพล', 'ef16b5fe40a49934ad40c0b059090b14', 'blackfrostier@gmail.com', 'employee'),
-('poople0201', 'พงษ์ศักดิ์', '8671fb0fad48271393c65ae59aaae694', 'phongsatron75@gmail.com', 'employee'),
-('poople0506', 'พงศธร', '8671fb0fad48271393c65ae59aaae694', 'phongsatron75@gmail.com', 'employee');
+('supisra45.30@gmail.com', 'สุภิศรา', '1cbf2e9cd7eba3b7dd32cf2565d57908', 'supisra45.30@gmail.com', 'employee');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logs`
+--
+
+CREATE TABLE `logs` (
+  `log_id` int(11) NOT NULL,
+  `log_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `log_detail` varchar(50) NOT NULL,
+  `log_topic` varchar(50) NOT NULL,
+  `log_name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -315,20 +326,21 @@ CREATE TABLE `repair` (
   `repair_date` varchar(200) NOT NULL,
   `repair_successdate` varchar(200) DEFAULT NULL,
   `repair_status` varchar(200) NOT NULL,
-  `repair_income` float(100,2) DEFAULT NULL,
-  `repair_expenses` float(100,2) DEFAULT NULL
+  `repair_income` float(10,2) DEFAULT NULL,
+  `repair_expenses` float(10,2) DEFAULT NULL,
+  `repair_profit` float(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `repair`
 --
 
-INSERT INTO `repair` (`repair_id`, `room_id`, `repair_appliance`, `repair_category`, `repair_detail`, `repair_date`, `repair_successdate`, `repair_status`, `repair_income`, `repair_expenses`) VALUES
-(1, '201', 'เครื่องทำน้ำอุ่น', 'เครื่องใช้ไฟฟ้า', 'เครื่องทำน้ำอุ่นไม่ร้อน', '2020-12-05', '2020-12-08', 'ซ่อมเสร็จแล้ว', 300.00, 165.00),
-(2, '202', 'โต๊ะ', 'เฟอร์นิเจอร์', 'ขาโต๊ะข้างมุมบนซ้ายชำรุด', '2020-12-09', '2020-12-12', 'ซ่อมเสร็จแล้ว', 200.00, 80.00),
-(3, '203', 'ชักโครก', 'สุขภัณฑ์', 'ฝาชักโครกแตกหัก', '2020-12-12', '2020-12-13', 'ซ่อมเสร็จแล้ว', 150.00, 60.00),
-(4, '201', 'ประตู', 'เฟอร์นิเจอร์', 'ลูกบิดประตูชำรุด', '2020-12-12', NULL, 'กำลังดำเนินการ', NULL, NULL),
-(5, '207', 'พัดลม', 'เครื่องใช้ไฟฟ้า', 'พัดลมไม่ทำงาน', '2020-12-19', NULL, 'รอดำเนินการ', NULL, NULL);
+INSERT INTO `repair` (`repair_id`, `room_id`, `repair_appliance`, `repair_category`, `repair_detail`, `repair_date`, `repair_successdate`, `repair_status`, `repair_income`, `repair_expenses`, `repair_profit`) VALUES
+(1, '201', 'เครื่องทำน้ำอุ่น', 'เครื่องใช้ไฟฟ้า', 'เครื่องทำน้ำอุ่นไม่ร้อน', '2020-12-05', '2020-12-08', 'ซ่อมเสร็จแล้ว', 300.00, 165.00, NULL),
+(2, '202', 'โต๊ะ', 'เฟอร์นิเจอร์', 'ขาโต๊ะข้างมุมบนซ้ายชำรุด', '2020-12-09', '2020-12-12', 'ซ่อมเสร็จแล้ว', 200.00, 80.00, NULL),
+(3, '203', 'ชักโครก', 'สุขภัณฑ์', 'ฝาชักโครกแตกหัก', '2020-12-12', '2020-12-13', 'ซ่อมเสร็จแล้ว', 150.00, 60.00, NULL),
+(4, '201', 'ประตู', 'เฟอร์นิเจอร์', 'ลูกบิดประตูชำรุด', '2020-12-12', '2021-01-08', 'ซ่อมเสร็จแล้ว', 325.50, 165.00, 160.50),
+(5, '207', 'พัดลม', 'เครื่องใช้ไฟฟ้า', 'พัดลมไม่ทำงาน', '2020-12-19', NULL, 'รอคิวซ่อม', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -378,7 +390,7 @@ CREATE TABLE `roomlist` (
 
 INSERT INTO `roomlist` (`room_id`, `room_type`, `room_cat`, `room_status`) VALUES
 ('201', 'แอร์', 'รายเดือน', 'ไม่ว่าง'),
-('202', 'แอร์', 'รายเดือน', 'ว่าง'),
+('202', 'แอร์', 'รายเดือน', 'ไม่ว่าง'),
 ('203', 'แอร์', 'รายเดือน', 'ว่าง'),
 ('204', 'แอร์', 'รายเดือน', 'ว่าง'),
 ('205', 'แอร์', 'รายเดือน', 'ว่าง'),
@@ -405,6 +417,7 @@ CREATE TABLE `roommember` (
   `room_id` varchar(10) NOT NULL,
   `come_date` varchar(20) NOT NULL,
   `out_date` varchar(20) DEFAULT NULL,
+  `member_cat` varchar(20) NOT NULL,
   `member_status` varchar(20) NOT NULL,
   `name_title` varchar(10) NOT NULL,
   `firstname` varchar(200) NOT NULL,
@@ -435,15 +448,17 @@ CREATE TABLE `roommember` (
   `job2` varchar(200) DEFAULT NULL,
   `address2` varchar(200) DEFAULT NULL,
   `pic_idcard2` text DEFAULT NULL,
-  `pic_home2` text DEFAULT NULL
+  `pic_home2` text DEFAULT NULL,
+  `people` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `roommember`
 --
 
-INSERT INTO `roommember` (`member_id`, `room_id`, `come_date`, `out_date`, `member_status`, `name_title`, `firstname`, `lastname`, `nickname`, `id_card`, `phone`, `email`, `birthday`, `age`, `race`, `nationality`, `job`, `address`, `pic_idcard`, `pic_home`, `name_title2`, `firstname2`, `lastname2`, `nickname2`, `id_card2`, `phone2`, `email2`, `birthday2`, `age2`, `race2`, `nationality2`, `job2`, `address2`, `pic_idcard2`, `pic_home2`) VALUES
-(17, '201', '2020-12-26', NULL, 'กำลังเข้าพัก', 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '1998-12-21', 22, 'ไทย', 'ไทย', 'นักศึกษา', '140/40 หมู่ 2 ต. หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', 'id_201.jpg', 'home_201.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `roommember` (`member_id`, `room_id`, `come_date`, `out_date`, `member_cat`, `member_status`, `name_title`, `firstname`, `lastname`, `nickname`, `id_card`, `phone`, `email`, `birthday`, `age`, `race`, `nationality`, `job`, `address`, `pic_idcard`, `pic_home`, `name_title2`, `firstname2`, `lastname2`, `nickname2`, `id_card2`, `phone2`, `email2`, `birthday2`, `age2`, `race2`, `nationality2`, `job2`, `address2`, `pic_idcard2`, `pic_home2`, `people`) VALUES
+(5, '201', '2020-12-27', NULL, 'รายเดือน', 'กำลังเข้าพัก', 'นาย', 'นวพล', 'นรเดชานันท์', 'เกม', '1509966011521', '0956722914', 'blackfrostier@gmail.com', '1998-12-21', 22, 'ไทย', 'ไทย', 'นักศึกษา', '140/40 หมู่ 2 ต.หนองป่าครั่ง อ.เมือง จ.เชียงใหม่ 50000', 'id_201.jpg', 'home_201.jpg', 'นางสาว', 'สุภิศรา', 'เตชนันท์', 'แยม', '5556667778889', '0620477145', 'supisra45.30@gmail.com', '1999-04-22', 21, 'ไทย', 'ไทย', 'นักศึกษา', 'เลขที่ 288 หมู่ที่ 5 ตำบล ริมกก อำเภอ เมืองเชียงราย จังหวัด เชียงราย 57100', 'id_202.jpg', 'home_202.jpg', 2),
+(6, '202', '2020-12-28', NULL, 'รายเดือน', 'กำลังเข้าพัก', 'นาย', 'พงศธร', 'สร้อยอินต๊ะ', 'นนท์', '1465544564654', '0987445556', 'blackfrostier@gmail.com', '1998-12-23', 22, 'ไทย', 'ไทย', 'นักศึกษา', 'กองบัญชาการกองทัพบก ถนนราชดำเนินนอก เขตพระนคร กรุงเทพฯ 10200', 'id_202.jpg', 'home_202.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -500,7 +515,7 @@ ALTER TABLE `dailycost`
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`employee_id`);
 
 --
 -- Indexes for table `fan_gal`
@@ -519,6 +534,12 @@ ALTER TABLE `gallery`
 --
 ALTER TABLE `login`
   ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`log_id`);
 
 --
 -- Indexes for table `package`
@@ -582,7 +603,7 @@ ALTER TABLE `daily`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `fan_gal`
@@ -597,6 +618,12 @@ ALTER TABLE `gallery`
   MODIFY `gallery_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
@@ -606,13 +633,13 @@ ALTER TABLE `package`
 -- AUTO_INCREMENT for table `repair`
 --
 ALTER TABLE `repair`
-  MODIFY `repair_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `repair_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `roommember`
 --
 ALTER TABLE `roommember`
-  MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

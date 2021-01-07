@@ -47,7 +47,7 @@ if($_SESSION["level"] == "admin"){
                 <?php if($row == null){ ?>
                 <div class="new_customer">
                     <div>
-                        <h3>ห้อง <?php echo $room_id; ?> ยังว่างอยู่ กดปุ่ม "เพิ่มผู้พัก" เพื่อเพิ่มข้อมูลผู้พัก</h3>
+                        <h3>ห้อง <?php echo $room_id; ?> ยังว่างอยู่ กดปุ่ม "เพิ่มผู้พัก" เพื่อเพิ่มข้อมูลผู้เข้าพัก</h3>
                         <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
                             <button id="add-btn">เพิ่มผู้พัก</button>
                         </div>

@@ -5,14 +5,13 @@ if($_SESSION['level'] == 'admin'){
     include('../../../components/sidebar.php');
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
-    $check = @$_REQUEST['Status'];
-    $num = 1;
+    $check = @$_REQUEST['status'];
     function DateThai($strDate)
     {
-        $strYear = date("Y",strtotime($strDate))+543;
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
@@ -60,20 +59,19 @@ if($_SESSION['level'] == 'admin'){
                 <div style="padding-top:32px;display:flex;justify-content:space-between;align-items:center;">
                     <div style="display:flex;align-items:center;">
                         <label>ค้นหาตามวันที่</label>
-                        <div style="position:relative;">
-                            <input type="text" id="date_from" class="roundtrip-input" value="<?php echo $from; ?>">
-                            <p id="from_date" class="dateText"></p>
+                        <div>
+                            <input type="text" id="date_from" class="roundtrip-input" value="<?php if(isset($from)){ echo DateThai($from); } ?>">
                         </div>
                         <label>~</label>
-                        <div style="position:relative;">
-                            <input type="text" id="date_to" class="roundtrip-input" value="<?php echo $to; ?>">
-                            <p id="to_date" class="dateText"></p>
-                            <button type="button" style="margin:0 8px;" onclick="searchDate()">ค้นหา</button>
+                        <div>
+                            <input type="text" id="date_to" class="roundtrip-input" value="<?php if(isset($to)){ echo DateThai($to); } ?>">
+                            
                         </div>
+                        <button type="button" style="margin:0 8px;" id="searchDate">ค้นหา</button>
                         <?php
                         if(isset($from) || isset($to) || isset($check)){
                         ?>
-                        <button class="cancel-sort" style="margin:0 8px;" onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
+                        <a href="index.php"><button class="cancel-sort" style="margin:0 8px;">ยกเลิกการกรองทั้งหมด</button></a>
                         <?php } ?>
                     </div>
                     <a href="addRepair.php"><button>เพิ่มรายการแจ้งซ่อม</button></a>
@@ -106,30 +104,21 @@ if($_SESSION['level'] == 'admin'){
                     <h3>รายการแจ้งซ่อมทั้งหมด</h3>
                     <div style="display:flex;align-items:center;">
                         <div style="padding:32px 16px 32px 0;display:flex;">
-                            <input type="checkbox" id="all"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(!isset($check)){ echo "checked"; } ?>>
+                            <input type="checkbox" id="all" <?php if(!isset($check)){ echo "checked"; } ?>>
                             <label for="scales">ทั้งหมด</label>
                         </div>
                         <div style="padding:32px 16px;display:flex;">
-                            <input type="checkbox" id="success"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
+                            <input type="checkbox" id="pending" <?php if(isset($check)){ if($check == "pending"){ echo "checked";}} ?>>
+                            <label for="scales">รอคิวซ่อม</label>
+                        </div>
+                        <div style="padding:32px 16px;display:flex;">
+                            <input type="checkbox" id="inprogress" <?php if(isset($check)){ if($check == "inprogress"){ echo "checked";}} ?>>
+                            <label for="scales">กำลังซ่อม</label>
+                        </div>
+                        <div style="padding:32px 16px;display:flex;">
+                            <input type="checkbox" id="success" <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
                             <label for="scales">ซ่อมเสร็จแล้ว</label>
                         </div>
-                        <div style="padding:32px 16px;display:flex;">
-                            <input type="checkbox" id="inprogress"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(isset($check)){ if($check == "inprogress"){ echo "checked";}} ?>>
-                            <label for="scales">กำลังดำเนินการ</label>
-                        </div>
-                        <div style="padding:32px 16px;display:flex;">
-                            <input type="checkbox" id="pending"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(isset($check)){ if($check == "pending"){ echo "checked";}} ?>>
-                            <label for="scales">รอดำเนินการ</label>
-                        </div>
-
                     </div>
                     <?php
                     $perpage = 5;
@@ -146,18 +135,18 @@ if($_SESSION['level'] == 'admin'){
                         if($check == "success"){
                             $check = "ซ่อมเสร็จแล้ว";
                         }else if($check == "inprogress"){
-                            $check = "กำลังดำเนินการ";
+                            $check = "กำลังซ่อม";
                         }else if($check == "pending"){
-                            $check = "รอดำเนินการ";
+                            $check = "รอคิวซ่อม";
                         }
                         $sql = "SELECT * FROM repair WHERE repair_status = '$check' ORDER BY repair_date LIMIT {$start} , {$perpage}";
                     }else if(isset($from) && isset($to) && isset($check)){
                         if($check == "success"){
                             $check = "ซ่อมเสร็จแล้ว";
                         }else if($check == "inprogress"){
-                            $check = "กำลังดำเนินการ";
+                            $check = "กำลังซ่อม";
                         }else if($check == "pending"){
-                            $check = "รอดำเนินการ";
+                            $check = "รอคิวซ่อม";
                         }
                         $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') AND repair_status = '$check' ORDER BY repair_date LIMIT {$start} , {$perpage}";   
                     }else{
@@ -172,7 +161,11 @@ if($_SESSION['level'] == 'admin'){
                             <th>เลขห้อง</th>
                             <th>อุปกรณ์</th>
                             <th>หมวดหมู่</th>
-                            <th>เวลาที่ลง</th>
+                            <th>รายได้</th>
+                            <th>รายจ่าย</th>
+                            <th>กำไร</th>
+                            <th>วันที่แจ้งซ่อม</th>
+                            <th>วันที่ซ่อมเสร็จ</th>
                             <th>สถานะ</th>
                             <th>เพิ่มเติม</th>
                         </tr>
@@ -182,16 +175,20 @@ if($_SESSION['level'] == 'admin'){
                             <td><?php echo $row['room_id']; ?></td>
                             <td><?php echo $row['repair_appliance']; ?></td>
                             <td><?php echo $row['repair_category']; ?></td>
+                            <td><?php echo $row['repair_income']; ?></td>
+                            <td><?php echo $row['repair_expenses']; ?></td>
+                            <td><?php echo $row['repair_profit']; ?></td>
                             <td><?php echo DateThai($row['repair_date']); ?></td>
+                            <td><?php if(isset($row['repair_successdate'])){ echo DateThai($row['repair_successdate']); }?></td>
                             <td>
                                 <?php
-                                if($row['repair_status'] == 'รอดำเนินการ'){
+                                if($row['repair_status'] == 'รอคิวซ่อม'){
                             ?>
                                 <div class="pending-status">
                                     <p><?php echo $row['repair_status']; ?></p>
                                 </div>
                                 <?php
-                                }else if($row['repair_status'] == 'กำลังดำเนินการ'){
+                                }else if($row['repair_status'] == 'กำลังซ่อม'){
                             ?>
                                 <div class="inprogress-status">
                                     <p><?php echo $row['repair_status']; ?></p>
@@ -213,7 +210,7 @@ if($_SESSION['level'] == 'admin'){
                                     <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
                                 </div>
                                 <div>
-                                    <button class="del-btn" onclick="repair_del(<?php echo $row['repair_id']; ?>)">ลบ</button>
+                                    <button class="del-btn" id="<?php echo $row['repair_id']; ?>" >ลบ</button>
                                 </div>
                             </td>
                         </tr>

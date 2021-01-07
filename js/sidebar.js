@@ -58,10 +58,22 @@ function menubar() {
         main.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         main.style.color = "#fff"
         header.innerHTML = "หน้าหลัก"
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emDetail.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/employee/addemployee.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/index.php") {
         employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         employee.style.color = "#fff"
         header.innerHTML = "จัดการพนักงาน"
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/addemployee.php") {
+        employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
+        employee.style.color = "#fff"
+        header.innerHTML = "เพิ่มพนักงาน"
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emHistory.php") {
+        employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
+        employee.style.color = "#fff"
+        header.innerHTML = "ประวัติการเข้าทำงานของพนักงาน"
+    }else if(localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emDetail.php"){
+        employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
+        employee.style.color = "#fff"
+        header.innerHTML = "รายละเอียดข้อมูลพนักงาน"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/detail.php") {
         roomdetail.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         roomdetail.style.color = "#fff"
@@ -72,11 +84,19 @@ function menubar() {
         gallery.style.color = "#fff"
         header.innerHTML = "แกลลอรี่"
         document.querySelector("#dropdown").style.display = "block"
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/room_id.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/index.php") {
         roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         roomlist.style.color = "#fff"
         header.innerHTML = "รายการห้องพัก"
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/daily/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/daily/dailyDetail.php") {
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/roomHistory.php") {
+        roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
+        roomlist.style.color = "#fff"
+        header.innerHTML = "ประวัติการเข้าพัก"
+    }else if(localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/room_id.php"){
+        roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
+        roomlist.style.color = "#fff"
+        header.innerHTML = "รายละเอียดข้อมูลผู้เข้าพัก"
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/daily/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/daily/dailyDetail.php") {
         daily.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         daily.style.color = "#fff"
         header.innerHTML = "รายการเช่ารายวัน"

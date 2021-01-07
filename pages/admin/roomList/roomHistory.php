@@ -47,20 +47,20 @@ if($_SESSION["level"] == "admin"){
     <div class="box">
         <div style="padding:24px;">
             <div class="history-box">
-                <h3>ประวัติการเข้าพัก</h3>
+                <h3>ค้นหาประวัติการเข้าพัก</h3>
                 <div class="search">
                     <div style="padding-right:16px">
                         <div style="height:57px;display:flex;align-items:flex-start;">
                             <label style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
                             <div style="position:relative;">
                                 <input type="text" class="roundtrip-input" id="date_from"
-                                    value="<?php if($from != ""){ echo DateThai($from); } ?>">
+                                    value="<?php if(isset($from)){ echo DateThai($from); } ?>">
                                 <h5 id="from_error" style="color:red;"></h5>
                             </div>
                             <label style="padding:10px 8px 0 8px;">~</label>
                             <div style="position:relative;">
                                 <input type="text" class="roundtrip-input" id="date_to"
-                                    value="<?php if($to != ""){ echo DateThai($to); } ?>">
+                                    value="<?php if(isset($to)){ echo DateThai($to); } ?>">
                                 <h5 id="to_error" style="color:red;"></h5>
                             </div>
                             <button type="button" id="searchHistory" style="margin-left:16px;">ค้นหา</button>
@@ -74,7 +74,7 @@ if($_SESSION["level"] == "admin"){
                         </div>
                     </div>
                 </div>
-                <div class="hr"></div>
+                <div class="hr" style="margin-top:16px;"></div>
                 <div>
                     <div class="card">
                         <?php

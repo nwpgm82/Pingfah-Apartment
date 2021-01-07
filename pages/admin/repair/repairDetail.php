@@ -6,10 +6,10 @@ if($_SESSION['level'] == 'admin'){
     $repair_id = $_REQUEST["repair_id"];
     function DateThai($strDate)
     {
-        $strYear = date("Y",strtotime($strDate))+543;
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
@@ -40,9 +40,11 @@ if($_SESSION['level'] == 'admin'){
             <div class="repairDetail-box">
                 <h3>รายละเอียดความเสียหาย</h3>
                 <div class="hr"></div>
-                <div style="margin-top: 32px;">
-                    <p>เลขห้อง</p>
-                    <input type="text" value="<?php echo $row['room_id']; ?>" disabled>
+                <div class="flex-detail">
+                    <div>
+                        <p>เลขห้อง</p>
+                        <input type="text" value="<?php echo $row['room_id']; ?>" disabled>
+                    </div>
                 </div>
                 <div class="flex-detail">
                     <div>
@@ -66,13 +68,14 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                         <div>
                             <p>สถานะ</p>
-                            <select name="status" id="status" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
-                                <option value="รอดำเนินการ"
-                                    <?php if($row['repair_status'] == 'รอดำเนินการ'){ echo "selected";} ?>>รอดำเนินการ
+                            <select name="status" id="status"
+                                <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
+                                <option value="รอคิวซ่อม"
+                                    <?php if($row['repair_status'] == 'รอคิวซ่อม'){ echo "selected";} ?>>รอคิวซ่อม
                                 </option>
-                                <option value="กำลังดำเนินการ"
-                                    <?php if($row['repair_status'] == 'กำลังดำเนินการ'){ echo "selected";} ?>>
-                                    กำลังดำเนินการ
+                                <option value="กำลังซ่อม"
+                                    <?php if($row['repair_status'] == 'กำลังซ่อม'){ echo "selected";} ?>>
+                                    กำลังซ่อม
                                 </option>
                                 <option value="ซ่อมเสร็จแล้ว"
                                     <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "selected";} ?>>
@@ -81,20 +84,26 @@ if($_SESSION['level'] == 'admin'){
                             </select>
                         </div>
                     </div>
-                    <div class="flex-detail2" id="success_status" <?php if($row['repair_status'] != "ซ่อมเสร็จแล้ว"){ echo "style='display:none;'"; } ?>>
+                    <div class="flex-detail2" id="success_status"
+                        <?php if($row['repair_status'] != "ซ่อมเสร็จแล้ว"){ echo "style='display:none;'"; } ?>>
                         <div style="position:relative;">
                             <p>เวลาที่ซ่อมเสร็จ</p>
-                            <input type="text" id="success_date" value="<?php echo $row['repair_successdate']; ?>"
-                                name="success_date" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "style='background: #fafafa' disabled"; } ?>>
-                            <p class="dateText" id="repair_successdate" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "style='background: #fafafa'"; } ?>></p>
+                            <input type="text" id="success_date" value="<?php echo $row['repair_successdate']; ?>" name="success_date" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "style='background: #fafafa' disabled"; } ?>>
+                            <h5 id="success_date_error" style="color:red;"></h5>
                         </div>
                         <div>
                             <p>รายได้จากการซ่อม</p>
-                            <input type="text" name="income" value="<?php echo $row['repair_income']; ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
+                            <input type="text" name="income" id="income" value="<?php echo $row['repair_income']; ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
+                            <h5 id="income_error" style="color:red;"></h5>
                         </div>
                         <div>
                             <p>รายจ่ายจากการซ่อม</p>
-                            <input type="text" name="expenses" value="<?php echo $row['repair_expenses']; ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
+                            <input type="text" name="expenses" id="expenses" value="<?php echo $row['repair_expenses']; ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
+                            <h5 id="expenses_error" style="color:red;"></h5>
+                        </div>
+                        <div>
+                            <p>กำไรที่ได้</p>
+                            <input type="text" name="profit" id="profit" value="<?php if(isset($row['repair_profit'])){ echo $row['repair_profit']; }else{ echo 0; } ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; }else{ echo "readonly"; } ?>>
                         </div>
                     </div>
                     <div class="hr" style="margin:32px 0;"></div>
@@ -102,7 +111,7 @@ if($_SESSION['level'] == 'admin'){
                     if($row['repair_status'] != 'ซ่อมเสร็จแล้ว'){
                     ?>
                     <div style="display:flex;justify-content:center;align-items:center;">
-                        <button type="submit">ยืนยัน</button>
+                        <button type="submit" id="">ยืนยันการแก้ไข</button>
                     </div>
                     <?php } ?>
                 </form>
