@@ -2,13 +2,14 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../../connection.php');
-    // $status = $_POST['status'];
-    $num = $_REQUEST["ID"];
-    $received = $_POST['received']; 
-    $sql = "UPDATE package SET package_status ='รับพัสดุแล้ว', package_received = '$received' WHERE package_num = '$num'";
+    $package_id = $_REQUEST["package_id"];
+    $received = $_POST["received"]; 
+    $re_date = date("Y-m-d");
+    $sql = "UPDATE package SET package_status ='รับพัสดุแล้ว', package_received = '$received', package_receiveddate = '$re_date' WHERE package_id = '$package_id'";
     if ($conn->query($sql) === TRUE) {
-        echo "<script type='text/javascript'>alert('รับพัสดุเรียบร้อย')</script>";
-        echo "<script type='text/javascript'>location.assign('/Pingfah/pages/admin/package/index.php')</script>";
+        echo "<script>alert('รับพัสดุเรียบร้อย')</script>";
+        echo "<script>location.href = '../index.php';";
+        echo "</script>";
     } else {
         echo "Error updating record: " . $conn->error;
     }

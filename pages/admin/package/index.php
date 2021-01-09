@@ -5,13 +5,15 @@ if($_SESSION['level'] == 'admin'){
     include('../../../components/sidebar.php');
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
-    $check = @$_REQUEST['Status'];
+    $code = @$_REQUEST['code'];
+    $check = @$_REQUEST['status'];
     $num = 1;
-    function DateThai($strDate){
-        $strYear = date("Y",strtotime($strDate))+543;
+    function DateThai($strDate)
+    {
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
@@ -48,28 +50,40 @@ if($_SESSION['level'] == 'admin'){
         <div style="padding:24px;">
             <div class="package-box">
                 <h3>ค้นหารายการพัสดุ</h3>
-                <div style="padding-top:32px;display:flex;justify-content:space-between;align-items:center;">
-                    <div style="display:flex;align-items:center;">
-                        <label>ค้นหาตามวันที่</label>
-                        <div style="position:relative;">
-                            <input type="text" id="date_from" class="roundtrip-input" value="<?php echo $from; ?>">
-                            <p id="from_date" class="dateText"></p>
+                <div class="search">
+                    <div style="padding-right:16px">
+                        <div style="height:57px;display:flex;align-items:flex-start;">
+                            <label style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="date_from" value="<?php if(isset($from)){ echo DateThai($from); } ?>">
+                                <h5 id="from_error" style="color:red;"></h5>
+                            </div>
+                            <label style="padding:10px 8px 0 8px;">~</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="date_to" value="<?php if(isset($to)){ echo DateThai($to); } ?>">
+                                <h5 id="to_error" style="color:red;"></h5>
+                            </div>
+                            <button type="button" id="searchDate" style="margin-left:16px;">ค้นหา</button>
+                            <div style="padding:0 16px;display:flex;flex-start;">
+                                <label style="padding:10px 8px 0 0;">ค้นหาเลขพัสดุ</label>
+                                <div>
+                                    <input type="text" class="searchPackage" id="code">
+                                    <h5 id="code_error" style="color:red"></h5>
+                                </div>  
+                            </div>
+                            <button id="searchCode">ค้นหาเลขพัสดุ</button>
+                            <?php
+                            if(isset($from) || isset($to) || isset($code) || isset($check)){
+                            ?>
+                            <div style="padding:0 16px;">
+                                <a href="index.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
+                            </div>
+                            <?php } ?>
                         </div>
-                        <label>~</label>
-                        <div style="position:relative;">
-                            <input type="text" id="date_to" class="roundtrip-input" value="<?php echo $to; ?>">
-                            <p id="to_date" class="dateText"></p>
-                            <button type="button" style="margin:0 8px;"onclick="searchDate()">ค้นหา</button>
-                        </div>
-                        <?php
-                        if(isset($from) || isset($to) || isset($check)){
-                        ?>
-                        <button class="cancel-sort" style="margin:0 8px;"onclick="unCheckAll()">ยกเลิกการกรองทั้งหมด</button>
-                        <?php } ?>
                     </div>
-                    <a href="addPackage.php"><button type="button">เพิ่มรายการพัสดุ</button></a>
+                    <a href="addPackage.php"><button>เพิ่มรายการพัสดุ</button></a>
                 </div>
-                <div class="hr"></div>
+                <div class="hr" style="margin-top:16px;"></div>
                 <div>
                     <div class="card">
                         <?php
@@ -83,9 +97,12 @@ if($_SESSION['level'] == 'admin'){
                         ?>
                     </div>
                     <div class="hr"></div>
+                    <?php
+                    if(!isset($code)){
+                    ?>
                     <h3>รายการพัสดุทั้งหมด</h3>
                     <div style="display:flex;align-items:center;">
-                    <div style="padding:32px 16px 32px 0;">
+                        <div style="padding:32px 16px 32px 0;">
                             <input type="checkbox" id="all"
                                 onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
                                 <?php if(!isset($check)){ echo "checked"; } ?>>
@@ -103,8 +120,14 @@ if($_SESSION['level'] == 'admin'){
                                 <?php if(isset($check)){ if($check == "unsuccess"){ echo "checked";}} ?>>
                             <label for="scales">ยังไม่ได้รับพัสดุ</label>
                         </div>
-                        
                     </div>
+                    <?php 
+                    }else{
+                    ?>
+                    <h3 style="padding-bottom:32px;">ผลการค้นหาเลขพัสดุ "<?php echo $code; ?>"</h3>
+                    <?php
+                    }
+                    ?>
                     <?php
                     $perpage = 5;
                     if(isset($_GET['page'])){
@@ -130,6 +153,8 @@ if($_SESSION['level'] == 'admin'){
                             $check = "ยังไม่ได้รับพัสดุ";
                         }
                         $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') AND package_status = '$check' ORDER BY package_arrived LIMIT {$start} , {$perpage}";   
+                    }else if(isset($code)){
+                        $sql = "SELECT * FROM package WHERE package_num = '$code' LIMIT {$start} , {$perpage}";   
                     }else{
                         $sql = "SELECT * FROM package ORDER BY package_arrived LIMIT {$start} , {$perpage} ";
                     }
@@ -141,7 +166,8 @@ if($_SESSION['level'] == 'admin'){
                             <th>ลำดับ</th>
                             <th>เลขพัสดุ</th>
                             <th>บริษัท</th>
-                            <th>พัสดุมาถึง</th>
+                            <th>วันที่พัสดุมาถึง</th>
+                            <th>วันที่รับพัสดุ</th>
                             <th>เจ้าของพัสดุ</th>
                             <th>เลขห้อง</th>
                             <th>สถานะ</th>
@@ -151,15 +177,17 @@ if($_SESSION['level'] == 'admin'){
                         <?php
                         while($row = $result->fetch_assoc()) {
                         ?>
-                        <form action="../package/function/receivedPackage.php?ID=<?php echo $row["package_num"]; ?>"
+                        <form action="../package/function/receivedPackage.php?package_id=<?php echo $row["package_id"]; ?>"
                             onsubmit="return confirm('คุณต้องการยืนยันการรับพัสดุใช่หรือไม่ ? ');" method="POST">
                             <tr>
                                 <td><?php echo $num; ?></td>
-                                <td><?php echo $row["package_num"] ?></td>
-                                <td><?php echo $row["package_company"] ?></td>
-                                <td><?php echo DateThai($row["package_arrived"]) ?></td>
-                                <td><?php echo $row["package_name"] ?></td>
-                                <td><?php echo $row["package_room"] ?></td>
+                                <td><?php echo $row["package_num"]; ?></td>
+                                <td><?php echo $row["package_company"]; ?></td>
+                                <td><?php echo DateThai($row["package_arrived"]); ?></td>
+                                <td><?php if(isset($row["package_receivedate"])){ echo DateThai($row["package_receiveddate"]); } ?>
+                                </td>
+                                <td><?php echo $row["package_name"]; ?></td>
+                                <td><?php echo $row["package_room"]; ?></td>
                                 <td style="width:200px">
                                     <?php 
                                         if($row["package_status"] == 'รับพัสดุแล้ว'){
@@ -175,8 +203,8 @@ if($_SESSION['level'] == 'admin'){
                                 </td>
                                 <td>
                                     <?php
-                                    if(strlen($row["package_received"]) == 0){
-                                        echo "<input type='text' name='received' required>";
+                                    if(!isset($row["package_received"])){
+                                        echo "<input type='text' name='received' placeholder='ชื่อผู้รับ' required>";
                                     }else{
                                         echo $row["package_received"];
                                     }
@@ -184,11 +212,17 @@ if($_SESSION['level'] == 'admin'){
                                 </td>
                                 <td>
                                     <?php
-                                    if(strlen($row["package_received"]) == 0){
+                                    if(!isset($row["package_received"])){
                                     ?>
                                     <button type="submit" class="received-btn">รับพัสดุ</button>
-                                    <?php } ?>
-                                    <button type="button" class="del-btn" onclick="del('<?php echo $row['package_num'] ?>')">ลบ</button>
+                                    <?php 
+                                    }else{
+                                    ?>
+                                    <button type="button" class="package-received">รับพัสดุแล้ว</button>
+                                    <?php
+                                    } 
+                                    ?>
+                                    <button type="button" class="del-btn" id="<?php echo $row["package_id"]; ?>" >ลบ</button>
                                 </td>
                             </tr>
                         </form>
@@ -209,6 +243,7 @@ if($_SESSION['level'] == 'admin'){
                     $query2 = mysqli_query($conn, $sql2);
                     $total_record = mysqli_num_rows($query2);
                     $total_page = ceil($total_record / $perpage);
+                    if(!isset($code)){
                     ?>
                     <div style="display:flex;justify-content:flex-end">
                         <div class="pagination">
@@ -254,12 +289,12 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                     </div>
                     <?php
-                }else{
-                    echo "<div style='margin:32px 0'>ไม่มีรายการพัสดุ</div>";
-                }
-                ?>
+                        }
+                    }else{
+                        echo "<div style='margin:32px 0'>ไม่มีรายการพัสดุ</div>";
+                    }
+                    ?>
                 </div>
-
             </div>
         </div>
     </div>
@@ -273,6 +308,7 @@ if($_SESSION['level'] == 'admin'){
     ?>
     google.charts.setOnLoadCallback(drawChart);
     <?php } ?>
+
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
@@ -284,7 +320,9 @@ if($_SESSION['level'] == 'admin'){
             title: 'รายการพัสดุ',
             colors: ['rgb(131, 120, 47)', '#a8a06d'],
             fontName: "Sarabun",
-            vAxis: { format: "decimal"}
+            vAxis: {
+                format: "decimal"
+            }
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));

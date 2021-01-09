@@ -44,13 +44,30 @@
     height: 366px;
 }
 
+.package-box .search {
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .hr {
     margin: 32px 0;
     border-bottom: 1px solid rgb(131, 120, 47, 0.7);
     opacity: 0.5;
 }
 
-.package-box input[type=text]#date_from,.package-box input[type=text]#date_to{
+.package-box input{
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.package-box input#date_from,.package-box input#date_to{
     position: relative;
     margin: 0 8px;
     width: 200px;
@@ -61,8 +78,6 @@
     font-size: 16px;
     outline: none;
     transition: 0.3s;
-    color: transparent;
-    background-color: transparent;
     background-image: url("../img/tool/calendar.png");
     background-repeat:no-repeat;
     background-size: 20px;
@@ -70,16 +85,8 @@
     cursor: pointer;
 }
 
-.package-box .dateText{
-    position: absolute;
-    top: 1px;
-    left: 20px;
-    width: 152px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    cursor: default;
+.package-box .searchPackage{
+    width: 200px;
 }
 
 .package-box input[type=checkbox]{
@@ -98,7 +105,7 @@
 }
 
 .package-box tr{
-    height: 50px;
+    height: 60px;
 }
 
 .package-box table th,
@@ -133,35 +140,39 @@
 }
 
 .package-box table th:nth-child(2){
-    width:15%;
+    width:12%;
 }
 
 .package-box table th:nth-child(3){
-    width:10%
+    width:9%;
 }
 
 .package-box table th:nth-child(4){
-    width:10%
+    width:11%;
 }
 
 .package-box table th:nth-child(5){
-    width:15%
+    width:11%;
 }
 
 .package-box table th:nth-child(6){
-    width:8%
+    width:10%;
 }
 
 .package-box table th:nth-child(7){
-    width:12%
+    width:8%;
 }
 
 .package-box table th:nth-child(8){
-    width:12%
+    width:10%;
 }
 
 .package-box table th:nth-child(9){
-    width:13%
+    width:10%;
+}
+
+.package-box table th:nth-child(10){
+    width:14%;
 }
 
 .package-box table td:first-child{
@@ -197,8 +208,7 @@
 }
 
 .package-box .received-btn{
-    margin: 0 4px;
-    width: 80px;
+    width: auto;
     height: 40px;
     background-color: rgb(82, 185, 82);
     border-radius: 4px;
@@ -208,6 +218,25 @@
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.package-box .package-received{
+    width: auto;
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: default;
+    transition: 0.3s;
+}
+
+.package-box .package-received:hover{
+    background-color: #fff;
+    border: 1px solid gray;
+    color: grey;
 }
 
 .package-box .received-btn:hover{
@@ -230,17 +259,6 @@
 
 .package-box .del-btn:hover{
     background-color:rgb(216, 40, 40);
-}
-
-.package-box input[type="text"]{
-    width: 100%;
-    height: 40px;
-    padding: 0 12px;
-    border: 1px solid rgb(131, 120, 47, 0.5);
-    border-radius: 4px;
-    font-size: 16px;
-    outline: none;
-    transition: 0.3s;
 }
 
 .package-box #addPackage {
