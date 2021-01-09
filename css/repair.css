@@ -130,7 +130,14 @@
 }
 
 .repair-box .del-btn {
-    background-color: #FF4646;
+    width: 40px;
+    padding: 0;
+    display: block;
+    margin: 0 8px;
+    background-image: url(../img/tool/trash-icon.png);
+    background-color: rgb(255, 70, 70);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .repair-box .del-btn:hover {
