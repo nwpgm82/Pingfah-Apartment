@@ -129,8 +129,8 @@ if($_SESSION["level"] == "admin"){
                             </td>
                             <td>
                                 <div class="flex-more">
-                                    <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
-                                    <button class="del-btn" id="<?php echo $row['repair_id']; ?>" ></button>
+                                    <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>" title="ดูข้อมูลเพิ่มเติม"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                    <button class="del-btn" id="<?php echo $row['repair_id']; ?>" title="ลบข้อมูล"></button>
                                 </div>
                             </td>
                         </tr>

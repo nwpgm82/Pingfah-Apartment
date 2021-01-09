@@ -158,8 +158,8 @@ if($_SESSION["level"] == "admin"){
                                 <td><?php echo $row["employee_status"]; ?></td>
                                 <td>
                                     <div class="option-grid">
-                                        <a href="emDetail.php?employee_id=<?php echo $row["employee_id"];?>"><button>ดูข้อมูลเพิ่มเติม</button></a>
-                                        <button class="del-btn" id="<?php echo $row["employee_id"]; ?>"></button>
+                                        <a href="emDetail.php?employee_id=<?php echo $row["employee_id"];?>" title="ดูข้อมูลเพิ่มเติม" ><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                        <button class="del-btn" id="<?php echo $row["employee_id"]; ?>" title="ลบข้อมูล" ></button>
                                     </div>
                                 </td>
                             </tr>

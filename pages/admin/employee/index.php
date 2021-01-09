@@ -134,9 +134,9 @@ if($_SESSION['level'] == 'admin'){
                             <td>
                                 <div class="grid-btn">
                                     <a href="../employee/emDetail.php?employee_id=<?php echo $row['employee_id']; ?>"><button
-                                            type="button" class="more-btn">แสดงข้อมูลเพิ่มเติม</button></a>
+                                            type="button" class="more-btn" title="แสดงข้อมูลเพิ่มเติม">แสดงข้อมูลเพิ่มเติม</button></a>
                                     <button type="button" class="del-btn"
-                                        id="<?php echo $row["employee_id"]; ?>">ลบ</button>
+                                        id="<?php echo $row["employee_id"]; ?>" title="ลบข้อมูล">ลบ</button>
                                 </div>
                             </td>
                         </tr>
