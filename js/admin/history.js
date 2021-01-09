@@ -38,10 +38,10 @@ $(document).ready(function () {
             to_toeng = BasicDate(new Date(to_toeng))
             location.href = `roomHistory.php?from=${from_toeng}&to=${to_toeng}`
         } else {
-            $("#from_error").html("โปรดระบุวันที่ที่ต้องการค้นหา")
+            $("#from_error").html("โปรดระบุวันที่ต้องการค้นหา")
             from.css("border-color", "red")
             from.css("background-image", "url('../../../img/tool/calendar-error.png')")
-            $("#to_error").html("โปรดระบุวันที่ที่ต้องการค้นหา")
+            $("#to_error").html("โปรดระบุวันที่ต้องการค้นหา")
             to.css("border-color", "red")
             to.css("background-image", "url('../../../img/tool/calendar-error.png')")
         }

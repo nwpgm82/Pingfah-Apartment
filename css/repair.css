@@ -58,8 +58,6 @@
 }
 
 .repair-box input[type=text]{
-    position: relative;
-    margin: 0 8px;
     width: 200px;
     height: 40px;
     padding: 0 12px;
@@ -115,13 +113,19 @@
     background-color: rgb(131, 120, 47, 1);
 }
 
-.repair-box .cancel-sort{
+.repair-box .search {
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.repair-box .search .cancel-sort{
     background-color: #fff;
     border: 1px solid gray;
     color: grey;
 }
 
-.repair-box .cancel-sort:hover{
+.repair-box .search .cancel-sort:hover{
     background-color: rgb(235, 235, 235);
 }
 

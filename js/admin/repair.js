@@ -1,72 +1,18 @@
-function BasicDate(date) {
-    let year = date.getFullYear()
-    let month = date.getMonth() + 1
-    let day = date.getDate()
-    if (day < 10) {
-        day = "0" + day.toString()
-    }
-    if (month < 10) {
-        month = "0" + month.toString()
-    }
-    return year + "-" + month + "-" + day
-}
-
-function searchCheck(id) {
-    var check = document.getElementById(id)
-    var success = document.getElementById("success")
-    var inprogress = document.getElementById("inprogress")
-    var pending = document.getElementById("pending")
-
-    success.checked = false
-    inprogress.checked = false
-    pending.checked = false
-    check.checked = true
-    if (id != "all") {
-        location.href = `index.php?Status=${check.id}`
-    } else {
-        location.href = "index.php"
-    }
-
-}
-
-function searchCheck2(from, to, id) {
-    var check = document.getElementById(id)
-    var success = document.getElementById("success")
-    var inprogress = document.getElementById("inprogress")
-    var pending = document.getElementById("pending")
-
-    success.checked = false
-    inprogress.checked = false
-    pending.checked = false
-    check.checked = true
-    if (id != "all") {
-        location.href = `index.php?from=${from}&to=${to}&Status=${check.id}`
-    } else {
-        location.href = `index.php?from=${from}&to=${to}`
-    }
-
-}
-
-
-function unCheckAll() {
-    var success = document.getElementById("success")
-    var inprogress = document.getElementById("inprogress")
-    var pending = document.getElementById("pending")
-    success.checked = false
-    inprogress.checked = false
-    pending.checked = false
-    location.href = "index.php"
-}
-
-function repair_del(id) {
-    if (confirm('คุณต้องการลบรายการแจ้งซ่อมนี้ใช่หรือไม่ ?')) {
-        location.href = `function/repairDel.php?repair_id=${id}`
-    }
-}
-
 $(document).ready(function () {
     let from = $("#date_from")
     let to = $("#date_to")
+    function BasicDate(date) {
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1
+        let day = date.getDate()
+        if (day < 10) {
+            day = "0" + day.toString()
+        }
+        if (month < 10) {
+            month = "0" + month.toString()
+        }
+        return year + "-" + month + "-" + day
+    }
     $('.roundtrip-input').dateDropper({
         roundtrip: true,
         theme: "my-style",
@@ -82,6 +28,8 @@ $(document).ready(function () {
             from.css("background-image", "url('../../../img/tool/calendar-error.png')")
             to.css("border-color", "red")
             to.css("background-image", "url('../../../img/tool/calendar-error.png')")
+            $("#from_error").html("โปรดระบุวันที่ต้องการค้นหา")
+            $("#to_error").html("โปรดระบุวันที่ต้องการค้นหา")
         } else {
             const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
             const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];

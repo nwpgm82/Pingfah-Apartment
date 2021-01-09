@@ -56,27 +56,34 @@ if($_SESSION['level'] == 'admin'){
         <div style="padding:24px;">
             <div class="repair-box">
                 <h3>ค้นหารายการแจ้งซ่อม</h3>
-                <div style="padding-top:32px;display:flex;justify-content:space-between;align-items:center;">
-                    <div style="display:flex;align-items:center;">
-                        <label>ค้นหาตามวันที่</label>
-                        <div>
-                            <input type="text" id="date_from" class="roundtrip-input" value="<?php if(isset($from)){ echo DateThai($from); } ?>">
+                <div class="search">
+                    <div style="padding-right:16px">
+                        <div style="height:57px;display:flex;align-items:flex-start;">
+                            <label style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="date_from"
+                                    value="<?php if(isset($from)){ echo DateThai($from); } ?>">
+                                <h5 id="from_error" style="color:red;"></h5>
+                            </div>
+                            <label style="padding:10px 8px 0 8px;">~</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="date_to"
+                                    value="<?php if(isset($to)){ echo DateThai($to); } ?>">
+                                <h5 id="to_error" style="color:red;"></h5>
+                            </div>
+                            <button type="button" id="searchDate" style="margin-left:16px;">ค้นหา</button>
+                            <?php
+                            if(isset($from) || isset($to) || isset($check)){
+                            ?>
+                            <div style="padding:0 16px;">
+                                <a href="index.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
+                            </div>
+                            <?php } ?>
                         </div>
-                        <label>~</label>
-                        <div>
-                            <input type="text" id="date_to" class="roundtrip-input" value="<?php if(isset($to)){ echo DateThai($to); } ?>">
-                            
-                        </div>
-                        <button type="button" style="margin:0 8px;" id="searchDate">ค้นหา</button>
-                        <?php
-                        if(isset($from) || isset($to) || isset($check)){
-                        ?>
-                        <a href="index.php"><button class="cancel-sort" style="margin:0 8px;">ยกเลิกการกรองทั้งหมด</button></a>
-                        <?php } ?>
                     </div>
                     <a href="addRepair.php"><button>เพิ่มรายการแจ้งซ่อม</button></a>
                 </div>
-                <div class="hr"></div>
+                <div class="hr" style="margin-top:16px;"></div>
                 <div>
                     <div class="card">
                         <div class="sub-grid">
