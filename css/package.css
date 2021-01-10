@@ -253,7 +253,6 @@
     width: 40px;
     padding: 0;
     display: block;
-    margin: 0 8px;
     background-image: url(../img/tool/edit-icon.png);
     background-color: darkturquoise;
     background-repeat: no-repeat;
@@ -268,7 +267,6 @@
     width: 40px;
     padding: 0;
     display: block;
-    margin: 0 8px;
     background-image: url(../img/tool/trash-icon.png);
     background-color: rgb(255, 70, 70);
     background-repeat: no-repeat;

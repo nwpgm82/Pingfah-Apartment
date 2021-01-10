@@ -49,7 +49,7 @@ if($_SESSION['level'] == 'admin'){
                             <h5 id="code_error" style="color:red;"></h5>
                         </div>
                         <div>
-                            <p>บริษัท</p>
+                            <p>บริษัทขนส่ง</p>
                             <input type="text" name="company" id="package_company"
                                 value="<?php echo $package_company; ?>">
                             <h5 id="company_error" style="color:red;"></h5>
@@ -71,7 +71,7 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <div class="flex-detail">
                         <div>
-                            <p>เวลาที่พัสดุมาถึง</p>
+                            <p>วันที่พัสดุมาถึง</p>
                             <input type="text" id="package_arrived" name="arrived" value="<?php echo DateThai($package_arrived); ?>">
                             <h5 id="date_error" style="color:red;"></h5>
                         </div>
