@@ -11,7 +11,7 @@ if($_SESSION['level'] == 'admin'){
     $month = date("m",$str_date);
     $day = date("d",$str_date);
     return "$year-$month-$day"; 
-}
+  }
   if(isset($_POST['repair_accept'])){
       $room_id = $_POST['room_select'];
       $app = $_POST['repair_appliance'];

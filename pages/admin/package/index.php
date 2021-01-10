@@ -138,25 +138,25 @@ if($_SESSION['level'] == 'admin'){
                     $start = ($page - 1) * $perpage;
                     $num = $start + 1;
                     if(isset($from) && isset($to) && !isset($check)){
-                        $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') ORDER BY package_arrived LIMIT {$start} , {$perpage}";
+                        $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";
                     }else if(!isset($from) && !isset($to) && isset($check)){
                         if($check == "success"){
                             $check = "รับพัสดุแล้ว";
                         }else if($check == "unsuccess"){
                             $check = "ยังไม่ได้รับพัสดุ";
                         }
-                        $sql = "SELECT * FROM package WHERE package_status = '$check' ORDER BY package_arrived LIMIT {$start} , {$perpage}";
+                        $sql = "SELECT * FROM package WHERE package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";
                     }else if(isset($from) && isset($to) && isset($check)){
                         if($check == "success"){
                             $check = "รับพัสดุแล้ว";
                         }else if($check == "unsuccess"){
                             $check = "ยังไม่ได้รับพัสดุ";
                         }
-                        $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') AND package_status = '$check' ORDER BY package_arrived LIMIT {$start} , {$perpage}";   
+                        $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') AND package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";   
                     }else if(isset($code)){
                         $sql = "SELECT * FROM package WHERE package_num = '$code' LIMIT {$start} , {$perpage}";   
                     }else{
-                        $sql = "SELECT * FROM package ORDER BY package_arrived LIMIT {$start} , {$perpage} ";
+                        $sql = "SELECT * FROM package ORDER BY package_arrived DESC LIMIT {$start} , {$perpage} ";
                     }
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {

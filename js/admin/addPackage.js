@@ -1,52 +1,97 @@
-$(document).ready(function(){
-    function formatDate(date) {
-        var monthNames = [
-            "ม.ค.", "ก.พ.", "มี.ค.",
-            "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
-            "ส.ค.", "ก.ย.", "ต.ค.",
-            "พ.ค.", "ธ.ค."
-        ];
-        var day = date.getDate();
-        var monthIndex = date.getMonth();
-        var year = date.getFullYear();
-        return day + ' ' + monthNames[monthIndex] + ' ' + year;
-    }
-    // function formatDate2(inputDate) {
-    //     var date = new Date(inputDate);
-    //     if (!isNaN(date.getTime())) {
-    //         // Months use 0 index.
-    //         return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
-    //     }
-    // }
-    let today_monthNames = [
-        "ม.ค.", "ก.พ.", "มี.ค.",
-        "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.",
-        "ส.ค.", "ก.ย.", "ต.ค.",
-        "พ.ค.", "ธ.ค."
-    ];
-    let today = new Date()
-    let today_day = today.getDate()
-    let today_month = today.getMonth() + 1
-    let today_year = today.getFullYear()
-    let current_dayShow = today_day + ' ' + today_monthNames[today_month - 1] + ' ' + today_year
-    if (today_day < 10) {
-        today_day = '0' + today_day.toString()
-    }
-    if (today_month < 10) {
-        today_month = '0' + today_month.toString()
-    }
-    let current_day = today_year + '-' + today_month + '-' + today_day
-    $("#arrived").val(current_day)
-    $("#arrived_date").html(current_dayShow)
-    $("#arrived").dateDropper({
+$(document).ready(function () {
+    let code = $("#code")
+    let company = $("#package_company")
+    let name = $("#package_name")
+    let room = $("#package_room")
+    let arrived = $("#package_arrived")
+    arrived.dateDropper({
         theme: "my-style",
         lang: "th",
-        format: "Y-m-d",
+        format: "d M Y",
+        lock: "to",
         large: true,
         largeDefault: true,
         startFromMonday: false,
     })
-    $("#arrived").change(function(){
-        $("#arrived_date").html(formatDate(new Date($("#arrived").val())))
+    code.keyup(function () {
+        if (code.val() != "") {
+            code.css("border-color", "")
+            $("#code_error").html("")
+        } else {
+            code.css("border-color", "red")
+            $("#code_error").html("โปรดระบุเลขพัสดุ")
+        }
+    })
+    company.keyup(function () {
+        if (company.val() != "") {
+            company.css("border-color", "")
+            $("#company_error").html("")
+        } else {
+            company.css("border-color", "red")
+            $("#company_error").html("โปรดระบุชื่อบริษัท")
+        }
+    })
+    name.keyup(function () {
+        if (name.val() != "") {
+            name.css("border-color", "")
+            $("#name_error").html("")
+            let value = name.val()
+            $.post('room_ajax.php', {
+                name: value,
+            }, function (data) {
+                room.empty()
+                room.append("<option value=''>--</option>")
+                room.append(data)
+            });
+            return false
+        } else {
+            name.css("border-color", "red")
+            $("#name_error").html("โปรดระบุชื่อเจ้าของพัสดุ")
+        }
+    })
+    room.change(function () {
+        if (room.val() != "") {
+            room.css("border-color", "")
+            $("#room_error").html("")
+        } else {
+            room.css("border-color", "red")
+            $("#room_error").html("โปรดระบุเลขห้อง")
+        }
+    })
+    arrived.change(function () {
+        if (arrived.val() != "") {
+            arrived.css("border-color", "")
+            arrived.css("background-image", "url('../../../img/tool/calendar.png')")
+            $("#date_error").html("")
+        } else {
+            arrived.css("border-color", "red")
+            arrived.css("background-image", "url('../../../img/tool/calendar-error.png')")
+            $("#date_error").html("โปรดระบุวันที่พัสดุมาถึง")
+        }
+    })
+    $("button[type=submit]").click(function (event) {
+        if (code.val() == "" || company.val() == "" || name.val() == "" || room.val() == "") {
+            let inputs = $("input")
+            inputs.each(function () {
+                if ($(this).val() == "") {
+                    $(this).css("border-color", "red")
+                    if ($(this).attr("id") == "code") {
+                        $("#code_error").html("โปรดระบุเลขพัสดุ")
+                    } else if ($(this).attr("id") == "package_company") {
+                        $("#company_error").html("โปรดระบุชื่อบริษัท")
+                    } else if ($(this).attr("id") == "package_name") {
+                        $("#name_error").html("โปรดระบุชื่อเจ้าของพัสดุ")
+                    } else if ($(this).attr("id") == "package_arrived") {
+                        $("#date_error").html("โปรดระบุวันที่พัสดุมาถึง")
+                        arrived.css("background-image", "url('../../../img/tool/calendar-error.png')")
+                    }
+                }
+            })
+            if (room.val() == "") {
+                room.css("border-color", "red")
+                $("#room_error").html("โปรดระบุเลขห้อง")
+            }
+            event.preventDefault()
+        }
     })
 })

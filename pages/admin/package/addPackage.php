@@ -34,30 +34,36 @@ if($_SESSION['level'] == 'admin'){
                 <div class="hr"></div>
                 <form action="function/addPackage.php" method="POST">
                     <div class="flex-detail">
-                        <div style="padding-right:8px">
+                        <div>
                             <p>เลขพัสดุ</p>
-                            <input type="text" name="num" required>
+                            <input type="text" name="num" id="code">
+                            <h5 id="code_error" style="color:red;"></h5>
                         </div>
-                        <div style="padding-right:8px">
+                        <div>
                             <p>บริษัท</p>
-                            <input type="text" name="company" required>
+                            <input type="text" name="company" id="package_company">
+                            <h5 id="company_error" style="color:red;"></h5>
                         </div>
                     </div>
                     <div class="flex-detail">
-                        <div style="padding-right:8px">
-                            <p>ชื่อเจ้าของ</p>
-                            <input type="text" name="name" required>
+                        <div>
+                            <p>ชื่อเจ้าของพัสดุ</p>
+                            <input type="text" name="name" id="package_name">
+                            <h5 id="name_error" style="color:red;"></h5>
                         </div>
-                        <div style="padding-right:8px">
+                        <div>
                             <p>เลขห้อง</p>
-                            <input type="text" name="room" required>
+                            <select name="room" id="package_room">
+                                <option value="">--</option>
+                            </select>
+                            <h5 id="room_error" style="color:red;"></h5>
                         </div>
                     </div>
                     <div class="flex-detail">
-                        <div style="position:relative;">
+                        <div>
                             <p>เวลาที่พัสดุมาถึง</p>
-                            <input type="text" id="arrived" style="width:200px;" name="arrived" required>
-                            <p id="arrived_date" class="dateText"></p>
+                            <input type="text" id="package_arrived" name="arrived">
+                            <h5 id="date_error" style="color:red;"></h5>
                         </div>
                     </div>
                     <div class="hr"></div>

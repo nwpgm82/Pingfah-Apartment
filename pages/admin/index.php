@@ -113,7 +113,7 @@ if($_SESSION['level'] == 'admin'){
                                 </div>
                             </div>
                             <div class="search-box">
-                                <input type="text" id="cost-month" type="subtmit" name="searchcost">
+                                <input type="text" id="cost-month" type="submit" name="searchcost">
                                 <div id="arrow-down" class="arrow-down"></div>
                                 <p class="dateText1">รายได้เดือน : </p>
                                 <p id="month-detail" class="dateText2"></p>
