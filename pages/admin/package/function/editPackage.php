@@ -12,15 +12,16 @@ if($_SESSION['level'] == 'admin'){
     $day = date("d",$str_date);
     return "$year-$month-$day"; 
   }
+  $package_id = $_REQUEST["package_id"];
   $num = $_POST['num'];
   $company = $_POST['company'];
   $arrived = BasicDate($_POST['arrived']);
   $name = $_POST['name'];
   $room = $_POST['room'];
-      $sql = "INSERT INTO package (package_num, package_company, package_arrived, package_status, package_name, package_room) VALUES ('$num', '$company', '$arrived', 'ยังไม่ได้รับพัสดุ', '$name', '$room')";
+      $sql = "UPDATE package SET package_num = '$num', package_company = '$company', package_arrived = '$arrived', package_name = '$name', package_room = '$room' WHERE package_id = $package_id";
       if ($conn->query($sql) === TRUE) {
         echo "<script>";
-        echo "alert('เพิ่มพัสดุเรียบร้อยแล้ว');";
+        echo "alert('แก้ไขพัสดุเรียบร้อยแล้ว');";
         echo "location.href = '../index.php';";
         echo "</script>";
       } else {

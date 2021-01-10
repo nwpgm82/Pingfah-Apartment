@@ -103,21 +103,15 @@ if($_SESSION['level'] == 'admin'){
                     <h3>รายการพัสดุทั้งหมด</h3>
                     <div style="display:flex;align-items:center;">
                         <div style="padding:32px 16px 32px 0;">
-                            <input type="checkbox" id="all"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(!isset($check)){ echo "checked"; } ?>>
+                            <input type="checkbox" id="all" <?php if(!isset($check)){ echo "checked"; } ?>>
                             <label for="scales">ทั้งหมด</label>
                         </div>
                         <div style="padding:32px 16px;">
-                            <input type="checkbox" id="success"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
+                            <input type="checkbox" id="success" <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
                             <label for="scales">รับพัสดุแล้ว</label>
                         </div>
                         <div style="padding:32px 16px;">
-                            <input type="checkbox" id="unsuccess"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(isset($check)){ if($check == "unsuccess"){ echo "checked";}} ?>>
+                            <input type="checkbox" id="unsuccess" <?php if(isset($check)){ if($check == "unsuccess"){ echo "checked";}} ?>>
                             <label for="scales">ยังไม่ได้รับพัสดุ</label>
                         </div>
                     </div>
@@ -184,7 +178,7 @@ if($_SESSION['level'] == 'admin'){
                                 <td><?php echo $row["package_num"]; ?></td>
                                 <td><?php echo $row["package_company"]; ?></td>
                                 <td><?php echo DateThai($row["package_arrived"]); ?></td>
-                                <td><?php if(isset($row["package_receivedate"])){ echo DateThai($row["package_receiveddate"]); } ?>
+                                <td><?php if(isset($row["package_receiveddate"])){ echo DateThai($row["package_receiveddate"]); } ?>
                                 </td>
                                 <td><?php echo $row["package_name"]; ?></td>
                                 <td><?php echo $row["package_room"]; ?></td>
@@ -211,18 +205,21 @@ if($_SESSION['level'] == 'admin'){
                                     ?>
                                 </td>
                                 <td>
-                                    <?php
-                                    if(!isset($row["package_received"])){
-                                    ?>
-                                    <button type="submit" class="received-btn">รับพัสดุ</button>
-                                    <?php 
-                                    }else{
-                                    ?>
-                                    <button type="button" class="package-received">รับพัสดุแล้ว</button>
-                                    <?php
-                                    } 
-                                    ?>
-                                    <button type="button" class="del-btn" id="<?php echo $row["package_id"]; ?>" >ลบ</button>
+                                    <div class="option">
+                                        <?php
+                                        if(!isset($row["package_received"])){
+                                        ?>
+                                        <button type="submit" class="received-btn" title="รับพัสดุ">รับพัสดุ</button>
+                                        <?php 
+                                        }else{
+                                        ?>
+                                        <button type="button" class="package-received">รับพัสดุแล้ว</button>
+                                        <?php
+                                        } 
+                                        ?>
+                                        <a href="editPackage.php?package_id=<?php echo $row["package_id"]; ?>" title="แก้ไขพัสดุ"><button type="button" class="edit-btn"></button></a>
+                                        <button type="button" class="del-btn" id="<?php echo $row["package_id"]; ?>" title="ลบพัสดุ"></button>
+                                    </div>
                                 </td>
                             </tr>
                         </form>

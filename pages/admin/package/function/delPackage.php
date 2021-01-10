@@ -5,7 +5,8 @@ if($_SESSION['level'] == 'admin'){
   $package_id = $_REQUEST["package_id"];
   $sql = "DELETE FROM package WHERE package_id = '$package_id'";
   if ($conn->query($sql) === TRUE) {
-    echo "<script>alert('เพิ่มพัสดุเรียบร้อยแล้ว');";
+    echo "<script>";
+    echo "alert('เพิ่มพัสดุเรียบร้อยแล้ว');";
     echo "location.href = '../index.php';";
     echo "</script>";
   } else {

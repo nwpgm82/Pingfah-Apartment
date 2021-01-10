@@ -2,15 +2,22 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
-    function DateThai($strDate){
-        $strYear = date("Y",strtotime($strDate))+543;
+    $package_id = $_REQUEST["package_id"];
+    function DateThai($strDate)
+    {
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
+    $sql = "SELECT * FROM package WHERE package_id = $package_id";
+    $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
+    $row = mysqli_fetch_array($result);
+    if($row != null){
+        extract($row);
+    }   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,28 +35,30 @@ if($_SESSION['level'] == 'admin'){
 </head>
 
 <body>
+    <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
         <div style="padding:24px;">
             <div class="addPackage-box">
-                <h3>เพิ่มรายการพัสดุ</h3>
+                <h3>รายละเอียดพัสดุ</h3>
                 <div class="hr"></div>
-                <form action="function/addPackage.php" method="POST">
+                <form action="function/editPackage.php?package_id=<?php echo $package_id; ?>" method="POST">
                     <div class="flex-detail">
                         <div>
                             <p>เลขพัสดุ</p>
-                            <input type="text" name="num" id="code">
+                            <input type="text" name="num" id="code" value="<?php echo $package_num; ?>">
                             <h5 id="code_error" style="color:red;"></h5>
                         </div>
                         <div>
                             <p>บริษัท</p>
-                            <input type="text" name="company" id="package_company">
+                            <input type="text" name="company" id="package_company"
+                                value="<?php echo $package_company; ?>">
                             <h5 id="company_error" style="color:red;"></h5>
                         </div>
                     </div>
                     <div class="flex-detail">
                         <div>
                             <p>ชื่อเจ้าของพัสดุ</p>
-                            <input type="text" name="name" id="package_name">
+                            <input type="text" name="name" id="package_name" value="<?php echo $package_name; ?>">
                             <h5 id="name_error" style="color:red;"></h5>
                         </div>
                         <div>
@@ -63,7 +72,7 @@ if($_SESSION['level'] == 'admin'){
                     <div class="flex-detail">
                         <div>
                             <p>เวลาที่พัสดุมาถึง</p>
-                            <input type="text" id="package_arrived" name="arrived">
+                            <input type="text" id="package_arrived" name="arrived" value="<?php echo DateThai($package_arrived); ?>">
                             <h5 id="date_error" style="color:red;"></h5>
                         </div>
                     </div>
@@ -75,6 +84,23 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
+    <script>
+    let name = $("#package_name")
+    let room = $("#package_room")
+    if (name.val() != "") {
+        name.css("border-color", "")
+        $("#name_error").html("")
+        let value = name.val()
+        $.post('room_ajax.php', {
+            name: value,
+        }, function(data) {
+            room.empty()
+            room.append("<option value=''>--</option>")
+            room.append(data)
+            $("select option[value='<?php echo $package_room; ?>']").attr("selected", true)
+        });
+    }
+    </script>
 </body>
 
 </html>

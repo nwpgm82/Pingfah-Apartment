@@ -156,11 +156,11 @@
 }
 
 .package-box table th:nth-child(6){
-    width:10%;
+    width:9%;
 }
 
 .package-box table th:nth-child(7){
-    width:8%;
+    width:6%;
 }
 
 .package-box table th:nth-child(8){
@@ -168,11 +168,11 @@
 }
 
 .package-box table th:nth-child(9){
-    width:10%;
+    width:9%;
 }
 
 .package-box table th:nth-child(10){
-    width:14%;
+    width:18%;
 }
 
 .package-box table td:first-child{
@@ -243,18 +243,36 @@
     background-color:  rgb(74, 165, 74);
 }
 
+.package-box .option{
+    display: grid;
+    grid-template-columns: 1fr 40px 40px;
+    column-gap: 8px;
+}
+
+.package-box .edit-btn {
+    width: 40px;
+    padding: 0;
+    display: block;
+    margin: 0 8px;
+    background-image: url(../img/tool/edit-icon.png);
+    background-color: darkturquoise;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.package-box .edit-btn:hover {
+    background-color: rgb(0, 165, 165);
+}
+
 .package-box .del-btn{
-    margin: 0 4px;
-    width: auto;
-    height: 40px;
-    background-color: #FF4646;
-    border-radius: 4px;
-    border: none;
-    font-size: 16px;
-    font-weight: 500;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.3s;
+    width: 40px;
+    padding: 0;
+    display: block;
+    margin: 0 8px;
+    background-image: url(../img/tool/trash-icon.png);
+    background-color: rgb(255, 70, 70);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .package-box .del-btn:hover{

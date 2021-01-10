@@ -45,6 +45,8 @@ $(document).ready(function () {
             });
             return false
         } else {
+            room.empty()
+            room.append("<option value=''>--</option>")
             name.css("border-color", "red")
             $("#name_error").html("โปรดระบุชื่อเจ้าของพัสดุ")
         }
