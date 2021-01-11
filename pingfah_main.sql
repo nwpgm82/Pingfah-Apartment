@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2021 at 07:47 PM
+-- Generation Time: Jan 11, 2021 at 08:03 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -74,28 +74,31 @@ INSERT INTO `appeal` (`appeal_id`, `room_id`, `appeal_topic`, `appeal_detail`, `
 
 CREATE TABLE `cost` (
   `cost_id` int(11) NOT NULL,
-  `room_id` varchar(100) NOT NULL,
-  `type` varchar(100) NOT NULL,
-  `cost_status` varchar(100) NOT NULL,
-  `date` varchar(100) NOT NULL,
-  `room_cost` float(100,2) NOT NULL,
-  `water_bill` float(100,2) NOT NULL,
-  `elec_bill` float(100,2) NOT NULL,
-  `cable_charge` float(100,2) NOT NULL,
-  `fines` float(100,2) NOT NULL,
-  `total` varchar(255) NOT NULL
+  `room_id` varchar(10) NOT NULL,
+  `room_type` varchar(10) NOT NULL,
+  `cost_status` varchar(20) NOT NULL,
+  `date` varchar(20) NOT NULL,
+  `pay_date` varchar(20) DEFAULT NULL,
+  `room_cost` float(11,2) NOT NULL,
+  `water_bill` float(11,2) NOT NULL,
+  `elec_bill` float(11,2) NOT NULL,
+  `cable_charge` float(11,2) NOT NULL,
+  `fines` float(11,2) DEFAULT NULL,
+  `total` float(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `cost`
 --
 
-INSERT INTO `cost` (`cost_id`, `room_id`, `type`, `cost_status`, `date`, `room_cost`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `total`) VALUES
-(1, '201', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 80.00, 570.00, 105.00, 150.00, '3455'),
-(2, '202', '', 'ชำระเงินแล้ว', '2020-12', 2700.00, 80.00, 375.00, 105.00, 0.00, '3260'),
-(3, '203', '', 'ยังไม่ได้ชำระ', '2020-12', 2700.00, 80.00, 600.00, 105.00, 150.00, '3485'),
-(4, '204', '', 'ชำระเงินแล้ว', '2020-12', 2700.00, 80.00, 315.00, 105.00, 0.00, '3200'),
-(5, '207', '', 'ยังไม่ได้ชำระ', '2020-12', 2300.00, 80.00, 225.00, 105.00, 150.00, '2710');
+INSERT INTO `cost` (`cost_id`, `room_id`, `room_type`, `cost_status`, `date`, `pay_date`, `room_cost`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `total`) VALUES
+(1, '201', 'แอร์', 'ชำระเงินแล้ว', '2020-12', '2020-01-06', 2700.00, 80.00, 570.00, 105.00, 150.00, 3605.00),
+(2, '202', 'แอร์', 'ชำระเงินแล้ว', '2020-12', '2020-01-02', 2700.00, 80.00, 375.00, 105.00, NULL, 3260.00),
+(3, '203', 'แอร์', 'ชำระเงินแล้ว', '2020-12', '2020-12-31', 2700.00, 80.00, 600.00, 105.00, NULL, 3485.00),
+(4, '204', 'แอร์', 'ชำระเงินแล้ว', '2020-12', '2021-12-31', 2700.00, 80.00, 315.00, 105.00, NULL, 3200.00),
+(5, '207', 'พัดลม', 'ชำระเงินแล้ว', '2020-12', '2020-12-31', 2300.00, 80.00, 225.00, 105.00, NULL, 2710.00),
+(7, '201', 'แอร์', 'ยังไม่ได้ชำระเงิน', '2021-01', NULL, 2700.00, 160.00, 315.00, 105.00, NULL, 3280.00),
+(8, '202', 'แอร์', 'ยังไม่ได้ชำระเงิน', '2021-01', NULL, 2700.00, 80.00, 487.50, 105.00, NULL, 3372.50);
 
 -- --------------------------------------------------------
 
@@ -296,20 +299,22 @@ CREATE TABLE `package` (
   `package_status` varchar(200) NOT NULL,
   `package_name` varchar(200) NOT NULL,
   `package_room` varchar(200) NOT NULL,
-  `package_received` varchar(200) DEFAULT NULL
+  `package_received` varchar(200) DEFAULT NULL,
+  `package_receiveddate` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `package`
 --
 
-INSERT INTO `package` (`package_id`, `package_num`, `package_company`, `package_arrived`, `package_status`, `package_name`, `package_room`, `package_received`) VALUES
-(2, 'RYMC000206662', 'เคอรี่', '2020-08-10', 'รับพัสดุแล้ว', 'มนุษย์', '201', 'มนุษย์'),
-(3, 'RP917308081TH', 'ไปรษณีย์ไทย', '2020-09-08', 'รับพัสดุแล้ว', 'มนุษย์', '201', 'มนุษย์'),
-(4, 'RP917307090TH', 'ไปรษณีย์ไทย', '2020-09-12', 'ยังไม่ได้รับพัสดุ', 'สุภิศรา', '202', ''),
-(5, 'PD252974232TH', 'ไปรษณีย์ไทย', '2020-09-12', 'ยังไม่ได้รับพัสดุ', 'สุภิศรา', '202', ''),
-(6, 'ED375848164TH', 'ไปรษณีย์ไทย', '2020-10-13', 'รับพัสดุแล้ว', 'สมคิด', '204', 'สมคิด'),
-(7, 'ED471406393TH', 'ไปรษณีย์ไทย', '2020-10-13', 'ยังไม่ได้รับพัสดุ', 'สุภิศรา', '202', '');
+INSERT INTO `package` (`package_id`, `package_num`, `package_company`, `package_arrived`, `package_status`, `package_name`, `package_room`, `package_received`, `package_receiveddate`) VALUES
+(2, 'RYMC000206662', 'เคอรี่', '2020-08-10', 'รับพัสดุแล้ว', 'มนุษย์', '201', 'มนุษย์', NULL),
+(3, 'RP917308081TH', 'ไปรษณีย์ไทย', '2020-09-08', 'รับพัสดุแล้ว', 'มนุษย์', '201', 'มนุษย์', NULL),
+(4, 'RP917307090TH', 'ไปรษณีย์ไทย', '2020-09-12', 'ยังไม่ได้รับพัสดุ', 'สุภิศรา', '202', NULL, NULL),
+(5, 'PD252974232TH', 'ไปรษณีย์ไทย', '2020-09-12', 'ยังไม่ได้รับพัสดุ', 'สุภิศรา', '202', NULL, NULL),
+(6, 'ED375848164TH', 'ไปรษณีย์ไทย', '2020-10-13', 'รับพัสดุแล้ว', 'สมคิด', '204', 'สมคิด', '2020-10-14'),
+(7, 'ED471406393TH', 'ไปรษณีย์ไทย', '2020-10-13', 'รับพัสดุแล้ว', 'สุภิศรา', '202', 'สุภิศรา', '2021-01-11'),
+(15, 'AAAAAAAAAAAA', 'J&T Express', '2021-01-10', 'ยังไม่ได้รับพัสดุ', 'นวพล', '201', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -336,9 +341,9 @@ CREATE TABLE `repair` (
 --
 
 INSERT INTO `repair` (`repair_id`, `room_id`, `repair_appliance`, `repair_category`, `repair_detail`, `repair_date`, `repair_successdate`, `repair_status`, `repair_income`, `repair_expenses`, `repair_profit`) VALUES
-(1, '201', 'เครื่องทำน้ำอุ่น', 'เครื่องใช้ไฟฟ้า', 'เครื่องทำน้ำอุ่นไม่ร้อน', '2020-12-05', '2020-12-08', 'ซ่อมเสร็จแล้ว', 300.00, 165.00, NULL),
-(2, '202', 'โต๊ะ', 'เฟอร์นิเจอร์', 'ขาโต๊ะข้างมุมบนซ้ายชำรุด', '2020-12-09', '2020-12-12', 'ซ่อมเสร็จแล้ว', 200.00, 80.00, NULL),
-(3, '203', 'ชักโครก', 'สุขภัณฑ์', 'ฝาชักโครกแตกหัก', '2020-12-12', '2020-12-13', 'ซ่อมเสร็จแล้ว', 150.00, 60.00, NULL),
+(1, '201', 'เครื่องทำน้ำอุ่น', 'เครื่องใช้ไฟฟ้า', 'เครื่องทำน้ำอุ่นไม่ร้อน', '2020-12-05', '2020-12-08', 'ซ่อมเสร็จแล้ว', 300.00, 165.00, 135.00),
+(2, '202', 'โต๊ะ', 'เฟอร์นิเจอร์', 'ขาโต๊ะข้างมุมบนซ้ายชำรุด', '2020-12-09', '2020-12-12', 'ซ่อมเสร็จแล้ว', 200.00, 80.00, 120.00),
+(3, '203', 'ชักโครก', 'สุขภัณฑ์', 'ฝาชักโครกแตกหัก', '2020-12-12', '2020-12-13', 'ซ่อมเสร็จแล้ว', 150.00, 60.00, 90.00),
 (4, '201', 'ประตู', 'เฟอร์นิเจอร์', 'ลูกบิดประตูชำรุด', '2020-12-12', '2021-01-08', 'ซ่อมเสร็จแล้ว', 325.50, 165.00, 160.50),
 (5, '207', 'พัดลม', 'เครื่องใช้ไฟฟ้า', 'พัดลมไม่ทำงาน', '2020-12-19', NULL, 'รอคิวซ่อม', NULL, NULL, NULL);
 
@@ -591,7 +596,7 @@ ALTER TABLE `appeal`
 -- AUTO_INCREMENT for table `cost`
 --
 ALTER TABLE `cost`
-  MODIFY `cost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `daily`
@@ -627,7 +632,7 @@ ALTER TABLE `logs`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `repair`
