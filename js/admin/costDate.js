@@ -100,18 +100,20 @@ function formatDate2(inputDate) {
 $(document).ready(function () {
     let from = $("#date_from")
     let to = $("#date_to")
-    let from_date = $("#from_date")
-    let to_date = $("#to_date")
-    if(from.val() != "" && to.val() != ""){
-        from_date.html(formatDate(new Date(from.val())))
-        to_date.html(formatDate(new Date(to.val())))
+    function BasicDate(date) {
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1
+        if (month < 10) {
+            month = "0" + month.toString()
+        }
+        return year + "-" + month
     }
-    
-    $('#date_from').dateDropper({
+
+    from.dateDropper({
         // roundtrip: true,
         theme: "my-style",
         lang: "th",
-        format: "Y-m",
+        format: "M Y",
         lock: "to",
         hideDay: true,
         hideMonth: false,
@@ -119,27 +121,64 @@ $(document).ready(function () {
         startFromMonday: false,
     });
 
-    $('#date_to').dateDropper({
+    to.dateDropper({
         // roundtrip: true,
         theme: "my-style",
         lang: "th",
-        format: "Y-m",
+        format: "M Y",
         lock: "to",
         hideDay: true,
         hideMonth: false,
         hideYear: false,
         startFromMonday: false,
-        // minDate: formatDate2($('#date_from').val())
     });
 
-    $('#date_from').change(function () {
-        $('#from_date').html(formatDate(new Date($('#date_from').val())))
-        $('#date_to').dateDropper('set', {
-            minDate: formatDate2($('#date_from').val())
+    from.change(function () {
+        to.dateDropper('set', {
+            minDate: from.val()
         });
+        from.css("border-color","")
+        from.css("background-image","")
+        $("#from_error").html("")
     })
 
-    $('#date_to').change(function () {
-        $('#to_date').html(formatDate(new Date($('#date_to').val())))
+    to.change(function () {
+        to.css("border-color","")
+        to.css("background-image","")
+        $("#to_error").html("")
+    })
+
+    $("#searchDate").click(function(){
+        if(from.val() == "" || to.val() == ""){
+            if(from.val() == ""){
+                from.css("border-color","red")
+                from.css("background-image","url('../../../img/tool/calendar-error.png')")
+                $("#from_error").html("โปรดระบุวันที่ต้องการค้นหา")
+            }
+            if(to.val() == ""){
+                to.css("border-color","red")
+                to.css("background-image","url('../../../img/tool/calendar-error.png')")
+                $("#to_error").html("โปรดระบุวันที่ต้องการค้นหา")
+            }
+        }else{
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let from_toeng = from.val().split(" ")
+            from_toeng[0] = search.findIndex(el => el === from_toeng[0])
+            from_toeng[0] = replace[from_toeng[0]]
+            from_toeng = from_toeng.join(" ")
+            from_toeng = BasicDate(new Date(from_toeng))
+            let to_toeng = to.val().split(" ")
+            to_toeng[0] = search.findIndex(el => el === to_toeng[0])
+            to_toeng[0] = replace[to_toeng[0]]
+            to_toeng = to_toeng.join(" ")
+            to_toeng = BasicDate(new Date(to_toeng))
+            location.href = `index.php?from=${from_toeng}&to=${to_toeng}`
+        }
+    })
+    $(".del-btn").click(function(event){
+        if(confirm("คุณต้องการลบรายการชำระเงินนี้ใช่หรือไม่ ?")){
+            location.href = `function/delcostData.php?cost_id=${event.target.id}`
+        }
     })
 })

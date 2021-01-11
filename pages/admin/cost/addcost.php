@@ -12,70 +12,81 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/addcost.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../../../js/admin/addcost.js"></script>
     <title>Document</title>
 </head>
 
-<body onload="onloadpage()">
+<body>
     <div class="box">
         <div style="padding:24px;">
             <div class="addcost-box">
                 <h3>รายละเอียดการชำระ</h3>
                 <div class="hr"></div>
                 <form action="function/addcostData.php" method="POST">
-                    <div>
-                        <p>เลขห้อง</p>
-                        <select name="room_select" id="room_select" onChange="searchroom()" required>
-                            <option value="---">--</option>
-                            <?php
-                            $select = $_REQUEST['room_select'];
-                            $sql = "SELECT * FROM roomlist WHERE room_status = 'ไม่ว่าง' ";
-                            $result = $conn->query($sql);
-                            if ($result->num_rows > 0) {
-                              while($row = $result->fetch_assoc()) {
-                            ?>
-                            <option value="<?php echo $row['room_id']; ?>"
-                                <?php if($select == $row['room_id']){ echo "selected"; } ?>>
-                                <?php echo $row['room_id']; ?></option>
-                            <?php }} ?>
-                        </select>
-                    </div>
-                    <?php
-                    if($select != ""){
-                        $searchRoom = mysqli_query($conn,"SELECT * FROM roomlist WHERE room_id = '$select'");
-                        $row2 = mysqli_fetch_assoc($searchRoom);
-                        $searchDetail = mysqli_query($conn,"SELECT * FROM roomdetail WHERE type = '".$row2['room_type']."'");
-                        $row3 = mysqli_fetch_assoc($searchDetail);
-                    }
-                    ?>
                     <div class="grid">
                         <div>
-                            <p>ค่าห้องพัก</p>
-                            <input type="text" id="room_price" name="room_price" value="<?php echo @$row3['price']; ?>" readonly>
+                            <p>เลขห้อง</p>
+                            <select name="room_select" id="room_select">
+                                <option value="">--</option>
+                                <?php
+                                $select = $_REQUEST['room_select'];
+                                $sql = "SELECT * FROM roomlist WHERE room_status = 'ไม่ว่าง' ";
+                                $result = $conn->query($sql);
+                                if ($result->num_rows > 0) {
+                                  while($row = $result->fetch_assoc()) {
+                                ?>
+                                <option value="<?php echo $row['room_id']; ?>"
+                                    <?php if($select == $row['room_id']){ echo "selected"; } ?>>
+                                    <?php echo $row['room_id']; ?></option>
+                                <?php }} ?>
+                            </select>
+                        </div>
+                        <?php
+                        if($select != ""){
+                            $searchRoom = mysqli_query($conn,"SELECT * FROM roomlist WHERE room_id = '$select'");
+                            $room_result = mysqli_fetch_assoc($searchRoom);
+                            $searchDetail = mysqli_query($conn,"SELECT * FROM roomdetail WHERE type = '".$room_result['room_type']."'");
+                            $detail_result = mysqli_fetch_assoc($searchDetail);
+                            $searchRoommember = mysqli_query($conn,"SELECT * FROM roommember WHERE room_id = '$select' AND member_status = 'กำลังเข้าพัก'");
+                            $member_result = mysqli_fetch_assoc($searchRoommember);
+                        }
+                        ?>
+                        <div>
+                            <p>ประเภทห้องพัก</p>
+                            <input type="text" id="room_type" name="room_type"
+                                value="<?php echo @$room_result['room_type']; ?>" readonly>
                         </div>
                         <div>
-                            <p>ค่าเคเบิล</p>
-                            <input type="text" id="cable_price" name="cable_price" value="<?php echo @$row3['cable_charge']; ?>" readonly>
+                            <p>ค่าห้องพัก (บาท)</p>
+                            <input type="text" id="room_price" name="room_price"
+                                value="<?php echo @$detail_result['price']; ?>" readonly>
                         </div>
                         <div>
-                            <p>ค่าน้ำ</p>
+                            <p>ค่าเคเบิล (บาท)</p>
+                            <input type="text" id="cable_price" name="cable_price"
+                                value="<?php echo @$detail_result['cable_charge']; ?>" readonly>
+                        </div>
+                        <div>
+                            <p>ค่าน้ำ (จำนวนคน | บาท)</p>
                             <div style="display:flex;">
-                                <input type="text" id="water_people" style="width:60px;margin-right:8px;"
-                                    placeholder="คน">
-                                <input type="text" id="water_price" name="water_price" placeholder="รวม (ค่าน้ำ)" readonly>
+                                <input type="text" id="water_people" style="width:80px;margin-right:8px;" value="<?php echo @$member_result["people"]; ?>" placeholder="คน" readonly>
+                                <input type="text" id="water_price" name="water_price" placeholder="รวม (ค่าน้ำ)"
+                                    readonly>
                             </div>
                         </div>
                         <div>
-                            <p>ค่าไฟ</p>
+                            <p>ค่าไฟ (หน่วย | บาท)</p>
                             <div style="display:flex;">
                                 <input type="text" id="elec_unit" style="width:80px;margin-right:8px;"
                                     placeholder="หน่วย">
-                                <input type="text" id="elec_price" name="elec_price" placeholder="รวม (ค่าไฟ)" readonly>
+                                <input type="text" id="elec_price" name="elec_price" placeholder="รวม (ค่าไฟ)"
+                                    value="0.00" readonly>
                             </div>
-
                         </div>
                     </div>
-                    <div style="display:flex;justify-content:flex-end;align-items:center;">
-                    <label>ยอดรวม</label>
+                    <div style="padding-top:32px;display:flex;justify-content:flex-end;align-items:center;">
+                        <label>ยอดรวม</label>
                         <input id="total_price" name="total_price" style="width:100px;margin:0 8px;" readonly>
                         <label>บาท</label>
                     </div>
@@ -87,27 +98,27 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/addcost.js"></script>
+
     <script>
-    let room_price = document.getElementById("room_price")
-    let cable_price = document.getElementById("cable_price")
-    let water_people = document.getElementById("water_people")
-    let water_price = document.getElementById("water_price")
-    let elec_unit = document.getElementById("elec_unit")
-    let elec_price = document.getElementById("elec_price")
-    let water_total = 0
-    let elec_total = 0
-    let total_price = document.getElementById("total_price")
-    total_price.value = parseFloat(room_price.value) + parseFloat(cable_price.value) + water_total + elec_total
-    water_people.addEventListener("change", function() {
-        water_total = <?php echo $row3["water_bill"]; ?> * parseFloat(water_people.value);
-        water_price.value = water_total
-        total_price.value = parseFloat(room_price.value) + parseFloat(cable_price.value) + water_total + elec_total
-    })
-    elec_unit.addEventListener("change", function() {
-        elec_total = parseFloat(elec_unit.value) * <?php echo $row3["elec_bill"]; ?>;
-        elec_price.value = elec_total
-        total_price.value = parseFloat(room_price.value) + parseFloat(cable_price.value) + water_total + elec_total
+    if ($("#room_select").val != "") {
+        $("#water_price").val((parseFloat($("#water_people").val()) * <?php echo $detail_result["water_bill"]; ?>).toFixed(2))
+    }
+    $("#elec_unit").keyup(function() {
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+        if ($("#elec_unit").val() != "") {
+            $("#elec_unit").css("border-color", "")
+            $("#total_price").css("border-color", "")
+            $("#elec_price").val((parseFloat($("#elec_unit").val()) * <?php echo $detail_result["elec_bill"]; ?>).toFixed(2))
+            $("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat($("#elec_price").val())).toFixed(2))
+        } else {
+            $("#elec_price").val("0.00")
+            $("#total_price").val("")
+            $("#elec_unit").css("border-color", "red")
+            $("#total_price").css("border-color", "red")
+        }
     })
     </script>
 </body>

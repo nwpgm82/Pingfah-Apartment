@@ -3,8 +3,35 @@ $conn= mysqli_connect("localhost","root","","Pingfah") or die("Error: " . mysqli
 mysqli_query($conn, "SET NAMES 'utf8' ");
 date_default_timezone_set('Asia/Bangkok');
 if(date("d") == "6"){
-  $updatefines = "UPDATE cost SET fines = 150 WHERE cost_status != 'ชำระเงินแล้ว' ";
-  $conn->query($updatefines) === TRUE;
+    $get_cost = "SELECT fines, total FROM cost WHERE cost_status = 'ยังไม่ได้ชำระเงิน'";
+    $get_result = $conn->query($get_cost);
+    if ($get_result->num_rows > 0) {
+        while($cost = $get_result->fetch_assoc()) {
+            if($cost["room_type"] == "แอร์"){
+                $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
+            }else if($cost["room_type"] == "พัดลม"){
+                $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
+            }
+            $detail_result = mysqli_fetch_assoc($get_detail);
+            $updatefines = "UPDATE cost SET fines = ".$detail_result["fines"].", total = total + ".$detail_result["fines"]." WHERE cost_status != 'ชำระเงินแล้ว' ";
+            $conn->query($updatefines) === TRUE;
+        }
+    }
+}else if(date("d") > "6" && date("d") <= "10"){
+    $get_cost = "SELECT fines, total FROM cost WHERE cost_status = 'ยังไม่ได้ชำระเงิน'";
+    $get_result = $conn->query($get_cost);
+    if ($get_result->num_rows > 0) {
+        while($cost = $get_result->fetch_assoc()) {
+            if($cost["room_type"] == "แอร์"){
+                $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
+            }else if($cost["room_type"] == "พัดลม"){
+                $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
+            }
+            $detail_result = mysqli_fetch_assoc($get_detail);
+            $updatefines = "UPDATE cost SET fines = fines + ".$detail_result["fines"].", total = total + ".$detail_result["fines"]." WHERE cost_status != 'ชำระเงินแล้ว' ";
+            $conn->query($updatefines) === TRUE;
+        }
+    }
 }
 $sql = "SELECT * FROM daily";
 $result = $conn->query($sql);

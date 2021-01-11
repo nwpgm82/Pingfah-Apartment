@@ -1,21 +1,20 @@
-function searchroom() {
-    var x = document.getElementById("room_select").value
-    console.log(x)
-    location.href = `addcost.php?room_select=${x}`
-}
-
-// function onloadpage(){
-//     document.getElementById("total").innerHTML = 0
-// }
-
-// function calculate(id,water,elec,cable,fines,price){
-//     var water_c = document.getElementById("water_count").value
-//     var elec_c = document.getElementById("elec_count").value
-//     if(water_c || elec_c || water_c && elec_c != ""){
-//     total = (water*water_c) + (elec_c*elec) + cable + price
-//     console.log(total)
-//     document.getElementById("total").innerHTML = total
-//     }else{
-//         alert("กรอกค่าให้ครบ")
-//     }
-// }
+$(document).ready(function () {
+    $("#room_select").change(function () {
+        location.href = `addcost.php?room_select=${$("#room_select").val()}`
+    })
+    $("button[type=submit]").click(function (event) {
+        if ($("#room_select").val() == "" || $("#cable_price").val() == "" || $("#water_people").val() == "" || $("#water_price").val() == "" || $("#elec_unit").val() == "" || $("#elec_price").val() == "" || $("#total_price").val() == "") {
+            let inputs = $("input")
+            inputs.each(function () {
+                if ($(this).val() == "") {
+                    $(this).css("border-color", "red")
+                    event.preventDefault()
+                }
+                if ($("#room_select").val() == "") {
+                    $("#room_select").css("border-color", "red")
+                    event.preventDefault()
+                }
+            })
+        }
+    })
+})

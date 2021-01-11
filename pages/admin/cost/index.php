@@ -6,22 +6,30 @@ if($_SESSION['level'] == 'admin'){
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
     $check = @$_REQUEST['Status'];
-    $num = 1;
-    function DateThai($strDate){
-    	$strYear = date("Y",strtotime($strDate))+543;
-    	$strMonth= date("n",strtotime($strDate));
-    	$strDay= date("j",strtotime($strDate));
-    	$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-    	$strMonthThai=$strMonthCut[$strMonth];
-    	return "$strMonthThai $strYear";
+    function DateThai($strDate)
+    {
+        $strYear = date("Y",strtotime($strDate));
+        $strMonth= date("n",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strMonthThai $strYear";
+    }
+    function DateThai2($strDate)
+    {
+        $strYear = date("Y",strtotime($strDate));
+        $strMonth= date("n",strtotime($strDate));
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strDay $strMonthThai $strYear";
     }
     if(isset($from) && isset($to)){
-        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระ' THEN total ELSE 0 END) as untotal_price FROM cost WHERE (date BETWEEN '$from' AND '$to') GROUP BY date";
-        $total_cost = mysqli_query($conn,"SELECT SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_cost, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระ' THEN total ELSE 0 END) as untotal_cost FROM cost WHERE (date BETWEEN '$from' AND '$to')");
+        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost WHERE (date BETWEEN '$from' AND '$to') GROUP BY date";
+        $total_cost = mysqli_query($conn,"SELECT SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_cost, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_cost FROM cost WHERE (date BETWEEN '$from' AND '$to')");
         $totalresult = mysqli_fetch_assoc($total_cost);
     }else{
-        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระ' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date";
-        $total_cost = mysqli_query($conn,"SELECT SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_cost, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระ' THEN total ELSE 0 END) as untotal_cost FROM cost ");
+        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date ORDER BY date ASC LIMIT 5";
+        $total_cost = mysqli_query($conn,"SELECT SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_cost, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_cost FROM cost ");
         $totalresult = mysqli_fetch_assoc($total_cost);
     }
     $result = mysqli_query($conn, $query);
@@ -43,6 +51,7 @@ if($_SESSION['level'] == 'admin'){
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
+    <script src="../../../js/admin/costDate.js"></script>
     <title>Document</title>
 </head>
 
@@ -51,28 +60,35 @@ if($_SESSION['level'] == 'admin'){
         <div style="padding:24px;">
             <div class="cost-box">
                 <h3>ค้นหารายการชำระเงินห้องพักรายเดือน</h3>
-                <div style="padding-top:32px;display:flex;justify-content:space-between;align-items:center;">
-                    <div style="display:flex;align-items:center;">
-                        <label>ค้นหาตามเดือน</label>
-                        <div style="position:relative;">
-                            <input type="text" id="date_from" value="<?php echo $from; ?>">
-                            <p id="from_date" class="dateText"></p>
+                <div class="search">
+                    <div style="padding-right:16px">
+                        <div style="height:57px;display:flex;align-items:flex-start;">
+                            <label style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="date_from"
+                                    value="<?php if(isset($from)){ echo DateThai($from); } ?>">
+                                <h5 id="from_error" style="color:red;"></h5>
+                            </div>
+                            <label style="padding:10px 8px 0 8px;">~</label>
+                            <div style="position:relative;">
+                                <input type="text" class="roundtrip-input" id="date_to"
+                                    value="<?php if(isset($to)){ echo DateThai($to); } ?>">
+                                <h5 id="to_error" style="color:red;"></h5>
+                            </div>
+                            <button type="button" id="searchDate" style="margin-left:16px;">ค้นหา</button>
+                            <?php
+                            if(isset($from) || isset($to) || isset($check)){
+                            ?>
+                            <div style="padding:0 16px;">
+                                <a href="index.php"><button type="button"
+                                        class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
+                            </div>
+                            <?php } ?>
                         </div>
-                        <label>~</label>
-                        <div style="position:relative;">
-                            <input type="text" id="date_to" value="<?php echo $to; ?>">
-                            <p id="to_date" class="dateText"></p>
-                            <button type="button" style="margin:0 8px;" onclick="searchDate()">ค้นหา</button>
-                        </div>
-                        <?php
-                        if(isset($from) || isset($to) || isset($check)){
-                        ?>
-                        <button style="margin:0 8px;" onclick="unCheckAll()" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button>
-                        <?php } ?>
                     </div>
-                    <a href="../cost/addcost.php"><button>เพิ่มรายการชำระเงิน</button></a>
+                    <a href="addcost.php"><button>เพิ่มรายการชำระเงิน</button></a>
                 </div>
-                <div class="hr"></div>
+                <div class="hr" style="margin-top:16px;"></div>
                 <div>
                     <div class="card">
                         <?php
@@ -111,7 +127,7 @@ if($_SESSION['level'] == 'admin'){
                             <input type="checkbox" id="unsuccess"
                                 onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
                                 <?php if(isset($check)){ if($check == "unsuccess"){ echo "checked";}} ?>>
-                            <label for="scales">ยังไม่ได้ชำระ</label>
+                            <label for="scales">ยังไม่ได้ชำระเงิน</label>
                         </div>
                     </div>
                     <?php
@@ -129,14 +145,14 @@ if($_SESSION['level'] == 'admin'){
                             if($check == "success"){
                                 $check = "ชำระเงินแล้ว";
                             }else if($check == "unsuccess"){
-                                $check = "ยังไม่ได้ชำระ";
+                                $check = "ยังไม่ได้ชำระเงิน";
                             }
                             $sql = "SELECT * FROM cost WHERE cost_status = '$check' ORDER BY date LIMIT {$start} , {$perpage}";
                         }else if(isset($from) && isset($to) && isset($check)){
                             if($check == "success"){
                                 $check = "ชำระเงินแล้ว";
                             }else if($check == "unsuccess"){
-                                $check = "ยังไม่ได้ชำระ";
+                                $check = "ยังไม่ได้ชำระเงิน";
                             }
                             $sql = "SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') AND cost_status = '$check' ORDER BY date LIMIT {$start} , {$perpage}";
                         }else{
@@ -149,65 +165,63 @@ if($_SESSION['level'] == 'admin'){
                         <tr>
                             <th>ลำดับ</th>
                             <th>เลขห้อง</th>
-                            <!-- <th>ประเภท</th> -->
                             <th>ประจำเดือน</th>
-                            <th>ค่าห้อง</th>
-                            <th>ค่าน้ำ</th>
-                            <th>ค่าไฟ</th>
-                            <th>ค่าเคเบิล</th>
+                            <th>วันที่ชำระเงิน</th>
+                            <th>ยอดรวม</th>
                             <th>ค่าปรับ</th>
-                            <th>ราคารวม</th>
-                            <th>สถานะการจ่ายเงิน</th>
+                            <th>สถานะการชำระเงิน</th>
                             <th>เพิ่มเติม</th>
                         </tr>
                         <?php while($row = $result->fetch_assoc()){ ?>
-                        <tr>
-                            <td><?php echo $num; ?></td>
-                            <td><?php echo $row["room_id"];?></td>
-                            <!-- <td><?php echo $row["type"]?></td> -->
-                            <td><?php echo DateThai($row["date"]);?></td>
-                            <td><?php echo number_format($row["room_cost"]);?></td>
-                            <td><?php echo number_format($row["water_bill"]);?></td>
-                            <td><?php echo number_format($row["elec_bill"]);?></td>
-                            <td><?php echo number_format($row["cable_charge"]);?></td>
-                            <td><?php echo number_format($row["fines"]);?></td>
-                            <td><?php echo number_format($row["total"]);?></td>
-                            <?php
-                            if($row['cost_status'] == 'ชำระเงินแล้ว'){
-                            ?>
-                            <td>
-                                <div class="status-success">
-                                    <p><?php echo $row["cost_status"]?></p>
-                                </div>
-                            </td>
-                            <?php
-                            }else{
-                            ?>
-                            <td>
-                                <div class="status-nosuccess">
-                                    <p><?php echo $row["cost_status"]?></p>
-                                </div>
-                            </td>
-                            <?php } ?>
-                            <?php
-                            if($row['cost_status'] != 'ชำระเงินแล้ว'){
-                            ?>
-                            <td>
-                                <button class="confirm-status"
-                                    onclick="confirmStatus(<?php echo $row['room_id'] .",'" .$row['date'] ."'"; ?>)">ยืนยันการชำระ</button>
-                                <button class="del"
-                                    onclick="delcost(<?php echo $row['room_id'] .",'" .$row['date'] ."'"; ?>)">ลบ</button>
-                            </td>
-                            <?php 
-                            }else{
-                            ?>
-                            <td>
-                                <button class="confirmed-status">ยืนยันการชำระ</button>
-                                <button class="del"
-                                    onclick="delcost(<?php echo $row['room_id'] .",'" .$row['date'] ."'"; ?>)">ลบ</button>
-                            </td>
-                            <?php } ?>
-                        </tr>
+                        <form action="function/confirmStatus.php?cost_id=<?php echo $row["cost_id"]; ?>" onsubmit="return confirm('คุณต้องการยืนยันการชำระเงินใช่หรือไม่ ?')" method="POST">
+                            <tr>
+                                <td><?php echo $num; ?></td>
+                                <td><?php echo $row["room_id"];?></td>
+                                <td><?php echo DateThai($row["date"]);?></td>
+                                <td><?php if(isset($row["pay_date"])){ echo DateThai2($row["pay_date"]); }?></td>
+                                <td><?php echo $row["total"];?></td>
+                                <td><?php if(isset($row["fines"])){ echo $row["fines"]; }else{ echo "0.00"; }?></td>
+                                <?php
+                                if($row['cost_status'] == 'ชำระเงินแล้ว'){
+                                ?>
+                                <td>
+                                    <div class="status-success">
+                                        <p><?php echo $row["cost_status"]?></p>
+                                    </div>
+                                </td>
+                                <?php
+                                }else{
+                                ?>
+                                <td>
+                                    <div class="status-nosuccess">
+                                        <p><?php echo $row["cost_status"]?></p>
+                                    </div>
+                                </td>
+                                <?php } ?>
+                                <?php
+                                if($row['cost_status'] != 'ชำระเงินแล้ว'){
+                                ?>
+                                <td>
+                                    <div class="option">
+                                        <button type="submit" class="confirm-status">ยืนยันการชำระเงิน</button>
+                                        <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more">ดูข้อมูลเพิ่มเติม</button></a>
+                                        <button type="button" class="del-btn" id="<?php echo $row["cost_id"]; ?>"></button>
+                                    </div>
+
+                                </td>
+                                <?php 
+                                }else{
+                                ?>
+                                <td>
+                                    <div class="option">
+                                        <button type="button" class="confirmed-status">ชำระเงินแล้ว</button>
+                                        <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more">ดูข้อมูลเพิ่มเติม</button></a>
+                                        <button type="button" class="del-btn" id="<?php echo $row["cost_id"]; ?>"></button>
+                                    </div>
+                                </td>
+                                <?php } ?>
+                            </tr>
+                        </form>
                         <?php $num++; } ?>
                     </table>
                     <?php
@@ -277,7 +291,6 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/costDate.js"></script>
     <script>
     google.charts.load('current', {
         'packages': ['bar']
@@ -290,14 +303,16 @@ if($_SESSION['level'] == 'admin'){
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['เดือน / ปี', 'ชำระเงินแล้ว (บาท)', 'ยังไม่ได้ชำระ (บาท)'],
+            ['เดือน / ปี', 'ชำระเงินแล้ว (บาท)', 'ยังไม่ได้ชำระเงิน (บาท)'],
             <?php echo $datax;?>
         ]);
         var options = {
             title: 'รายการชำระเงินห้องพักรายเดือน',
             colors: ['rgb(131, 120, 47)', '#c6b66b'],
             fontName: "Sarabun",
-            vAxis: { format: "decimal"}
+            vAxis: {
+                format: "decimal"
+            }
         };
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
 
