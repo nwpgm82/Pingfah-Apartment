@@ -37,8 +37,6 @@ if($_SESSION['level'] == 'admin'){
     <link rel="stylesheet" href="../../../css/costDetail.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
-    <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/costDetail.js"></script>
     <title>Document</title>
 </head>
@@ -51,7 +49,7 @@ if($_SESSION['level'] == 'admin'){
                 <form action="function/editcost.php?cost_id=<?php echo $cost_id; ?>" method="POST">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <h3>รายละเอียดการชำระเงิน</h3>
-                        <button type="button" class="edit-btn"></button>
+                        <button type="button" class="edit-btn" title="แก้ไขข้อมูล"></button>
                         <div class="edit-option" style="display:none;">
                             <button type="submit" class="correct-btn" id="accept-edit" name="accept-edit" title="ยืนยันการแก้ไข"></button>
                             <button type="button" class="cancel-btn" id="cancel-edit" title="ยกเลิกการแก้ไข"></button>
@@ -73,23 +71,27 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                         <div class="room_cost">
                             <p>ค่าห้องพัก (บาท)</p>
-                            <input type="text" id="room_price" value="<?php echo $room_cost; ?>" disabled>
+                            <input type="text" id="room_price" name="room_price" value="<?php echo $room_cost; ?>" disabled>
+                            <h5 id="room_error" style="color:red;"></h5>
                         </div>
                         <div class="cable_charge">
                             <p>ค่าเคเบิล (บาท)</p>
-                            <input type="text" id="cable_price" value="<?php echo $cable_charge; ?>" disabled>
+                            <input type="text" id="cable_price" name="cable_price" value="<?php echo $cable_charge; ?>" disabled>
+                            <h5 id="cable_error" style="color:red;"></h5>
                         </div>
                         <div class="water_bill">
                             <p>ค่าน้ำ (บาท)</p>
-                            <input type="text" id="water_price" value="<?php echo $water_bill; ?>" disabled>
+                            <input type="text" id="water_price" name="water_price" value="<?php echo $water_bill; ?>" disabled>
+                            <h5 id="water_error" style="color:red;"></h5>
                         </div>
                         <div class="elec_bill">
                             <p>ค่าไฟ (บาท)</p>
-                            <input type="text" id="elec_price" value="<?php echo $elec_bill; ?>" disabled>
+                            <input type="text" id="elec_price" name="elec_price" value="<?php echo $elec_bill; ?>" disabled>
+                            <h5 id="elec_error" style="color:red;"></h5>
                         </div>
                         <div class="total">
                             <p>ยอดรวม (บาท)</p>
-                            <input type="text" id="total_price" value="<?php echo $total; ?>" disabled>
+                            <input type="text" id="total_price" name="total_price" value="<?php echo $total; ?>" disabled>
                         </div>
                         <div class="cost_status">
                             <p>สถานะการชำระเงิน</p>
@@ -97,8 +99,7 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                         <div class="pay_date">
                             <p>วันที่ชำระเงิน</p>
-                            <input type="text" id="pay_date" value="<?php if(isset($pay_date)){ echo DateThai2($pay_date); } ?>"
-                                disabled>
+                            <input type="text" id="pay_date" value="<?php if(isset($pay_date)){ echo DateThai2($pay_date); } ?>" disabled>
                         </div>
                     </div>
                 </form>

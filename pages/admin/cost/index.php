@@ -203,9 +203,9 @@ if($_SESSION['level'] == 'admin'){
                                 ?>
                                 <td>
                                     <div class="option">
-                                        <button type="submit" class="confirm-status">ยืนยันการชำระเงิน</button>
-                                        <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more">ดูข้อมูลเพิ่มเติม</button></a>
-                                        <button type="button" class="del-btn" id="<?php echo $row["cost_id"]; ?>"></button>
+                                        <button type="submit" class="confirm-status" title="ยืนยันการชำระเงิน">ยืนยันการชำระเงิน</button>
+                                        <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more" title="ดูข้อมูลเพิ่มเติม">ดูข้อมูลเพิ่มเติม</button></a>
+                                        <button type="button" class="del-btn" id="<?php echo $row["cost_id"]; ?>" title="ลบข้อมูล"></button>
                                     </div>
 
                                 </td>
@@ -215,8 +215,8 @@ if($_SESSION['level'] == 'admin'){
                                 <td>
                                     <div class="option">
                                         <button type="button" class="confirmed-status">ชำระเงินแล้ว</button>
-                                        <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more">ดูข้อมูลเพิ่มเติม</button></a>
-                                        <button type="button" class="del-btn" id="<?php echo $row["cost_id"]; ?>"></button>
+                                        <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more" title="ดูข้อมูลเพิ่มเติม">ดูข้อมูลเพิ่มเติม</button></a>
+                                        <button type="button" class="del-btn" id="<?php echo $row["cost_id"]; ?>" title="ลบข้อมูล"></button>
                                     </div>
                                 </td>
                                 <?php } ?>
