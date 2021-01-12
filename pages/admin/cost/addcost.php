@@ -21,7 +21,7 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="addcost-box">
-                <h3>รายละเอียดการชำระ</h3>
+                <h3>รายละเอียดการชำระเงิน</h3>
                 <div class="hr"></div>
                 <form action="function/addcostData.php" method="POST">
                     <div class="grid">
@@ -100,8 +100,8 @@ if($_SESSION['level'] == 'admin'){
     </div>
 
     <script>
-    if ($("#room_select").val != "") {
-        $("#water_price").val((parseFloat($("#water_people").val()) * <?php echo $detail_result["water_bill"]; ?>).toFixed(2))
+    if ($("#room_select").val() != "") {
+        $("#water_price").val((parseFloat($("#water_people").val()) * <?php echo @$detail_result["water_bill"]; ?>).toFixed(2))
     }
     $("#elec_unit").keyup(function() {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
@@ -111,7 +111,7 @@ if($_SESSION['level'] == 'admin'){
         if ($("#elec_unit").val() != "") {
             $("#elec_unit").css("border-color", "")
             $("#total_price").css("border-color", "")
-            $("#elec_price").val((parseFloat($("#elec_unit").val()) * <?php echo $detail_result["elec_bill"]; ?>).toFixed(2))
+            $("#elec_price").val((parseFloat($("#elec_unit").val()) * <?php echo @$detail_result["elec_bill"]; ?>).toFixed(2))
             $("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat($("#elec_price").val())).toFixed(2))
         } else {
             $("#elec_price").val("0.00")
