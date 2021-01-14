@@ -176,7 +176,7 @@ include('pages/connection.php');
         </div>
     </div>
     <?php include('components/mainFoot.php') ?>
-    <div class="clickTotop">
+    <div class="clickTotop" style="display:none;">
         <div class="arrow-up"></div>
     </div>
     <script src="js/main.js"></script>

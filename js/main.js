@@ -63,9 +63,17 @@ $('.roundtrip-input').dateDropper({
     lock: "from",
     startFromMonday: false,
 });
+
+$(window).scroll(function(){
+    if(window.pageYOffset > 180){
+        $(".clickTotop").show()
+    }else{
+        $(".clickTotop").hide()
+    }
+})
 $(".clickTotop").click(function () {
     $("html, body").animate({
-        scrollTop: 0
+        scrollTop: 0,
     }, 1000)
 })
 check_in_date.click(function () {

@@ -414,7 +414,11 @@ body::after{
     border-radius: 4px;
     background-color: rgb(131, 120, 47, 0.5);
     cursor: pointer;
-    animation-duration: 3s;
+    transition: 0.3s;
+}
+
+.clickTotop:hover{
+    background-color: rgb(131, 120, 47, 0.7);
 }
 
 .clickTotop .arrow-up {
