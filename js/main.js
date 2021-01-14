@@ -123,7 +123,7 @@ people.keyup(function(){
 })
 $("#checkRoom").click(function () {
     if (people.val() != 0) {
-        window.open(`pages/checkRoom.php?check_in=${check_in.value}&check_out=${check_out.value}&people=${people.value}`, "_blank")
+        window.open(`pages/checkRoom.php?check_in=${check_in.val()}&check_out=${check_out.val()}&people=${people.val()}`, "_blank")
     } else {
         people.css("border-color","red")
     }
