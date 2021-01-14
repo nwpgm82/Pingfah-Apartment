@@ -95,7 +95,7 @@ body::after{
 
 .reservation .card input[type=text]{
     position: relative;
-    width: 180px;
+    width: 200px;
     height: 40px;
     padding: 0 12px;
     color: transparent;
@@ -141,7 +141,7 @@ body::after{
     left: 20px;
     width: 134px;
     background-color: #fff;
-    cursor: default;
+    cursor: pointer;
 }
 
 .reservation .card button {
@@ -225,6 +225,7 @@ body::after{
 
 .room-box .room-detail .room-grid {
     padding: 60px 0;
+    height: 450px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 0 16px;
@@ -232,7 +233,7 @@ body::after{
 
 .room-box .room-detail .room-grid .detail-grid {
     display: grid;
-    grid-template-columns: 300px auto;
+    grid-template-columns: 320px auto;
     border-radius: 4px;
     background: url('../img/tool/bg2.png');
     overflow: hidden;
@@ -242,8 +243,8 @@ body::after{
 }
 
 .room-box .room-detail .room-grid .detail-grid img {
-    width: 300px;
-    height: 250px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
@@ -398,6 +399,31 @@ body::after{
     width: 100%;
     height: 350px;
     object-fit: cover;
+}
+
+.clickTotop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid  rgb(131, 120, 47, 1);
+    border-radius: 4px;
+    background-color: rgb(131, 120, 47, 0.5);
+    cursor: pointer;
+    animation-duration: 3s;
+}
+
+.clickTotop .arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 5px solid #fff;
 }
 
 @media screen and (max-width:1200px) {

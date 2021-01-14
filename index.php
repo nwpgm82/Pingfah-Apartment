@@ -18,7 +18,7 @@ include('pages/connection.php');
     <title>Document</title>
 </head>
 
-<body onload="bannerload()">
+<body>
     <?php include('components/maintopbar.php') ?>
     <div style="position:relative;">
         <div class="banner">
@@ -31,7 +31,7 @@ include('pages/connection.php');
                     <div style="display:flex;align-items:center;">
                         <label style="font-family: 'Playfair Display', serif;">Check In : </label>
                         <div style="position:relative;padding-left:8px;height:40px;">
-                            <input id="check_in" type="text">
+                            <input id="check_in" class="roundtrip-input" type="text">
                             <p id="check_in_date" class="dateText"></p>
                         </div>
                     </div>
@@ -40,7 +40,7 @@ include('pages/connection.php');
                     <div style="display:flex;align-items:center;">
                         <label style="font-family: 'Playfair Display', serif;">Check Out : </label>
                         <div style="position:relative;padding-left:8px;height:40px;">
-                            <input id="check_out" type="text">
+                            <input id="check_out" class="roundtrip-input" type="text">
                             <p id="check_out_date" class="dateText"></p>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ include('pages/connection.php');
                     </div>
                     <label style="line-height:0px">(สูงสุด : 10)</label>
                 </div>
-                <button type="button" onclick="checkRoom()">CHECK AVAILABILITY</button>
+                <button type="button" id="checkRoom">CHECK AVAILABILITY</button>
             </div>
         </div>
     </div>
@@ -176,6 +176,9 @@ include('pages/connection.php');
         </div>
     </div>
     <?php include('components/mainFoot.php') ?>
+    <div class="clickTotop">
+        <div class="arrow-up"></div>
+    </div>
     <script src="js/main.js"></script>
     <script>
     AOS.init();

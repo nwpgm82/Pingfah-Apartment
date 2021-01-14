@@ -45,6 +45,11 @@
                             </a>
                         </div>
                         <div>
+                            <a href="/Pingfah/pages/checkCode.php">
+                                <p>ตรวจสอบการจอง</p>
+                            </a>
+                        </div>
+                        <div>
                             <a href="#">
                                 <p>ติดต่อเรา</p>
                             </a>
