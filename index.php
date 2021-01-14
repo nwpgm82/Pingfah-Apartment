@@ -27,7 +27,7 @@ include('pages/connection.php');
         <div class="reservation" id="re">
             <div class="card">
                 <strong><label class="topic">RESERVATION</label></strong>
-                <div style="padding:0 16px 0 32px">
+                <div style="padding-left:16px">
                     <div style="display:flex;align-items:center;">
                         <label style="font-family: 'Playfair Display', serif;">Check In : </label>
                         <div style="position:relative;padding-left:8px;height:40px;">
@@ -36,15 +36,16 @@ include('pages/connection.php');
                         </div>
                     </div>
                 </div>
-                <div style="padding:0 16px">
-                    <div style="display:flex;align-items:center;">
-                        <label style="font-family: 'Playfair Display', serif;">Check Out : </label>
-                        <div style="position:relative;padding-left:8px;height:40px;">
-                            <input id="check_out" class="roundtrip-input" type="text">
-                            <p id="check_out_date" class="dateText"></p>
-                        </div>
+                <div style="display:flex;align-items:center;">
+                    <label style="font-family: 'Playfair Display', serif;">Check Out : </label>
+                    <div style="position:relative;padding-left:8px;height:40px;">
+                        <input id="check_out" class="roundtrip-input" type="text">
+                        <p id="check_out_date" class="dateText"></p>
                     </div>
                 </div>
+                <div style="min-width:52px;display:flex;align-items:center;">
+                        <p id="summary">(1 คืน)</p>
+                    </div>
                 <div style="display:flex;align-items:center;">
                     <label>จำนวนผู้พัก : </label>
                     <div style="position:relative;padding:0 8px;height:40px;">
