@@ -114,21 +114,13 @@ function decrease(num) {
     }
 }
 
-function checkform() {
-    let people_check = Math.ceil(parseInt(document.getElementById("people").value) / 2)
-    let room_check = parseInt(document.getElementById("people1").value) + parseInt(document.getElementById("people2").value)
-    if (people_check > room_check) {
-        alert("กรุณาเลือกห้องพักให้เพียงพอกับผู้พัก")
-        return false
-    }
-}
-
 $(document).ready(function () {
     let check_in = $("#check_in")
     let check_out = $("#check_out")
     let check_in_date = $("#check_in_date")
     let check_out_date = $("#check_out_date")
     let people = $("#people")
+
     function formatDate(date) {
         var monthNames = [
             "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
@@ -141,6 +133,7 @@ $(document).ready(function () {
         }
         return day + ' ' + monthNames[monthIndex] + ' ' + year;
     }
+
     function formatDate2(inputDate) {
         var date = new Date(inputDate);
         if (!isNaN(date.getTime())) {
@@ -206,7 +199,7 @@ $(document).ready(function () {
         let date1 = new Date(formatDate2(check_in.val()))
         let date2 = new Date(formatDate2(check_out.val()))
         let Difference_In_Time = date2.getTime() - date1.getTime();
-        let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);  
+        let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         $("#summary").html(`(${Difference_In_Days} คืน)`)
     })
     people.keyup(function () {
@@ -216,11 +209,19 @@ $(document).ready(function () {
             people.css("border-color", "red")
         }
     })
-    $("#search").click(function(){
+    $("#search").click(function () {
         if (people.val() != 0) {
             location.href = `checkRoom.php?check_in=${check_in.val()}&check_out=${check_out.val()}&people=${people.val()}`
         } else {
             people.css("border-color", "red")
+        }
+    })
+    $("button[type=submit]").click(function (event) {
+        let people_check = Math.ceil(parseInt(document.getElementById("people").value) / 2)
+        let room_check = parseInt(document.getElementById("people1").value) + parseInt(document.getElementById("people2").value)
+        if (people_check > room_check) {
+            alert("กรุณาเลือกห้องพักให้เพียงพอกับผู้พัก")
+            event.preventDefault()
         }
     })
 })

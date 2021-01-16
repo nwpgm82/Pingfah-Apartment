@@ -1,29 +1,30 @@
 <?php
+    session_start();
     include('connection.php');
     include('../components/maintopbar.php');
-    @$check_in = $_POST['check_in'];
-    @$check_out = $_POST['check_out'];
-    @$people = $_POST['people'];
-    @$air = $_POST['air'];
-    @$fan = $_POST['fan'];
-    $date1 = date_create($check_in);
-    $date2 = date_create($check_out);
+    function DateThai($strDate)
+    {
+        $strYear = date("Y",strtotime($strDate));
+        $strMonth= date("n",strtotime($strDate));
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strDay $strMonthThai $strYear";
+    }
+    $_SESSION["check_in"] = @$_POST['check_in'];
+    $_SESSION["check_out"] = @$_POST['check_out'];
+    $_SESSION["people"] = @$_POST['people'];
+    $_SESSION["air"] = @$_POST['air'];
+    $_SESSION["fan"] = @$_POST['fan'];
+    $date1 = date_create($_SESSION["check_in"]);
+    $date2 = date_create($_SESSION["check_out"]);
     $diff= date_diff($date1,$date2);
     $checkdate_result = $diff->format("%R%a days");
-    if(date("Y-m-d") == $check_in){  
-        $datetime_result = DateThai($check_in);
+    if(date("Y-m-d") == $_SESSION["check_in"]){  
+        $datetime_result = DateThai($_SESSION["check_in"]);
     }else{
         $datetime = new DateTime('tomorrow');
         $datetime_result = DateThai($datetime->format('Y-m-d'));
-    }
-    function DateThai($strDate)
-    {
-        $strYear = date("Y",strtotime($strDate))+543;
-        $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-        $strMonthThai=$strMonthCut[$strMonth];
-        return "$strDay $strMonthThai $strYear";
     }
 ?>
 <!DOCTYPE html>
@@ -33,6 +34,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/dailyForm.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../js/dailyForm.js"></script>
     <title>Document</title>
 </head>
 
@@ -41,57 +44,64 @@
         <div class="dailyForm">
             <h2>แบบฟอร์มจองห้องพัก</h2>
             <div class="hr"></div>
-            <form action="mainpage_function/addDailyForm.php?check_in=<?php echo $check_in;?>&check_out=<?php echo $check_out;?>&people=<?php echo $people;?>&air=<?php echo $air;?>&fan=<?php echo $fan;?>" method="POST" onsubmit="return confirm('คุณต้องการจองห้องพักใช่หรือไม่ ?');">
-                <div class="row">
-                    <div class="col-4">
+            <form action="xxx.php" method="POST">
+                <div class="grid-container">
+                    <div class="name_title">
+                        <p>คำนำหน้าชื่อ</p>
+                        <select name="name_title" id="">
+                            <option value="นาย">นาย</option>
+                            <option value="นาง">นาง</option>
+                            <option value="นางสาว">นางสาว</option>
+                        </select>
+                    </div>
+                    <div class="firstname">
                         <p>ชื่อ</p>
-                        <input type="text" name="firstname" required>
+                        <input type="text" name="firstname" id="firstname">
+                        <h5 id="fs_error" style="color:red;"></h5>
                     </div>
-                    <div class="col-4">
+                    <div class="lastname">
                         <p>นามสกุล</p>
-                        <input type="text" name="lastname" required>
+                        <input type="text" name="lastname" id="lastname">
+                        <h5 id="ls_error" style="color:red;"></h5>
                     </div>
-                    <div class="col-4">
-                        <p>เลขบัตรประชาชน / Passport</p>
-                        <input type="text" name="id_card" required>
+                    <div class="id_card">
+                        <p>เลขบัตรประชาชน / Passport No.</p>
+                        <input type="text" name="id_card" id="id_card">
+                        <h5 id="id_error" style="color:red;"></h5>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
+                    <div class="email">
                         <p>อีเมล</p>
-                        <input type="email" name="email" required>
+                        <input type="text" name="email" id="email">
+                        <h5 id="em_error" style="color:red;"></h5>
                     </div>
-                    <div class="col-2">
+                    <div class="tel">
                         <p>เบอร์โทรศัพท์</p>
-                        <input type="tel" name="tel" required>
+                        <input type="text" name="tel" id="tel">
+                        <h5 id="tel_error" style="color:red;"></h5>
                     </div>
-                    <div class="col-2">
+                    <div class="check_in">
                         <p>เช็คอิน</p>
-                        <input type="text" name="check_in_input" value="<?php echo DateThai($check_in); ?>" readonly>
+                        <input type="text" name="check_in" id="check_in" value="<?php echo DateThai($_SESSION["check_in"]); ?>" disabled>
                     </div>
-                    <div class="col-2">
+                    <div class="check_out">
                         <p>เช็คเอ้าท์</p>
-                        <input type="text" name="check_out_input" value="<?php echo DateThai($check_out); ?>" readonly>
+                        <input type="text" name="check_out" id="check_out" value="<?php echo DateThai($_SESSION["check_out"]); ?>" disabled>
                     </div>
-                    <div class="col-1">
-                        <p>จำนวน (ท่าน)</p>
-                        <input type="text" name="people" value="<?php echo $people; ?>" readonly>
+                    <div class="people">
+                        <p>จำนวนผู้พัก(คน)</p>
+                        <input type="text" name="people" id="people" value="<?php echo $_SESSION["people"]; ?>" disabled>
                     </div>
-                    <div class="col-1">
-                        <p>ห้องแอร์ (ห้อง)</p>
-                        <input type="number" name="air" value="<?php if($air != 0){ echo $air; }else{ echo 0; } ?>" readonly>
+                    <div class="air">
+                        <p>ห้องแอร์(ห้อง)</p>
+                        <input type="text" name="air" id="air" value="<?php echo $_SESSION["air"]; ?>" disabled>
                     </div>
-                    <div class="col-1">
-                        <p>ห้องพัดลม (ห้อง)</p>
-                        <input type="number" name="fan" value="<?php if($fan != 0){ echo $fan; }else{ echo 0; } ?>" readonly>
+                    <div class="fan">
+                        <p>ห้องพัดลม(ห้อง)</p>
+                        <input type="text" name="fan" id="fan" value="<?php echo $_SESSION["fan"]; ?>" disabled>
                     </div>
                 </div>
-                <div style="line-height:40px;">
-                    <p style="color:red;"><strong>*** โปรดวางเงินมัดจำค่าห้องเป็นจำนวน 1,000 บาท ก่อนวันที่ <?php echo $datetime_result; ?> มิเช่นนั้นการจองห้องพักจะถูกยกเลิก ***</strong></p>
-                <p style="color:red;"><strong>*** เงินมัดจำจะได้คืนก็ต่อเมื่อเช็คเอ้าท์เรียบร้อยแล้ว ***</strong></p>
-                </div>
-                <div style="padding-top:64px;display:flex;justify-content:center;">
-                    <button type="submit" name="accept_daily">ยืนยันการจอง</button>
+                <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
+                    <button type="submit" id="confirm">ยืนยันการจองห้องพัก</button>
                 </div>
             </form>
         </div>

@@ -25,9 +25,7 @@
     <?php include("../components/maintopbar.php"); ?>
     <div class="box">
         <div class="checkRoom">
-            <form
-                action="dailyForm.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out; ?>&people=<?php echo $people; ?>"
-                method="POST" onsubmit="return checkform()">
+            <form action="dailyForm.php" method="POST">
                 <div class="searchDate">
                     <div>
                         <div style="display:flex;align-items:center;">
@@ -314,10 +312,9 @@
                             </div>
                         </div>
                     </div>
-                    
                     <?php } ?>
                     <div style="padding-top:32px;display:flex;justify-content:flex-end;align-items:center">
-                        <button class="rent">จองเลย</button>
+                        <button type="submit" class="rent">จองเลย</button>
                     </div>
                     <?php
                     }}else{
