@@ -20,10 +20,12 @@
     $date2 = date_create($_SESSION["check_out"]);
     $diff= date_diff($date1,$date2);
     $checkdate_result = $diff->format("%R%a days");
-    if(date("Y-m-d") == $_SESSION["check_in"]){  
+    if(date("Y-m-d") == $_SESSION["check_in"]){
+        $_SESSION["payment_datebefore"] = $_SESSION["check_in"];
         $datetime_result = DateThai($_SESSION["check_in"]);
     }else{
         $datetime = new DateTime('tomorrow');
+        $_SESSION["payment_datebefore"] = $datetime->format('Y-m-d');
         $datetime_result = DateThai($datetime->format('Y-m-d'));
     }
 ?>
@@ -44,7 +46,7 @@
         <div class="dailyForm">
             <h2>แบบฟอร์มจองห้องพัก</h2>
             <div class="hr"></div>
-            <form action="xxx.php" method="POST">
+            <form action="mainpage_function/addDailyForm.php" method="POST">
                 <div class="grid-container">
                     <div class="name_title">
                         <p>คำนำหน้าชื่อ</p>
@@ -101,9 +103,10 @@
                     </div>
                 </div>
                 <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
-                    <button type="submit" id="confirm">ยืนยันการจองห้องพัก</button>
+                    <button type="submit" id="confirm" name="accept_daily">ยืนยันการจองห้องพัก</button>
                 </div>
             </form>
+            <?php echo $datetime_result ."/" .$_SESSION["payment_datebefore"];?>
         </div>
     </div>
 </body>

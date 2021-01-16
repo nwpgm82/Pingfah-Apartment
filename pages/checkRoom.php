@@ -4,7 +4,7 @@
     $check_out = $_REQUEST['check_out'];
     $calculate = strtotime($check_out) - strtotime($check_in);
     $summary = floor($calculate / 86400);
-    $summary = $summary - 1;
+    $summary = $summary;
     $people = $_REQUEST['people'];
 ?>
 <!DOCTYPE html>

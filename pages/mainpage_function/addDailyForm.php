@@ -1,98 +1,120 @@
 <?php
+session_start();
 include("../connection.php");
 if(isset($_POST['accept_daily'])){
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $id_card = $_POST['id_card'];
-    $email = $_POST['email'];
-    $tel = $_POST['tel'];
-    $check_in = $_REQUEST['check_in'];
-    $check_in_show = DateThai($check_in);
-    $check_out = $_REQUEST['check_out'];
-    $check_out_show = DateThai($check_out);
-    $people = $_REQUEST['people'];
-    $air = $_REQUEST['air'];
-    $fan = $_REQUEST['fan'];
-    $room_total = intval($air) + intval($fan);
-    $date1 = date_create($check_in);
-    $date2 = date_create($check_out);
-    $diff=date_diff($date1,$date2);
-    $checkdate_result = $diff->format("%R%a days");
-    if(date("Y-m-d") == $check_in){
-        $payment_datebefore = $check_in;
-        $payment_datebeforeEmail = DateThai($check_in);
-    }else{
-        $paymentBefore = new DateTime('tomorrow');
-        $payment_datebefore = $paymentBefore->format('Y-m-d');
-        $payment_datebeforeEmail = DateThai($payment_datebefore);
+    function createRandomPassword() {
+        global $tel;
+        $date_split = explode("-",$_SESSION["check_in"]);
+        $tel_split = str_split($tel);
+        $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ023456789"; 
+        srand((double)microtime()*1000000); 
+        $i = 0;
+        $pass = "" ;
+        while ($i < 3) { 
+            $num = rand() % 33; 
+            $tmp = substr($chars, $num, 1); 
+            $pass = $pass . $tmp; 
+            $i++; 
+        } 
+        if(intval($_SESSION["air"]) != 0 && intval($_SESSION["fan"]) == 0){
+            return "AIR".$pass.$date_split[2].$date_split[1].$tel_split[2].$tel_split[4].$tel_split[6]; 
+        }else if(intval($_SESSION["air"]) == 0 && intval($_SESSION["fan"]) != 0){
+            return "FAN".$pass.$date_split[2].$date_split[1].$tel_split[2].$tel_split[4].$tel_split[6];
+        }else{
+            return "ALL".$pass.$date_split[2].$date_split[1].$tel_split[2].$tel_split[4].$tel_split[6];
+        }
     }
-    // echo "$room_total";
+    $name_title = $_POST["name_title"];
+    $firstname = $_POST["firstname"];
+    $lastname = $_POST["lastname"];
+    $id_card = $_POST["id_card"];
+    $email = $_POST["email"];
+    $tel = $_POST["tel"];
     $code = createRandomPassword();
-    // echo $firstname ."/" .$lastname ."/" .$id_card ."/" .$email ."/" .$tel ."/" .$room_type ."/ " .$check_in ."/" .$check_out;
-    $countAir = mysqli_query($conn,"SELECT SUM(air_room) AS airTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))");
-    $roomDailyAirdata= mysqli_fetch_assoc($countAir);  
-    $roomDailyAirtotal_int = intval($roomDailyAirdata['airTotal']);
-    $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = 'แอร์' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
-    $roomdata= mysqli_fetch_assoc($countroom);  
-    $roomtotal_int = intval($roomdata['roomtotal']);
-    $total_int = $roomtotal_int - $roomDailyAirtotal_int;
+    do{
+        $checkCode_repeat = "SELECT * FROM daily WHERE code = '$code'";
+        $checkCode_result = $conn->query($checkCode_repeat);
+        if ($checkCode_result->num_rows > 0) {
+            $code = createRandomPassword();
+        }
+    }while($checkCode_result->num_rows > 0);
+    echo $code;
+    // $check_in = $_REQUEST['check_in'];
+    // $check_in_show = DateThai($check_in);
+    // $check_out = $_REQUEST['check_out'];
+    // $check_out_show = DateThai($check_out);
+    // $people = $_REQUEST['people'];
+    // $air = $_REQUEST['air'];
+    // $fan = $_REQUEST['fan'];
+    // $room_total = intval($air) + intval($fan);
+    // $date1 = date_create($_SESSION["check_in"]);
+    // $date2 = date_create($_SESSION["check_out"]);
+    // $diff=date_diff($date1,$date2);
+    // $checkdate_result = $diff->format("%R%a days");
+    // if(date("Y-m-d") == $check_in){
+    //     $payment_datebefore = $_SESSION["check_in"];
+    //     $payment_datebeforeEmail = DateThai($_SESSION["check_in"]);
+    // }else{
+    //     $paymentBefore = new DateTime('tomorrow');
+    //     $payment_datebefore = $paymentBefore->format('Y-m-d');
+    //     $payment_datebeforeEmail = DateThai($payment_datebefore);
+    // }
+    // echo $payment_datebefore;
+    // // echo "$room_total";
+    
+    // // echo $firstname ."/" .$lastname ."/" .$id_card ."/" .$email ."/" .$tel ."/" .$room_type ."/ " .$check_in ."/" .$check_out;
+    // $countAir = mysqli_query($conn,"SELECT SUM(air_room) AS airTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))");
+    // $roomDailyAirdata= mysqli_fetch_assoc($countAir);  
+    // $roomDailyAirtotal_int = intval($roomDailyAirdata['airTotal']);
+    // $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = 'แอร์' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
+    // $roomdata= mysqli_fetch_assoc($countroom);  
+    // $roomtotal_int = intval($roomdata['roomtotal']);
+    // $total_int = $roomtotal_int - $roomDailyAirtotal_int;
 
-    $countFan = mysqli_query($conn,"SELECT SUM(fan_room) AS fanTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))");
-    $roomDailyFandata= mysqli_fetch_assoc($countFan);  
-    $roomDailyFantotal_int = intval($roomDailyFandata['fanTotal']);
-    $countroom2 = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal2 FROM roomlist WHERE room_type = 'พัดลม' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
-    $roomdata2= mysqli_fetch_assoc($countroom2);  
-    $roomtotal_int2 = intval($roomdata2['roomtotal2']);
-    $total_int2 = $roomtotal_int2 - $roomDailyFantotal_int;
+    // $countFan = mysqli_query($conn,"SELECT SUM(fan_room) AS fanTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ))");
+    // $roomDailyFandata= mysqli_fetch_assoc($countFan);  
+    // $roomDailyFantotal_int = intval($roomDailyFandata['fanTotal']);
+    // $countroom2 = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal2 FROM roomlist WHERE room_type = 'พัดลม' AND (room_status = 'ว่าง' OR room_status = 'เช่ารายวัน')");
+    // $roomdata2= mysqli_fetch_assoc($countroom2);  
+    // $roomtotal_int2 = intval($roomdata2['roomtotal2']);
+    // $total_int2 = $roomtotal_int2 - $roomDailyFantotal_int;
 
-    if(intval($air) != 0 && intval($fan) == 0){
-        if($total_int != 0 && $total_int > 0){
-            sendEmail();
-        }else{
-            echo "<script>";
-            echo "alert('ไม่สามารถจองห้องได้เนื่องจากห้องเต็มแล้ว');";
-            echo "window.history.back();";
-            echo "</script>";
-        }
-    }else if(intval($air) == 0 && intval($fan) != 0){
-        if($total_int2 != 0 && $total_int2 > 0){
-            sendEmail();
-        }else{
-            echo "<script>";
-            echo "alert('ไม่สามารถจองห้องได้เนื่องจากห้องเต็มแล้ว');";
-            echo "window.history.back();";
-            echo "</script>";
-        }
-    }else if(intval($air) != 0 && intval($fan) != 0){
-        if($total_int != 0 && $total_int > 0 && $total_int2 != 0 && $total_int2 > 0){
-            sendEmail();
-        }else{
-            echo "<script>";
-            echo "alert('ไม่สามารถจองห้องได้เนื่องจากห้องเต็มแล้ว');";
-            echo "window.history.back();";
-            echo "</script>";
-        }
-    }else{
-        echo "<script>";
-        echo "alert('ข้อมูลไม่เพียงพอ');";
-        echo "window.history.back();";
-        echo "</script>";
-    }
+    // if(intval($air) != 0 && intval($fan) == 0){
+    //     if($total_int != 0 && $total_int > 0){
+    //         sendEmail();
+    //     }else{
+    //         echo "<script>";
+    //         echo "alert('ไม่สามารถจองห้องได้เนื่องจากห้องเต็มแล้ว');";
+    //         echo "window.history.back();";
+    //         echo "</script>";
+    //     }
+    // }else if(intval($air) == 0 && intval($fan) != 0){
+    //     if($total_int2 != 0 && $total_int2 > 0){
+    //         sendEmail();
+    //     }else{
+    //         echo "<script>";
+    //         echo "alert('ไม่สามารถจองห้องได้เนื่องจากห้องเต็มแล้ว');";
+    //         echo "window.history.back();";
+    //         echo "</script>";
+    //     }
+    // }else if(intval($air) != 0 && intval($fan) != 0){
+    //     if($total_int != 0 && $total_int > 0 && $total_int2 != 0 && $total_int2 > 0){
+    //         sendEmail();
+    //     }else{
+    //         echo "<script>";
+    //         echo "alert('ไม่สามารถจองห้องได้เนื่องจากห้องเต็มแล้ว');";
+    //         echo "window.history.back();";
+    //         echo "</script>";
+    //     }
+    // }else{
+    //     echo "<script>";
+    //     echo "alert('ข้อมูลไม่เพียงพอ');";
+    //     echo "window.history.back();";
+    //     echo "</script>";
+    // }
 }
+    
 
-function createRandomPassword() { 
-    $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
-    srand((double)microtime()*1000000); 
-    $i = 0; 
-    $pass = '' ; 
-    while ($i <= 10) { 
-        $num = rand() % 33; 
-        $tmp = substr($chars, $num, 1); 
-        $pass = $pass . $tmp; 
-        $i++; 
-    } 
-    return $pass; 
-}
 
 function DateThai($strDate){
         $strYear = date("Y",strtotime($strDate))+543;
