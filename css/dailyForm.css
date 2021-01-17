@@ -49,6 +49,13 @@ body {
     transition: 0.3s;
 }
 
+.box .dailyForm input[type=checkbox]{
+    margin: 0 8px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
 .box .dailyForm button {
     width: auto;
     height: 40px;
@@ -63,8 +70,17 @@ body {
     transition: 0.3s;
 }
 
+.box .dailyForm button:disabled{
+    background-color: #ddd;
+    cursor: default;
+}
+
 .box .dailyForm button:hover {
     background-color: rgb(131, 120, 47, 1);
+}
+
+.box .dailyForm button:disabled:hover{
+    background-color: #ddd;
 }
 
 .grid-container {

@@ -71,6 +71,13 @@ $(document).ready(function () {
             $("#tel_error").html("")
         }
     })
+    $("#confirm_check").change(function(){
+        if(this.checked){
+            $("#confirm").prop("disabled",false)
+        }else{
+            $("#confirm").prop("disabled",true)
+        }
+    })
     $("#confirm").click(function (event) {
         let inputs = $("input");
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

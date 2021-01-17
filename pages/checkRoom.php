@@ -73,7 +73,7 @@
                 $countDailyAll = mysqli_query($conn,"SELECT SUM(air_room+fan_room) AS dailyTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง'");
                 $roomDailyAlldata= mysqli_fetch_assoc($countDailyAll);  
                 $roomDailyAlltotal_int = intval($roomDailyAlldata['dailyTotal']);
-                $countroomAll = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_status = 'ว่าง' AND room_cat = 'รายวัน'");
+                $countroomAll = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_cat = 'รายวัน'");
                 $roomAlldata= mysqli_fetch_assoc($countroomAll);  
                 $roomAlltotal_int = intval($roomAlldata['roomtotal']);
                 $totalAll_int = $roomAlltotal_int - $roomDailyAlltotal_int;
@@ -83,11 +83,11 @@
                         $countAir = mysqli_query($conn,"SELECT SUM(air_room) AS airTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง'");
                         $roomDailyAirdata= mysqli_fetch_assoc($countAir);  
                         $roomDailyAirtotal_int = intval($roomDailyAirdata['airTotal']);
-                        $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = 'แอร์' AND room_status = 'ว่าง' AND room_cat = 'รายวัน'");
+                        $countroom = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal FROM roomlist WHERE room_type = 'แอร์' AND room_cat = 'รายวัน'");
                         $roomdata= mysqli_fetch_assoc($countroom);  
                         $roomtotal_int = intval($roomdata['roomtotal']);
-                        // $total_int = $roomtotal_int - $roomDailyAirtotal_int - 3;
-                        if($roomtotal_int > 0){
+                        $total_int = $roomtotal_int - $roomDailyAirtotal_int;
+                        if($total_int > 0){
                             $sql = "SELECT * FROM roomdetail WHERE type = 'แอร์'";
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
@@ -183,7 +183,7 @@
                                 </div>
                             </div>
                             <div style="display: flex;justify-content: space-between;align-items:center;">
-                                <p>จำนวนห้องพักที่เหลือ : <?php echo $roomtotal_int; ?> ห้อง</p>
+                                <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int; ?> ห้อง</p>
                                 <div>
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
                                     <button type="button" onclick="decrease(1)">-</button>
@@ -201,10 +201,11 @@
                         $countFan = mysqli_query($conn,"SELECT SUM(fan_room) AS fanTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง'");
                         $roomDailyFandata= mysqli_fetch_assoc($countFan);  
                         $roomDailyFantotal_int = intval($roomDailyFandata['fanTotal']);
-                        $countroom2 = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal2 FROM roomlist WHERE room_type = 'พัดลม' AND room_status = 'ว่าง' AND room_cat = 'รายวัน'");
+                        $countroom2 = mysqli_query($conn,"SELECT COUNT(*) AS roomtotal2 FROM roomlist WHERE room_type = 'พัดลม' AND room_cat = 'รายวัน'");
                         $roomdata2= mysqli_fetch_assoc($countroom2);  
                         $roomtotal_int2 = intval($roomdata2['roomtotal2']);
-                        if($roomtotal_int2 > 0){
+                        $total_int2 = $roomtotal_int2 - $roomDailyFantotal_int;
+                        if($total_int2 > 0){
                             $sql2 = "SELECT * FROM roomdetail WHERE type = 'พัดลม'";
                             $result2 = $conn->query($sql2);
                             $row2 = $result2->fetch_assoc();
@@ -300,7 +301,7 @@
                                 </div>
                             </div>
                             <div style="display: flex;justify-content: space-between;align-items:center;">
-                                <p>จำนวนห้องพักที่เหลือ : <?php echo $roomtotal_int2; ?> ห้อง</p>
+                                <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int2; ?> ห้อง</p>
                                 <div>
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
                                     <button type="button" onclick="decrease(2)">-</button>
