@@ -85,13 +85,13 @@ body {
 
 .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     gap: 16px 8px;
     grid-template-areas:
-        "name_title firstname firstname firstname lastname lastname lastname"
-        "id_card id_card email email email tel tel"
-        "check_in check_in check_out check_out people air fan";
+        "name_title name_title firstname firstname firstname lastname lastname lastname"
+        "id_card id_card email email email email tel tel"
+        "check_in check_in check_out check_out night people air fan";
 }
 
 .name_title {
@@ -134,6 +134,11 @@ body {
     height: 86px;
 }
 
+.night{
+    grid-area: night;
+    height: 86px;
+}
+
 .people {
     grid-area: people;
     height: 86px;
@@ -147,4 +152,8 @@ body {
 .fan {
     grid-area: fan;
     height: 86px;
+}
+
+.box .dailyForm .placeholder-error::-webkit-input-placeholder {
+    color: red
 }

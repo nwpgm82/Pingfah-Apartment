@@ -1,10 +1,11 @@
 <?php
+    session_start();
     include("connection.php");
     $check_in = $_REQUEST['check_in'];
     $check_out = $_REQUEST['check_out'];
     $calculate = strtotime($check_out) - strtotime($check_in);
     $summary = floor($calculate / 86400);
-    $summary = $summary;
+    $_SESSION["night"] = $summary;
     $people = $_REQUEST['people'];
 ?>
 <!DOCTYPE html>
@@ -46,7 +47,7 @@
                         </div>
                     </div>
                     <div style="min-width:52px;display:flex;align-items:center;">
-                        <p id="summary"><?php echo "($summary คืน)"?></p>
+                        <p id="summary"><?php echo "(".$_SESSION["night"]." คืน)"?></p>
                     </div>
                     <div style="padding:0 16px">
                         <div style="display:flex;align-items:center;">

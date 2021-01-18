@@ -46,7 +46,7 @@ if(isset($_POST['accept_daily'])){
     $airTotal = intval($roomData["airTotal"]) - intval($dailyData["daily_airTotal"]);
     $fanTotal = intval($roomData["fanTotal"]) - intval($dailyData["daily_fanTotal"]);
     if(intval($_SESSION["air"]) <= $airTotal && intval($_SESSION["fan"]) <= $fanTotal){
-        $sql = "INSERT INTO daily (name_title, firstname, lastname, id_card, email, tel, code, check_in, check_out, people, air_room, fan_room, daily_status, payment_price, payment_datebefore) VALUES ('$name_title', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '".$_SESSION["check_in"]."', '".$_SESSION["check_out"]."', '".$_SESSION["people"]."',".$_SESSION["air"].",".$_SESSION["fan"].", 'รอการยืนยัน',".$_SESSION["total_room"].", '".$_SESSION["payment_datebefore"]."')";
+        $sql = "INSERT INTO daily (name_title, firstname, lastname, id_card, email, tel, code, check_in, check_out, night, people, air_room, fan_room, daily_status, payment_price, payment_datebefore) VALUES ('$name_title', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '".$_SESSION["check_in"]."', '".$_SESSION["check_out"]."',".$_SESSION["night"].",".$_SESSION["people"].",".$_SESSION["air"].",".$_SESSION["fan"].", 'รอการยืนยัน',".$_SESSION["total_room"].", '".$_SESSION["payment_datebefore"]."')";
         ///////////////////// อีเมล ////////////////////////
         require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
         header('Content-Type: text/html; charset=utf-8');
@@ -77,51 +77,58 @@ if(isset($_POST['accept_daily'])){
         $mail->setFrom($email_sender, $sender);
         $mail->addAddress($email_receiver);
         $mail->Subject = $subject;
-
+        $mail->AddEmbeddedImage("../../img/logo.png","logo","logo.png");
+        $mail->addEmbeddedImage("../../img/tool/qr-code.png","qr_code","qr-code.png");
         $email_content = "
         	<!DOCTYPE html>
         	<html>
         		<head>
         			<meta charset=utf-8'/>
                     <title>คำสั่งในการจองห้องพัก</title>
-                    <link rel='preconnect' href='https://fonts.gstatic.com'>
-                    <link href='https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap' rel='stylesheet'>
                     <style>
                     *{
-                        font-family: 'Sarabun', sans-serif;
+                        padding: 0;
+                        margin: 0;
+                        box-sizing: border-box;
+                        line-height: 30px;
                     }
                     </style>                
                 </head>
                 <body>
-        			<div style='background-color: #edeadb;width:1000px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;' >
-        				<img src='https://pingfah-apartment.000webhostapp.com/img/logo.png' style='width:250px;height:60px;'>
+        			<div style='background-color: #edeadb;width:1000px;margin:0 auto;padding:16px;display:flex;align-items:center;' >
+        				<img src='cid:logo' style='width:250px;height:60px;'>
         			</div>
         			<div style='background-color: #f6f4ec;width:1000px;margin:0 auto;padding:16px;'>
-                        <h3 style='color:#000'>คำสั่งในการจองห้องพัก</h3>
+                        <h2 style='color:#000'>คำสั่งในการจองห้องพัก</h2>
                         <div>
-                            <p style='color:#000'><strong>ชื่อ :</strong> $name_title$firstname  $lastname</p>
-                            <p style='color:#000'><strong>เลขบัตรประชาชน / Passport No. :</strong> $id_card</p>
-                            <p style='color:#000'><strong>อีเมล :</strong> $email</p>
-                            <p style='color:#000'><strong>เบอร์โทรศัพท์ :</strong> $tel</p>
-                            <p style='color:#000'><strong>จำนวนผู้พัก :</strong> ".$_SESSION["people"]." ท่าน</p>
-                            <p style='color:#000'><strong>จำนวนห้องพัก : ห้องแอร์ </strong>".$_SESSION["air"]." ห้อง <strong>| ห้องพัดลม : </strong>".$_SESSION["fan"]." ห้อง</p>
-                            <p style='color:#000'><strong>วันที่เข้าพัก :</strong> ".DateThai($_SESSION["check_in"])." <strong>ถึง</strong> ".DateThai($_SESSION["check_out"])."</p>
-                            <div style='padding-top:32px;'>
-                            <h3 style='color:#000'>ขั้นตอนในการจองห้องพัก</h3>
+                            <p style='font-size:16px;color:#000'><strong>ชื่อ :</strong> $name_title$firstname  $lastname</p>
+                            <p style='font-size:16px;color:#000'><strong>เลขบัตรประชาชน / Passport No. :</strong> $id_card</p>
+                            <p style='font-size:16px;color:#000'><strong>อีเมล :</strong> $email</p>
+                            <p style='font-size:16px;color:#000'><strong>เบอร์โทรศัพท์ :</strong> $tel</p>
+                            <p style='font-size:16px;color:#000'><strong>จำนวนผู้พัก :</strong> ".$_SESSION["people"]." ท่าน</p>
+                            <p style='font-size:16px;color:#000'><strong>จำนวนห้องพัก : ห้องแอร์ </strong>".$_SESSION["air"]." ห้อง <strong>| ห้องพัดลม : </strong>".$_SESSION["fan"]." ห้อง</p>
+                            <p style='font-size:16px;color:#000'><strong>วันที่เข้าพัก :</strong> ".DateThai($_SESSION["check_in"])." <strong>ถึง</strong> ".DateThai($_SESSION["check_out"])." (".$_SESSION["night"]." คืน)</p>
+                        </div>
+                        <div style='padding-top:32px;'>
+                            <h2 style='color:#000'>ขั้นตอนในการจองห้องพัก</h2>
+                            <p style='font-size:16px;color:#000'>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style='color:red;'>".$_SESSION["total_room"]." บาท (จำนวนห้องพัก x 300)</strong> มาที่บัญชีพร้อมเพย์ <strong>095-6722914 (นวพล นรเดชานันท์) หรือสแกน QR code ได้ที่ข้างล่าง</strong> ก่อนวันที่ <strong style='color:red;'>".DateThai($_SESSION["payment_datebefore"])."</strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
+                            <p style='font-size:16px;color:#000'>2. เมื่อโอนเงินแล้วให้อัปโหลดสลิปในเมนู <a href='/Pingfah/pages/checkCode.php' target='_blank'>ตรวจสอบการจอง</a> </p>
+                            <p style='font-size:16px;color:#000'>3. เมื่ออัปโหลดสลิปแล้วให้แจ้งเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
+                            <p style='font-size:16px;color:#000'>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>
+                            <p style='font-size:16px;color:#000'>5. เมื่อได้รับการยืนยันแล้ว สามารถเข้าพักตามวันที่ท่านได้จองห้องพักไว้ <strong>(เข้าพักได้ในเวลา 14.00 น. เป็นต้นไป)</strong></p>
+                        </div>
+                        <div style='padding-top:32px;text-align:center;'>
                             <div>
-                                <p style='color:#000'>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style='color:red;'>".$_SESSION["total_room"]." บาท (จำนวนห้องพัก x 300)</strong> มาที่บัญชี <strong>123-456789-0 (นวพล นรเดชานันท์)</strong> ก่อนวันที่ <strong style='color:red;'>".DateThai($_SESSION["payment_datebefore"])."</strong> มิเช่นนั้นการจองจะถือว่าเป็นโมฆะ</p>
-                                <p style='color:#000'>2. เมื่อโอนเงินแล้วให้อัปโหลดสลิปในเมนู <a href='/Pingfah/pages/checkCode.php' target='_blank'>ตรวจสอบการจอง</a> </p>
-                                <p style='color:#000'>3. เมื่ออัปโหลดสลิปแล้วให้โทรศัพท์หาเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
-                                <p style='color:#000'>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>
-                                <p style='color:#000'>5. เมื่อได้รับการยืนยันแล้ว สามารถเข้าพักตามวันที่ได้จองห้องพักไว้ <strong>(เข้าพักได้เวลา 14.00 น. เป็นต้นไป)</strong></p>
+                                <img src='cid:qr_code' style='width:113;height:128;'>
+                                <p style='font-size:16px;color:#000'>เลขบัญชีพร้อมเพย์ : 095-6722914 (นวพล นรเดชานันท์)</p>
                             </div>
                         </div>
-                            <p style='color:#000;'><strong>เลขบัญชี :</strong> 123-456789-0 (นวพล นรเดชานันท์) <strong>หรือ</strong> สแกน QR code ได้<a>ที่นี่</a></p>
-                            <h3 style='text-align:center;color:#000'><strong>เลขที่ในการจอง :</strong> $code</h3>
+                        <div style='padding-top:32px;'>
+                            <h2 style='text-align:center;color:#000'><strong>เลขที่ในการจอง :</strong> $code</h2>
                         </div>
         			</div>
         			<div style='background-color: #edeadb;width:1000px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;'>
-        				<p style='color:#000'><strong>ติดต่อสอบถาม :</strong> 098-9132002 (เจ้าของหอพัก), 093-2266753 (แม่บ้าน)</p>
+        				<p style='font-size:16px;color:#000'><strong>ติดต่อสอบถาม :</strong> 098-9132002 (เจ้าของหอพัก), 093-2266753 (แม่บ้าน)</p>
         			</div>
         		</body>
         	</html>
@@ -132,7 +139,7 @@ if(isset($_POST['accept_daily'])){
             $mail->msgHTML($email_content);
             if ($mail->send() && $conn->query($sql) === TRUE) {
                 echo "<script>";
-                echo "alert('จองห้องเรียบร้อยแล้ว กรุณาดูคำสั่งในการจองได้ในอีเมล์');";
+                echo "alert('จองห้องเรียบร้อยแล้ว กรุณาดูคำสั่งในการจองได้ในอีเมล');";
                 echo "location.href = '../successRent.php?code=$code'";
                 echo "</script>";
             } else {

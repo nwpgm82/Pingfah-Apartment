@@ -67,27 +67,27 @@
                     </div>
                     <div class="firstname">
                         <p>ชื่อ</p>
-                        <input type="text" name="firstname" id="firstname">
+                        <input type="text" name="firstname" id="firstname" placeholder="ชื่อของท่าน">
                         <h5 id="fs_error" style="color:red;"></h5>
                     </div>
                     <div class="lastname">
                         <p>นามสกุล</p>
-                        <input type="text" name="lastname" id="lastname">
+                        <input type="text" name="lastname" id="lastname" placeholder="นามสกุลของท่าน">
                         <h5 id="ls_error" style="color:red;"></h5>
                     </div>
                     <div class="id_card">
                         <p>เลขบัตรประชาชน / Passport No.</p>
-                        <input type="text" name="id_card" id="id_card">
+                        <input type="text" name="id_card" id="id_card" placeholder="เลขบัตรประชาชน / Passport No. ของท่าน">
                         <h5 id="id_error" style="color:red;"></h5>
                     </div>
                     <div class="email">
                         <p>อีเมล</p>
-                        <input type="text" name="email" id="email">
+                        <input type="text" name="email" id="email" placeholder="อีเมลของท่าน">
                         <h5 id="em_error" style="color:red;"></h5>
                     </div>
                     <div class="tel">
                         <p>เบอร์โทรศัพท์</p>
-                        <input type="text" name="tel" id="tel">
+                        <input type="text" name="tel" id="tel" placeholder="เบอร์โทรศัพท์ของท่าน">
                         <h5 id="tel_error" style="color:red;"></h5>
                     </div>
                     <div class="check_in">
@@ -97,6 +97,10 @@
                     <div class="check_out">
                         <p>เช็คเอ้าท์</p>
                         <input type="text" name="check_out" id="check_out" value="<?php echo DateThai($_SESSION["check_out"]); ?>" disabled>
+                    </div>
+                    <div class="night">
+                        <p>จำนวนคืนที่พัก (คืน)</p>
+                        <input type="text" name="night" id="night" value="<?php echo $_SESSION["night"]; ?>" disabled>
                     </div>
                     <div class="people">
                         <p>จำนวนผู้พัก(คน)</p>
@@ -114,11 +118,11 @@
                 <div style="padding-top:32px;">
                     <h3>ขั้นตอนในการจองห้องพัก</h3>
                     <div style="line-height:40px;padding-top:16px;">
-                        <p>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style="color:red;"><?php echo number_format($_SESSION["total_room"]); ?> บาท (จำนวนห้องพัก x 300)</strong> มาที่บัญชี <strong>123-456789-0 (นวพล นรเดชานันท์)</strong> ก่อนวันที่ <strong style="color:red;"><?php echo $datetime_result; ?></strong> มิเช่นนั้นการจองจะถือว่าเป็นโมฆะ</p>
+                        <p>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style="color:red;"><?php echo number_format($_SESSION["total_room"]); ?> บาท (จำนวนห้องพัก x 300)</strong> มาที่บัญชีพร้อมเพย์ <strong>095-6722914 (นวพล นรเดชานันท์)</strong> หรือ สแกน QR code ได้<a href="../img/tool/qr-code.png" target="_blank">ที่นี่</a> ก่อนวันที่ <strong style="color:red;"><?php echo $datetime_result; ?></strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
                         <p>2. เมื่อโอนเงินแล้วให้อัปโหลดสลิปในเมนู <a href="checkCode.php" target="_blank">ตรวจสอบการจอง</a> </p>
-                        <p>3. เมื่ออัปโหลดสลิปแล้วให้โทรศัพท์หาเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
+                        <p>3. เมื่ออัปโหลดสลิปแล้วให้แจ้งเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
                         <p>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>
-                        <p>5. เมื่อได้รับการยืนยันแล้ว สามารถเข้าพักตามวันที่ได้จองห้องพักไว้ <strong>(เข้าพักได้เวลา 14.00 น. เป็นต้นไป)</strong></p>
+                        <p>5. เมื่อได้รับการยืนยันแล้ว สามารถเข้าพักตามวันที่ท่านได้จองห้องพักไว้ <strong>(เข้าพักได้ในเวลา 14.00 น. เป็นต้นไป)</strong></p>
                     </div>
                 </div>
                 <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
