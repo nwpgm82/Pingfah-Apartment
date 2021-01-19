@@ -6,14 +6,14 @@ if($_SESSION['level'] == 'admin'){
     $check_in = @$_REQUEST['check_in'];
     $check_out = @$_REQUEST['check_out'];
     $code = @$_REQUEST['Code'];
-    $check = @$_REQUEST['Status'];
+    $check = @$_REQUEST['status'];
     $num = 1;
     function DateThai($strDate)
     {
-        $strYear = date("Y",strtotime($strDate))+543;
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
@@ -60,26 +60,29 @@ if($_SESSION['level'] == 'admin'){
                 <h3>ค้นหารายการเช่ารายวัน</h3>
                 <div class="search">
                     <div style="padding-right:16px">
-                        <div style="display:flex;align-items:center;">
-                            <label>ค้นหาตามวันที่</label>
+                        <div style="height:57px;display:flex;align-items:flex-start;">
+                            <label style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
                             <div style="position:relative;">
                                 <input type="text" class="roundtrip-input" id="check_in"
-                                    value="<?php echo $check_in; ?>" required>
-                                <p id="check_in_date" class="dateText"></p>
+                                    value="<?php if(isset($check_in)){ echo DateThai($check_in); } ?>">
+                                <h5 id="checkIn_error" style="color:red;"></h5>
                             </div>
-                            <label>~</label>
+                            <label style="padding:10px 8px 0 8px;">~</label>
                             <div style="position:relative;">
                                 <input type="text" class="roundtrip-input" id="check_out"
-                                    value="<?php echo $check_out; ?>" required>
-                                <p id="check_out_date" class="dateText"></p>
+                                    value="<?php if(isset($check_out)){ echo DateThai($check_out); } ?>">
+                                <h5 id="checkOut_error" style="color:red;"></h5>
                             </div>
-                            <button type="button" onclick="searchDate()">ค้นหา</button>
+                            <button type="button" id="searchDate">ค้นหา</button>
                         </div>
                     </div>
-                    <div style="padding-right:16px;">
-                        <label>ค้นหาเลขในการจอง</label>
-                        <input type="text" id="code" value="<?php echo $code?>">
-                        <button type="button" onclick="searchCode()">ค้นหา</button>
+                    <div style="height:57px;display:flex;align-items:flex-start;">
+                        <label style="padding:10px 8px 0 0;">ค้นหาเลขที่ในการจอง</label>
+                        <div>
+                            <input type="text" id="code" value="<?php echo $code?>">
+                            <h5 id="code_error" style="color:red;"></h5>
+                        </div>
+                        <button type="button" id="searchCode">ค้นหา</button>
                     </div>
                     <?php
                     if(isset($check_in) || isset($check_out) || isset($check) || isset($code)){
@@ -134,6 +137,8 @@ if($_SESSION['level'] == 'admin'){
                             $check_s = "เช็คเอ้าท์แล้ว";
                         }else if($check == "pending"){
                             $check_s = "รอการเข้าพัก";
+                        }else if($check == "waiting"){
+                            $check_s = "รอการยืนยัน";
                         }else if($check == "cancel"){
                             $check_s = "ยกเลิกการจอง";
                         }
@@ -145,11 +150,12 @@ if($_SESSION['level'] == 'admin'){
                             $check_s = "เช็คเอ้าท์แล้ว";
                         }else if($check == "pending"){
                             $check_s = "รอการเข้าพัก";
+                        }else if($check == "waiting"){
+                            $check_s = "รอการยืนยัน";
                         }else if($check == "cancel"){
                             $check_s = "ยกเลิกการจอง";
                         }
-                        $sql = "SELECT * FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status = '$check_s' LIMIT {$start} , {$perpage}";
-                        
+                        $sql = "SELECT * FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status = '$check_s' LIMIT {$start} , {$perpage}"; 
                     }else if(isset($code)){
                         $sql = "SELECT * FROM daily WHERE code = '$code'";
                     }else{
@@ -164,32 +170,31 @@ if($_SESSION['level'] == 'admin'){
                     ?>
                         <div style="display:flex;align-items:center;">
                             <div style="padding:32px 16px 32px 0;display: flex;align-items: center;">
-                                <input type="checkbox" id="all"
-                                    onchange="<?php if(isset($check_in) && isset($check_out)){ echo "searchCheck2('$check_in','$check_out',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                    <?php if(!isset($check)){ echo "checked";} ?>>
+                                <input type="checkbox" id="all" <?php if(!isset($check)){ echo "checked";} ?>>
                                 <label for="scales">ทั้งหมด</label>
                             </div>
                             <div style="padding:32px 16px;display: flex;align-items: center;">
+                                <input type="checkbox" id="waiting"
+                                    <?php if(isset($check)){ if($check == "waiting"){ echo "checked";}} ?>>
+                                <label for="scales">รอการยืนยัน</label>
+                            </div>
+                            <div style="padding:32px 16px;display: flex;align-items: center;">
+                                <input type="checkbox" id="pending"
+                                    <?php if(isset($check)){ if($check == "pending"){ echo "checked";}} ?>>
+                                <label for="scales">รอการเข้าพัก</label>
+                            </div>
+                            <div style="padding:32px 16px;display: flex;align-items: center;">
                                 <input type="checkbox" id="come"
-                                    onchange="<?php if(isset($check_in) && isset($check_out)){ echo "searchCheck2('$check_in','$check_out',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
                                     <?php if(isset($check)){ if($check == "come"){ echo "checked";}} ?>>
                                 <label for="scales">เข้าพักแล้ว</label>
                             </div>
                             <div style="padding:32px 16px;display: flex;align-items: center;">
                                 <input type="checkbox" id="checkout"
-                                    onchange="<?php if(isset($check_in) && isset($check_out)){ echo "searchCheck2('$check_in','$check_out',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
                                     <?php if(isset($check)){ if($check == "checkout"){ echo "checked";}} ?>>
                                 <label for="scales">เช็คเอ้าท์แล้ว</label>
                             </div>
                             <div style="padding:32px 16px;display: flex;align-items: center;">
-                                <input type="checkbox" id="pending"
-                                    onchange="<?php if(isset($check_in) && isset($check_out)){ echo "searchCheck2('$check_in','$check_out',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                    <?php if(isset($check)){ if($check == "pending"){ echo "checked";}} ?>>
-                                <label for="scales">รอการเข้าพัก</label>
-                            </div>
-                            <div style="padding:32px 16px;display: flex;align-items: center;">
                                 <input type="checkbox" id="cancel"
-                                    onchange="<?php if(isset($check_in) && isset($check_out)){ echo "searchCheck2('$check_in','$check_out',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
                                     <?php if(isset($check)){ if($check == "cancel"){ echo "checked";}} ?>>
                                 <label for="scales">ยกเลิกการจอง</label>
                             </div>
@@ -201,10 +206,10 @@ if($_SESSION['level'] == 'admin'){
                             <tr>
                                 <th>ลำดับ</th>
                                 <th>ชื่อผู้เช่า</th>
+                                <th>วันที่เข้าพัก</th>
                                 <th>จำนวน (ท่าน)</th>
                                 <th>ห้องแอร์ (ห้อง)</th>
                                 <th>ห้องพัดลม (ห้อง)</th>
-                                <th>วันที่เข้าพัก</th>
                                 <th>เลขที่ในการจอง</th>
                                 <th>สถานะ</th>
                                 <th>เพิ่มเติม</th>
@@ -212,80 +217,101 @@ if($_SESSION['level'] == 'admin'){
                             <?php
                         while($row = $result->fetch_assoc()) {
                         ?>
-                            <tr>
-                                <td><?php echo $num; ?></td>
-                                <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
-                                <td><?php echo $row['people']; ?></td>
-                                <td><?php echo $row['air_room']; ?></td>
-                                <td><?php echo $row['fan_room']; ?></td>
-                                <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?>
-                                </td>
-                                <td><?php echo $row['code']; ?></td>
-                                <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอ้าท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอ้าท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else if($row['daily_status'] == "รอการเข้าพัก"){ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; }else{ echo "<button type='button' class='waiting-btn'>รอการยืนยัน</button>";} ?>
-                                </td>
-                                <td>
+                            <form action="function/acceptRent.php?daily_id=<?php echo $row["daily_id"]; ?>" method="POST">
+                                <tr>
+                                    <td><?php echo $num; ?></td>
+                                    <td><?php echo $row['name_title'].$row['firstname'] ." " .$row['lastname']; ?></td>
+                                    <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']) ." (".$row['night']." คืน)"?></td>
+                                    <td><?php echo $row['people']; ?></td>
+                                    <td><?php echo $row['people']; ?></td>
+                                    <td><?php echo $row['people']; ?></td>
+                                    <td><?php echo $row['code']; ?></td>
+                                    <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอ้าท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอ้าท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else if($row['daily_status'] == "รอการเข้าพัก"){ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; }else{ echo "<button type='button' class='waiting-btn'>รอการยืนยัน</button>";} ?></td>
+                                    <td>
                                     <?php
                                     if($row['daily_status'] == 'รอการยืนยัน'){
                                     ?>
-                                     <button class="acceptRent-btn"
-                                        onclick="acceptRent(<?php echo $row['daily_id']; ?>)">ยืนยัน</button>
-                                    <a
-                                        href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
-                                    <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
+                                        <button type="submit" class="acceptRent-btn">ยืนยัน</button>
+                                         
                                     <?php
                                     }else if($row['daily_status'] == 'รอการเข้าพัก'){
                                     ?>
-                                    <div id="btn<?php echo $num; ?>">
-                                        <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button
-                                                class="select_room">เลือกห้อง</button></a>
-                                        <a
-                                            href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
-                                        <button class="del-btn"
-                                            onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
-                                    </div>
+                                        <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button type="button" class="select_room">เลือกห้อง</button></a>
                                     <?php 
                                     }else if($row['daily_status'] == 'เข้าพักแล้ว'){
                                     ?>
-                                    <button class="checkout-btn"
-                                        onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอ้าท์</button>
-                                    <a
-                                        href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
-                                    <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
+                                        <button type="button" class="checkout-btn" onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอ้าท์</button>
                                     <?php 
-                                    }else{
+                                    }
                                     ?>
-                                    <a
-                                        href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button>รายละเอียด</button></a>
-                                    <button class="del-btn" onclick="del('<?php echo $row['daily_id']; ?>')">ลบ</button>
-                                    <?php    
-                                    } 
-                                    ?>
-                                </td>
-                            </tr>
+                                    <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button type="button">รายละเอียด</button></a>
+                                    <button type="button" class="del-btn" id="<?php echo $row['daily_id']; ?>">ลบ</button>
+                                    </td>
+                                </tr>
+                            </form>
                             <?php $num++; } ?>
                         </table>
                         <?php
-                    ///////pagination
-                    $sql2 = "SELECT * FROM daily";
-                    $query2 = mysqli_query($conn, $sql2);
-                    $total_record = mysqli_num_rows($query2);
-                    $total_page = ceil($total_record / $perpage);
-                    ?>
+                        ///////pagination
+                        if(isset($check_in) && isset($check_out) && !isset($check)){
+                            $sql2 ="SELECT * FROM daily WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )";
+                        }else if(!isset($check_in) && !isset($check_out) && isset($check)){
+                            $sql2 = "SELECT * FROM daily WHERE daily_status = '$check_s'";
+                        }else if(isset($check_in) && isset($check_out) && isset($check)){
+                            $sql2 = "SELECT * FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status = '$check_s'";   
+                        }else{
+                            $sql2 = "SELECT * FROM daily";
+                        }
+                        $query2 = mysqli_query($conn, $sql2);
+                        $total_record = mysqli_num_rows($query2);
+                        $total_page = ceil($total_record / $perpage);
+                        ?>
                         <div style="display:flex;justify-content:flex-end">
                             <div class="pagination">
+                                <?php
+                                if(isset($check_in) && isset($check_out) && !isset($check)){
+                                ?>
+                                <a href="index.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out;?>&page=1">&laquo;</a>
+                                <?php for($i=1;$i<=$total_page;$i++){ ?>
+                                <a href="index.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out;?>&page=<?php echo $i; ?>"
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                                <?php } ?>
+                                <a href="index.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out;?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                                <?php
+                                }else if(!isset($check_in) && !isset($check_out) && isset($check)){
+                                ?>
+                                <a href="index.php?status=<?php echo $check; ?>&page=1">&laquo;</a>
+                                <?php for($i=1;$i<=$total_page;$i++){ ?>
+                                <a href="index.php?status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                                    <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                                <?php } ?>
+                                <a href="index.php?status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                                <?php
+                                }else if(isset($check_in) && isset($check_out) && isset($check)){
+                                ?>
+                                <a href="index.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out;?>&status=<?php echo $check; ?>&page=1">&laquo;</a>
+                                <?php for($i=1;$i<=$total_page;$i++){ ?>
+                                <a href="index.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out;?>&status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                                <?php } ?>
+                                <a href="index.php?check_in=<?php echo $check_in; ?>&check_out=<?php echo $check_out;?>&status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                                <?php
+                                }else{
+                                ?>
                                 <a href="index.php?page=1">&laquo;</a>
                                 <?php for($i=1;$i<=$total_page;$i++){ ?>
                                 <a href="index.php?page=<?php echo $i; ?>"
                                     <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                                 <?php } ?>
                                 <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
+                                <?php } ?>
                             </div>
                         </div>
                         <?php
-                    }else{
-                        echo "<div style='padding-top:32px;'>ไม่มีรายการเช่ารายวัน</div>";
-                    }
-                    ?>
+                        }else{
+                            echo "<div style='padding-top:32px;'>ไม่มีรายการเช่ารายวัน</div>";
+                        }
+                        ?>
                     </div>
                 </div>
 
@@ -319,7 +345,9 @@ if($_SESSION['level'] == 'admin'){
             title: 'จำนวนผู้เช่าห้องพักรายวันในแต่ละวัน',
             colors: ['rgb(131, 120, 47)'],
             fontName: "Sarabun",
-            vAxis: { format: "decimal"}
+            vAxis: {
+                format: "decimal"
+            }
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
@@ -338,7 +366,9 @@ if($_SESSION['level'] == 'admin'){
             title: 'จำนวนผู้เช่าห้องพักรายวันในแต่ละประเภท',
             colors: ['rgb(131, 120, 47)', '#c6b66b'],
             fontName: "Sarabun",
-            vAxis: { format: "decimal"}
+            vAxis: {
+                format: "decimal"
+            }
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));

@@ -120,3 +120,32 @@ body {
     height: 800px;
     object-fit: contain;
 }
+
+.clickTotop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid  rgb(131, 120, 47, 1);
+    border-radius: 4px;
+    background-color: rgb(131, 120, 47, 0.5);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.clickTotop:hover{
+    background-color: rgb(131, 120, 47, 0.7);
+}
+
+.clickTotop .arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 5px solid #fff;
+}

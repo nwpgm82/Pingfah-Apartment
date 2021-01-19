@@ -5,7 +5,7 @@ if($_SESSION['level'] == 'admin'){
     include('../../../components/sidebar.php');
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
-    $check = @$_REQUEST['Status'];
+    $check = @$_REQUEST['status'];
     function DateThai($strDate)
     {
         $strYear = date("Y",strtotime($strDate));
@@ -24,18 +24,18 @@ if($_SESSION['level'] == 'admin'){
         return "$strDay $strMonthThai $strYear";
     }
     if(isset($from) && isset($to)){
-        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost WHERE (date BETWEEN '$from' AND '$to') GROUP BY date";
+        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost WHERE (date BETWEEN '$from' AND '$to') GROUP BY date";
         $total_cost = mysqli_query($conn,"SELECT SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_cost, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_cost FROM cost WHERE (date BETWEEN '$from' AND '$to')");
         $totalresult = mysqli_fetch_assoc($total_cost);
     }else{
-        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date ORDER BY date ASC LIMIT 5";
-        $total_cost = mysqli_query($conn,"SELECT SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_cost, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_cost FROM cost ");
+        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date ORDER BY date ASC LIMIT 5";
+        $total_cost = mysqli_query($conn,"SELECT SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_cost, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_cost FROM cost ");
         $totalresult = mysqli_fetch_assoc($total_cost);
     }
     $result = mysqli_query($conn, $query);
     $datax = array();
     foreach ($result as $k) {
-        $datax[] = "['".DateThai($k['date'])."'".", ".$k['total_price'] ."," .$k['untotal_price'] ."]";
+        $datax[] = "['".DateThai($k['date'])."'".", ".$k['total_price'] .",".$k['pendingtotal_price'].",".$k['untotal_price']."]";
     }
     $datax = implode(",", $datax);
 ?>
@@ -112,23 +112,22 @@ if($_SESSION['level'] == 'admin'){
                     <h3>รายการชำระเงินห้องพักรายเดือนทั้งหมด</h3>
                     <div style="display:flex;align-items:center;">
                         <div style="padding:32px 16px 32px 0px;display: flex;align-items: center;">
-                            <input type="checkbox" id="all"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(!isset($check)){ echo "checked";} ?>>
+                            <input type="checkbox" id="all" <?php if(!isset($check)){ echo "checked";} ?>>
                             <label for="scales">ทั้งหมด</label>
                         </div>
                         <div style="padding:32px 16px;display: flex;align-items: center;">
-                            <input type="checkbox" id="success"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
-                            <label for="scales">ชำระเงินแล้ว</label>
-                        </div>
-                        <div style="padding:32px 16px;display: flex;align-items: center;">
-                            <input type="checkbox" id="unsuccess"
-                                onchange="<?php if(isset($from) && isset($to)){ echo "searchCheck2('$from','$to',this.id)"; }else{ echo "searchCheck(this.id)"; } ?>"
-                                <?php if(isset($check)){ if($check == "unsuccess"){ echo "checked";}} ?>>
+                            <input type="checkbox" id="unsuccess" <?php if(isset($check)){ if($check == "unsuccess"){ echo "checked";}} ?>>
                             <label for="scales">ยังไม่ได้ชำระเงิน</label>
                         </div>
+                        <div style="padding:32px 16px;display: flex;align-items: center;">
+                            <input type="checkbox" id="pending" <?php if(isset($check)){ if($check == "pending"){ echo "checked";}} ?>>
+                            <label for="scales">รอการชำระเงิน</label>
+                        </div>
+                        <div style="padding:32px 16px;display: flex;align-items: center;">
+                            <input type="checkbox" id="success" <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
+                            <label for="scales">ชำระเงินแล้ว</label>
+                        </div>
+                        
                     </div>
                     <?php
                         $perpage = 10;
@@ -143,18 +142,22 @@ if($_SESSION['level'] == 'admin'){
                             $sql ="SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') ORDER BY date LIMIT {$start} , {$perpage}";
                         }else if(!isset($from) && !isset($to) && isset($check)){
                             if($check == "success"){
-                                $check = "ชำระเงินแล้ว";
+                                $check_s = "ชำระเงินแล้ว";
                             }else if($check == "unsuccess"){
-                                $check = "ยังไม่ได้ชำระเงิน";
+                                $check_s = "ยังไม่ได้ชำระเงิน";
+                            }else if($check = "pending"){
+                                $check_s = "รอการชำระเงิน";
                             }
-                            $sql = "SELECT * FROM cost WHERE cost_status = '$check' ORDER BY date LIMIT {$start} , {$perpage}";
+                            $sql = "SELECT * FROM cost WHERE cost_status = '$check_s' ORDER BY date LIMIT {$start} , {$perpage}";
                         }else if(isset($from) && isset($to) && isset($check)){
                             if($check == "success"){
-                                $check = "ชำระเงินแล้ว";
+                                $check_s = "ชำระเงินแล้ว";
                             }else if($check == "unsuccess"){
-                                $check = "ยังไม่ได้ชำระเงิน";
+                                $check_s = "ยังไม่ได้ชำระเงิน";
+                            }else if($check == "pending"){
+                                $check_s = "รอการชำระเงิน";
                             }
-                            $sql = "SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') AND cost_status = '$check' ORDER BY date LIMIT {$start} , {$perpage}";
+                            $sql = "SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') AND cost_status = '$check_s' ORDER BY date LIMIT {$start} , {$perpage}";
                         }else{
                             $sql = "SELECT * FROM cost ORDER BY date LIMIT {$start} , {$perpage} ";
                         }
@@ -186,6 +189,14 @@ if($_SESSION['level'] == 'admin'){
                                 ?>
                                 <td>
                                     <div class="status-success">
+                                        <p><?php echo $row["cost_status"]?></p>
+                                    </div>
+                                </td>
+                                <?php
+                                }else if($row['cost_status'] == 'รอการชำระเงิน'){
+                                ?>
+                                <td>
+                                    <div class="status-pending">
                                         <p><?php echo $row["cost_status"]?></p>
                                     </div>
                                 </td>
@@ -226,12 +237,12 @@ if($_SESSION['level'] == 'admin'){
                     </table>
                     <?php
                         ///////pagination
-                        if(isset($date) && !isset($check)){
-                            $sql2 ="SELECT * FROM cost WHERE date = '$date'";
-                        }else if(!isset($date) && isset($check)){
-                            $sql2 = "SELECT * FROM cost WHERE cost_status = '$check'";
-                        }else if(isset($date) && isset($check)){
-                            $sql2 = "SELECT * FROM cost WHERE date = '$date' AND cost_status = '$check'";   
+                        if(isset($from) && isset($to) && !isset($check)){
+                            $sql2 ="SELECT * FROM cost WHERE date BETWEEN '$from' AND '$to'";
+                        }else if(!isset($from) && !isset($to) && isset($check)){
+                            $sql2 = "SELECT * FROM cost WHERE cost_status = '$check_s'";
+                        }else if(isset($from) && isset($to) && isset($check)){
+                            $sql2 = "SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') AND cost_status = '$check_s'";   
                         }else{
                             $sql2 = "SELECT * FROM cost";
                         }
@@ -253,23 +264,23 @@ if($_SESSION['level'] == 'admin'){
                             <?php
                                 }else if(!isset($date) && isset($check)){
                                 ?>
-                            <a href="index.php?Status=<?php echo $check; ?>&page=1">&laquo;</a>
+                            <a href="index.php?status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
-                            <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                            <a href="index.php?status=<?php echo $check; ?>&page=<?php echo $i; ?>"
                                 <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
-                            <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <a href="index.php?status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
                                 }else if(isset($date) && isset($check)){
                                 ?>
                             <a
-                                href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=1">&laquo;</a>
+                                href="index.php?Date=<?php echo $date; ?>&status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                            <a href="index.php?Date=<?php echo $date; ?>&status=<?php echo $check; ?>&page=<?php echo $i; ?>"
                                 <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
                             <a
-                                href="index.php?Date=<?php echo $date; ?>&Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                                href="index.php?Date=<?php echo $date; ?>&status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
                                 }else{
                                 ?>
@@ -303,12 +314,12 @@ if($_SESSION['level'] == 'admin'){
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['เดือน / ปี', 'ชำระเงินแล้ว (บาท)', 'ยังไม่ได้ชำระเงิน (บาท)'],
+            ['เดือน / ปี', 'ชำระเงินแล้ว (บาท)', 'รอการชำระเงิน (บาท)', 'ยังไม่ได้ชำระเงิน (บาท)'],
             <?php echo $datax;?>
         ]);
         var options = {
             title: 'รายการชำระเงินห้องพักรายเดือน',
-            colors: ['rgb(131, 120, 47)', '#c6b66b'],
+            colors: ['rgb(131, 120, 47)', '#c6b66b', '#ffefab'],
             fontName: "Sarabun",
             vAxis: {
                 format: "decimal"

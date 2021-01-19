@@ -55,8 +55,8 @@ function searchCheck2(checkIn, checkOut, id) {
 
 }
 
-function acceptRent(id){
-    if(confirm("คุณต้องการยืนยันการเข้าอยู่ของลูกค้าท่านนี้ใช่หรือไม่")){
+function acceptRent(id) {
+    if (confirm("คุณต้องการยืนยันการเข้าอยู่ของลูกค้าท่านนี้ใช่หรือไม่")) {
         location.href = `function/acceptRent.php?daily_id=${id}`
     }
 }
@@ -114,27 +114,194 @@ function formatDate(date) {
 $(document).ready(function () {
     let check_in = $("#check_in")
     let check_out = $("#check_out")
-    let check_in_date = $("#check_in_date")
-    let check_out_date = $("#check_out_date")
-    if (check_in.val() != "" && check_out.val() != "") {
-        check_in_date.html(formatDate(new Date(check_in.val())))
-        check_out_date.html(formatDate(new Date(check_out.val())))
-    }
+    let code = $("#code")
 
+    function BasicDate(date) {
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1
+        let day = date.getDate()
+        if (day < 10) {
+            day = "0" + day.toString()
+        }
+        if (month < 10) {
+            month = "0" + month.toString()
+        }
+        return year + "-" + month + "-" + day
+    }
     $('.roundtrip-input').dateDropper({
         roundtrip: true,
         theme: "my-style",
         lang: "th",
-        format: "Y-m-d",
+        format: "d M Y",
         startFromMonday: false,
     });
+    $("#searchDate").click(function () {
+        if (check_in.val() != "" && check_out.val() != "") {
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let checkIn_toeng = check_in.val().split(" ")
+            checkIn_toeng[1] = search.findIndex(el => el === checkIn_toeng[1])
+            checkIn_toeng[1] = replace[checkIn_toeng[1]]
+            checkIn_toeng = checkIn_toeng.join(" ")
+            checkIn_toeng = BasicDate(new Date(checkIn_toeng))
+            let checkOut_toeng = check_out.val().split(" ")
+            checkOut_toeng[1] = search.findIndex(el => el === checkOut_toeng[1])
+            checkOut_toeng[1] = replace[checkOut_toeng[1]]
+            checkOut_toeng = checkOut_toeng.join(" ")
+            checkOut_toeng = BasicDate(new Date(checkOut_toeng))
+            location.href = `index.php?check_in=${checkIn_toeng}&check_out=${checkOut_toeng}`
+        } else {
+            check_in.css("border-color", "red")
+            check_in.css("background-image", "url('../../../img/tool/calendar-error.png')")
+            $("#checkIn_error").html("โปรดระบุวันที่ต้องการค้นหา")
+            check_out.css("border-color", "red")
+            check_out.css("background-image", "url('../../../img/tool/calendar-error.png')")
+            $("#checkOut_error").html("โปรดระบุวันที่ต้องการค้นหา")
 
-    $('#check_in').change(function () {
-        console.log("check in :", $('#check_in').val())
-        $('#check_in_date').html(formatDate(new Date($('#check_in').val())))
+        }
     })
-
-    $('#check_out').change(function () {
-        $('#check_out_date').html(formatDate(new Date($('#check_out').val())))
+    check_in.change(function () {
+        check_in.css("border-color", "")
+        check_in.css("background-image", "")
+        $("#checkIn_error").html("")
+    })
+    check_out.change(function(){
+        check_out.css("border-color", "")
+        check_out.css("background-image", "")
+        $("#checkOut_error").html("")
+    })
+    $("#searchCode").click(function () {
+        if (code.val() != "") {
+            location.href = `index.php?code=${code.val()}`
+        } else {
+            code.css("border-color", "red")
+            $("#code_error").html("โปรดระบุเลขที่ในการจอง")
+        }
+    })
+    $("#all").click(function(){
+        if(check_in.val() != "" && check_out.val() != ""){
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let checkIn_toeng = check_in.val().split(" ")
+            checkIn_toeng[1] = search.findIndex(el => el === checkIn_toeng[1])
+            checkIn_toeng[1] = replace[checkIn_toeng[1]]
+            checkIn_toeng = checkIn_toeng.join(" ")
+            checkIn_toeng = BasicDate(new Date(checkIn_toeng))
+            let checkOut_toeng = check_out.val().split(" ")
+            checkOut_toeng[1] = search.findIndex(el => el === checkOut_toeng[1])
+            checkOut_toeng[1] = replace[checkOut_toeng[1]]
+            checkOut_toeng = checkOut_toeng.join(" ")
+            checkOut_toeng = BasicDate(new Date(checkOut_toeng))
+            location.href = `index.php?check_in=${checkIn_toeng}&check_out=${checkOut_toeng}`
+        }else{
+            location.href = "index.php"
+        }
+    })
+    $("#waiting").click(function(){
+        if(check_in.val() != "" && check_out.val() != ""){
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let checkIn_toeng = check_in.val().split(" ")
+            checkIn_toeng[1] = search.findIndex(el => el === checkIn_toeng[1])
+            checkIn_toeng[1] = replace[checkIn_toeng[1]]
+            checkIn_toeng = checkIn_toeng.join(" ")
+            checkIn_toeng = BasicDate(new Date(checkIn_toeng))
+            let checkOut_toeng = check_out.val().split(" ")
+            checkOut_toeng[1] = search.findIndex(el => el === checkOut_toeng[1])
+            checkOut_toeng[1] = replace[checkOut_toeng[1]]
+            checkOut_toeng = checkOut_toeng.join(" ")
+            checkOut_toeng = BasicDate(new Date(checkOut_toeng))
+            location.href = `index.php?check_in=${checkIn_toeng}&check_out=${checkOut_toeng}&status=waiting`
+        }else{
+            location.href = "index.php?status=waiting"
+        }
+    })
+    $("#pending").click(function(){
+        if(check_in.val() != "" && check_out.val() != ""){
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let checkIn_toeng = check_in.val().split(" ")
+            checkIn_toeng[1] = search.findIndex(el => el === checkIn_toeng[1])
+            checkIn_toeng[1] = replace[checkIn_toeng[1]]
+            checkIn_toeng = checkIn_toeng.join(" ")
+            checkIn_toeng = BasicDate(new Date(checkIn_toeng))
+            let checkOut_toeng = check_out.val().split(" ")
+            checkOut_toeng[1] = search.findIndex(el => el === checkOut_toeng[1])
+            checkOut_toeng[1] = replace[checkOut_toeng[1]]
+            checkOut_toeng = checkOut_toeng.join(" ")
+            checkOut_toeng = BasicDate(new Date(checkOut_toeng))
+            location.href = `index.php?check_in=${checkIn_toeng}&check_out=${checkOut_toeng}&status=pending`
+        }else{
+            location.href = "index.php?status=pending"
+        }
+    })
+    $("#come").click(function(){
+        if(check_in.val() != "" && check_out.val() != ""){
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let checkIn_toeng = check_in.val().split(" ")
+            checkIn_toeng[1] = search.findIndex(el => el === checkIn_toeng[1])
+            checkIn_toeng[1] = replace[checkIn_toeng[1]]
+            checkIn_toeng = checkIn_toeng.join(" ")
+            checkIn_toeng = BasicDate(new Date(checkIn_toeng))
+            let checkOut_toeng = check_out.val().split(" ")
+            checkOut_toeng[1] = search.findIndex(el => el === checkOut_toeng[1])
+            checkOut_toeng[1] = replace[checkOut_toeng[1]]
+            checkOut_toeng = checkOut_toeng.join(" ")
+            checkOut_toeng = BasicDate(new Date(checkOut_toeng))
+            location.href = `index.php?check_in=${checkIn_toeng}&check_out=${checkOut_toeng}&status=come`
+        }else{
+            location.href = "index.php?status=come"
+        }
+    })
+    $("#checkout").click(function(){
+        if(check_in.val() != "" && check_out.val() != ""){
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let checkIn_toeng = check_in.val().split(" ")
+            checkIn_toeng[1] = search.findIndex(el => el === checkIn_toeng[1])
+            checkIn_toeng[1] = replace[checkIn_toeng[1]]
+            checkIn_toeng = checkIn_toeng.join(" ")
+            checkIn_toeng = BasicDate(new Date(checkIn_toeng))
+            let checkOut_toeng = check_out.val().split(" ")
+            checkOut_toeng[1] = search.findIndex(el => el === checkOut_toeng[1])
+            checkOut_toeng[1] = replace[checkOut_toeng[1]]
+            checkOut_toeng = checkOut_toeng.join(" ")
+            checkOut_toeng = BasicDate(new Date(checkOut_toeng))
+            location.href = `index.php?check_in=${checkIn_toeng}&check_out=${checkOut_toeng}&status=checkout`
+        }else{
+            location.href = "index.php?status=checkout"
+        }
+    })
+    $("#cancel").click(function(){
+        if(check_in.val() != "" && check_out.val() != ""){
+            const search = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const replace = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let checkIn_toeng = check_in.val().split(" ")
+            checkIn_toeng[1] = search.findIndex(el => el === checkIn_toeng[1])
+            checkIn_toeng[1] = replace[checkIn_toeng[1]]
+            checkIn_toeng = checkIn_toeng.join(" ")
+            checkIn_toeng = BasicDate(new Date(checkIn_toeng))
+            let checkOut_toeng = check_out.val().split(" ")
+            checkOut_toeng[1] = search.findIndex(el => el === checkOut_toeng[1])
+            checkOut_toeng[1] = replace[checkOut_toeng[1]]
+            checkOut_toeng = checkOut_toeng.join(" ")
+            checkOut_toeng = BasicDate(new Date(checkOut_toeng))
+            location.href = `index.php?check_in=${checkIn_toeng}&check_out=${checkOut_toeng}&status=cancel`
+        }else{
+            location.href = "index.php?status=cancel"
+        }
+    })
+    $("button[type=submit]").click(function(event){
+        if(confirm("คุณต้องการยืนยันการเข้าอยู่ของลูกค้าท่านนี้ใช่หรือไม่")){
+            $("form").submit()
+        }else{
+            event.preventDefault()
+        }
+    })
+    $(".del-btn").click(function(event){
+        if (confirm('คุณต้องการลบรายการจองห้องพักใช่หรือไม่ ?')) {
+            location.href = `function/delDaily.php?daily_id=${event.target.id}`
+        }
     })
 })

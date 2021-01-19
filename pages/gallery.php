@@ -55,6 +55,9 @@
         }
     }
     ?>
+    <div class="clickTotop" style="display:none;">
+        <div class="arrow-up"></div>
+    </div>
     <script src="../js/gallery.js"></script>
 </body>
 

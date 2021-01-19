@@ -221,10 +221,15 @@
     background-color: #B1D78A;
 }
 
-.cost-box table .status-success p {
-    font-size: 16px;
-    font-weight: 500;
-    color: #fff;
+.cost-box table .status-pending{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(170, 170, 170);
 }
 
 .cost-box table .status-nosuccess {
@@ -238,7 +243,7 @@
     background-color: #D68B8B;
 }
 
-.cost-box table .status-nosuccess p {
+.cost-box table .status-success p, .cost-box table .status-nosuccess p, .cost-box table .status-pending p {
     font-size: 16px;
     font-weight: 500;
     color: #fff;
