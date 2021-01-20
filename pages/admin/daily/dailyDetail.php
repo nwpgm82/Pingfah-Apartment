@@ -6,10 +6,10 @@ if($_SESSION['level'] == 'admin'){
     $daily_id = $_REQUEST['daily_id'];
     function DateThai($strDate)
     {
-        $strYear = date("Y",strtotime($strDate))+543;
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
@@ -34,65 +34,66 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="dailyDetail-box">
-                <h3>รายละเอียดการจอง</h3>
+                <!-- <h3>รายละเอียดการจอง</h3> -->
+                <h3>เลขที่ในการจอง : </strong><?php echo $code; ?></h3>
                 <div class="hr"></div>
                 <div>
-                    <h3>เลขที่ในการจอง : </strong><?php echo $code; ?></h3>
-                    <div class="row">
-                        <div class="col-4">
+                    <div class="grid-container">
+                        <div class="room_select">
                             <p>ห้องที่เลือก</p>
-                            <input type="text" value="<?php echo $room_select ?>" disabled>
+                            <input type="text" value="<?php echo $room_select; ?>" disabled>
                         </div>
-                        <div class="col-4">
+                        <div class="name_title">
+                            <p>คำนำหน้าชื่อ</p>
+                            <input type="text" value="<?php echo $name_title; ?>" disabled>
+                        </div>
+                        <div class="firstname">
                             <p>ชื่อ</p>
-                            <input type="text" value="<?php echo $firstname ?>" disabled>
+                            <input type="text" value="<?php echo $firstname; ?>" disabled>
                         </div>
-                        <div class="col-4">
+                        <div class="lastname">
                             <p>นามสกุล</p>
-                            <input type="text" value="<?php echo $lastname ?>" disabled>
+                            <input type="text" value="<?php echo $lastname; ?>" disabled>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
+                        <div class="id_card">
                             <p>เลขบัตรประชาชน / Passport</p>
-                            <input type="text" value="<?php echo $id_card ?>" disabled>
+                            <input type="text" value="<?php echo $id_card; ?>" disabled>
                         </div>
-                        <div class="col-4">
+                        <div class="email">
                             <p>อีเมล</p>
-                            <input type="email" value="<?php echo $email ?>" disabled>
+                            <input type="email" value="<?php echo $email; ?>" disabled>
                         </div>
-                        <div class="col-4">
+                        <div class="tel">
                             <p>เบอร์โทรศัพท์</p>
-                            <input type="tel" value="<?php echo $tel ?>" disabled>
+                            <input type="tel" value="<?php echo $tel; ?>" disabled>
                         </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
+                        <div class="check_in">
                             <p>เช็คอิน</p>
                             <input type="text" value="<?php echo DateThai($check_in); ?>" disabled>
                         </div>
-                        <div class="col-2">
+                        <div class="check_out">
                             <p>เช็คเอ้าท์</p>
                             <input type="text" value="<?php echo DateThai($check_out); ?>" disabled>
                         </div>
-                        <div class="col-1">
+                        <div class="night">
+                            <p>จำนวนวันที่พัก (คืน)</p>
+                            <input type="text" value="<?php echo $night; ?>" disabled>
+                        </div>
+                        <div class="people">
                             <p>จำนวน (ท่าน)</p>
                             <input type="number" value="<?php echo $people; ?>" disabled>
                         </div>
-                        <div class="col-1">
+                        <div class="air">
                             <p>ห้องแอร์ (ห้อง)</p>
                             <input type="number" value="<?php echo $air_room; ?>" disabled>
                         </div>
-                        <div class="col-1">
+                        <div class="fan">
                             <p>ห้องพัดลม (ห้อง)</p>
                             <input type="number" value="<?php echo $fan_room; ?>" disabled>
                         </div>
-                        <div class="col-2">
+                        <div class="room_status">
                             <p>สถานะการเข้าพัก</p>
-                            <input type="email"
-                                value="<?php if(isset($daily_status)){ echo $daily_status; }else{ echo "ยังไม่ได้เข้าพัก"; } ?>"
-                                disabled>
+                            <input type="email" value="<?php if(isset($daily_status)){ echo $daily_status; }else{ echo "ยังไม่ได้เข้าพัก"; } ?>" disabled>
                         </div>
                     </div>
                     <div style="padding-top:32px;">
@@ -103,7 +104,8 @@ if($_SESSION['level'] == 'admin'){
                             if($payment_img != null || $payment_img != ""){
                             ?>
                             <img src="../../../img/tool/bill.jpg" alt="">
-                            <button class="del-btn" onclick="delImg(<?php echo $daily_id; ?>,'<?php echo $payment_img; ?>')">X</button>
+                            <button class="del-btn"
+                                onclick="delImg(<?php echo $daily_id; ?>,'<?php echo $payment_img; ?>')">X</button>
                             <?php } ?>
                         </div>
                     </div>
