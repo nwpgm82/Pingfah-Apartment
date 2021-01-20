@@ -5,7 +5,7 @@ if($_SESSION['level'] == 'admin'){
     include('../../../components/sidebar.php');
     $check_in = @$_REQUEST['check_in'];
     $check_out = @$_REQUEST['check_out'];
-    $code = @$_REQUEST['Code'];
+    $code = @$_REQUEST['code'];
     $check = @$_REQUEST['status'];
     $num = 1;
     function DateThai($strDate)
@@ -18,10 +18,10 @@ if($_SESSION['level'] == 'admin'){
         return "$strDay $strMonthThai $strYear";
     }
     if($check_in != "" && $check_out != ""){
-        $query = "SELECT check_in, SUM(air_room + fan_room) as total_daily FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
+        $query = "SELECT check_in, SUM(people) as total_people FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
         $query2 = "SELECT check_in, SUM(air_room) as total_air, SUM(fan_room) as total_fan FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
     }else{
-        $query = "SELECT check_in, SUM(air_room + fan_room) as total_daily FROM daily WHERE daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
+        $query = "SELECT check_in, SUM(people) as total_people FROM daily WHERE daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
         $query2 = "SELECT check_in, SUM(air_room) as total_air, SUM(fan_room) as total_fan FROM daily WHERE daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
     }
     $query_result = mysqli_query($conn, $query);
@@ -29,14 +29,14 @@ if($_SESSION['level'] == 'admin'){
     $datax = array();
     $datax2 = array();
     foreach ($query_result as $k) {
-        $datax[] = "['".DateThai($k['check_in'])."'".", ".$k['total_daily']."]";
+        $datax[] = "['".DateThai($k['check_in'])."'".",".$k['total_people']."]";
     }
     foreach ($query_result2 as $l) {
-        $datax2[] = "['".DateThai($l['check_in'])."'".", ".$l['total_air'] ."," .$l['total_fan'] ."]";
+        $datax2[] = "['".DateThai($l['check_in'])."'".",".$l['total_air'] ."," .$l['total_fan'] ."]";
     }
     $datax = implode(",", $datax);
     $datax2 = implode(",", $datax2);
-    // echo $datax;
+    echo $datax;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +100,7 @@ if($_SESSION['level'] == 'admin'){
                             <?php
                             if(strlen($datax) != 0){
                             ?>
-                            <div id="columnchart_material1" class="chart"></div>
+                            <div id="curve_chart" class="chart"></div>
                             <?php 
                             }else{
                                 echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>";
@@ -163,10 +163,13 @@ if($_SESSION['level'] == 'admin'){
                     }
                     $result = $conn->query($sql);
                     if(isset($code)){
-                        echo "<h3>ผลลัพธ์การค้นหา : $code</h3>";
+                        echo "<h3 style='padding-bottom:32px;'>ผลลัพธ์การค้นหา : $code</h3>";
                     }else{
                         echo "<h3>รายการเช่าห้องพักทั้งหมด</h3>";
                     }
+                    ?>
+                    <?php
+                    if(!isset($code)){
                     ?>
                         <div style="display:flex;align-items:center;">
                             <div style="padding:32px 16px 32px 0;display: flex;align-items: center;">
@@ -199,6 +202,7 @@ if($_SESSION['level'] == 'admin'){
                                 <label for="scales">ยกเลิกการจอง</label>
                             </div>
                         </div>
+                        <?php } ?>
                         <?php
                     if ($result->num_rows > 0) {
                     ?>
@@ -223,8 +227,8 @@ if($_SESSION['level'] == 'admin'){
                                     <td><?php echo $row['name_title'].$row['firstname'] ." " .$row['lastname']; ?></td>
                                     <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']) ." (".$row['night']." คืน)"?></td>
                                     <td><?php echo $row['people']; ?></td>
-                                    <td><?php echo $row['people']; ?></td>
-                                    <td><?php echo $row['people']; ?></td>
+                                    <td><?php echo $row['air_room']; ?></td>
+                                    <td><?php echo $row['fan_room']; ?></td>
                                     <td><?php echo $row['code']; ?></td>
                                     <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอ้าท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอ้าท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else if($row['daily_status'] == "รอการเข้าพัก"){ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; }else{ echo "<button type='button' class='waiting-btn'>รอการยืนยัน</button>";} ?></td>
                                     <td>
@@ -320,6 +324,7 @@ if($_SESSION['level'] == 'admin'){
     </div>
     <script src="../../../js/admin/daily.js"></script>
     <script>
+    google.charts.load("current", {packages: ["line"]});
     google.charts.load('current', {
         'packages': ['bar']
     });
@@ -337,7 +342,8 @@ if($_SESSION['level'] == 'admin'){
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี', 'จำนวนผู้เช่า (คน)'],
+            ['วัน / เดือน / ปี', 'จำนวนผู้พัก'],
+            ['',0],
             <?php echo $datax;?>
         ]);
 
@@ -345,20 +351,16 @@ if($_SESSION['level'] == 'admin'){
             title: 'จำนวนผู้เช่าห้องพักรายวันในแต่ละวัน',
             colors: ['rgb(131, 120, 47)'],
             fontName: "Sarabun",
-            vAxis: {
-                format: "decimal"
-            }
         };
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
+        var chart = new google.charts.Line(document.getElementById('curve_chart'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
     }
 
     function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี', 'แอร์ (ห้อง)', 'พัดลม (ห้อง)'],
+            ['วัน / เดือน / ปี','แอร์ (ห้อง)', 'พัดลม (ห้อง)'],
             <?php echo $datax2;?>
         ]);
 
@@ -366,9 +368,7 @@ if($_SESSION['level'] == 'admin'){
             title: 'จำนวนผู้เช่าห้องพักรายวันในแต่ละประเภท',
             colors: ['rgb(131, 120, 47)', '#c6b66b'],
             fontName: "Sarabun",
-            vAxis: {
-                format: "decimal"
-            }
+            vAxis: { ticks: [5,10,15,20] }
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));

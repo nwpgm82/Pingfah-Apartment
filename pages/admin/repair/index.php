@@ -140,22 +140,22 @@ if($_SESSION['level'] == 'admin'){
                         $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') ORDER BY repair_date";
                     }else if(!isset($from) && !isset($to) && isset($check)){
                         if($check == "success"){
-                            $check = "ซ่อมเสร็จแล้ว";
+                            $check_s = "ซ่อมเสร็จแล้ว";
                         }else if($check == "inprogress"){
-                            $check = "กำลังซ่อม";
+                            $check_s = "กำลังซ่อม";
                         }else if($check == "pending"){
-                            $check = "รอคิวซ่อม";
+                            $check_s = "รอคิวซ่อม";
                         }
-                        $sql = "SELECT * FROM repair WHERE repair_status = '$check' ORDER BY repair_date LIMIT {$start} , {$perpage}";
+                        $sql = "SELECT * FROM repair WHERE repair_status = '$check_s' ORDER BY repair_date LIMIT {$start} , {$perpage}";
                     }else if(isset($from) && isset($to) && isset($check)){
                         if($check == "success"){
-                            $check = "ซ่อมเสร็จแล้ว";
+                            $check_s = "ซ่อมเสร็จแล้ว";
                         }else if($check == "inprogress"){
-                            $check = "กำลังซ่อม";
+                            $check_s = "กำลังซ่อม";
                         }else if($check == "pending"){
-                            $check = "รอคิวซ่อม";
+                            $check_s = "รอคิวซ่อม";
                         }
-                        $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') AND repair_status = '$check' ORDER BY repair_date LIMIT {$start} , {$perpage}";   
+                        $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') AND repair_status = '$check_s' ORDER BY repair_date LIMIT {$start} , {$perpage}";   
                     }else{
                         $sql = "SELECT * FROM repair ORDER BY repair_date LIMIT {$start} , {$perpage} ";
                     }
@@ -225,7 +225,16 @@ if($_SESSION['level'] == 'admin'){
                     </table>
                     <?php
                     ///////pagination
-                    $sql2 = "SELECT * FROM repair";
+                    if(isset($from) && isset($to) && !isset($check)){
+                        $sql2 = "SELECT * FROM repair WHERE repair_date BETWEEN '$from' AND '$to'";
+                    }else if(!isset($from) && !isset($to) && isset($check)){   
+                        $sql2 = "SELECT * FROM repair WHERE repair_status = '$check_s'";
+                    }else if(isset($from) && isset($to) && isset($check)){
+                        $sql2 = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') AND repair_status = '$check_s'";
+                    }else{
+                        $sql2 = "SELECT * FROM repair";
+                    }
+                    
                     $query2 = mysqli_query($conn, $sql2);
                     $total_record = mysqli_num_rows($query2);
                     $total_page = ceil($total_record / $perpage);
@@ -245,23 +254,23 @@ if($_SESSION['level'] == 'admin'){
                             <?php
                         }else if(!isset($from) && !isset($to) && isset($check)){
                         ?>
-                            <a href="index.php?Status=<?php echo $check; ?>&page=1">&laquo;</a>
+                            <a href="index.php?status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
-                            <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                            <a href="index.php?status=<?php echo $check; ?>&page=<?php echo $i; ?>"
                                 <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
-                            <a href="index.php?Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <a href="index.php?status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
                         }else if(isset($from) && isset($to) && isset($check)){
                         ?>
                             <a
-                                href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&Status=<?php echo $check; ?>&page=1">&laquo;</a>
+                                href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
-                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&Status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&status=<?php echo $check; ?>&page=<?php echo $i; ?>"
                                 <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
                             <a
-                                href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&Status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                                href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
                         }else{
                         ?>

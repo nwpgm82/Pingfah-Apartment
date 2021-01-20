@@ -253,41 +253,39 @@ if($_SESSION['level'] == 'admin'){
                     <div style="display:flex;justify-content:flex-end">
                         <div class="pagination">
                             <?php
-                                if(isset($date) && !isset($check)){
-                                ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&page=1">&laquo;</a>
+                            if(isset($from) && isset($to) && !isset($check)){
+                            ?>
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&page=<?php echo $i; ?>"
-                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $i; ?>"
+                            <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
-                                }else if(!isset($date) && isset($check)){
-                                ?>
+                            }else if(!isset($from) && !isset($to) && isset($check)){
+                            ?>
                             <a href="index.php?status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
                             <a href="index.php?status=<?php echo $check; ?>&page=<?php echo $i; ?>"
-                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                            <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
                             <a href="index.php?status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
-                                }else if(isset($date) && isset($check)){
-                                ?>
-                            <a
-                                href="index.php?Date=<?php echo $date; ?>&status=<?php echo $check; ?>&page=1">&laquo;</a>
+                            }else if(isset($from) && isset($to) && isset($check)){
+                            ?>
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&status=<?php echo $check; ?>&page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
-                            <a href="index.php?Date=<?php echo $date; ?>&status=<?php echo $check; ?>&page=<?php echo $i; ?>"
-                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&status=<?php echo $check; ?>&page=<?php echo $i; ?>"
+                            <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
-                            <a
-                                href="index.php?Date=<?php echo $date; ?>&status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
+                            <a href="index.php?from=<?php echo $from; ?>&to=<?php echo $to; ?>&status=<?php echo $check; ?>&page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php
-                                }else{
-                                ?>
+                            }else{
+                            ?>
                             <a href="index.php?page=1">&laquo;</a>
                             <?php for($i=1;$i<=$total_page;$i++){ ?>
                             <a href="index.php?page=<?php echo $i; ?>"
-                                <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
+                            <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                             <?php } ?>
                             <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
                             <?php } ?>
