@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2021 at 08:03 PM
+-- Generation Time: Jan 20, 2021 at 08:58 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -94,11 +94,11 @@ CREATE TABLE `cost` (
 INSERT INTO `cost` (`cost_id`, `room_id`, `room_type`, `cost_status`, `date`, `pay_date`, `room_cost`, `water_bill`, `elec_bill`, `cable_charge`, `fines`, `total`) VALUES
 (1, '201', 'แอร์', 'ชำระเงินแล้ว', '2020-12', '2020-01-06', 2700.00, 80.00, 570.00, 105.00, 150.00, 3605.00),
 (2, '202', 'แอร์', 'ชำระเงินแล้ว', '2020-12', '2020-01-02', 2700.00, 80.00, 375.00, 105.00, NULL, 3260.00),
-(3, '203', 'แอร์', 'ชำระเงินแล้ว', '2020-12', '2020-12-31', 2700.00, 80.00, 600.00, 105.00, NULL, 3485.00),
+(3, '203', 'แอร์', 'ยังไม่ได้ชำระเงิน', '2020-12', NULL, 2700.00, 80.00, 600.00, 105.00, 150.00, 3485.00),
 (4, '204', 'แอร์', 'ชำระเงินแล้ว', '2020-12', '2021-12-31', 2700.00, 80.00, 315.00, 105.00, NULL, 3200.00),
 (5, '207', 'พัดลม', 'ชำระเงินแล้ว', '2020-12', '2020-12-31', 2300.00, 80.00, 225.00, 105.00, NULL, 2710.00),
-(7, '201', 'แอร์', 'ยังไม่ได้ชำระเงิน', '2021-01', NULL, 2700.00, 160.00, 315.00, 105.00, NULL, 3280.00),
-(8, '202', 'แอร์', 'ยังไม่ได้ชำระเงิน', '2021-01', NULL, 2700.00, 80.00, 487.50, 105.00, NULL, 3372.50);
+(7, '201', 'แอร์', 'รอการชำระเงิน', '2021-01', NULL, 2700.00, 160.00, 315.00, 105.00, NULL, 3280.00),
+(8, '202', 'แอร์', 'รอการชำระเงิน', '2021-01', NULL, 2700.00, 50.00, 315.00, 90.00, NULL, 3155.00);
 
 -- --------------------------------------------------------
 
@@ -108,6 +108,7 @@ INSERT INTO `cost` (`cost_id`, `room_id`, `room_type`, `cost_status`, `date`, `p
 
 CREATE TABLE `daily` (
   `daily_id` int(11) NOT NULL,
+  `name_title` varchar(10) NOT NULL,
   `firstname` varchar(200) NOT NULL,
   `lastname` varchar(200) NOT NULL,
   `id_card` varchar(200) NOT NULL,
@@ -116,14 +117,29 @@ CREATE TABLE `daily` (
   `code` varchar(200) NOT NULL,
   `check_in` varchar(200) NOT NULL,
   `check_out` varchar(200) NOT NULL,
-  `people` varchar(2) NOT NULL,
+  `night` int(2) NOT NULL,
+  `people` int(2) NOT NULL,
   `air_room` int(2) NOT NULL,
   `fan_room` int(2) NOT NULL,
   `daily_status` varchar(200) NOT NULL,
+  `total_price` int(11) NOT NULL,
+  `payment_price` float(11,2) NOT NULL,
   `payment_datebefore` varchar(200) NOT NULL,
   `payment_img` varchar(200) DEFAULT NULL,
   `room_select` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `daily`
+--
+
+INSERT INTO `daily` (`daily_id`, `name_title`, `firstname`, `lastname`, `id_card`, `email`, `tel`, `code`, `check_in`, `check_out`, `night`, `people`, `air_room`, `fan_room`, `daily_status`, `total_price`, `payment_price`, `payment_datebefore`, `payment_img`, `room_select`) VALUES
+(39, 'นาย', 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'AIR2072301572', '2021-01-23', '2021-01-24', 1, 1, 1, 0, 'รอการเข้าพัก', 0, 300.00, '2021-01-21', NULL, NULL),
+(40, 'นาย', 'พงศธร', 'สร้อยอินต๊ะ', '5556667778889', 'blackfrostier@gmail.com', '2255889944', 'AIRZWL2501589', '2021-01-25', '2021-01-27', 2, 2, 1, 0, 'รอการเข้าพัก', 0, 300.00, '2021-01-21', NULL, NULL),
+(41, 'นาย', 'สุภิศรา', 'เตชนันท์', '5556667778889', 'blackfrostier@gmail.com', '0620477145', 'ALLWG02901247', '2021-01-29', '2021-01-31', 2, 4, 2, 1, 'รอการเข้าพัก', 0, 900.00, '2021-01-21', NULL, NULL),
+(42, 'นาย', 'นวพล', 'นรเดชานันท์', '1509966011521', 'blackfrostier@gmail.com', '0956722914', 'FANBJF0102572', '2021-02-01', '2021-02-03', 2, 1, 0, 1, 'รอการเข้าพัก', 0, 300.00, '2021-01-21', NULL, NULL),
+(43, 'นาย', 'พงศธร', 'สร้อยอินต๊ะ', '1509966011524', 'blackfrostier@gmail.com', '2255889944', 'AIRVYF0502589', '2021-02-05', '2021-02-07', 2, 2, 1, 0, 'รอการเข้าพัก', 0, 300.00, '2021-01-21', NULL, NULL),
+(44, 'นาย', 'สุภิศรา', 'เตชนันท์', '5556667778889', 'blackfrostier@gmail.com', '0620477145', 'AIRIG01002247', '2021-02-10', '2021-02-11', 1, 1, 1, 0, 'รอการเข้าพัก', 0, 300.00, '2021-01-21', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -602,7 +618,7 @@ ALTER TABLE `cost`
 -- AUTO_INCREMENT for table `daily`
 --
 ALTER TABLE `daily`
-  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `daily_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `employee`
