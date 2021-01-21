@@ -11,6 +11,10 @@
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
+    $getAir_price = mysqli_query($conn,"SELECT daily_price FROM roomdetail WHERE type='แอร์'");
+    $getAir_result = mysqli_fetch_assoc($getAir_price); 
+    $getFan_price = mysqli_query($conn,"SELECT daily_price FROM roomdetail WHERE type='พัดลม'");
+    $getFan_result = mysqli_fetch_assoc($getFan_price);
     $_SESSION["check_in"] = @$_POST['check_in'];
     $_SESSION["check_out"] = @$_POST['check_out'];
     $_SESSION["people"] = @$_POST['people'];
@@ -24,6 +28,10 @@
     }else{
         $_SESSION["fan"] = 0;
     }
+    $vat = 7;
+    $total_price = (intval($_SESSION["air"]) * $getAir_result["daily_price"]) + (intval($_SESSION["fan"]) * $getFan_result["daily_price"]);
+    $cal_vat = ($total_price/100)*$vat;
+    $_SESSION["total_price"] = $total_price + $cal_vat;
     $date1 = date_create($_SESSION["check_in"]);
     $date2 = date_create($_SESSION["check_out"]);
     $diff= date_diff($date1,$date2);
@@ -114,6 +122,14 @@
                         <p>ห้องพัดลม(ห้อง)</p>
                         <input type="text" name="fan" id="fan" value="<?php echo $_SESSION["fan"]; ?>" disabled>
                     </div>
+                    <div class="total_price">
+                        <p>ราคารวม (บาท)</p>
+                        <input type="text" name="total_price" id="total_price" value="<?php echo number_format($_SESSION["total_price"]); ?>" disabled>
+                    </div>
+                    <div class="vat">
+                        <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
+                        <input type="text" name="total_price" id="total_price" value="<?php echo $vat."%"; ?>" disabled>
+                    </div>
                 </div>
                 <div style="padding-top:32px;">
                     <h3>ขั้นตอนในการจองห้องพัก</h3>
@@ -122,7 +138,7 @@
                         <p>2. เมื่อโอนเงินแล้วให้อัปโหลดสลิปในเมนู <a href="checkCode.php" target="_blank">ตรวจสอบการจอง</a> </p>
                         <p>3. เมื่ออัปโหลดสลิปแล้วให้แจ้งเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
                         <p>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>
-                        <p>5. เมื่อได้รับการยืนยันแล้ว สามารถเข้าพักตามวันที่ท่านได้จองห้องพักไว้ <strong>(เข้าพักได้ในเวลา 14.00 น. เป็นต้นไป)</strong></p>
+                        <p>5. เมื่อได้รับการยืนยันแล้ว ให้ท่านชำระเงิน ณ ที่พัก และเข้าพักตามวันที่ท่านได้จองห้องพักไว้ <strong>(เข้าพักได้ในเวลา 14.00 น. เป็นต้นไป)</strong></p>
                     </div>
                 </div>
                 <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">

@@ -217,8 +217,8 @@ $(document).ready(function () {
         }
     })
     $("button[type=submit]").click(function (event) {
-        let people_check = Math.ceil(parseInt(document.getElementById("people").value) / 2)
-        let room_check = parseInt(document.getElementById("people1").value) + parseInt(document.getElementById("people2").value)
+        let people_check = Math.ceil(parseInt($("#people").val()) / 2)
+        let room_check = parseInt($("#people1").val()) + parseInt($("#people2").val())
         if (people_check > room_check) {
             alert("กรุณาเลือกห้องพักให้เพียงพอกับผู้พัก")
             event.preventDefault()

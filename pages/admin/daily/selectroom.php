@@ -97,6 +97,10 @@ if($_SESSION['level'] == 'admin'){
                             <p>สถานะการเข้าพัก</p>
                             <input type="email" value="<?php if(isset($daily_status)){ echo $daily_status; }else{ echo "ยังไม่ได้เข้าพัก"; } ?>" disabled>
                         </div>
+                        <div class="total_price">
+                            <p>ราคารวม (บาท)</p>
+                            <input type="number" value="<?php echo $total_price; ?>" disabled>
+                        </div>
                     </div>
                     <div style="padding-top:32px;">
                         <h3>เลือกห้องที่ต้องการเข้าพัก</h3>

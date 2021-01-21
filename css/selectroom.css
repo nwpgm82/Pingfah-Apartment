@@ -51,7 +51,8 @@
     grid-template-areas:
         "room_select room_select room_select name_title firstname firstname firstname lastname lastname lastname"
         "id_card id_card id_card email email email email tel tel tel"
-        "check_in check_in check_out check_out night people air fan room_status room_status";
+        "check_in check_in check_out check_out night people air fan room_status room_status"
+        "total_price . . . . . . . . .";
 }
 
 .room_select {
@@ -121,6 +122,11 @@
 
 .room_status {
     grid-area: room_status;
+    height: 86px;
+}
+
+.total_price{
+    grid-area: total_price;
     height: 86px;
 }
 

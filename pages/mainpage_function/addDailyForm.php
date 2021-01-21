@@ -46,7 +46,7 @@ if(isset($_POST['accept_daily'])){
     $airTotal = intval($roomData["airTotal"]) - intval($dailyData["daily_airTotal"]);
     $fanTotal = intval($roomData["fanTotal"]) - intval($dailyData["daily_fanTotal"]);
     if(intval($_SESSION["air"]) <= $airTotal && intval($_SESSION["fan"]) <= $fanTotal){
-        $sql = "INSERT INTO daily (name_title, firstname, lastname, id_card, email, tel, code, check_in, check_out, night, people, air_room, fan_room, daily_status, payment_price, payment_datebefore) VALUES ('$name_title', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '".$_SESSION["check_in"]."', '".$_SESSION["check_out"]."',".$_SESSION["night"].",".$_SESSION["people"].",".$_SESSION["air"].",".$_SESSION["fan"].", 'รอการยืนยัน',".$_SESSION["total_room"].", '".$_SESSION["payment_datebefore"]."')";
+        $sql = "INSERT INTO daily (name_title, firstname, lastname, id_card, email, tel, code, check_in, check_out, night, people, air_room, fan_room, daily_status, total_price, payment_price, payment_datebefore) VALUES ('$name_title', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '".$_SESSION["check_in"]."', '".$_SESSION["check_out"]."',".$_SESSION["night"].",".$_SESSION["people"].",".$_SESSION["air"].",".$_SESSION["fan"].", 'รอการยืนยัน',".ceil($_SESSION["total_price"]).",".$_SESSION["total_room"].", '".$_SESSION["payment_datebefore"]."')";
         ///////////////////// อีเมล ////////////////////////
         require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
         header('Content-Type: text/html; charset=utf-8');
@@ -115,7 +115,7 @@ if(isset($_POST['accept_daily'])){
                             <p style='font-size:16px;color:#000'>2. เมื่อโอนเงินแล้วให้อัปโหลดสลิปในเมนู <a href='/Pingfah/pages/checkCode.php' target='_blank'>ตรวจสอบการจอง</a> </p>
                             <p style='font-size:16px;color:#000'>3. เมื่ออัปโหลดสลิปแล้วให้แจ้งเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
                             <p style='font-size:16px;color:#000'>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>
-                            <p style='font-size:16px;color:#000'>5. เมื่อได้รับการยืนยันแล้ว สามารถเข้าพักตามวันที่ท่านได้จองห้องพักไว้ <strong>(เข้าพักได้ในเวลา 14.00 น. เป็นต้นไป)</strong></p>
+                            <p style='font-size:16px;color:#000'>5. เมื่อได้รับการยืนยันแล้ว ให้ท่านชำระเงิน ณ ที่พัก และเข้าพักตามวันที่ท่านได้จองห้องพักไว้ <strong>(เข้าพักได้ในเวลา 14.00 น. เป็นต้นไป)</strong></p>
                         </div>
                         <div style='padding-top:32px;text-align:center;'>
                             <div>

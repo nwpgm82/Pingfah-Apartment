@@ -32,7 +32,8 @@
                         <div style="display:flex;align-items:center;">
                             <label class="checkText">Check In : </label>
                             <div style="position:relative;padding-left:8px;height:40px;">
-                                <input id="check_in" class="roundtrip-input" name="check_in" type="text" value="<?php echo $check_in; ?>">
+                                <input id="check_in" class="roundtrip-input" name="check_in" type="text"
+                                    value="<?php echo $check_in; ?>">
                                 <p id="check_in_date" class="dateText"></p>
                             </div>
                         </div>
@@ -41,7 +42,8 @@
                         <div style="display:flex;align-items:center;">
                             <label class="checkText">Check Out : </label>
                             <div style="position:relative;padding-left:8px;height:40px;">
-                                <input id="check_out" class="roundtrip-input" name="check_out" type="text" value="<?php echo $check_out; ?>">
+                                <input id="check_out" class="roundtrip-input" name="check_out" type="text"
+                                    value="<?php echo $check_out; ?>">
                                 <p id="check_out_date" class="dateText"></p>
                             </div>
                         </div>
@@ -54,7 +56,8 @@
                             <label>จำนวนผู้พัก : </label>
                             <div style="position:relative;padding:0 8px;height:40px;">
                                 <input type="number" id="people" name="people" min="1" max="10"
-                                    value="<?php echo $people; ?>" oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
+                                    value="<?php echo $people; ?>"
+                                    oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
                             </div>
                             <label>(สูงสุด : 10)</label>
                         </div>
@@ -187,10 +190,10 @@
                                 <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int; ?> ห้อง</p>
                                 <div>
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
-                                    <button type="button" onclick="decrease(1)">-</button>
+                                    <button type="button" id="DesAir">-</button>
                                     <input type="number" id="people1" min="0" max="<?php echo $total_int; ?>" value="0"
                                         name="air" readonly>
-                                    <button type="button" onclick="increase(1)">+</button>
+                                    <button type="button" id="InsAir">+</button>
                                     <label>ห้อง</label>
                                 </div>
                             </div>
@@ -305,16 +308,19 @@
                                 <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int2; ?> ห้อง</p>
                                 <div>
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
-                                    <button type="button" onclick="decrease(2)">-</button>
+                                    <button type="button" id="DesFan">-</button>
                                     <input type="number" id="people2" min="0" max="<?php echo $total_int2; ?>" value="0"
                                         name="fan" readonly>
-                                    <button type="button" onclick="increase(2)">+</button>
+                                    <button type="button" id="InsFan">+</button>
                                     <label>ห้อง</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <?php } ?>
+                    <div style="display:flex;justify-content:flex-end;align-items:center;">
+                        <h2>ราคารวม : <label id="total_price">0</label> บาท</h2>
+                    </div>
                     <div style="padding-top:32px;display:flex;justify-content:flex-end;align-items:center">
                         <button type="submit" class="rent">จองเลย</button>
                     </div>
@@ -324,12 +330,54 @@
                     } ?>
                 </div>
             </form>
-            <?php
-            
-            ?>
         </div>
     </div>
     <script src="../js/checkRoom.js"></script>
+    <script>
+    <?php
+    $getAir_price = mysqli_query($conn,"SELECT daily_price FROM roomdetail WHERE type='แอร์'");
+    $getAir_result = mysqli_fetch_assoc($getAir_price); 
+    $getFan_price = mysqli_query($conn,"SELECT daily_price FROM roomdetail WHERE type='พัดลม'");
+    $getFan_result = mysqli_fetch_assoc($getFan_price);  
+    ?>
+    function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+    let people = <?php echo $people; ?>;
+    let total_price = 0
+    $("#InsAir").click(function(){
+        if(people != 0){
+            $("#people1").val(parseInt($("#people1").val()) + 1)
+            people = people - 1
+            total_price = total_price + <?php echo intval($getAir_result["daily_price"]); ?>;
+        }
+        $("#total_price").html(formatNumber(total_price))
+    })
+    $("#DesAir").click(function(){
+        if(parseInt($("#people1").val()) != 0){
+            $("#people1").val(parseInt($("#people1").val()) - 1)
+            people = people + 1
+            total_price = total_price - <?php echo intval($getAir_result["daily_price"]); ?>;
+        }
+        $("#total_price").html(formatNumber(total_price))
+    })
+    $("#InsFan").click(function(){
+        if(people != 0){
+            $("#people2").val(parseInt($("#people2").val()) + 1)
+            people = people - 1
+            total_price = total_price + <?php echo intval($getFan_result["daily_price"]); ?>;
+        }
+        $("#total_price").html(formatNumber(total_price))
+    })
+    $("#DesFan").click(function(){
+        if(parseInt($("#people2").val()) != 0){
+            $("#people2").val(parseInt($("#people2").val()) - 1)
+            people = people + 1
+            total_price = total_price - <?php echo intval($getFan_result["daily_price"]); ?>;
+        }
+        $("#total_price").html(formatNumber(total_price))
+    })
+    </script>
 </body>
 
 </html>
