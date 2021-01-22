@@ -7,7 +7,7 @@ $path_file2 = "../images/daily/$daily_id/";
 $target = "../images/daily/$daily_id/".basename($img);
 $result = mysqli_query($conn,"SELECT code FROM daily WHERE daily_id = $daily_id LIMIT 1");
 $row = mysqli_fetch_assoc($result);
-$sql = "UPDATE daily SET payment_img = '$img' WHERE daily_id = '$daily_id'";
+$sql = "UPDATE daily SET payment_img = '$img' WHERE daily_id = $daily_id";
 if(is_dir($path_file)){
     if(is_dir($path_file2)){
         if(!empty($img)){

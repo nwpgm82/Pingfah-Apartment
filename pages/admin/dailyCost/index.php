@@ -9,10 +9,10 @@ if($_SESSION['level'] == 'admin'){
     $num = 1;
     function DateThai($strDate)
     {
-        $strYear = date("Y",strtotime($strDate))+543;
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
@@ -138,8 +138,8 @@ if($_SESSION['level'] == 'admin'){
                         <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?>
                         </td>
                         <td><?php echo $row['code']; ?></td>
-                        <td><?php echo $row['price_total']; ?></td>
-                        <td><button class="status-success"><?php echo $row['daily_status']; ?></button></td>
+                        <td><?php echo $row['total_price']; ?></td>
+                        <td><button class="status-success"><?php echo $row['pay_status']; ?></button></td>
                         <td>
                             <a
                                 href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>

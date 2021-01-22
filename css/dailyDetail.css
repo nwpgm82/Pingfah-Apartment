@@ -43,7 +43,7 @@
     background-color: rgb(131, 120, 47, 1);
 }
 
-.dailyDetail-box .edit-btn {
+/* .dailyDetail-box .edit-btn {
     width: 40px;
     padding: 0;
     background-image: url(../img/tool/edit-icon.png);
@@ -80,7 +80,7 @@
 
 .dailyDetail-box .cancel-btn:hover {
     background-color: rgb(216, 40, 40);
-}
+} */
 
 
 .hr {
@@ -101,12 +101,13 @@
     transition: 0.3s;
 }
 
-.box .dailyDetail-box .roundtrip-input{
-    background-image: url("../img/tool/calendar.png");
-    background-repeat: no-repeat;
-    background-size: 20px;
-    background-position: 96% 50%;
-    cursor: pointer;
+.box .dailyDetail-box input[type=number]::-webkit-inner-spin-button, 
+.box .dailyDetail-box input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+
+.box .dailyDetail-box input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .grid-container {

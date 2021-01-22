@@ -6,10 +6,10 @@ if($_SESSION['level'] == 'admin'){
     $dailycost_id = $_REQUEST['dailycost_id'];
     function DateThai($strDate)
     {
-        $strYear = date("Y",strtotime($strDate))+543;
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
@@ -37,36 +37,39 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="dailyCostDetail-box">
-                <h3>รายละเอียดการจอง</h3>
+                <h3>เลขที่ในการจอง : <?php echo $code; ?></h3>
                 <div class="hr"></div>
                 <div>
-                    <label><strong>เลขที่ในการจอง : </strong><?php echo $code; ?></label>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-3">
                             <p>เลขห้องที่จอง</p>
-                            <input type="text" value="<?php echo $room_id ?>" disabled>
+                            <input type="text" value="<?php echo $room_id; ?>" disabled>
+                        </div>
+                        <div class="col-1">
+                            <p>คำนำหน้าชื่อ</p>
+                            <input type="text" value="<?php echo $name_title; ?>" disabled>
                         </div>
                         <div class="col-4">
                             <p>ชื่อ</p>
-                            <input type="text" value="<?php echo $firstname ?>" disabled>
+                            <input type="text" value="<?php echo $firstname; ?>" disabled>
                         </div>
                         <div class="col-4">
                             <p>นามสกุล</p>
-                            <input type="text" value="<?php echo $lastname ?>" disabled>
+                            <input type="text" value="<?php echo $lastname; ?>" disabled>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-4">
                             <p>เลขบัตรประชาชน / Passport</p>
-                            <input type="text" value="<?php echo $id_card ?>" disabled>
+                            <input type="text" value="<?php echo $id_card; ?>" disabled>
                         </div>
                         <div class="col-4">
                             <p>อีเมล</p>
-                            <input type="email" value="<?php echo $email ?>" disabled>
+                            <input type="email" value="<?php echo $email; ?>" disabled>
                         </div>
                         <div class="col-4">
                             <p>เบอร์โทรศัพท์</p>
-                            <input type="tel" value="<?php echo $tel ?>" disabled>
+                            <input type="tel" value="<?php echo $tel; ?>" disabled>
                         </div>
                     </div>
                     <div class="row">
@@ -80,11 +83,11 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                         <div class="col-2">
                             <p>ราคารวม</p>
-                            <input type="text" value="<?php echo $price_total ?>" disabled>
+                            <input type="text" value="<?php echo $total_price ?>" disabled>
                         </div>
                         <div class="col-2">
                             <p>สถานะการชำระเงิน</p>
-                            <input type="text" value="<?php echo $daily_status ?>" disabled>
+                            <input type="text" value="<?php echo $pay_status ?>" disabled>
                         </div>
                     </div>
                 </div>
@@ -93,15 +96,14 @@ if($_SESSION['level'] == 'admin'){
                     <div class="hr"></div>
                     <div class="img-box">
                         <?php
-                        if($payment_img != null || $payment_img != ""){
+                        if($pay_img != null || $pay_img != ""){
                         ?>
                         <img src="../../images/daily/<?php echo $dailycost_id; ?>/<?php echo $payment_img; ?>" alt="">
-                        <button class="del-btn"
-                            onclick="delImg(<?php echo $dailycost_id; ?>,'<?php echo $payment_img; ?>')">X</button>
+                        <button class="del-btn" onclick="delImg(<?php echo $dailycost_id; ?>,'<?php echo $payment_img; ?>')">X</button>
                         <?php } ?>
                     </div>
                     <?php
-                    if($payment_img == null){
+                    if($pay_img == null){
                     ?>
                     <div style="padding-top:16px;">
                         <form id="submitForm" enctype="multipart/form-data">

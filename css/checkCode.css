@@ -59,88 +59,95 @@ body::before{
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
-.box .checkCode-box form{
+.grid-container {
     padding-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 16px 8px;
+    grid-template-areas:
+        "name_title name_title firstname firstname firstname lastname lastname lastname"
+        "id_card id_card email email email email tel tel"
+        "check_in check_in check_out check_out night people air fan"
+        "total_price vat status . . . . .";
 }
 
-.box .checkCode-box .row {
-    display: flex;
-    padding-bottom: 32px;
+.name_title {
+    grid-area: name_title;
+    height: 86px;
 }
 
-.checkCode-box .row .col-1 {
-    flex: 0 0 auto;
-    width: 8.333333%;
-    padding: 0 4px;
+.id_card {
+    grid-area: id_card;
+    height: 86px;
 }
 
-.checkCode-box .row .col-2 {
-    flex: 0 0 auto;
-    width: 16.666667%;
-    padding: 0 4px;
+.firstname {
+    grid-area: firstname;
+    height: 86px;
 }
 
-.checkCode-box .row .col-3 {
-    flex: 0 0 auto;
-    width: 25%;
-    padding: 0 4px;
+.lastname {
+    grid-area: lastname;
+    height: 86px;
 }
 
-.checkCode-box .row .col-4 {
-    flex: 0 0 auto;
-    width: 33.333333%;
-    padding: 0 4px;
+.email {
+    grid-area: email;
+    height: 86px;
 }
 
-.checkCode-box .row .col-5 {
-    flex: 0 0 auto;
-    width: 41.666667%;
-    padding: 0 4px;
+.tel {
+    grid-area: tel;
+    height: 86px;
 }
 
-.checkCode-box .row .col-6 {
-    flex: 0 0 auto;
-    width: 50%;
-    padding: 0 4px;
+.check_in {
+    grid-area: check_in;
+    height: 86px;
 }
 
-.checkCode-box .row .col-7 {
-    flex: 0 0 auto;
-    width: 58.333333%;
-    padding: 0 4px;
+.check_out {
+    grid-area: check_out;
+    height: 86px;
 }
 
-.checkCode-box .row .col-8 {
-    flex: 0 0 auto;
-    width: 66.666667%;
-    padding: 0 4px;
+.night{
+    grid-area: night;
+    height: 86px;
 }
 
-.checkCode-box .row .col-9 {
-    flex: 0 0 auto;
-    width: 75%;
-    padding: 0 4px;
+.people {
+    grid-area: people;
+    height: 86px;
 }
 
-.checkCode-box .row .col-10 {
-    flex: 0 0 auto;
-    width: 83.333333%;
-    padding: 0 4px;
+.air {
+    grid-area: air;
+    height: 86px;
 }
 
-.checkCode-box .row .col-11 {
-    flex: 0 0 auto;
-    width: 91.666667%;
-    padding: 0 4px;
+.fan {
+    grid-area: fan;
+    height: 86px;
 }
 
-.checkCode-box .row .col-12 {
-    flex: 0 0 auto;
-    width: 100%;
-    padding: 0 4px;
+.total_price{
+    grid-area: total_price;
+    height: 86px;
 }
 
-.box .checkCode-box .row input {
+.vat{
+    grid-area: vat;
+    height: 86px;
+}
+
+.status{
+    grid-area: status;
+    height: 86px;
+}
+
+.box .checkCode-box input:not([type=file]) {
     margin-top: 8px;
     width: 100%;
     height: 36px;
@@ -222,4 +229,13 @@ body::before{
 
 .box .cancel-btn:hover{
     background-color: rgb(216, 40, 40);
+}
+
+.box button:disabled{
+    background-color: #ddd;
+    cursor: default;
+}
+
+.box button:disabled:hover{
+    background-color: #ddd;
 }

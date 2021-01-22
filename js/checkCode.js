@@ -11,6 +11,7 @@ function preview_image(event, pic) {
         output.src = reader.result;
     }
     reader.readAsDataURL(event.target.files[0]);
+    document.querySelector("button[type=submit]").disabled = false;
 }
 
 function delImg(id,name) {

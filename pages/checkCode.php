@@ -1,10 +1,11 @@
 <?php
-@$code = $_REQUEST["code"];
-function DateThai($strDate){
-    $strYear = date("Y",strtotime($strDate))+543;
+$code = @$_REQUEST["code"];
+function DateThai($strDate)
+{
+    $strYear = date("Y",strtotime($strDate));
     $strMonth= date("n",strtotime($strDate));
-    $strDay= date("j",strtotime($strDate));
-    $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+    $strDay= date("d",strtotime($strDate));
+    $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
     $strMonthThai=$strMonthCut[$strMonth];
     return "$strDay $strMonthThai $strYear";
 }
@@ -26,7 +27,7 @@ function DateThai($strDate){
     <div class="box">
         <div class="search">
             <label>ค้นหาเลขที่การจอง : </label>
-            <input type="text" id="code">
+            <input type="text" id="code" value="<?php echo $code; ?>">
             <button style="margin: 0 8px;" onclick="searchDate()">ค้นหา</button>
         </div>
         <div class="hr"></div>
@@ -36,106 +37,107 @@ function DateThai($strDate){
             $sql = "SELECT * FROM daily WHERE code = '$code' LIMIT 1";
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
-                // output data of each row
                 while($row = $result->fetch_assoc()) {
         ?>
         <div class="checkCode-box">
             <h3>รายละเอียดในการจองห้องพัก</h3>
-            <form action="mainpage_function/addPayment_image.php?daily_id=<?php echo $row['daily_id']; ?>" method="POST"
-                enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-4">
-                        <p>ชื่อ</p>
-                        <input type="text" value="<?php echo $row['firstname']; ?>" readonly>
-                    </div>
-                    <div class="col-4">
-                        <p>นามสกุล</p>
-                        <input type="text" value="<?php echo $row['lastname']; ?>" readonly>
-                    </div>
-                    <div class="col-4">
-                        <p>เลขบัตรประชาชน / Passport</p>
-                        <input type="text" value="<?php echo $row['id_card']; ?>" readonly>
-                    </div>
+            <div class="grid-container">
+                <div class="name_title">
+                    <p>คำนำหน้าชื่อ</p>
+                    <input type="text" value="<?php echo $row["name_title"]; ?>" disabled>
                 </div>
-                <div class="row">
-                    <div class="col-3">
-                        <p>อีเมล</p>
-                        <input type="email" value="<?php echo $row['email']; ?>" readonly>
-                    </div>
-                    <div class="col-2">
-                        <p>เบอร์โทรศัพท์</p>
-                        <input type="tel" value="<?php echo $row['tel']; ?>" readonly>
-                    </div>
-                    <div class="col-2">
-                        <p>เช็คอิน</p>
-                        <input type="text" value="<?php echo DateThai($row['check_in']); ?>" readonly>
-                    </div>
-                    <div class="col-2">
-                        <p>เช็คเอ้าท์</p>
-                        <input type="text" value="<?php echo DateThai($row['check_out']); ?>" readonly>
-                    </div>
-                    <div class="col-1">
-                        <p>จำนวนผู้พัก</p>
-                        <input type="text" value="<?php echo $row['people']; ?>" readonly>
-                    </div>
-                    <div class="col-1">
-                        <p>ห้องแอร์</p>
-                        <input type="number" value="<?php echo $row['air_room']; ?>" readonly>
-                    </div>
-                    <div class="col-1">
-                        <p>ห้องพัดลม</p>
-                        <input type="number" value="<?php echo $row['fan_room']; ?>" readonly>
-                    </div>
+                <div class="firstname">
+                    <p>ชื่อ</p>
+                    <input type="text" value="<?php echo $row["firstname"]; ?>" disabled>
                 </div>
-                <div style="line-height:40px;">
-                    <p style="color:red;"><strong>*** โปรดวางเงินมัดจำค่าห้องเป็นจำนวน 1,000 บาท ก่อนวันที่
-                            <?php echo DateThai($row['payment_datebefore']); ?> มิเช่นนั้นการจองห้องพักจะถูกยกเลิก
-                            ***</strong>
-                    </p>
-                    <p style="color:red;"><strong>*** เงินมัดจำจะได้คืนก็ต่อเมื่อเช็คเอ้าท์เรียบร้อยแล้ว ***</strong>
-                    </p>
+                <div class="lastname">
+                    <p>นามสกุล</p>
+                    <input type="text" value="<?php echo $row["lastname"]; ?>" disabled>
                 </div>
+                <div class="id_card">
+                    <p>เลขบัตรประชาชน / Passport No.</p>
+                    <input type="text" value="<?php echo $row["id_card"]; ?>" disabled>
+                </div>
+                <div class="email">
+                    <p>อีเมล</p>
+                    <input type="text" value="<?php echo $row["email"]; ?>" disabled>
+                </div>
+                <div class="tel">
+                    <p>เบอร์โทรศัพท์</p>
+                    <input type="text" value="<?php echo $row["tel"]; ?>" disabled>
+                </div>
+                <div class="check_in">
+                    <p>เช็คอิน</p>
+                    <input type="text" value="<?php echo DateThai($row["check_in"]); ?>" disabled>
+                </div>
+                <div class="check_out">
+                    <p>เช็คเอ้าท์</p>
+                    <input type="text" value="<?php echo DateThai($row["check_in"]); ?>" disabled>
+                </div>
+                <div class="night">
+                    <p>จำนวนคืนที่พัก (คืน)</p>
+                    <input type="text" name="night" id="night" value="<?php echo $row["night"]; ?>" disabled>
+                </div>
+                <div class="people">
+                    <p>จำนวนผู้พัก(คน)</p>
+                    <input type="text" name="people" id="people" value="<?php echo $row["people"]; ?>" disabled>
+                </div>
+                <div class="air">
+                    <p>ห้องแอร์(ห้อง)</p>
+                    <input type="text" name="air" id="air" value="<?php echo $row["air_room"]; ?>" disabled>
+                </div>
+                <div class="fan">
+                    <p>ห้องพัดลม(ห้อง)</p>
+                    <input type="text" name="fan" id="fan" value="<?php echo $row["fan_room"]; ?>" disabled>
+                </div>
+                <div class="total_price">
+                    <p>ราคารวม (บาท)</p>
+                    <input type="text" value="<?php echo number_format($row["total_price"]); ?>" disabled>
+                </div>
+                <div class="vat">
+                    <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
+                    <input type="text" name="total_price" id="total_price" value="7%" disabled>
+                </div>
+                <div class="status">
+                    <label>สถานะการจอง :</label>
+                    <input type="text" class="input-status" value="<?php echo $row['daily_status']; ?>" disabled>
+                </div>
+            </div>
+            <form action="mainpage_function/addPayment_image.php?daily_id=<?php echo $row['daily_id']; ?>" method="POST" enctype="multipart/form-data">
                 <div style="padding-top:32px;">
                     <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>
                     <div class="hr"></div>
-                    <div style="display:grid;grid-template-columns: 1fr 1fr;column-gap: 16px;align-items:flex-end;">
-                        <div>
-                            <div class="img-box">
-                                <img id="output_imagepic1"
-                                    <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> />
-                                <?php
-                        if(isset($row['payment_img']) && $row['daily_status'] == 'รอการตรวจสอบ'){ ?>
-                                <button class="del-btn" type="button" id="del-btn1" style="margin:0;"
-                                    onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')">X</button>
-                                <?php } ?>
-                            </div>
+                    <div>
+                        <div class="img-box">
+                            <img id="output_imagepic1" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> />
                             <?php
-                    if(!isset($row['payment_img']) && $row['daily_status'] == 'รอการตรวจสอบ'){ ?>
-                            <input type="file" id="pic_idcard1" accept="image/*" style="padding-top:16px;"
-                                onchange="preview_image(event,'pic1')" name="payment_img">
+                            if(isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
+                            <button class="del-btn" type="button" id="del-btn1" style="margin:0;" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')">X</button>
                             <?php } ?>
                         </div>
-                        <div>
-                            <label>สถานะการจอง :</label>
-                            <input type="text" class="input-status" value="<?php echo $row['daily_status']; ?>" readonly>
-                        </div>
+                        <?php
+                        if(!isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
+                        <input type="file" id="pic_idcard1" accept="image/*" style="padding-top:16px;" onchange="preview_image(event,'pic1')" name="payment_img">
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="hr"></div>
+                <div style="display:flex;justify-content:center;">
                 <?php
-                if(!isset($row['payment_img'])){
+                if(!isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){
                 ?>
-                <div style="padding-top:32px;display:flex;justify-content:center;">
-                    <button type="submit">ยืนยัน</button>
+                    <button type="submit" disabled>ยืนยัน</button>
+                <?php } ?>
                     <button type="button" class="cancel-btn"
                         onclick="cancel_daily(<?php echo $row['daily_id']; ?>)">ยกเลิกการจองห้องพัก</button>
                 </div>
-                <?php } ?>
             </form>
         </div>
-        <?php } }else{
+        <?php 
+        }}else{
             echo "ไม่พบข้อมูล";
-        }}?>
+        }}
+        ?>
     </div>
     <script src="../js/checkCode.js"></script>
 </body>

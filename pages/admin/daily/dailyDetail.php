@@ -43,12 +43,12 @@ if($_SESSION['level'] == 'admin'){
                 <form action="">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <h3>เลขที่ในการจอง : </strong><?php echo $code; ?></h3>
-                        <button type="button" class="edit-btn" id="edit"></button>
+                        <!-- <button type="button" class="edit-btn" id="edit"></button>
                         <div id="edit-option" style="width:90px;display:none;justify-content:space-between;align-items:center;">
                             <button type="submit" class="correct-btn" id="accept-edit" name="accept-edit"
                                 title="ยืนยันการแก้ไข"></button>
                             <button type="button" class="cancel-btn" id="cancel-edit" title="ยกเลิกการแก้ไข"></button>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="hr"></div>
                     <div>
@@ -107,7 +107,7 @@ if($_SESSION['level'] == 'admin'){
                             </div>
                             <div class="room_status">
                                 <p>สถานะการเข้าพัก</p>
-                                <input type="email" value="<?php if(isset($daily_status)){ echo $daily_status; }else{ echo "ยังไม่ได้เข้าพัก"; } ?>" disabled>
+                                <input type="text" value="<?php echo $daily_status; ?>" disabled>
                             </div>
                             <div class="total_price">
                                 <p>ราคารวม (บาท)</p>

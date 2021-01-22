@@ -157,7 +157,6 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/dailyDetail.js"></script>
 </body>
 
 </html>
