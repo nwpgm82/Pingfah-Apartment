@@ -98,8 +98,8 @@ if($_SESSION['level'] == 'admin'){
                         <?php
                         if($pay_img != null || $pay_img != ""){
                         ?>
-                        <img src="../../images/daily/<?php echo $dailycost_id; ?>/<?php echo $payment_img; ?>" alt="">
-                        <button class="del-btn" onclick="delImg(<?php echo $dailycost_id; ?>,'<?php echo $payment_img; ?>')">X</button>
+                        <img src="../../images/daily/<?php echo $dailycost_id; ?>/<?php echo $pay_img; ?>" alt="">
+                        <button class="del-btn" onclick="delImg(<?php echo $dailycost_id; ?>,'<?php echo $pay_img; ?>')">X</button>
                         <?php } ?>
                     </div>
                     <?php

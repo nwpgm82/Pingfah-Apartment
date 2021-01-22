@@ -172,6 +172,7 @@ if($_SESSION['level'] == 'admin'){
                             <th>วันที่ชำระเงิน</th>
                             <th>ยอดรวม</th>
                             <th>ค่าปรับ</th>
+                            <th>สถานะการเข้าพัก</th>
                             <th>สถานะการชำระเงิน</th>
                             <th>เพิ่มเติม</th>
                         </tr>
@@ -184,6 +185,23 @@ if($_SESSION['level'] == 'admin'){
                                 <td><?php if(isset($row["pay_date"])){ echo DateThai2($row["pay_date"]); }?></td>
                                 <td><?php echo $row["total"];?></td>
                                 <td><?php if(isset($row["fines"])){ echo $row["fines"]; }else{ echo "0.00"; }?></td>
+                                <?php
+                                if($row['member_status'] == 'กำลังเข้าพัก'){
+                                ?>
+                                <td>
+                                    <div class="status-success">
+                                        <p><?php echo $row["member_status"]; ?></p>
+                                    </div>    
+                                </td>
+                                <?php
+                                }else if($row['member_status'] == 'แจ้งออกแล้ว'){
+                                ?>
+                                <td>
+                                    <div class="status-out">
+                                        <p><?php echo $row["member_status"]; ?></p>
+                                    </div>    
+                                </td>
+                                <?php } ?>
                                 <?php
                                 if($row['cost_status'] == 'ชำระเงินแล้ว'){
                                 ?>

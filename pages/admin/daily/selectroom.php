@@ -95,64 +95,81 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                         <div class="room_status">
                             <p>สถานะการเข้าพัก</p>
-                            <input type="email" value="<?php if(isset($daily_status)){ echo $daily_status; }else{ echo "ยังไม่ได้เข้าพัก"; } ?>" disabled>
+                            <input type="email"
+                                value="<?php if(isset($daily_status)){ echo $daily_status; }else{ echo "ยังไม่ได้เข้าพัก"; } ?>"
+                                disabled>
                         </div>
                         <div class="total_price">
                             <p>ราคารวม (บาท)</p>
                             <input type="number" value="<?php echo $total_price; ?>" disabled>
                         </div>
                     </div>
-                    <div style="padding-top:32px;">
-                        <h3>เลือกห้องที่ต้องการเข้าพัก</h3>
-                        <div class="hr"></div>
-                        <p><strong>ห้องที่ท่านเลือก :</strong> <label id="room_select"></label></p>
-                        <div class="grid-box">
-                            <div style="border: 1px solid rgb(131, 120, 47, 0.7);border-radius:4px;padding:16px 0;">
-                                <div style="padding:0 16px;">
-                                    <label><strong>ห้องแอร์</strong> (จำนวนที่เลือกได้ : <label id="air_count"><?php echo $air_room; ?></label> ห้อง)</label>
-                                </div>
-                                <div class="hr" style="margin:16px 0"></div>
-                                <div style="padding:0 16px;">
-                                <?php
-                                $get_air = "SELECT room_id FROM roomlist WHERE room_type = 'แอร์' AND room_cat = 'รายวัน' AND room_status = 'ว่าง'";
-                                $result_air = $conn->query($get_air);
-                                if ($result_air->num_rows > 0) {
-                                    while($air_data = $result_air->fetch_assoc()) {
-                                        echo "<button type='button' class='air' id='".$air_data["room_id"]."'>".$air_data["room_id"]."</button>";
-                                    }
-                                } else {
-                                    echo "ไม่มีห้องว่างให้เช่า";
-                                }
-                                ?>  
-                                </div>
-                                 
+                    <form action="function/addSelectRoom.php?daily_id=<?php echo $daily_id; ?>" method="POST" enctype="multipart/form-data">
+                        <div style="padding-top:32px;height:582px;">
+                            <h3>สำเนาเอกสาร</h3>
+                            <div class="hr"></div>
+                            <p>สำเนาบัตรประชาชน</p>
+                            <div class="img-box" id="id_box">
+                                <img id="img_id" style="display:none;">
                             </div>
-                            <div style="border: 1px solid rgb(131, 120, 47, 0.7);border-radius:4px;padding:16px 0;">
-                                <div style="padding:0 16px;">
-                                    <label><strong>ห้องพัดลม</strong> (จำนวนที่เลือกได้ : <label id="fan_count"><?php echo $fan_room; ?></label> ห้อง)</label>
-                                </div>
-                                <div class="hr" style="margin:16px 0"></div>
-                                <div style="padding:0 16px;">
-                                <?php
-                                $get_fan = "SELECT room_id FROM roomlist WHERE room_type = 'พัดลม' AND room_cat = 'รายวัน' AND room_status = 'ว่าง'";
-                                $result_fan = $conn->query($get_fan);
-                                if ($result_fan->num_rows > 0) {
-                                    while($fan_data = $result_fan->fetch_assoc()) {
-                                        echo "<button type='button' class='fan' id='".$fan_data["room_id"]."'>".$fan_data["room_id"]."</button>";
+                            <h5 id="idimg_error" style="color:red;"></h5>
+                            <input type="file" name="id_img" id="id_img">
+                        </div>
+                        <div style="padding-top:32px;">
+                            <h3>เลือกห้องที่ต้องการเข้าพัก</h3>
+                            <div class="hr"></div>
+                            <div style="display:flex;align-items:center;width:100%;">
+                                <p><strong>ห้องที่ท่านเลือก :</strong></p>
+                                <input id="room_select" name="room_select">
+                            </div>
+                            <div class="grid-box">
+                                <div style="border: 1px solid rgb(131, 120, 47, 0.7);border-radius:4px;padding:16px 0;">
+                                    <div style="padding:0 16px;">
+                                        <label><strong>ห้องแอร์</strong> (จำนวนที่เลือกได้ : <label
+                                                id="air_count"><?php echo $air_room; ?></label> ห้อง)</label>
+                                    </div>
+                                    <div class="hr" style="margin:16px 0"></div>
+                                    <div style="padding:0 16px;">
+                                    <?php
+                                    $get_air = "SELECT room_id FROM roomlist WHERE room_type = 'แอร์' AND room_cat = 'รายวัน' AND room_status = 'ว่าง'";
+                                    $result_air = $conn->query($get_air);
+                                    if ($result_air->num_rows > 0) {
+                                        while($air_data = $result_air->fetch_assoc()) {
+                                            echo "<button type='button' class='air' id='".$air_data["room_id"]."'>".$air_data["room_id"]."</button>";
+                                        }
+                                    } else {
+                                        echo "ไม่มีห้องว่างให้เช่า";
                                     }
-                                } else {
-                                    echo "ไม่มีห้องว่างให้เช่า";
-                                }
-                                ?>  
+                                    ?>
+                                    </div>
                                 </div>
-                                
+                                <div style="border: 1px solid rgb(131, 120, 47, 0.7);border-radius:4px;padding:16px 0;">
+                                    <div style="padding:0 16px;">
+                                        <label><strong>ห้องพัดลม</strong> (จำนวนที่เลือกได้ : <label
+                                                id="fan_count"><?php echo $fan_room; ?></label> ห้อง)</label>
+                                    </div>
+                                    <div class="hr" style="margin:16px 0"></div>
+                                    <div style="padding:0 16px;">
+                                    <?php
+                                    $get_fan = "SELECT room_id FROM roomlist WHERE room_type = 'พัดลม' AND room_cat = 'รายวัน' AND room_status = 'ว่าง'";
+                                    $result_fan = $conn->query($get_fan);
+                                    if ($result_fan->num_rows > 0) {
+                                        while($fan_data = $result_fan->fetch_assoc()) {
+                                            echo "<button type='button' class='fan' id='".$fan_data["room_id"]."'>".$fan_data["room_id"]."</button>";
+                                        }
+                                    } else {
+                                        echo "ไม่มีห้องว่างให้เช่า";
+                                    }
+                                    ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="hr"></div>
-                <div style="display:flex;justify-content:center;align-items:center;">
-                    <button id="confirmRent">ยืนยันการจองห้องพัก</button>
+                        <div class="hr"></div>
+                        <div style="display:flex;justify-content:center;align-items:center;">
+                            <button type="submit" id="confirmRent">ยืนยันการจองห้องพัก</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

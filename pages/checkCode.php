@@ -103,6 +103,16 @@ function DateThai($strDate)
                     <input type="text" class="input-status" value="<?php echo $row['daily_status']; ?>" disabled>
                 </div>
             </div>
+            <div style="padding-top:32px;">
+                <h3>ขั้นตอนในการจองห้องพัก</h3>
+                <div style="line-height:40px;padding-top:16px;">
+                    <p>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style="color:red;"><?php echo number_format($row['payment_price']); ?> บาท (จำนวนห้องพัก x 300)</strong> มาที่บัญชีพร้อมเพย์ <strong>095-6722914 (นวพล นรเดชานันท์)</strong> หรือ สแกน QR code ได้<a href="../img/tool/qr-code.png" target="_blank">ที่นี่</a> ก่อนวันที่ <strong style="color:red;"><?php echo DateThai($row['payment_datebefore']); ?></strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
+                    <p>2. เมื่อโอนเงินแล้วให้อัปโหลดสลิปในเมนู <a href="checkCode.php" target="_blank">ตรวจสอบการจอง</a> </p>
+                    <p>3. เมื่ออัปโหลดสลิปแล้วให้แจ้งเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
+                    <p>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>
+                    <p>5. เมื่อได้รับการยืนยันแล้ว ให้ท่านชำระเงิน ณ ที่พัก และเข้าพักตามวันที่ท่านได้จองห้องพักไว้ <strong>(เข้าพักได้ในเวลา 14.00 น. เป็นต้นไป)</strong></p>
+                </div>
+            </div>
             <form action="mainpage_function/addPayment_image.php?daily_id=<?php echo $row['daily_id']; ?>" method="POST" enctype="multipart/form-data">
                 <div style="padding-top:32px;">
                     <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>

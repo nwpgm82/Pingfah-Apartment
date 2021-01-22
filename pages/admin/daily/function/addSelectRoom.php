@@ -2,18 +2,34 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include("../../../connection.php");
+    $room_str = $_POST["room_select"];
+    $room = explode(", ",$room_str);
+    // echo sizeof($room);
     $daily_id = $_REQUEST['daily_id'];
-    $room = json_decode($_REQUEST['room_select']);
-    $room_str = implode(', ', $room);
+    $pic_idcard = $_FILES["id_img"]["name"];
+    $folder_member = "../../../images/roommember/";
+    if(!is_dir($folder_member)){
+        mkdir($folder_member);
+    }
     $search = mysqli_query($conn,"SELECT * FROM daily WHERE daily_id = $daily_id");
     $resultSearch = mysqli_fetch_assoc($search);
     $sql = "INSERT INTO dailycost (dailycost_id, room_id, name_title, firstname, lastname, id_card, email, tel, check_in, check_out, total_price, pay_status, code) VALUES ($daily_id, '$room_str', '".$resultSearch["name_title"]."', '".$resultSearch["firstname"]."', '".$resultSearch["lastname"]."', '".$resultSearch["id_card"]."', '".$resultSearch["email"]."', '".$resultSearch["tel"]."', '".$resultSearch["check_in"]."', '".$resultSearch["check_out"]."', ".$resultSearch["total_price"].", 'ชำระเงินแล้ว', '".$resultSearch["code"]."')";
     $sql2 = "UPDATE daily SET daily_status = 'เข้าพักแล้ว', room_select = '$room_str' WHERE daily_id = $daily_id";
+    $uploaded = false;
     for($i = 0; $i < sizeof($room) ; $i++){
-        $addUser = "INSERT INTO roommember (room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname, id_card, phone, email) VALUES ('$room[$i]','".$resultSearch["check_in"]."', '".$resultSearch["check_out"]."', 'รายวัน', 'กำลังเข้าพัก', '".$resultSearch["name_title"]."', '".$resultSearch["firstname"]."', '".$resultSearch["lastname"]."', '".$resultSearch["id_card"]."', '".$resultSearch["tel"]."', '".$resultSearch["email"]."')";
+        mkdir("../../../images/roommember/$room[$i]/".$resultSearch["check_in"]."/");
+        $img_path = "../../../images/roommember/$room[$i]/".$resultSearch["check_in"]."/".basename($pic_idcard);
+        $addUser = "INSERT INTO roommember (room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname, id_card, phone, email, pic_idcard) VALUES ('$room[$i]','".$resultSearch["check_in"]."', '".$resultSearch["check_out"]."', 'รายวัน', 'กำลังเข้าพัก', '".$resultSearch["name_title"]."', '".$resultSearch["firstname"]."', '".$resultSearch["lastname"]."', '".$resultSearch["id_card"]."', '".$resultSearch["tel"]."', '".$resultSearch["email"]."', '$pic_idcard')";
         $updateStatus = "UPDATE roomlist SET room_status = 'ไม่ว่าง' WHERE room_id = '$room[$i]'";
         $conn->query($addUser);
         $conn->query($updateStatus);
+        if($uploaded){
+            copy($uploaded, $img_path);
+        }else{
+            if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $img_path)){
+                $uploaded = $img_path;
+            }
+        }
     }
     if($conn->query($sql) === TRUE && $conn->query($sql2) === TRUE){
         echo "<script>";

@@ -146,22 +146,25 @@
     width: 8%;
 }
 .cost-box table th:nth-child(3){
-    width: 15%;
+    width: 12%;
 }
 .cost-box table th:nth-child(4){
-    width: 15%;
+    width: 13%;
 }
 .cost-box table th:nth-child(5){
-    width: 10%;
+    width: 7%;
 }
 .cost-box table th:nth-child(6){
-    width: 10%;
+    width: 7%;
 }
 .cost-box table th:nth-child(7){
     width: 11%;
 }
-
 .cost-box table th:nth-child(8){
+    width: 11%;
+}
+
+.cost-box table th:nth-child(9){
     width: 26%;
 }
 
@@ -243,7 +246,18 @@
     background-color: #D68B8B;
 }
 
-.cost-box table .status-success p, .cost-box table .status-nosuccess p, .cost-box table .status-pending p {
+.cost-box table .status-out{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(255, 199, 95);
+}
+
+.cost-box table .status-success p, .cost-box table .status-nosuccess p, .cost-box table .status-pending p, .cost-box table .status-out p {
     font-size: 16px;
     font-weight: 500;
     color: #fff;

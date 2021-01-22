@@ -160,8 +160,7 @@ if($_SESSION["level"] == "admin"){
                         while($row = $result->fetch_assoc()) {
                         ?>
                         <tr>
-                            <td><a
-                                    href="room_id.php?ID=<?php echo $row['room_id']; ?>"><?php echo $row["room_id"]; ?></a>
+                            <td><a href="<?php if($row["room_cat"] == "รายเดือน"){ echo "room_id.php?ID=".$row['room_id']; }else if($row["room_cat"] == "รายวัน"){ echo "roomdaily_id.php?ID=".$row['room_id']; } ?>"><?php echo $row["room_id"]; ?></a>
                             </td>
                             <td><?php echo $row["room_type"]; ?></td>
                             <td>

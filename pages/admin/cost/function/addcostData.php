@@ -18,7 +18,7 @@ if($_SESSION['level'] == 'admin'){
       echo "location.href = '../../cost/addcost.php';";
       echo "</script>";
   } else {
-    $sql = "INSERT INTO cost (room_id, room_type, cost_status, date, room_cost, water_bill, elec_bill, cable_charge, total) VALUES ('$room_id', '$room_type', 'รอการชำระเงิน', '$date', '$room_price', '$water_price', '$elec_price', '$cable_price', '$total_price')";
+    $sql = "INSERT INTO cost (room_id, room_type, member_cost, cost_status, date, room_cost, water_bill, elec_bill, cable_charge, total) VALUES ('$room_id', '$room_type', 'กำลังเข้าพัก', 'รอการชำระเงิน', '$date', '$room_price', '$water_price', '$elec_price', '$cable_price', '$total_price')";
     if ($conn->query($sql) === TRUE) {
       echo "<script>";
       echo "alert('บันทึกค่าใช้จ่ายของห้อง $room_id เรียบร้อยแล้ว');";
