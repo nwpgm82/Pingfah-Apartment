@@ -5,13 +5,11 @@ if($_SESSION["level"] == "admin"){
     $id = $_REQUEST["daily_id"];
     $name = $_REQUEST["name"];
     $pic_location = "../../../images/daily/$id/$name";
-    $countCheck = mysqli_query($conn,"SELECT COUNT(payment_img) AS total FROM daily WHERE payment_img = '$name' GROUP BY payment_img HAVING COUNT(payment_img)");
-    $countTotal = mysqli_fetch_assoc($countCheck);
     function DateThai($strDate){
-        $strYear = date("Y",strtotime($strDate))+543;
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
@@ -67,9 +65,7 @@ if($_SESSION["level"] == "admin"){
                         <img src='https://pingfah-apartment.000webhostapp.com/img/logo.png' style='width:250px;height:60px;'>
                     </div>
                     <div style='background-color: #f6f4ec;width:900px;margin:0 auto;padding:16px;'>
-                        <p><strong>กรุณาโปรดอัปโหลดหลักฐานการชำระเงินค่ามัดจำห้องพักใหม่อีกครั่งเนื่องจากหลักฐานนี้เป็นเท็จ</strong></p>
-                        <p><strong>โดยสามารถอัปโหลดหลักฐานการชำระเงินค่ามัดจำห้องพักใหม่ได้ที่ <a href='localhost/Pingfah/pages/checkCode.php'>ตรวจสอบการจอง</a></strong></p>
-                        <p style='color:red;'><strong>*** โปรดวางเงินมัดจำค่าห้องเป็นจำนวน 1,000 บาท ก่อนวันที่ $payment_datebeforeEmail มิเช่นนั้นการจองห้องพักจะถูกยกเลิก ***</strong></p>
+                        <p><strong>กรุณาโปรดอัปโหลดหลักฐานการชำระเงินใหม่อีกครั้ง เนื่องจากข้อมูลเป็นเท็จ</strong></p>
                     </div>
                     <div style='background-color: #edeadb;width:900px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;'>
                         <p style='color:#000'><strong>ติดต่อสอบถาม :</strong> 098-9132002 (เจ้าของหอพัก), 093-2266753 (แม่บ้าน)</p>
@@ -91,29 +87,16 @@ if($_SESSION["level"] == "admin"){
             }
         }
     }
-    if($countTotal['total'] > 1){
-        $del = "UPDATE daily SET payment_img = NULL WHERE daily_id = $id";
-        if($conn->query($del) === TRUE){
-            sendEmail();
-            echo "<script>";
-            echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
-            echo "window.location.assign('../dailyDetail.php?daily_id=$id');";
-            echo "</script>";
-        }else{
-            echo "Error deleting record: " . $conn->error;
-        } 
+    $del = "UPDATE daily SET payment_img = NULL WHERE daily_id = $id";
+    if($conn->query($del) === TRUE && unlink($pic_location)){
+        sendEmail();
+        echo "<script>";
+        echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
+        echo "window.location.assign('../dailyDetail.php?daily_id=$id');";
+        echo "</script>";
     }else{
-        $del = "UPDATE daily SET payment_img = NULL WHERE daily_id = $id";
-        if($conn->query($del) === TRUE && unlink($pic_location)){
-            sendEmail();
-            echo "<script>";
-            echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
-            echo "window.location.assign('../dailyDetail.php?daily_id=$id');";
-            echo "</script>";
-        }else{
-            echo "Error deleting record: " . $conn->error;
-        } 
-    }
+        echo "Error deleting record: " . $conn->error;
+    } 
 }else{
     Header("Location: ../../../login.php");
 }

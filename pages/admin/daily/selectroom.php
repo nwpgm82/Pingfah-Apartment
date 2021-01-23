@@ -106,14 +106,26 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <form action="function/addSelectRoom.php?daily_id=<?php echo $daily_id; ?>" method="POST" enctype="multipart/form-data">
                         <div style="padding-top:32px;height:582px;">
-                            <h3>สำเนาเอกสาร</h3>
+                            <h3>เอกสาร</h3>
                             <div class="hr"></div>
-                            <p>สำเนาบัตรประชาชน</p>
-                            <div class="img-box" id="id_box">
-                                <img id="img_id" style="display:none;">
+                            <div class="grid-img">
+                                <div>
+                                    <p>สำเนาบัตรประชาชน</p>
+                                    <div class="img-box" id="id_box">
+                                        <img id="img_id" style="display:none;">
+                                    </div>
+                                    <h5 id="idimg_error" style="color:red;"></h5>
+                                    <input type="file" name="id_img" id="id_img">
+                                </div>
+                                <div>
+                                    <p>สำเนาบัตรประชาชน</p>
+                                    <div class="img-box" id="id_box">
+                                        <img id="img_id" style="display:none;">
+                                    </div>
+                                    <h5 id="idimg_error" style="color:red;"></h5>
+                                    <input type="file" name="id_img" id="id_img">
+                                </div>
                             </div>
-                            <h5 id="idimg_error" style="color:red;"></h5>
-                            <input type="file" name="id_img" id="id_img">
                         </div>
                         <div style="padding-top:32px;">
                             <h3>เลือกห้องที่ต้องการเข้าพัก</h3>
@@ -125,8 +137,7 @@ if($_SESSION['level'] == 'admin'){
                             <div class="grid-box">
                                 <div style="border: 1px solid rgb(131, 120, 47, 0.7);border-radius:4px;padding:16px 0;">
                                     <div style="padding:0 16px;">
-                                        <label><strong>ห้องแอร์</strong> (จำนวนที่เลือกได้ : <label
-                                                id="air_count"><?php echo $air_room; ?></label> ห้อง)</label>
+                                        <label><strong>ห้องแอร์</strong> (จำนวนที่เลือกได้ : <label id="air_count"><?php echo $air_room; ?></label> ห้อง)</label>
                                     </div>
                                     <div class="hr" style="margin:16px 0"></div>
                                     <div style="padding:0 16px;">
@@ -145,8 +156,7 @@ if($_SESSION['level'] == 'admin'){
                                 </div>
                                 <div style="border: 1px solid rgb(131, 120, 47, 0.7);border-radius:4px;padding:16px 0;">
                                     <div style="padding:0 16px;">
-                                        <label><strong>ห้องพัดลม</strong> (จำนวนที่เลือกได้ : <label
-                                                id="fan_count"><?php echo $fan_room; ?></label> ห้อง)</label>
+                                        <label><strong>ห้องพัดลม</strong> (จำนวนที่เลือกได้ : <label id="fan_count"><?php echo $fan_room; ?></label> ห้อง)</label>
                                     </div>
                                     <div class="hr" style="margin:16px 0"></div>
                                     <div style="padding:0 16px;">

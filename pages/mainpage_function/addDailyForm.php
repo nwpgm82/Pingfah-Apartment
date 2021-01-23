@@ -49,7 +49,7 @@ if(isset($_POST['accept_daily'])){
     }while($checkCode_result->num_rows > 0);
     $countRoom = mysqli_query($conn,"SELECT SUM(room_type = 'แอร์') AS airTotal, SUM(room_type = 'พัดลม') AS fanTotal FROM roomlist WHERE room_cat = 'รายวัน'");
     $roomData= mysqli_fetch_assoc($countRoom);  
-    $countDaily = mysqli_query($conn,"SELECT SUM(air_room) AS daily_airTotal, SUM(fan_room) AS daily_fanTotal FROM daily WHERE ((check_in BETWEEN '".$_SESSION["check_in"]."' AND '".$_SESSION["check_out"]."') OR (check_out BETWEEN '".$_SESSION["check_in"]."' AND '".$_SESSION["check_out"]."') OR ('".$_SESSION["check_in"]."' BETWEEN check_in AND check_out) OR ('".$_SESSION["check_out"]."' BETWEEN check_in AND check_out ))");
+    $countDaily = mysqli_query($conn,"SELECT SUM(air_room) AS daily_airTotal, SUM(fan_room) AS daily_fanTotal FROM daily WHERE ((check_in BETWEEN '".$_SESSION["check_in"]."' AND '".$_SESSION["check_out"]."') OR (check_out BETWEEN '".$_SESSION["check_in"]."' AND '".$_SESSION["check_out"]."') OR ('".$_SESSION["check_in"]."' BETWEEN check_in AND check_out) OR ('".$_SESSION["check_out"]."' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง'");
     $dailyData= mysqli_fetch_assoc($countDaily);  
     $airTotal = intval($roomData["airTotal"]) - intval($dailyData["daily_airTotal"]);
     $fanTotal = intval($roomData["fanTotal"]) - intval($dailyData["daily_fanTotal"]);
@@ -115,6 +115,7 @@ if(isset($_POST['accept_daily'])){
                             <p style='font-size:16px;color:#000'><strong>เบอร์โทรศัพท์ :</strong> $tel</p>
                             <p style='font-size:16px;color:#000'><strong>จำนวนผู้พัก :</strong> ".$_SESSION["people"]." ท่าน</p>
                             <p style='font-size:16px;color:#000'><strong>จำนวนห้องพัก : ห้องแอร์ </strong>".$_SESSION["air"]." ห้อง <strong>| ห้องพัดลม : </strong>".$_SESSION["fan"]." ห้อง</p>
+                            <p style='font-size:16px;color:#000'><strong>ราคารวม :</strong> ".ceil($_SESSION["total_price"])." บาท</p>
                             <p style='font-size:16px;color:#000'><strong>วันที่เข้าพัก :</strong> ".DateThai($_SESSION["check_in"])." <strong>ถึง</strong> ".DateThai($_SESSION["check_out"])." (".$_SESSION["night"]." คืน)</p>
                         </div>
                         <div style='padding-top:32px;'>

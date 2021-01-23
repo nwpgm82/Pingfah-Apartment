@@ -4,6 +4,8 @@ if($_SESSION["level"] == "admin"){
     include("../../../connection.php");
     $daily_id = $_REQUEST["daily_id"];
     $sql = "UPDATE daily SET daily_status = 'รอการเข้าพัก' WHERE daily_id = $daily_id";
+    $search = mysqli_query($conn,"SELECT email FROM daily WHERE daily_id = $daily_id");
+    $result_search = mysqli_fetch_assoc($search);
     ///////////////////// อีเมล ////////////////////////
     require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
     header('Content-Type: text/html; charset=utf-8');
@@ -24,7 +26,7 @@ if($_SESSION["level"] == "admin"){
 
     $sender = "Pingfah Apartment"; // ชื่อผู้ส่ง
     $email_sender = "noreply.pingfah@gmail.com"; // เมล์ผู้ส่ง 
-    $email_receiver = $row['email']; // เมล์ผู้รับ ***
+    $email_receiver = $result_search['email']; // เมล์ผู้รับ ***
 
     $subject = "ยืนยันหลักฐานการชำระเงินค่ามัดจำห้องพัก"; // หัวข้อเมล์
 

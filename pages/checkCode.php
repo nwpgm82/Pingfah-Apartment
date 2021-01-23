@@ -124,10 +124,10 @@ function DateThai($strDate)
                     <div class="hr"></div>
                     <div>
                         <div class="img-box" id="id_box">
-                            <img id="img_id" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> style="display:none;" />
+                            <img id="img_id" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> <?php if(!isset($row['payment_img'])){ echo "style='display:none;'"; }?> />
                             <?php
                             if(isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
-                            <button class="del-btn" type="button" id="del-btn1" style="margin:0;" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')">X</button>
+                            <button class="del-btn" type="button" id="del-btn1" style="margin:0;" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')"></button>
                             <?php } ?>
                         </div>
                         <h5 id="idimg_error" style="color:red;"></h5>
@@ -137,6 +137,9 @@ function DateThai($strDate)
                         <?php } ?>
                     </div>
                 </div>
+                <?php
+                if($row["daily_status"] != "ยกเลิกการจอง" && $row["daily_status"] != "เช็คเอ้าท์แล้ว" && $row["daily_status"] != "เข้าพักแล้ว"){
+                ?>
                 <div class="hr"></div>
                 <div style="display:flex;justify-content:center;">
                 <?php
@@ -144,9 +147,9 @@ function DateThai($strDate)
                 ?>
                     <button type="submit" disabled>ยืนยัน</button>
                 <?php } ?>
-                    <button type="button" class="cancel-btn"
-                        onclick="cancel_daily(<?php echo $row['daily_id']; ?>)">ยกเลิกการจองห้องพัก</button>
+                    <button type="button" class="cancel-btn" id="cancel_daily">ยกเลิกการจองห้องพัก</button>
                 </div>
+                <?php } ?>
             </form>
         </div>
         <?php 

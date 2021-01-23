@@ -137,6 +137,12 @@
     height: 86px;
 }
 
+.box .selectRoom-box .grid-img{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+}
+
 .box .selectRoom-box .grid-box{
     padding: 32px 0;
     display: grid;

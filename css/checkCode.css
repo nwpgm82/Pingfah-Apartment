@@ -192,21 +192,15 @@ body::before{
 }
 
 .box .checkCode-box .img-box .del-btn {
-    width: auto;
-    height: 40px;
-    padding: 0 16px;
-    border-radius: 4px;
-    background-color: rgb(255, 70, 70);
-    border: none;
     position: absolute;
     top: 8px;
     right: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.3s;
+    width: 40px;
+    padding: 0;
+    background-image: url(../img/tool/trash-icon.png);
+    background-color: rgb(255, 70, 70);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .box .checkCode-box .img-box .del-btn:hover{

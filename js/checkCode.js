@@ -1,7 +1,7 @@
-function searchDate(){
-    let x = document.getElementById("code").value
-    location.href = `checkCode.php?code=${x}`
-}
+// function searchDate(){
+//     let x = document.getElementById("code").value
+//     location.href = `checkCode.php?code=${x}`
+// }
 
 // function preview_image(event, pic) {
 //     console.log(pic)
@@ -20,11 +20,11 @@ function delImg(id,name) {
     }
 }
 
-function cancel_daily(id){
-    if(confirm("คุณต้องการยกเลิกการจองใช่หรือไม่ ?")){
-        location.href = `mainpage_function/cancelDaily.php?daily_id=${id}`
-    }
-}
+// function cancel_daily(id){
+//     if(confirm("คุณต้องการยกเลิกการจองใช่หรือไม่ ?")){
+//         location.href = `mainpage_function/cancelDaily.php?daily_id=${id}`
+//     }
+// }
 
 $(document).ready(function(){
     let id_img = $("#pic_idcard1")
@@ -98,6 +98,13 @@ $(document).ready(function(){
                 $("#idimg_error").html("โปรดเพิ่มรูปภาพหลักฐานการชำระเงิน")
                 event.preventDefault()
             }
+        }else{
+            event.preventDefault()
+        }
+    })
+    $("#cancel_daily").click(function(){
+        if(confirm("คุณต้องการยกเลิกการจองใช่หรือไม่ ?")){
+            location.href = `mainpage_function/cancelDaily.php?daily_id=${id}`
         }
     })
 })
