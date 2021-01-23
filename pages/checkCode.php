@@ -17,6 +17,7 @@ function DateThai($strDate)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/checkCode.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -26,9 +27,13 @@ function DateThai($strDate)
     ?>
     <div class="box">
         <div class="search">
-            <label>ค้นหาเลขที่การจอง : </label>
-            <input type="text" id="code" value="<?php echo $code; ?>">
-            <button style="margin: 0 8px;" onclick="searchDate()">ค้นหา</button>
+            <label style="padding:9px 8px 0 0">ค้นหาเลขที่การจอง : </label>
+            <div>
+               <input type="text" id="code" value="<?php echo $code; ?>"> 
+               <h5 id="code_error" style="color:red;"></h5>
+            </div>
+            
+            <button style="margin: 0 8px;" id="searchCode">ค้นหา</button>
         </div>
         <div class="hr"></div>
         <?php
@@ -114,20 +119,21 @@ function DateThai($strDate)
                 </div>
             </div>
             <form action="mainpage_function/addPayment_image.php?daily_id=<?php echo $row['daily_id']; ?>" method="POST" enctype="multipart/form-data">
-                <div style="padding-top:32px;">
+                <div style="padding-top:32px;height:659px;">
                     <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>
                     <div class="hr"></div>
                     <div>
-                        <div class="img-box">
-                            <img id="output_imagepic1" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> />
+                        <div class="img-box" id="id_box">
+                            <img id="img_id" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> style="display:none;" />
                             <?php
                             if(isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
                             <button class="del-btn" type="button" id="del-btn1" style="margin:0;" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')">X</button>
                             <?php } ?>
                         </div>
+                        <h5 id="idimg_error" style="color:red;"></h5>
                         <?php
                         if(!isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
-                        <input type="file" id="pic_idcard1" accept="image/*" style="padding-top:16px;" onchange="preview_image(event,'pic1')" name="payment_img">
+                        <input type="file" id="pic_idcard1" style="padding-top:16px;" name="payment_img">
                         <?php } ?>
                     </div>
                 </div>

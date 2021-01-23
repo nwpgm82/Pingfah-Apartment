@@ -2,7 +2,7 @@
 session_start();
 if($_SESSION["level"] == "admin"){
     include("../../connection.php");
-    $room_id = $_REQUEST["ID"];
+    $member_id = $_REQUEST["member_id"];
     function DateThai($strDate){
         $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
@@ -11,7 +11,7 @@ if($_SESSION["level"] == "admin"){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    $sql = "SELECT room_id, come_date, out_date, name_title, firstname, lastname, nickname, id_card, phone, email, pic_idcard FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
+    $sql = "SELECT room_id, come_date, out_date, name_title, firstname, lastname, nickname, id_card, phone, email, pic_idcard FROM roommember WHERE member_id = '$member_id'";
     $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
     $row = mysqli_fetch_array($result);
     if($row != null){

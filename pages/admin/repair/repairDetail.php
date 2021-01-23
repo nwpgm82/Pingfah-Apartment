@@ -88,7 +88,7 @@ if($_SESSION['level'] == 'admin'){
                         <?php if($row['repair_status'] != "ซ่อมเสร็จแล้ว"){ echo "style='display:none;'"; } ?>>
                         <div style="position:relative;">
                             <p>เวลาที่ซ่อมเสร็จ</p>
-                            <input type="text" id="success_date" value="<?php echo $row['repair_successdate']; ?>" name="success_date" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "style='background: #fafafa' disabled"; } ?>>
+                            <input type="text" id="success_date" value="<?php echo DateThai($row['repair_successdate']); ?>" name="success_date" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "style='background: #fafafa' disabled"; } ?>>
                             <h5 id="success_date_error" style="color:red;"></h5>
                         </div>
                         <div>

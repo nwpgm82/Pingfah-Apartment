@@ -160,10 +160,26 @@ if($_SESSION["level"] == "admin"){
                                 <td><img id="cat"
                                     src="<?php if($row['member_cat'] == 'รายวัน'){ echo '../../../img/tool/clock-icon.png'; }else if($row['member_cat'] == 'รายเดือน'){ echo '../../../img/tool/calendar-icon.png'; } ?>"
                                     alt="category-icon" title="<?php if($row['member_cat'] == 'รายวัน'){ echo "รายวัน"; }else if($row['member_cat'] == 'รายเดือน'){ echo "รายเดือน"; } ?>"></td>
-                                <td><?php echo $row["member_status"]; ?></td>
+                                <td>
+                                    <?php
+                                    if($row['member_status'] == "กำลังเข้าพัก"){
+                                    ?>
+                                    <div class="come">
+                                        <p><?php echo $row["member_status"]; ?></p> 
+                                    </div>
+                                    <?php
+                                    }else if($row['member_status'] == "แจ้งออกแล้ว"){
+                                    ?>
+                                    <div class="out">
+                                        <p><?php echo $row["member_status"]; ?></p>
+                                    </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </td>
                                 <td>
                                     <div class="option-grid">
-                                        <a href="memberDetail.php?member_id=<?php echo $row["member_id"];?>" title="ดูข้อมูลเพิ่มเติม"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                        <a href="<?php if($row["member_cat"] == "รายเดือน"){ echo "memberDetail.php?member_id=".$row["member_id"]; }else if($row["member_cat"] == "รายวัน"){ echo "memberDetail_daily.php?member_id=".$row["member_id"]; } ?>" title="ดูข้อมูลเพิ่มเติม"><button>ดูข้อมูลเพิ่มเติม</button></a>
                                         <button class="del-btn" id="<?php echo $row["member_id"]; ?>" title="ลบข้อมูล"></button>
                                     </div>
                                 </td>
