@@ -309,13 +309,9 @@ if($_SESSION["level"] == "admin"){
                             <div style="height:81px;padding-top:20px;display:flex;align-items:flex-start;">
                                 <label style="padding-top:8px;">จำนวนผู้พัก :</label>
                                 <div>
-                                    <input id="people" type="number" style="margin:0 8px;" min="1" max="8"
-                                        oninput="this.value = this.value > 8 ? 8 : Math.abs(this.value)"
-                                        value="<?php if(isset($people)){ echo $people; }else{ echo 1; } ?>">
+                                    <input id="people" type="text" style="margin:0 8px;" min="1" value="<?php if(isset($people)){ echo $people; }else{ echo 1; } ?>" maxlength="2">
                                     <h5 id="error-number" style="color:red;padding:4px 0 0 8px;"></h5>
                                 </div>
-
-                                <label style="padding-top:8px;">(สูงสุด : 8)</label>
                                 <button id="search_room" type="button">ค้นหา</button>
                             </div>
                         </div>
@@ -393,12 +389,19 @@ if($_SESSION["level"] == "admin"){
                                         </div>
                                         <div class="room-text">
                                             <div>
+                                                <?php
+                                                if($check2 == "daily"){
+                                                ?>
                                                 <p>รายวัน : <strong
                                                         style="color:rgb(131, 120, 47, 1);"><?php echo number_format($roomdetail['daily_price']); ?></strong>
-                                                    บาท</p>
+                                                    บาท / คืน</p>
+                                                <?php
+                                                }else if($check2 == "month"){
+                                                ?>
                                                 <p>รายเดือน : <strong
                                                         style="color:rgb(131, 120, 47, 1);"><?php echo number_format($roomdetail['price']); ?></strong>
-                                                    บาท</p>
+                                                    บาท / เดือน</p>
+                                                <?php } ?>
                                             </div>
                                             <div>
                                                 <p>จำนวนห้องพักคงเหลือ

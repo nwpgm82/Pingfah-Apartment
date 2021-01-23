@@ -326,7 +326,7 @@
     cursor: default;
 }
 
-.roomList-box .search input[type=text] {
+.roomList-box .search .roundtrip-input {
     margin: 0;
     background-image: url("../img/tool/calendar.png");
     background-repeat: no-repeat;
@@ -335,7 +335,7 @@
     cursor: pointer;
 }
 
-.roomList-box .search input[type=number] {
+.roomList-box .search input#people {
     width: 70px;
     margin: 0;
 }
@@ -380,7 +380,7 @@
 }
 
 .roomList-box .card .room-text {
-    padding-top: 8px;
+    padding-top: 16px;
     width: 100%;
     height: 118px;
     display: flex;

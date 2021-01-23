@@ -203,6 +203,11 @@ $(document).ready(function () {
         // }
     })
     $("#people").keyup(function(){
+        if (event.which !== 8 && event.which !== 0 && event.which < 48 || event.which > 57) {
+            $(this).val(function (index, value) {
+                return value.replace(/\D/g, "");
+            });
+        }
         if($("#people").val() <= 0){
             $("#people").css("border-color","red")
             $("#people").css("color","red")

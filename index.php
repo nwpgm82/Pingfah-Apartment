@@ -49,9 +49,9 @@ include('pages/connection.php');
                 <div style="display:flex;align-items:center;">
                     <label>จำนวนผู้พัก : </label>
                     <div style="position:relative;padding:0 8px;height:40px;">
-                        <input id="people" type="number" min="1" max="10" value="1" oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
+                        <input id="people" type="text" value="1" maxlength="2">
                     </div>
-                    <label style="line-height:0px">(สูงสุด : 10)</label>
+                    <label>ท่าน</label>
                 </div>
                 <button type="button" id="checkRoom">CHECK AVAILABILITY</button>
             </div>

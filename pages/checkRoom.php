@@ -55,11 +55,9 @@
                         <div style="display:flex;align-items:center;">
                             <label>จำนวนผู้พัก : </label>
                             <div style="position:relative;padding:0 8px;height:40px;">
-                                <input type="number" id="people" name="people" min="1" max="10"
-                                    value="<?php echo $people; ?>"
-                                    oninput="this.value = this.value > 10 ? 10 : Math.abs(this.value)">
+                                <input type="text" id="people" name="people" value="<?php echo $people; ?>" maxlength="2">
                             </div>
-                            <label>(สูงสุด : 10)</label>
+                            <label>ท่าน</label>
                         </div>
                     </div>
                     <button type="button" id="search">ค้นหา</button>
