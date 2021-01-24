@@ -67,7 +67,7 @@
                             <p>098-9132002</p>
                         </div>
                         <div style="padding-top:16px;">
-                            <strong><p>แม่บ้าน :</p></strong>
+                            <strong><p>พนักงาน :</p></strong>
                             <p>087-5777192</p>
                         </div>
                     </div>
