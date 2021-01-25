@@ -69,7 +69,7 @@ body::before{
     cursor: pointer;
 }
 
-.box .checkRoom #people {
+.box .checkRoom #people,.box .checkRoom #people1, .box .checkRoom #people2 {
     width: 70px;
 }
 

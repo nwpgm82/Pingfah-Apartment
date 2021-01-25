@@ -86,7 +86,7 @@ if($_SESSION['level'] == 'admin'){
                                 value="<?php echo DateThai($check_in); ?>" disabled>
                         </div>
                         <div class="check_out">
-                            <p>เช็คเอ้าท์</p>
+                            <p>เช็คเอาท์</p>
                             <input type="text" class="roundtrip-input" id="check_out" name="check_out"
                                 value="<?php echo DateThai($check_out); ?>" disabled>
                         </div>

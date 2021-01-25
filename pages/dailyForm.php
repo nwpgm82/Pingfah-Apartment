@@ -103,11 +103,11 @@
                         <input type="text" name="check_in" id="check_in" value="<?php echo DateThai($_SESSION["check_in"]); ?>" disabled>
                     </div>
                     <div class="check_out">
-                        <p>เช็คเอ้าท์</p>
+                        <p>เช็คเอาท์</p>
                         <input type="text" name="check_out" id="check_out" value="<?php echo DateThai($_SESSION["check_out"]); ?>" disabled>
                     </div>
                     <div class="night">
-                        <p>จำนวนคืนที่พัก (คืน)</p>
+                        <p>จำนวนวันที่พัก (คืน)</p>
                         <input type="text" name="night" id="night" value="<?php echo $_SESSION["night"]; ?>" disabled>
                     </div>
                     <div class="people">

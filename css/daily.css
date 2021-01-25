@@ -158,6 +158,26 @@
     background-color:rgb(216, 40, 40);
 }
 
+.daily-box .print{
+    padding: 0px 16px 0px 48px;
+    background-image: url("../img/tool/printer.png");
+    background-repeat: no-repeat;
+    background-position: 12% 50%;
+}
+
+.daily-box .un-print{
+    padding: 0px 16px 0px 48px;
+    background-color: #ddd;
+    background-image: url("../img/tool/printer.png");
+    background-repeat: no-repeat;
+    background-position: 12% 50%;
+}
+
+.daily-box .un-print:hover{
+    background-color: #ddd;
+    cursor: default;
+}
+
 .daily-box select{
     width: auto;
     height: 40px;
@@ -249,13 +269,13 @@
 }
 
 .daily-box table th:nth-child(2){
-    width: 16%;
+    width: 15%;
 }
 
 .daily-box table th:nth-child(3){
-    width: 24%;
+    width: 25%;
 }
-.daily-box table th:nth-child(4){
+/* .daily-box table th:nth-child(4){
     width: 5%;
 }
 .daily-box table th:nth-child(5){
@@ -263,17 +283,20 @@
 }
 .daily-box table th:nth-child(6){
     width: 5%;
+} */
+.daily-box table th:nth-child(4){
+    /* width: 10%; */
+    width: 12%;
 }
-.daily-box table th:nth-child(7){
+
+.daily-box table th:nth-child(5){
+    /* width: 10%; */
     width: 10%;
 }
 
-.daily-box table th:nth-child(8){
-    width: 10%;
-}
-
-.daily-box table th:nth-child(9){
-    width: 20%;
+.daily-box table th:nth-child(6){
+    /* width: 20%; */
+    width: 33%;
 }
 
 .daily-box table tr {

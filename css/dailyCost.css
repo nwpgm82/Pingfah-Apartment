@@ -158,23 +158,23 @@
 }
 
 .dailycost-box table th:nth-child(2){
-    width:15%;
+    width:8%;
 }
 
 .dailycost-box table th:nth-child(3){
-    width:15%;
-}
-
-.dailycost-box table th:nth-child(4){
-    width:20%;
-}
-
-.dailycost-box table th:nth-child(5){
     width:12%;
 }
 
+.dailycost-box table th:nth-child(4){
+    width:22%;
+}
+
+.dailycost-box table th:nth-child(5){
+    width:10%;
+}
+
 .dailycost-box table th:nth-child(6){
-    width:8%;
+    width:7%;
 }
 
 .dailycost-box table th:nth-child(7){
@@ -182,7 +182,7 @@
 }
 
 .dailycost-box table th:nth-child(8){
-    width:15%;
+    width:25%;
 }
 
 .dailycost-box table td {
@@ -239,6 +239,26 @@
 .dailycost-box table .del:hover {
     background-color: rgb(216, 40, 40);
 }
+
+.dailycost-box .print{
+    padding: 0px 16px 0px 48px;
+    background-image: url("../img/tool/printer.png");
+    background-repeat: no-repeat;
+    background-position: 12% 50%;
+}
+
+/* .dailycost-box .un-print{
+    padding: 0px 16px 0px 48px;
+    background-color: #ddd;
+    background-image: url("../img/tool/printer.png");
+    background-repeat: no-repeat;
+    background-position: 12% 50%;
+}
+
+.dailycost-box .un-print:hover{
+    background-color: #ddd;
+    cursor: default;
+} */
 
 .pagination {
     padding: 32px 0;

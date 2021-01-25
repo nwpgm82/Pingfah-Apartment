@@ -17,9 +17,9 @@ if($_SESSION['level'] == 'admin'){
         return "$strDay $strMonthThai $strYear";
     }
     if($check_in != "" && $check_out != ""){
-        $query = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in";
+        $query = "SELECT check_in ,SUM(total_price) as daily_price FROM dailycost WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in";
     }else{
-        $query = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost GROUP BY check_in";
+        $query = "SELECT check_in ,SUM(total_price) as daily_price FROM dailycost GROUP BY check_in";
     }
     
     $query_result = mysqli_query($conn, $query);
@@ -130,21 +130,22 @@ if($_SESSION['level'] == 'admin'){
                     </tr>
                     <?php
                         while($row = $result->fetch_assoc()) {
+                        $calculate = strtotime($row["check_out"]) - strtotime($row["check_in"]);
+                        $night = floor($calculate / 86400);
                     ?>
                     <tr>
                         <td><?php echo $num; ?></td>
                         <td><?php echo $row['room_id']; ?></td>
                         <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
-                        <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']); ?>
+                        <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out'])."(".$night." คืน)"; ?>
                         </td>
                         <td><?php echo $row['code']; ?></td>
                         <td><?php echo $row['total_price']; ?></td>
                         <td><button class="status-success"><?php echo $row['pay_status']; ?></button></td>
                         <td>
-                            <a
-                                href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
-                            <button type="button" class="del"
-                                onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
+                            <a href="../../receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่าเช่าห้องพัก</button></a> 
+                            <a href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
+                            <button type="button" class="del" onclick="delDailyCost(<?php echo $row['dailycost_id']; ?>)">ลบ</button>
                         </td>
                     </tr>
                     <?php $num++; } ?>

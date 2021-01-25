@@ -10,7 +10,7 @@ if($_SESSION["level"] == "admin"){
             $room_arr = explode(", ",$row["room_select"]);
         }
     }
-    $sql = "UPDATE daily SET daily_status = 'เช็คเอ้าท์แล้ว' WHERE daily_id = $id";
+    $sql = "UPDATE daily SET daily_status = 'เช็คเอาท์แล้ว' WHERE daily_id = $id";
     for($i = 0 ; $i < sizeof($room_arr) ; $i++){
         $sql2 = "UPDATE roomlist SET room_status = 'ว่าง' WHERE room_id = '$room_arr[$i]'";
         $sql3 = "UPDATE roommember SET member_status = 'แจ้งออกแล้ว' WHERE room_id = '$room_arr[$i]' AND member_status = 'กำลังเข้าพัก'";

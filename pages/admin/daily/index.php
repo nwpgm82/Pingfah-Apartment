@@ -134,7 +134,7 @@ if($_SESSION['level'] == 'admin'){
                         if($check == "come"){
                             $check_s = "เข้าพักแล้ว";
                         }else if($check == "checkout"){
-                            $check_s = "เช็คเอ้าท์แล้ว";
+                            $check_s = "เช็คเอาท์แล้ว";
                         }else if($check == "pending"){
                             $check_s = "รอการเข้าพัก";
                         }else if($check == "waiting"){
@@ -147,7 +147,7 @@ if($_SESSION['level'] == 'admin'){
                         if($check == "come"){
                             $check_s = "เข้าพักแล้ว";
                         }else if($check == "checkout"){
-                            $check_s = "เช็คเอ้าท์แล้ว";
+                            $check_s = "เช็คเอาท์แล้ว";
                         }else if($check == "pending"){
                             $check_s = "รอการเข้าพัก";
                         }else if($check == "waiting"){
@@ -194,7 +194,7 @@ if($_SESSION['level'] == 'admin'){
                             <div style="padding:32px 16px;display: flex;align-items: center;">
                                 <input type="checkbox" id="checkout"
                                     <?php if(isset($check)){ if($check == "checkout"){ echo "checked";}} ?>>
-                                <label for="scales">เช็คเอ้าท์แล้ว</label>
+                                <label for="scales">เช็คเอาท์แล้ว</label>
                             </div>
                             <div style="padding:32px 16px;display: flex;align-items: center;">
                                 <input type="checkbox" id="cancel"
@@ -211,9 +211,9 @@ if($_SESSION['level'] == 'admin'){
                                 <th>ลำดับ</th>
                                 <th>ชื่อผู้เช่า</th>
                                 <th>วันที่เข้าพัก</th>
-                                <th>จำนวน (ท่าน)</th>
+                                <!-- <th>จำนวนผู้พัก (ท่าน)</th>
                                 <th>ห้องแอร์ (ห้อง)</th>
-                                <th>ห้องพัดลม (ห้อง)</th>
+                                <th>ห้องพัดลม (ห้อง)</th> -->
                                 <th>เลขที่ในการจอง</th>
                                 <th>สถานะ</th>
                                 <th>เพิ่มเติม</th>
@@ -226,11 +226,8 @@ if($_SESSION['level'] == 'admin'){
                                     <td><?php echo $num; ?></td>
                                     <td><?php echo $row['name_title'].$row['firstname'] ." " .$row['lastname']; ?></td>
                                     <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']) ." (".$row['night']." คืน)"?></td>
-                                    <td><?php echo $row['people']; ?></td>
-                                    <td><?php echo $row['air_room']; ?></td>
-                                    <td><?php echo $row['fan_room']; ?></td>
                                     <td><?php echo $row['code']; ?></td>
-                                    <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอ้าท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอ้าท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else if($row['daily_status'] == "รอการเข้าพัก"){ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; }else{ echo "<button type='button' class='waiting-btn'>รอการยืนยัน</button>";} ?></td>
+                                    <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอาท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอาท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else if($row['daily_status'] == "รอการเข้าพัก"){ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; }else{ echo "<button type='button' class='waiting-btn'>รอการยืนยัน</button>";} ?></td>
                                     <td>
                                     <?php
                                     if($row['daily_status'] == 'รอการยืนยัน'){
@@ -244,10 +241,19 @@ if($_SESSION['level'] == 'admin'){
                                     <?php 
                                     }else if($row['daily_status'] == 'เข้าพักแล้ว'){
                                     ?>
-                                        <button type="button" class="checkout-btn" onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอ้าท์</button>
+                                        <button type="button" class="checkout-btn" onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอาท์</button>
                                     <?php 
                                     }
                                     ?>
+                                    <?php
+                                    if($row["daily_status"] != "รอการยืนยัน" && $row["daily_status"] != "ยกเลิกการจอง"){
+                                    ?>
+                                    <a href="../../receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่ามัดจำห้องพัก</button></a>
+                                    <?php 
+                                    }else{ 
+                                    ?>
+                                    <button type="button" class="un-print">ค่ามัดจำห้องพัก</button>
+                                    <?php } ?>
                                     <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button type="button">รายละเอียด</button></a>
                                     <button type="button" class="del-btn" id="<?php echo $row['daily_id']; ?>">ลบ</button>
                                     </td>

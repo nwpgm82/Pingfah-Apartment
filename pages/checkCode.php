@@ -46,6 +46,7 @@ function DateThai($strDate)
         ?>
         <div class="checkCode-box">
             <h3>รายละเอียดในการจองห้องพัก</h3>
+            <div class="hr"></div>
             <div class="grid-container">
                 <div class="name_title">
                     <p>คำนำหน้าชื่อ</p>
@@ -76,11 +77,11 @@ function DateThai($strDate)
                     <input type="text" value="<?php echo DateThai($row["check_in"]); ?>" disabled>
                 </div>
                 <div class="check_out">
-                    <p>เช็คเอ้าท์</p>
-                    <input type="text" value="<?php echo DateThai($row["check_in"]); ?>" disabled>
+                    <p>เช็คเอาท์</p>
+                    <input type="text" value="<?php echo DateThai($row["check_out"]); ?>" disabled>
                 </div>
                 <div class="night">
-                    <p>จำนวนคืนที่พัก (คืน)</p>
+                    <p>จำนวนวันที่พัก (คืน)</p>
                     <input type="text" name="night" id="night" value="<?php echo $row["night"]; ?>" disabled>
                 </div>
                 <div class="people">
@@ -120,21 +121,52 @@ function DateThai($strDate)
             </div>
             <form action="mainpage_function/addPayment_image.php?daily_id=<?php echo $row['daily_id']; ?>" method="POST" enctype="multipart/form-data">
                 <div style="padding-top:32px;height:659px;">
-                    <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>
-                    <div class="hr"></div>
-                    <div>
-                        <div class="img-box" id="id_box">
-                            <img id="img_id" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> <?php if(!isset($row['payment_img'])){ echo "style='display:none;'"; }?> />
+                    <div class="grid-box">
+                        <div style="border:1px solid rgb(131, 120, 47, 0.7);border-radius:4px;padding:16px;">
+                            <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>
+                            <div class="hr"></div>
+                            <div class="img-box" id="id_box">
+                                <img id="img_id" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> <?php if(!isset($row['payment_img'])){ echo "style='display:none;'"; }?> />
+                                <?php
+                                if(isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
+                                <button class="del-btn" type="button" id="del-btn1" style="margin:0;" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')"></button>
+                                <?php } ?>
+                            </div>
+                            <h5 id="idimg_error" style="color:red;"></h5>
                             <?php
-                            if(isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
-                            <button class="del-btn" type="button" id="del-btn1" style="margin:0;" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')"></button>
+                            if(!isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
+                            <input type="file" id="pic_idcard1" style="padding-top:16px;" name="payment_img">
                             <?php } ?>
                         </div>
-                        <h5 id="idimg_error" style="color:red;"></h5>
-                        <?php
-                        if(!isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
-                        <input type="file" id="pic_idcard1" style="padding-top:16px;" name="payment_img">
-                        <?php } ?>
+                        <div style="border:1px solid rgb(131, 120, 47, 0.7);border-radius:4px;padding:16px;">
+                            <h3>ดาวน์โหลดหลักฐานใบเสร็จ</h3>
+                            <div class="hr"></div>
+                            <div>
+                                <ul>
+                                    <?php
+                                    if($row["daily_status"] != "รอการยืนยัน"){
+                                    ?>
+                                    <li>
+                                        <div>
+                                            <p>ใบเสร็จค่ามัดจำห้องพัก</p>
+                                            <a href="receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank" class="print"></a>
+                                        </div> 
+                                    </li>
+                                    <?php
+                                    if($row["daily_status"] != "รอการยืนยัน" && $row["daily_status"] != "รอการเข้าพัก"){
+                                    ?>
+                                    <li>
+                                        <div>
+                                            <p>ใบเสร็จค่าห้องพัก</p>
+                                            <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank" class="print"></a>
+                                        </div>
+                                    </li>
+                                    <?php
+                                    }}
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <?php
