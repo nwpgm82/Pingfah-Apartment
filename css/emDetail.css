@@ -251,6 +251,10 @@
     cursor: pointer;
 }
 
+.emDetail-box input#come_date:disabled,.emDetail-box input#birthday:disabled{
+    cursor: default;
+}
+
 .emDetail-box textarea {
     margin-top: 8px;
     width: 100%;

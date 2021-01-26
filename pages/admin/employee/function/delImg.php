@@ -11,11 +11,10 @@ if($_SESSION['level'] == 'admin'){
     $picData = $row["$pic"];
   }
   $sql = "UPDATE employee SET $pic = NULL WHERE username = '$username' ";
-  $pic_location = "../../../images/employee/$username/$picData";
-  if ($conn->query($sql) === TRUE && unlink($pic_location) === TRUE) {
+  if ($conn->query($sql) === TRUE) {
     echo "<script>";
     echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
-    echo "window.location.assign('../emDetail.php?username=$username'); ";
+    echo "window.history.back();";
     echo "</script>";
   } else {
     echo "Error updating record: " . $conn->error;

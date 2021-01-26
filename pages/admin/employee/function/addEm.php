@@ -36,12 +36,12 @@ if($_SESSION['level'] == 'admin'){
     $target1 = "../../../images/employee/$id_card/".basename($pic_idcard);
     $target2 = "../../../images/employee/$id_card/".basename($pic_home);
     $target3 = "../../../images/employee/$id_card/".basename($profile_img);
-    $checkData = "SELECT * FROM employee WHERE id_card = '$id_card'";
+    $checkData = "SELECT * FROM employee WHERE (id_card = '$id_card' OR email ='$email') AND employee_status = 'กำลังทำงาน'";
     $result = $conn->query($checkData);
     if ($result->num_rows > 0) {
         echo "<script>";
         echo "alert('ไม่สามารถเพิ่มพนักงานได้เนื่องจากมีพนักงานท่านนี้อยู่แล้ว');";
-        echo "window.history.back();";
+        echo "location.href = '../addemployee.php'";
         echo "</script>";
     }else{
         if(!is_dir($main_target)){
@@ -50,8 +50,9 @@ if($_SESSION['level'] == 'admin'){
         mkdir($folder_target);
         $sql = "INSERT INTO employee (come_date, employee_status, title_name, firstname, lastname, nickname, position, id_card, tel, email, birthday, age, race, nationality, address, pic_idcard, pic_home, profile_img) VALUES ('$come','กำลังทำงาน','$title_name','$firstname','$lastname','$nickname','$position','$id_card','$tel','$email','$birthday','$age','$race','$nat','$add','$pic_idcard','$pic_home','$profile_img')";
         $addUser = "INSERT INTO login (username, name, password, email, level) VALUES ('$username', '$firstname', MD5('$password'), '$email', 'employee')";
+        $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน', 'เพิ่มข้อมูลพนักงาน (".$title_name.$firstname." ".$lastname.")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
         if(move_uploaded_file($_FILES['id_img']['tmp_name'], $target1) && move_uploaded_file($_FILES['home_img']['tmp_name'], $target2) && move_uploaded_file($_FILES['profile_img']['tmp_name'], $target3)){
-            if ($conn->query($sql) === TRUE && $conn->query($addUser) === TRUE) {
+            if ($conn->query($sql) === TRUE && $conn->query($addUser) === TRUE && $conn->query($addLogs)) {
                 echo "<script>";
                 echo "alert('เพิ่มข้อมูลพนักงานสำเร็จ');";
                 echo "location.href = '../index.php';";

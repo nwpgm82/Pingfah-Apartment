@@ -97,7 +97,7 @@ if($_SESSION["level"] == "admin"){
                                 <?php } ?>
                                 <div class="<?php if($employee_status == "กำลังทำงาน"){ echo "out"; }else if($employee_status == "ลาออก"){ echo "status"; } ?>">
                                     <p>สถานะการทำงาน</p>
-                                    <input type="text" value="<?php echo $employee_status; ?>" disabled>
+                                    <input type="text" id="employee_status" value="<?php echo $employee_status; ?>" disabled>
                                 </div>
                                 <div class="title_name">
                                     <p>คำนำหน้าชื่อ</p>
@@ -209,7 +209,7 @@ if($_SESSION["level"] == "admin"){
                                         <?php
                                         if($pic_idcard == ""){
                                         ?>
-                                        <input type="file" name="id_img" id="id_img">
+                                        <input type="file" name="id_img" id="id_img" disabled>
                                         <?php } ?>
                                     </div>
                                     <div>
@@ -225,7 +225,7 @@ if($_SESSION["level"] == "admin"){
                                         <?php
                                         if($pic_home == ""){
                                         ?>
-                                        <input type="file" name="home_img" id="home_img">
+                                        <input type="file" name="home_img" id="home_img" disabled>
                                         <?php } ?>
                                     </div>
                                 </div>

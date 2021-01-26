@@ -379,9 +379,9 @@ $(document).ready(function(){
         $("#title_name").prop("disabled", false)
         let inputs = $("input")
         inputs.each(function (i) {
-            if (i == 0) {
+            if (i == 0 || $(this).attr("id") == "employee_status") {
                 return true
-            } else if ($(this).attr("id") == "age") {
+            }else if ($(this).attr("id") == "age") {
                 $(this).prop("disabled", false)
                 $(this).prop("readonly", true)
             } else {
