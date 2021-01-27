@@ -211,15 +211,36 @@ $(document).ready(function () {
         }
     })
     $(".bg-close").click(function () {
-        $(".topbar").animate({
-            paddingLeft: 0,
-        }, 400)
-        $(".sidebar").animate({
-            left: -230
-        }, 400)
-        $(".box").animate({
-            paddingLeft: 0
-        }, 400)
-        $(".bg-close").fadeOut(400)
+        if(window.matchMedia('(max-width: 767px)').matches){
+            $(".topbar").animate({
+                paddingLeft: 0,
+            }, 400)
+            $(".sidebar").animate({
+                left: -230,
+                width: 0
+            }, 400)
+            $(".box").animate({
+                paddingLeft: 0
+            }, 400)
+            // $(".sidebar img").css("width","")
+            // $(".sidebar img").css("height","")
+            $("#topbar-page").fadeIn(400)
+            $(".profile").fadeIn(400)
+            $(".bg-close").fadeOut(400)
+        }else{
+            $(".topbar").animate({
+                paddingLeft: 0,
+            }, 400)
+            $(".sidebar").animate({
+                left: -230
+            }, 400)
+            $(".box").animate({
+                paddingLeft: 0
+            }, 400)
+            // $(".sidebar img").css("width","")
+            // $(".sidebar img").css("height","")
+            $(".bg-close").fadeOut(400)
+        }
+        
     })
 })
