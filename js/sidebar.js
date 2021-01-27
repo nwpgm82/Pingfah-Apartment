@@ -62,15 +62,15 @@ function menubar() {
         employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         employee.style.color = "#fff"
         header.innerHTML = "จัดการพนักงาน"
-    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/addemployee.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/addemployee.php") {
         employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         employee.style.color = "#fff"
         header.innerHTML = "เพิ่มพนักงาน"
-    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emHistory.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emHistory.php") {
         employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         employee.style.color = "#fff"
         header.innerHTML = "ประวัติการเข้าทำงานของพนักงาน"
-    }else if(localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emDetail.php"){
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emDetail.php") {
         employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         employee.style.color = "#fff"
         header.innerHTML = "รายละเอียดข้อมูลพนักงาน"
@@ -79,7 +79,7 @@ function menubar() {
         roomdetail.style.color = "#fff"
         header.innerHTML = "ประเภทห้องพัก"
         document.querySelector("#dropdown").style.display = "block"
-    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/gallery/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/gallery/index.php") {
         gallery.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         gallery.style.color = "#fff"
         header.innerHTML = "แกลลอรี่"
@@ -88,15 +88,15 @@ function menubar() {
         roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         roomlist.style.color = "#fff"
         header.innerHTML = "รายการห้องพัก"
-    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/roomHistory.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/roomHistory.php") {
         roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         roomlist.style.color = "#fff"
         header.innerHTML = "ประวัติการเข้าพัก"
-    }else if(localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/room_id.php"){
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/room_id.php") {
         roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         roomlist.style.color = "#fff"
         header.innerHTML = "รายละเอียดข้อมูลผู้เข้าพัก"
-    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/daily/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/daily/dailyDetail.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/daily/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/daily/dailyDetail.php") {
         daily.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         daily.style.color = "#fff"
         header.innerHTML = "รายการเช่ารายวัน"
@@ -133,3 +133,67 @@ function menubar() {
         header.innerHTML = "รายการร้องเรียน"
     }
 }
+
+$(document).ready(function () {
+    $(".burger").click(function () {
+        if(window.matchMedia('(max-width: 767px)').matches){
+            if ($(".sidebar").css("left") == "-230px") {
+                $(".topbar").animate({
+                    paddingLeft: 230,
+                }, 400)
+                $(".sidebar").animate({
+                    left: 0
+                }, 400)
+                $("#topbar-page").fadeOut(400)
+                $(".profile").fadeOut(400)
+                $(".bg-close").fadeIn(500)
+            } else {
+                $(".topbar").animate({
+                    paddingLeft: 0,
+                }, 400)
+                $(".sidebar").animate({
+                    left: -230
+                }, 400)
+                $(".box").animate({
+                    paddingLeft: 0
+                }, 400)
+                $("#topbar-page").fadeIn(400)
+                $(".profile").fadeIn(400)
+                $(".bg-close").fadeOut(400)
+            }
+        }else{
+            if ($(".sidebar").css("left") == "-230px") {
+                $(".topbar").animate({
+                    paddingLeft: 230,
+                }, 400)
+                $(".sidebar").animate({
+                    left: 0
+                }, 400)
+                $(".bg-close").fadeIn(500)
+            } else {
+                $(".topbar").animate({
+                    paddingLeft: 0,
+                }, 400)
+                $(".sidebar").animate({
+                    left: -230
+                }, 400)
+                $(".box").animate({
+                    paddingLeft: 0
+                }, 400)
+                $(".bg-close").fadeOut(400)
+            }
+        }
+    })
+    $(".bg-close").click(function () {
+        $(".topbar").animate({
+            paddingLeft: 0,
+        }, 400)
+        $(".sidebar").animate({
+            left: -230
+        }, 400)
+        $(".box").animate({
+            paddingLeft: 0
+        }, 400)
+        $(".bg-close").fadeOut(400)
+    })
+})

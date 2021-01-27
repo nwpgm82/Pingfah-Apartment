@@ -131,6 +131,16 @@ body {
     text-decoration: none;
 }
 
+.topbar h3{
+    text-overflow: ellipsis;
+}
+
+.topbar .topbar-flex{
+    display: flex;
+    justify-content: space-between;
+    width: 180px;
+}
+
 .topbar .profile {
     display: grid;
     grid-template-columns: 60px auto;
@@ -168,17 +178,71 @@ body {
     padding: 8px;
 }
 
-@media screen and (max-width: 1199px) {
-    .sidebar .logo_box {
-        width: 100%;
-    }
+.topbar .burger{
+    display: none;
+    width: 24px;
+    height: 24px;
+}
 
-    .sidebar .logo {
-        width: 100%;
+.topbar .burger div{
+    margin: 4px 0;
+    width: 100%;
+    height: 4px;
+    background-color: #000;
+}
+
+.bg-close{
+    width: 100%;
+    min-height: 100vh;
+    padding: 80px 0 0 230px;
+    background-color: rgb(97, 97, 97);
+    opacity: 0.2;
+    position: fixed;
+    display: none;
+}
+
+@media screen and (max-width: 1599px) {
+    .sidebar{
+        width: calc(100% - 1340px);
     }
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 1569px){
+    .sidebar{
+        width: 230px;
+    }
+}
+
+@media screen and (max-width: 1449px){
+    .sidebar{
+        /* position: absolute; */
+        left: -230px;
+    }
+
+    .topbar{
+        padding-left: 0px;
+    }
+
+    .topbar .burger{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .topbar .profile{
+        display: flex;
+        align-items: center;
+        width: auto;
+        padding: 0 16px;
+    }
+    .topbar .profile p{
+        display: none;
+    }
+}
+
+
+
+/* @media screen and (max-width: 1023px) {
     .sidebar {
         width: 200px;
     }
@@ -186,4 +250,4 @@ body {
     .topbar {
         padding-left: 200px;
     }
-}
+} */

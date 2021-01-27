@@ -10,11 +10,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Pingfah/css/navbar.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/Pingfah/js/sidebar.js"></script>
     <title>Pingfah</title>
 </head>
 
 <body onload="menubar()">
-    <div >
+    <div>
         <div class="sidebar">
             <div class="logo_box">
                 <img src="/Pingfah/img/logo.png" alt="logo" class="logo">
@@ -83,8 +85,15 @@
             </ul>
         </div>
         <div class="topbar">
-            <div style="padding:16px 24px">
-                <h3 id="topbar-page"></h3>
+            <div id="topbar-box" style="padding:16px 24px">
+                <div class="topbar-flex">
+                    <div class="burger">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <h3 id="topbar-page"></h3>
+                </div>  
             </div>
             <div class="profile">
                 <img src="https://sites.google.com/site/rabbiteieicom/_/rsrc/1467891358746/home/image8.jpg"
@@ -92,12 +101,8 @@
                 <p class="profile-text">ยินดีต้อนรับ <?php echo $_SESSION['name']; ?></p>
             </div>
         </div>
+        <div class="bg-close"></div>
     </div>
-
-
-
-    <!--- JavaScript Field --->
-    <script src="/Pingfah/js/sidebar.js"></script>
 </body>
 
 </html>

@@ -35,7 +35,7 @@ if($_SESSION['level'] == 'admin'){
 
 <body>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="employee-box">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <h3>รายชื่อพนักงาน</h3>
@@ -45,7 +45,7 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                 </div>
                 <div class="hr"></div>
-                <div style="height:86px;">
+                <div id="search-box" style="height:86px;">
                     <div class="search">
                         <div style="padding-right:8px;">
                             <p>ชื่อ</p>
@@ -62,7 +62,8 @@ if($_SESSION['level'] == 'admin'){
                         if(isset($firstname) || isset($lastname)){
                         ?>
                         <div style="padding:0 16px;">
-                            <a href="index.php"><button type="button" class="cancel-sort">แสดงรายชื่อพนักงานทั้งหมด</button></a>
+                            <a href="index.php"><button type="button"
+                                    class="cancel-sort">แสดงรายชื่อพนักงานทั้งหมด</button></a>
                         </div>
                         <?php } ?>
                     </div>
@@ -100,48 +101,48 @@ if($_SESSION['level'] == 'admin'){
                     $result = $conn->query($sql);  
                     if ($result->num_rows > 0) {
                     ?>
-                    <table>
-                        <tr>
-                            <th>ลำดับ</th>
-                            <th>ชื่อพนักงาน</th>
-                            <th>ตำแหน่ง</th>
-                            <th>เบอร์โทรศัพท์</th>
-                            <th>อีเมล</th>
-                            <th>เพิ่มเติม</th>
-                        </tr>
-                        <?php while($row = $result->fetch_assoc()) { ?>
-                        <tr>
-                            <td>
-                                <div style="display:flex;justify-content:center;">
-                                    <?php echo $num; ?>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="grid">
-                                    <img src="../../images/employee/<?php echo $row['id_card']; ?>/<?php echo $row["profile_img"]; ?>"
-                                        alt="">
-                                    <p><?php echo $row["firstname"]; ?> <?php echo $row["lastname"]; ?></p>
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <p><?php if($row["position"] == "employee"){ echo "พนักงาน"; }else{ echo $row["position"]; } ?>
-                                    </p>
-                                </div>
-                            </td>
-                            <td><?php echo textFormat($row["tel"],"___-_______"); ?></td>
-                            <td><?php echo $row["email"]; ?></td>
-                            <td>
-                                <div class="grid-btn">
-                                    <a href="../employee/emDetail.php?employee_id=<?php echo $row['employee_id']; ?>"><button
-                                            type="button" class="more-btn" title="แสดงข้อมูลเพิ่มเติม">แสดงข้อมูลเพิ่มเติม</button></a>
-                                    <button type="button" class="del-btn"
-                                        id="<?php echo $row["employee_id"]; ?>" title="ลบข้อมูล">ลบ</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php $num++; } ?>
-                    </table>
+                    <div style="overflow-x: auto;overflow-y:hidden;">
+                        <table>
+                            <tr>
+                                <th>ลำดับ</th>
+                                <th>ชื่อพนักงาน</th>
+                                <th>ตำแหน่ง</th>
+                                <th>เบอร์โทรศัพท์</th>
+                                <th>อีเมล</th>
+                                <th>เพิ่มเติม</th>
+                            </tr>
+                            <?php while($row = $result->fetch_assoc()) { ?>
+                            <tr>
+                                <td>
+                                    <div style="display:flex;justify-content:center;">
+                                        <?php echo $num; ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="grid">
+                                        <img src="../../images/employee/<?php echo $row['id_card']; ?>/<?php echo $row["profile_img"]; ?>"
+                                            alt="">
+                                        <p><?php echo $row["firstname"]; ?> <?php echo $row["lastname"]; ?></p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p><?php if($row["position"] == "employee"){ echo "พนักงาน"; }else{ echo $row["position"]; } ?>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td><?php echo textFormat($row["tel"],"___-_______"); ?></td>
+                                <td><?php echo $row["email"]; ?></td>
+                                <td>
+                                    <div class="grid-btn">
+                                        <a href="../employee/emDetail.php?employee_id=<?php echo $row['employee_id']; ?>"><button type="button" class="more-btn" title="แสดงข้อมูลเพิ่มเติม">แสดงข้อมูลเพิ่มเติม</button></a>
+                                        <button type="button" class="del-btn" id="<?php echo $row["employee_id"]; ?>" title="ลบข้อมูล">ลบ</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php $num++; } ?>
+                        </table>
+                    </div>
                     <?php
                     $sql2 = "SELECT * FROM employee";
                     $query2 = mysqli_query($conn, $sql2);
