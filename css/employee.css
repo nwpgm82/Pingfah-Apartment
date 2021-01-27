@@ -70,6 +70,10 @@
     transition: 0.3s;
 }
 
+.employee-box .search a{
+    height: 40px !important;
+}
+
 .employee-box table{
     margin-top: 24px;
     width: 100%;
@@ -252,7 +256,7 @@
     }
 
     .employee-box .search div{
-        padding-right: 0 !important;
+        padding: 0 !important;
     }
 
     input:placeholder-shown{
@@ -267,9 +271,5 @@
 
     .employee-box{
         padding: 24px 16px;
-    }
-
-    #topbar-box{
-        padding: 16px 16px !important;
     }
 }

@@ -2,7 +2,7 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
+    
     function textFormat( $text = '', $pattern = '', $ex = '' ) {
         $cid = ( $text == '' ) ? '0000000000000' : $text;
         $pattern = ( $pattern == '' ) ? '_-____-_____-__-_' : $pattern;
@@ -28,12 +28,15 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/employee.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../../../js/admin/employee.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
+    <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
         <div id="box-padding" style="padding:24px;">
             <div class="employee-box">
@@ -63,7 +66,7 @@ if($_SESSION['level'] == 'admin'){
                         ?>
                         <div style="padding:0 16px;">
                             <a href="index.php"><button type="button"
-                                    class="cancel-sort">แสดงรายชื่อพนักงานทั้งหมด</button></a>
+                                    class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
                         </div>
                         <?php } ?>
                     </div>

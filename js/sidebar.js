@@ -54,18 +54,37 @@ function menubar() {
     localStorage.setItem("i", window.location.pathname)
     localStorage.getItem("i")
     console.log(localStorage.getItem("i"))
+    
+}
+
+$(document).ready(function () {
+    let main = $("#main")
+    let employee = $("#employee")
+    let roomdetail = $("#roomdetail")
+    let gallery = $("#gallery")
+    let roomlist = $("#roomlist")
+    let daily = $("#daily")
+    let dailycost = $("#dailycost")
+    let cost = $("#cost")
+    let repair_report = $("#repair_report")
+    let repair = $("#repair")
+    let package = $("#package")
+    let rule = $("#rule")
+    let appeal = $("#appeal")
+    let header = $("#topbar-page")
+    localStorage.setItem("i", window.location.pathname)
     if (localStorage.getItem("i") == "/Pingfah/pages/admin/index.php") {
-        main.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        main.style.color = "#fff"
-        header.innerHTML = "หน้าหลัก"
+        main.css("background-color", "rgba(131, 120, 47, 0.7)")
+        main.css("color", "#fff")
+        header.html("หน้าหลัก")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/index.php") {
-        employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        employee.style.color = "#fff"
-        header.innerHTML = "จัดการพนักงาน"
+        employee.css("background-color", "rgba(131, 120, 47, 0.7)")
+        employee.css("color", "#fff")
+        header.html("จัดการพนักงาน")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/addemployee.php") {
-        employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        employee.style.color = "#fff"
-        header.innerHTML = "เพิ่มพนักงาน"
+        employee.css("background-color", "rgba(131, 120, 47, 0.7)")
+        employee.css("color", "#fff")
+        header.html("เพิ่มพนักงาน")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emHistory.php") {
         employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         employee.style.color = "#fff"
@@ -132,31 +151,34 @@ function menubar() {
         appeal.style.color = "#fff"
         header.innerHTML = "รายการร้องเรียน"
     }
-}
-
-$(document).ready(function () {
     $(".burger").click(function () {
         if(window.matchMedia('(max-width: 767px)').matches){
             if ($(".sidebar").css("left") == "-230px") {
                 $(".topbar").animate({
-                    paddingLeft: 230,
+                    paddingLeft: "80%",
                 }, 400)
                 $(".sidebar").animate({
-                    left: 0
+                    left: 0,
+                    width: "80%"
                 }, 400)
+                // $(".sidebar img").css("width","244px")
+                // $(".sidebar img").css("height","80px")
                 $("#topbar-page").fadeOut(400)
                 $(".profile").fadeOut(400)
-                $(".bg-close").fadeIn(500)
+                $(".bg-close").fadeIn(400)
             } else {
                 $(".topbar").animate({
                     paddingLeft: 0,
                 }, 400)
                 $(".sidebar").animate({
-                    left: -230
+                    left: -230,
+                    width: 0
                 }, 400)
                 $(".box").animate({
                     paddingLeft: 0
                 }, 400)
+                // $(".sidebar img").css("width","")
+                // $(".sidebar img").css("height","")
                 $("#topbar-page").fadeIn(400)
                 $(".profile").fadeIn(400)
                 $(".bg-close").fadeOut(400)
@@ -169,7 +191,9 @@ $(document).ready(function () {
                 $(".sidebar").animate({
                     left: 0
                 }, 400)
-                $(".bg-close").fadeIn(500)
+                // $(".sidebar img").css("width","244px")
+                // $(".sidebar img").css("height","80px")
+                $(".bg-close").fadeIn(400)
             } else {
                 $(".topbar").animate({
                     paddingLeft: 0,
@@ -180,6 +204,8 @@ $(document).ready(function () {
                 $(".box").animate({
                     paddingLeft: 0
                 }, 400)
+                // $(".sidebar img").css("width","")
+                // $(".sidebar img").css("height","")
                 $(".bg-close").fadeOut(400)
             }
         }

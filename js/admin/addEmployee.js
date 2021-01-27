@@ -232,13 +232,15 @@ $(document).ready(function(){
         if (id_img.val() == "") {
             $("#id_box").css("border-color", "red")
             $("#idimg_error").html("โปรดเพิ่มรูปภาพสำเนาบัตรประชาชน")
+            $("#img_id").hide()
         } else if (isImage(id_img.val()) == false) {
             $("#id_box").css("border-color", "red")
-            $("#idimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 1 MB เท่านั้น")
+            $("#idimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 5 MB เท่านั้น")
             id_img.val("")
+            $("#img_id").hide()
         } else {
             if (this.files && this.files[0]) {
-                if (this.files[0].size < 1048576) {
+                if (this.files[0].size < 5242880) {
                     $("#img_id").show()
                     var reader = new FileReader();
                     reader.onload = function (e) {
@@ -249,8 +251,9 @@ $(document).ready(function(){
                     $("#idimg_error").html("")
                 } else {
                     $("#id_box").css("border-color", "red")
-                    $("#idimg_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 1 MB)")
+                    $("#idimg_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 5 MB)")
                     id_img.val("")
+                    $("#img_id").hide()
                 }
             }
         }
@@ -259,13 +262,15 @@ $(document).ready(function(){
         if (home_img.val() == "") {
             $("#home_box").css("border-color", "red")
             $("#homeimg_error").html("โปรดเพิ่มรูปภาพสำเนาทะเบียนบ้าน")
+            $("#img_home").hide()
         } else if (isImage(home_img.val()) == false) {
             $("#home_box").css("border-color", "red")
-            $("#homeimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 1 MB เท่านั้น")
+            $("#homeimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 5 MB เท่านั้น")
             home_img.val("")
+            $("#img_home").hide()
         } else {
             if (this.files && this.files[0]) {
-                if (this.files[0].size < 1048576) {
+                if (this.files[0].size < 5242880) {
                     $("#img_home").show()
                     var reader = new FileReader();
                     reader.onload = function (e) {
@@ -276,8 +281,9 @@ $(document).ready(function(){
                     $("#homeimg_error").html("")
                 }else{
                     $("#home_box").css("border-color", "red")
-                    $("#homeimg_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 1 MB)")
+                    $("#homeimg_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 5 MB)")
                     home_img.val("")
+                    $("#img_home").hide()
                 }
             }
         }
@@ -286,13 +292,16 @@ $(document).ready(function(){
         if (profile_img.val() == "") {
             $("#profile_box").css("border-color", "red")
             $("#profileimg_error").html("โปรดเพิ่มรูปภาพประจำตัว")
+            $("#img_profile").hide()
         } else if (isImage(profile_img.val()) == false) {
             $("#profile_box").css("border-color", "red")
-            $("#profileimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 1 MB เท่านั้น")
+            $("#profileimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 5 MB เท่านั้น")
             profile_img.val("")
+            console.log(false)
+            $("#img_profile").hide()
         } else {
             if (this.files && this.files[0]) {
-                if (this.files[0].size < 1048576) {
+                if (this.files[0].size < 5242880) {
                     $("#img_profile").show()
                     var reader = new FileReader();
                     reader.onload = function (e) {
@@ -303,8 +312,9 @@ $(document).ready(function(){
                     $("#profileimg_error").html("")
                 } else {
                     $("#profile_box").css("border-color", "red")
-                    $("#profileimg_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 1 MB)")
+                    $("#profileimg_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 5 MB)")
                     profile_img.val("")
+                    $("#img_profile").hide()
                 }
             }
         }

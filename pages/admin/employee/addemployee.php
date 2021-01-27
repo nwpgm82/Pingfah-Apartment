@@ -10,18 +10,20 @@ if($_SESSION["level"] == "admin"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/addEmployee.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/addEmployee.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
     <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="addEmployee-box">
                 <h3>ข้อมูลพนักงาน</h3>
                 <div class="hr"></div>
@@ -110,12 +112,12 @@ if($_SESSION["level"] == "admin"){
                                     </select>
                                 </div>
                             </div>
-                            <div style="padding-top:16px;height:146px;">
+                            <div id="address-box" style="padding-top:16px;height:146px;">
                                 <p>ที่อยู่</p>
                                 <textarea name="address" id="address" placeholder="ที่อยู่"></textarea>
                                 <h5 id="ad_error" style="color:red;"></h5>
                             </div>
-                            <div style="padding-top:32px;">
+                            <div id="copy-box" style="padding-top:32px;">
                                 <h3>สำเนาเอกสาร</h3>
                                 <div class="hr"></div>
                                 <div class="img-grid">
