@@ -25,18 +25,20 @@ if($_SESSION["level"] == "admin"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/emDetail.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/emDetail.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
     <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="emDetail-box">
                 <form action="function/action.php?employee_id=<?php echo $id; ?>" method="POST"
                     enctype="multipart/form-data">
@@ -63,21 +65,10 @@ if($_SESSION["level"] == "admin"){
                     <div class="form-grid">
                         <div>
                             <div class="profile-box" id="profile_box">
-                                <img <?php if($profile_img != ""){ echo "src='../../images/employee/$id_card/$profile_img'"; }?>
-                                    id="img_profile" <?php if($profile_img == ""){ echo "style='display:none;'"; } ?>>
-                                <?php
-                                if($profile_img != ""){
-                                ?>
-                                <button type="submit" id="del-profileimg" class="delimg-btn" name="del-profileimg"
-                                    style="display:none;"></button>
-                                <?php } ?>
+                                <img <?php if($profile_img != ""){ echo "src='../../images/employee/$id_card/$profile_img'"; }?> id="img_profile" <?php if($profile_img == ""){ echo "style='display:none;'"; } ?>>
                             </div>
                             <h5 id="profileimg_error" style="color:red;"></h5>
-                            <?php
-                            if($profile_img == ""){
-                            ?>
-                            <input type="file" name="profile_img" id="profile_img">
-                            <?php } ?>
+                            <input type="file" name="profile_img" id="profile_img" disabled>
                         </div>
                         <div>
                             <div class="grid-container">
@@ -87,15 +78,11 @@ if($_SESSION["level"] == "admin"){
                                         value="<?php echo DateThai($come_date); ?>" disabled>
                                     <h5 id="come_error" style="color:red;"></h5>
                                 </div>
-                                <?php
-                                if($employee_status == "ลาออก"){
-                                ?>
                                 <div class="out">
                                     <p>วันที่ลาออก</p>
-                                    <input type="text" value="<?php echo DateThai($out_date); ?>" disabled>
+                                    <input type="text" id="out_date" value="<?php if(isset($out_date)){ echo DateThai($out_date); } ?>" disabled>
                                 </div>
-                                <?php } ?>
-                                <div class="<?php if($employee_status == "กำลังทำงาน"){ echo "out"; }else if($employee_status == "ลาออก"){ echo "status"; } ?>">
+                                <div class="status">
                                     <p>สถานะการทำงาน</p>
                                     <input type="text" id="employee_status" value="<?php echo $employee_status; ?>" disabled>
                                 </div>
@@ -182,51 +169,31 @@ if($_SESSION["level"] == "admin"){
                                     </select>
                                 </div>
                             </div>
-                            <div style="padding-top:16px;height:146px;">
+                            <div id="address-box" style="padding-top:16px;height:146px;">
                                 <p>ที่อยู่</p>
                                 <textarea name="address" id="address" placeholder="ที่อยู่"
                                     disabled><?php echo $address; ?></textarea>
                                 <h5 id="ad_error" style="color:red;"></h5>
                             </div>
-                            <div style="padding-top:32px;">
+                            <div id="copy-box" style="padding-top:32px;">
                                 <h3>สำเนาเอกสาร</h3>
                                 <div class="hr"></div>
                                 <div class="img-grid">
                                     <div>
                                         <p>สำเนาบัตรประชาชน</p>
                                         <div class="img-box" id="id_box">
-                                            <img <?php if($pic_idcard != ""){ echo "src='../../images/employee/$id_card/$pic_idcard'"; } ?>
-                                                id="img_id"
-                                                <?php if($pic_idcard == ""){ echo "style='display:none;'"; } ?>>
-                                            <?php
-                                            if($pic_idcard != ""){
-                                            ?>
-                                            <button type="submit" id="del-idimg" class="delimg-btn" name="del-idimg"
-                                                style="display:none;"></button>
-                                            <?php } ?>
+                                            <img <?php if($pic_idcard != ""){ echo "src='../../images/employee/$id_card/$pic_idcard'"; } ?> id="img_id" <?php if($pic_idcard == ""){ echo "style='display:none;'"; } ?>>
                                         </div>
                                         <h5 id="idimg_error" style="color:red;"></h5>
-                                        <?php
-                                        if($pic_idcard == ""){
-                                        ?>
                                         <input type="file" name="id_img" id="id_img" disabled>
-                                        <?php } ?>
                                     </div>
                                     <div>
                                         <p>สำเนาทะเบียนบ้าน</p>
                                         <div class="img-box" id="home_box">
-                                            <img <?php if($pic_home != ""){ echo "src='../../images/employee/$id_card/$pic_home'"; } ?>
-                                                id="img_home"
-                                                <?php if($pic_home == ""){ echo "style='display:none;'"; } ?>>
-                                            <button type="submit" id="del-homeimg" class="delimg-btn" name="del-homeimg"
-                                                style="display:none;"></button>
+                                            <img <?php if($pic_home != ""){ echo "src='../../images/employee/$id_card/$pic_home'"; } ?> id="img_home" <?php if($pic_home == ""){ echo "style='display:none;'"; } ?>>
                                         </div>
                                         <h5 id="homeimg_error" style="color:red;"></h5>
-                                        <?php
-                                        if($pic_home == ""){
-                                        ?>
                                         <input type="file" name="home_img" id="home_img" disabled>
-                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>

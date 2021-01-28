@@ -14,6 +14,7 @@ if($_SESSION["level"] == "admin"){
             $day = date("d",$str_date);
             return "$year-$month-$day"; 
         }
+        $come = BasicDate($_POST['come']);
         $title_name = $_POST['title_name'];
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
@@ -37,22 +38,22 @@ if($_SESSION["level"] == "admin"){
         $target3 = "../../../images/employee/$id_card/".basename($profile_img);
         $get_data = mysqli_query($conn,"SELECT * FROM employee WHERE employee_id = $id");
         $result_get = mysqli_fetch_assoc($get_data);
-        $update_data = "UPDATE employee SET title_name = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', position = '$position', id_card = '$id_card', tel = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nat', address = '$add' WHERE employee_id = $id";
+        $update_data = "UPDATE employee SET come_date = '$come', title_name = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', position = '$position', id_card = '$id_card', tel = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nat', address = '$add' WHERE employee_id = $id";
         $update_level = "UPDATE login SET username = '$email', email = '$email', level = '$position' WHERE username = '".$result_get["email"]."'";
         $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน', 'แก้ไขข้อมูลพนักงาน (".$result_get["title_name"].$result_get["firstname"]." ".$result_get["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
-        if(isset($pic_idcard)){
+        if($pic_idcard != ""){
             if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $target1)){
                 $update_idcard = "UPDATE employee SET pic_idcard = '$pic_idcard' WHERE employee_id = $id";
                 $conn->query($update_idcard);
             }
         }
-        if(isset($pic_home)){
-            if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $target2)){
+        if($pic_home != ""){
+            if(move_uploaded_file($_FILES["home_img"]["tmp_name"], $target2)){
                 $update_home = "UPDATE employee SET pic_home = '$pic_home' WHERE employee_id = $id";
                 $conn->query($update_home);
             }
         }
-        if(isset($profile_img)){
+        if($profile_img != ""){
             if(move_uploaded_file($_FILES["profile_img"]["tmp_name"], $target3)){
                 $update_profile = "UPDATE employee SET profile_img = '$profile_img' WHERE employee_id = $id";
                 $conn->query($update_profile);
@@ -107,33 +108,47 @@ if($_SESSION["level"] == "admin"){
             echo "</script>";
         }
     }
-    if(isset($_POST["del-idimg"])){
-        $get_data = mysqli_query($conn,"SELECT * FROM employee WHERE employee_id = $id");
-        $result_get = mysqli_fetch_assoc($get_data);
-        $sql = "UPDATE employee SET pic_idcard = NULL WHERE employee_id = $id";
-        $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน','ลบรูปภาพสำเนาบัตรประชาชน (".$result_get["title_name"].$result_get["firstname"]." ".$result_get["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
-        if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
-            echo "<script>";
-            echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
-            echo "location.href = '../emDetail.php?employee_id=$id'";
-            echo "</script>";
-        } else {
-            echo "Error updating record: " . $conn->error;
-        }
-    }
-    if(isset($_POST["del-homeimg"])){
-        $get_data = mysqli_query($conn,"SELECT * FROM employee WHERE employee_id = $id");
-        $result_get = mysqli_fetch_assoc($get_data);
-        $sql = "UPDATE employee SET pic_idcard = NULL WHERE employee_id = $id";
-        $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน','ลบรูปภาพสำเนาทะเบียนบ้าน (".$result_get["title_name"].$result_get["firstname"]." ".$result_get["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
-        if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
-            echo "<script>";
-            echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
-            echo "location.href = '../emDetail.php?employee_id=$id'";
-            echo "</script>";
-        } else {
-            echo "Error updating record: " . $conn->error;
-        }
-    }
+    // if(isset($_POST["del-idimg"])){
+    //     $get_data = mysqli_query($conn,"SELECT * FROM employee WHERE employee_id = $id");
+    //     $result_get = mysqli_fetch_assoc($get_data);
+    //     $sql = "UPDATE employee SET pic_idcard = NULL WHERE employee_id = $id";
+    //     $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน','ลบรูปภาพสำเนาบัตรประชาชน (".$result_get["title_name"].$result_get["firstname"]." ".$result_get["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+    //     if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
+    //         echo "<script>";
+    //         echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
+    //         echo "location.href = '../emDetail.php?employee_id=$id'";
+    //         echo "</script>";
+    //     } else {
+    //         echo "Error updating record: " . $conn->error;
+    //     }
+    // }
+    // if(isset($_POST["del-homeimg"])){
+    //     $get_data = mysqli_query($conn,"SELECT * FROM employee WHERE employee_id = $id");
+    //     $result_get = mysqli_fetch_assoc($get_data);
+    //     $sql = "UPDATE employee SET pic_idcard = NULL WHERE employee_id = $id";
+    //     $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน','ลบรูปภาพสำเนาทะเบียนบ้าน (".$result_get["title_name"].$result_get["firstname"]." ".$result_get["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+    //     if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
+    //         echo "<script>";
+    //         echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
+    //         echo "location.href = '../emDetail.php?employee_id=$id'";
+    //         echo "</script>";
+    //     } else {
+    //         echo "Error updating record: " . $conn->error;
+    //     }
+    // }
+    // if(isset($_POST["del-profileimg"])){
+    //     $get_data = mysqli_query($conn,"SELECT * FROM employee WHERE employee_id = $id");
+    //     $result_get = mysqli_fetch_assoc($get_data);
+    //     $sql = "UPDATE employee SET profile_img = NULL WHERE employee_id = $id";
+    //     $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน','ลบรูปภาพประจำตัว (".$result_get["title_name"].$result_get["firstname"]." ".$result_get["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+    //     if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
+    //         echo "<script>";
+    //         echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
+    //         echo "location.href = '../emDetail.php?employee_id=$id'";
+    //         echo "</script>";
+    //     } else {
+    //         echo "Error updating record: " . $conn->error;
+    //     }
+    // }
 }
 ?>

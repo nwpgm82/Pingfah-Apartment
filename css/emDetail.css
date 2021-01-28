@@ -112,7 +112,7 @@
 .emDetail-box .profile-box{
     position: relative;
     margin-bottom: 8px;
-    width: 160px;
+    width: 100%;
     height: 160px;
     border-radius: 4px;
     border: 1px solid rgb(131, 120, 47, 0.5);
@@ -230,6 +230,13 @@
     height: 86px;
 }
 
+.emDetail-box p {
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .emDetail-box input:not([type=file]),
 .emDetail-box select {
     margin-top: 8px;
@@ -241,6 +248,14 @@
     border: 1px solid rgb(131, 120, 47, 0.5);
     font-size: 16px;
     transition: 0.3s;
+}
+
+.emDetail-box input[type=file]{
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .emDetail-box input#come_date,.emDetail-box input#birthday{
@@ -311,4 +326,124 @@
 
 .emDetail-box button:hover {
     background-color: rgb(131, 120, 47, 1);
+}
+
+@media screen and (max-width: 1599px) {
+    .box {
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px) {
+    .box {
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px) {
+    .box {
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px){
+    .emDetail-box{
+        padding: 24px;
+    }
+
+    .grid-container{
+        gap: 8px 8px;
+        grid-template-areas:
+        "come come come out out out status status status"
+        "title_name title_name firstname firstname firstname lastname lastname lastname nickname"
+        "id_card id_card id_card birthday birthday birthday age phone phone"
+        "email email email race race nation nation position position";
+    }
+
+    #address-box{
+        padding-top: 8px !important;
+    }
+
+    #copy-box{
+        padding-top: 8px !important;
+    }
+
+    .emDetail-box .img-grid .img-box{
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .emDetail-box .form-grid{
+        grid-template-columns: 120px auto;
+        column-gap: 16px;
+    }
+
+    .emDetail-box .profile-box{
+        height: 120px;
+    }
+
+    .grid-container{
+        grid-template-areas:
+        "come come come out out out status status status"
+        "title_name firstname firstname firstname firstname lastname lastname lastname lastname"
+        "nickname nickname nickname nickname id_card id_card id_card id_card id_card"
+        "birthday birthday birthday age phone phone email email email"
+        "race race nation nation position position . . .";
+    }
+
+    .emDetail-box .img-grid .img-box{
+        height: 220px;
+    }
+}
+
+@media screen and (max-width: 767px){
+    #box-padding{
+        padding: 0 !important;
+    }
+
+    .emDetail-box{
+        padding: 24px 16px;
+    }
+
+    .emDetail-box .form-grid{
+        display: block;
+    }
+
+    .emDetail-box .profile-box{
+        width: 160px;
+        height: 160px;
+        display: block;
+        margin: 0 auto 8px auto;
+    }
+
+    #profileimg_error{
+        text-align: center;
+    }
+
+    #profile_img{
+        width: 160px;
+        display: block;
+        margin: auto;
+    }
+
+    .grid-container{
+        padding-top: 32px;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        "come come come come come out out out out out"
+        "status status status status status . . . . ."
+        "title_name title_name title_name title_name title_name . . . . ."
+        "firstname firstname firstname firstname firstname lastname lastname lastname lastname lastname"
+        "nickname nickname nickname nickname nickname id_card id_card id_card id_card id_card"
+        "birthday birthday birthday birthday birthday age age age age age"
+        "phone phone phone phone phone email email email email email"
+        "race race race nation nation nation position position position position";
+    }
+
+    .emDetail-box .img-grid{
+        grid-template-columns: 100%;
+        row-gap: 16px;
+    }
+    
 }

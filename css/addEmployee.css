@@ -256,7 +256,7 @@
         gap: 8px 8px;
         grid-template-areas:
         "come come come status status . . . ."
-        "title_name firstname firstname firstname lastname lastname lastname nickname nickname"
+        "title_name title_name firstname firstname firstname lastname lastname lastname nickname"
         "id_card id_card id_card birthday birthday birthday age phone phone"
         "email email email race race nation nation position position";
     }

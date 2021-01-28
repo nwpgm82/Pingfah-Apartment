@@ -134,12 +134,15 @@ body {
 
 .topbar h3{
     text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .topbar .topbar-flex{
     display: flex;
     justify-content: space-between;
-    width: 180px;
+    width: 100%;
 }
 
 .topbar .profile {
@@ -201,6 +204,7 @@ body {
     opacity: 0.2;
     position: fixed;
     display: none;
+    z-index: 13;
 }
 
 @media screen and (max-width: 1599px) {
@@ -223,6 +227,13 @@ body {
 
     .topbar{
         padding-left: 0px;
+    }
+
+    .topbar .topbar-flex{
+        display: grid;
+        grid-template-columns: 24px auto;
+        column-gap: 32px;
+        width: 100%;
     }
 
     .topbar .burger{

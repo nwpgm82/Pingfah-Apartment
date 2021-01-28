@@ -90,9 +90,9 @@ $(document).ready(function () {
         employee.style.color = "#fff"
         header.innerHTML = "ประวัติการเข้าทำงานของพนักงาน"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emDetail.php") {
-        employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        employee.style.color = "#fff"
-        header.innerHTML = "รายละเอียดข้อมูลพนักงาน"
+        employee.css("background-color", "rgba(131, 120, 47, 0.7)")
+        employee.css("color", "#fff")
+        header.html("รายละเอียดข้อมูลพนักงาน")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/detail.php") {
         roomdetail.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         roomdetail.style.color = "#fff"
@@ -155,7 +155,7 @@ $(document).ready(function () {
         if(window.matchMedia('(max-width: 767px)').matches){
             if ($(".sidebar").css("left") == "-230px") {
                 $(".topbar").animate({
-                    paddingLeft: "80%",
+                    left: "80%",
                 }, 400)
                 $(".sidebar").animate({
                     left: 0,
@@ -168,11 +168,11 @@ $(document).ready(function () {
                 $(".bg-close").fadeIn(400)
             } else {
                 $(".topbar").animate({
-                    paddingLeft: 0,
+                    left: 0,
                 }, 400)
                 $(".sidebar").animate({
                     left: -230,
-                    width: 0
+                    width: 230
                 }, 400)
                 $(".box").animate({
                     paddingLeft: 0
