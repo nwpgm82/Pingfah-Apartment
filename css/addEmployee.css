@@ -346,5 +346,13 @@
         grid-template-columns: 100%;
         row-gap: 16px;
     }
+
+    h5{
+        /* font-size: 12px; */
+        height: 19px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
     
 }
