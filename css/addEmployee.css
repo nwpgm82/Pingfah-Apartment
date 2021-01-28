@@ -305,6 +305,7 @@
 
     .addEmployee-box{
         padding: 24px 16px;
+        border-radius: 0;
     }
 
     .addEmployee-box .form-grid{

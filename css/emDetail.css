@@ -404,6 +404,7 @@
 
     .emDetail-box{
         padding: 24px 16px;
+        border-radius: 0;
     }
 
     .emDetail-box .form-grid{

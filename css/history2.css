@@ -27,7 +27,9 @@
 
 .history-box .search {
     padding-top: 32px;
+    height: 89px;
     display: flex;
+    align-items: flex-start;
 }
 
 .history-box input {
@@ -95,7 +97,8 @@
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .history-box .card .chart {
@@ -113,9 +116,10 @@
 .history-box table {
     width: 100%;
     border-radius: 4px;
-    overflow: hidden;
+    /* overflow: hidden; */
     border-collapse: collapse;
-    table-layout: fixed;
+    /* table-layout: fixed; */
+    border-radius: 4px;
 }
 
 .history-box table tr {
@@ -150,11 +154,11 @@
 }
 
 .history-box table th:nth-child(6) {
-    width: 15%;
+    width: 10%;
 }
 
 .history-box table th:nth-child(7) {
-    width: 15%;
+    width: 20%;
 }
 
 .history-box table th,
@@ -177,7 +181,7 @@
 
 .history-box table td .option-grid {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     column-gap: 8px;
 }
 
@@ -225,4 +229,78 @@
 .pagination a:hover:not(.active) {
     background-color: rgb(131, 120, 47, 0.7);
     border: 1px solid rgb(131, 120, 47, 0.7);
+}
+
+@media screen and (max-width: 1599px) {
+    .box {
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px) {
+    .box {
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px) {
+    .box {
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px){
+    .history-box{
+        padding: 24px;
+    }
+}
+
+@media screen and (min-width: 1023px) {
+    svg{
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #box-padding {
+        padding: 0 !important;
+    }
+    
+    .history-box {
+        padding: 24px 16px;
+        border-radius: 0;
+    }
+
+    .history-box .search{
+        padding-top: 24px;
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr 26px 1fr;
+        gap: 16px 0px;
+        grid-template-areas:
+        "search-topic . ."
+        "from-box to-text to-box"
+        "search-btn . ."
+    }
+
+    .search-topic{
+        grid-area: search-topic;
+    }
+    .from-box{
+        grid-area: from-box;
+    }
+    .to-text{
+        grid-area: to-text;
+    }
+    .to-box{
+        grid-area: to-box;
+    }
+    .search-btn{
+        grid-area: search-btn;
+        margin: 0 !important;
+    }
+
+    .history-box input{
+        width: 100%;
+    }
 }

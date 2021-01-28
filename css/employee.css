@@ -271,5 +271,6 @@
 
     .employee-box{
         padding: 24px 16px;
+        border-radius: 0;
     }
 }

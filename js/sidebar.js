@@ -86,9 +86,9 @@ $(document).ready(function () {
         employee.css("color", "#fff")
         header.html("เพิ่มพนักงาน")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emHistory.php") {
-        employee.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        employee.style.color = "#fff"
-        header.innerHTML = "ประวัติการเข้าทำงานของพนักงาน"
+        employee.css("background-color", "rgba(131, 120, 47, 0.7)")
+        employee.css("color", "#fff")
+        header.html("ประวัติของพนักงาน")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emDetail.php") {
         employee.css("background-color", "rgba(131, 120, 47, 0.7)")
         employee.css("color", "#fff")
