@@ -28,7 +28,15 @@ $(document).ready(function () {
         return year + "-" + month + "-" + day
     }
     $("#addRoom").click(function () {
-        $("#add").toggle()
+        if(window.matchMedia('(max-width: 767px)').matches){
+            $("#add2").fadeIn(400)
+        }else{
+           $("#add").toggle() 
+        }
+        
+    })
+    $(".bg").click(function(){
+        $("#add2").fadeOut(400)
     })
     $("#room_id").inputFilter(function (value) {
         return /^\d*$/.test(value); // Allow digits only, using a RegExp
@@ -202,7 +210,7 @@ $(document).ready(function () {
         //     $('#to_date').html(formatDate(new Date($('#date_to').val())))
         // }
     })
-    $("#people").keyup(function(){
+    $("#people").keyup(function(event){
         if (event.which !== 8 && event.which !== 0 && event.which < 48 || event.which > 57) {
             $(this).val(function (index, value) {
                 return value.replace(/\D/g, "");

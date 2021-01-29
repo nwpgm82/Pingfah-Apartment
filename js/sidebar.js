@@ -104,9 +104,9 @@ $(document).ready(function () {
         header.innerHTML = "แกลลอรี่"
         document.querySelector("#dropdown").style.display = "block"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/index.php") {
-        roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        roomlist.style.color = "#fff"
-        header.innerHTML = "รายการห้องพัก"
+        roomlist.css("background-color", "rgba(131, 120, 47, 0.7)")
+        roomlist.css("color", "#fff")
+        header.html("รายการห้องพัก")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/roomHistory.php") {
         roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         roomlist.style.color = "#fff"
@@ -213,11 +213,11 @@ $(document).ready(function () {
     $(".bg-close").click(function () {
         if(window.matchMedia('(max-width: 767px)').matches){
             $(".topbar").animate({
-                paddingLeft: 0,
+                left: 0,
             }, 400)
             $(".sidebar").animate({
                 left: -230,
-                width: 0
+                width: 230
             }, 400)
             $(".box").animate({
                 paddingLeft: 0
@@ -242,5 +242,11 @@ $(document).ready(function () {
             $(".bg-close").fadeOut(400)
         }
         
+    })
+    $(".dropdown-btn").click(function(){
+        $("#dropdown").toggle()
+    })
+    $(".dropdown-btn2").click(function(){
+        $("#dropdown2").toggle()
     })
 })

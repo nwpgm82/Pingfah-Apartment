@@ -245,6 +245,11 @@ body {
     #topbar-box{
         padding: 16px 16px !important;
     }
+    .sidebar ul{
+        overflow-y: scroll;
+        margin-top: 16px;
+        max-height: calc(100vh - 96px);
+    }
     .topbar .profile{
         display: flex;
         align-items: center;

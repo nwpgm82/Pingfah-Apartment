@@ -28,17 +28,19 @@ if($_SESSION["level"] == "admin"){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/roomList.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/roomList.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
     <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="box-grid">
                 <div class="roomList-box">
                     <div class="header">
@@ -148,36 +150,39 @@ if($_SESSION["level"] == "admin"){
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                     ?>
-                    <table>
-                        <tr>
-                            <th>เลขห้อง</th>
-                            <th>ประเภท</th>
-                            <th>ลักษณะ</th>
-                            <th>สถานะ</th>
-                            <th>เพิ่มเติม</th>
-                        </tr>
-                        <?php
-                        while($row = $result->fetch_assoc()) {
-                        ?>
-                        <tr>
-                            <td><a href="<?php if($row["room_cat"] == "รายเดือน"){ echo "room_id.php?ID=".$row['room_id']; }else if($row["room_cat"] == "รายวัน"){ echo "roomdaily_id.php?ID=".$row['room_id']; } ?>"><?php echo $row["room_id"]; ?></a>
-                            </td>
-                            <td><?php echo $row["room_type"]; ?></td>
-                            <td>
-                                <img id="cat"
-                                    src="<?php if($row['room_cat'] == 'รายวัน'){ echo '../../../img/tool/clock-icon.png'; }else if($row['room_cat'] == 'รายเดือน'){ echo '../../../img/tool/calendar-icon.png'; } ?>"
-                                    alt="category-icon">
-                            </td>
-                            <td><?php if($row["room_status"] == "ว่าง"){ echo "<div class='status-available'></div>"; }else{ echo "<div class='status-unavailable'></div>"; } ?>
-                            </td>
-                            <td>
-                                <div style="display:flex;justify-content:center;">
-                                    <button id="<?php echo $row['room_id']; ?>" class="del-btn"></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php } ?>
-                    </table>
+                    <div style="overflow-x: auto;overflow-y:hidden;">
+                        <table>
+                            <tr>
+                                <th>เลขห้อง</th>
+                                <th>ประเภท</th>
+                                <th>ลักษณะ</th>
+                                <th>สถานะ</th>
+                                <th>เพิ่มเติม</th>
+                            </tr>
+                            <?php
+                            while($row = $result->fetch_assoc()) {
+                            ?>
+                            <tr>
+                                <td><a
+                                        href="<?php if($row["room_cat"] == "รายเดือน"){ echo "room_id.php?ID=".$row['room_id']; }else if($row["room_cat"] == "รายวัน"){ echo "roomdaily_id.php?ID=".$row['room_id']; } ?>"><?php echo $row["room_id"]; ?></a>
+                                </td>
+                                <td><?php echo $row["room_type"]; ?></td>
+                                <td>
+                                    <img id="cat"
+                                        src="<?php if($row['room_cat'] == 'รายวัน'){ echo '../../../img/tool/clock-icon.png'; }else if($row['room_cat'] == 'รายเดือน'){ echo '../../../img/tool/calendar-icon.png'; } ?>"
+                                        alt="category-icon">
+                                </td>
+                                <td><?php if($row["room_status"] == "ว่าง"){ echo "<div class='status-available'></div>"; }else{ echo "<div class='status-unavailable'></div>"; } ?>
+                                </td>
+                                <td>
+                                    <div style="display:flex;justify-content:center;">
+                                        <button id="<?php echo $row['room_id']; ?>" class="del-btn"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php } ?>
+                        </table>
+                    </div>
                     <?php
                     ///////pagination
                     if($check == "avai_all"){
@@ -290,30 +295,31 @@ if($_SESSION["level"] == "admin"){
                 <div class="roomList-box">
                     <h3>ค้นหาห้องพักที่ว่าง</h3>
                     <div class="hr"></div>
-                    <div style="padding-top:32px;">
+                    <div id="padding-searchbox" style="padding-top:32px;">
                         <div class="search">
-                            <div style="height:61px;display:flex;align-items:flex-start;">
-                                <p style="padding:10px 8px 0 0;">ค้นหาตามวันที่</p>
-                                <div style="position:relative;">
-                                    <input type="text" id="date_from" class="roundtrip-input"
-                                        value="<?php if(isset($from)){ echo DateThai($from); }?>">
-                                    <!-- <p id="from_date" class="dateText"></p> -->
-                                    <h5 id="error-text" style="color:red;padding-top:4px;"></h5>
-                                </div>
-                                <label style="padding:10px 8px 0 8px;">~</label>
-                                <div style="position:relative;">
-                                    <input type="text" id="date_to" class="roundtrip-input" value="<?php if(isset($to)){ echo DateThai($to); }?>">
-                                    <!-- <p id="to_date" class="dateText"></p> -->
-                                </div>
+                            <p style="padding:10px 8px 0 0;">ค้นหาตามวันที่</p>
+                            <div id="from_box" style="position:relative;">
+                                <input type="text" id="date_from" class="roundtrip-input"
+                                    value="<?php if(isset($from)){ echo DateThai($from); }?>">
+                                <!-- <p id="from_date" class="dateText"></p> -->
+                                <h5 id="error-text" style="color:red;padding-top:4px;"></h5>
                             </div>
-                            <div style="height:81px;padding-top:20px;display:flex;align-items:flex-start;">
-                                <label style="padding-top:8px;">จำนวนผู้พัก :</label>
-                                <div>
-                                    <input id="people" type="text" style="margin:0 8px;" min="1" value="<?php if(isset($people)){ echo $people; }else{ echo 1; } ?>" maxlength="2">
-                                    <h5 id="error-number" style="color:red;padding:4px 0 0 8px;"></h5>
-                                </div>
-                                <button id="search_room" type="button">ค้นหา</button>
+                            <label style="padding:10px 8px 0 8px;">~</label>
+                            <div id="to_box" style="position:relative;">
+                                <input type="text" id="date_to" class="roundtrip-input"
+                                    value="<?php if(isset($to)){ echo DateThai($to); }?>">
+                                <!-- <p id="to_date" class="dateText"></p> -->
                             </div>
+                        </div>
+                        <div style="height:81px;padding-top:20px;display:flex;align-items:flex-start;">
+                            <label style="padding-top:8px;">จำนวนผู้พัก :</label>
+                            <div>
+                                <input id="people" type="text" style="margin:0 8px;" min="1"
+                                    value="<?php if(isset($people)){ echo $people; }else{ echo 1; } ?>"
+                                    maxlength="2">
+                                <h5 id="error-number" style="color:red;padding:4px 0 0 8px;"></h5>
+                            </div>
+                            <button id="search_room" type="button">ค้นหา</button>
                         </div>
                         <?php
                         if(isset($from) && isset($to) && isset($people)){
@@ -377,7 +383,7 @@ if($_SESSION["level"] == "admin"){
                                     if ($get_img_result->num_rows > 0) {
                                         while($room_img = $get_img_result->fetch_assoc()) {
                                 ?>
-                                <img src="../../images/roomdetail/<?php if($roomdetail['type'] == 'แอร์'){ echo 'air'; }else if($roomdetail['type'] == 'พัดลม'){ echo 'fan'; } ?>/<?php echo $room_img['gal_name']; ?>"
+                                <img id="room_img" src="../../images/roomdetail/<?php if($roomdetail['type'] == 'แอร์'){ echo 'air'; }else if($roomdetail['type'] == 'พัดลม'){ echo 'fan'; } ?>/<?php echo $room_img['gal_name']; ?>"
                                     alt="">
                                 <?php } } ?>
                                 <div style="padding:16px;">
@@ -443,6 +449,39 @@ if($_SESSION["level"] == "admin"){
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="add2">
+        <div class="bg"></div>
+        <div class="card">
+            <h3>เพิ่มห้องพัก</h3>
+            <div class="hr"></div>
+            <form action="function/addRoom.php" method="POST">
+                <div class="input-grid">
+                    <div>
+                        <p>เลขห้อง</p>
+                        <input type="text" id="room_id" name="room_id" maxlength="3" placeholder="เลขห้อง">
+                        <h5 id="room_id_check" style="color:red;"></h5>
+                    </div>
+                    <div>
+                        <p>ประเภทห้องพัก</p>
+                        <select name="room_type" id="">
+                            <option value="แอร์">แอร์</option>
+                            <option value="พัดลม">พัดลม</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p>ลักษณะห้องพัก</p>
+                        <select name="room_cat" id="">
+                            <option value="รายวัน">รายวัน</option>
+                            <option value="รายเดือน">รายเดือน</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="padding-top:24px;">
+                    <button type="submit">เพิ่ม</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
