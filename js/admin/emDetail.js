@@ -322,7 +322,7 @@ $(document).ready(function () {
         $("#title_name").prop("disabled", false)
         let inputs = $("input")
         inputs.each(function (i) {
-            if (i == 2 || i == 3) {
+            if (i == 1 || i == 2 || i == 3) {
                 return true
             } else if ($(this).attr("id") == "age") {
                 $(this).prop("disabled", false)

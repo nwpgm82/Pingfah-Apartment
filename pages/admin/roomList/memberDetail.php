@@ -31,15 +31,19 @@ if($_SESSION["level"] == "admin"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/roomform.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
+    <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/room_id_form.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Pingfah</title>
 </head>
 
 <body>
     <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="roomform-box">
                 <div id="form-box">
                     <form>
@@ -116,11 +120,11 @@ if($_SESSION["level"] == "admin"){
                                 <input type="text" name="job" id="job" value="<?php if($row != null){ if(intval($get_people) == 1 || $get_people == ""){ echo $job; }else if(intval($get_people) == 2){ echo $job2; }} ?>" placeholder="อาชีพ" disabled>
                             </div>
                         </div>
-                        <div style="padding-top:16px;height:146px;">
+                        <div id="address-box" style="padding-top:16px;height:146px;">
                             <p>ที่อยู่</p>
                             <textarea name="address" id="address" placeholder="ที่อยู่" disabled><?php if($row != null){ if(intval($get_people) == 1 || $get_people == ""){ echo $address; }else if(intval($get_people) == 2){ echo $address2; }} ?></textarea>
                         </div>
-                        <div style="padding-top:32px;">
+                        <div id="copy-box" style="padding-top:32px;">
                             <h3>สำเนาเอกสาร</h3>
                             <div class="hr"></div>
                             <div class="img-grid">

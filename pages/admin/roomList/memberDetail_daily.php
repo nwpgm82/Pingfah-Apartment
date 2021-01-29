@@ -27,13 +27,16 @@ if($_SESSION["level"] == "admin"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/roomform2.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
     <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="roomform-box">
                 <h3>ห้อง <?php echo $room_id; ?></h3>
                 <div class="hr"></div>
@@ -78,12 +81,14 @@ if($_SESSION["level"] == "admin"){
                         <input type="text" value="<?php echo $phone; ?>" disabled>
                     </div>
                 </div>
-                <div style="padding-top:32px;">
+                <div id="copy-box" style="padding-top:32px;">
                     <h3>สำเนาเอกสาร</h3>
                     <div class="hr"></div>
-                    <p>สำเนาบัตรประชาชน</p>
-                    <div class="img-box">
-                        <img src="../../images/roommember/<?php echo $room_id; ?>/<?php echo $come_date; ?>/<?php echo $pic_idcard;?>" alt="">
+                    <div style="padding:32px 0">
+                        <p>สำเนาบัตรประชาชน</p>
+                        <div class="img-box">
+                            <img src="../../images/roommember/<?php echo $room_id; ?>/<?php echo $come_date; ?>/<?php echo $pic_idcard;?>" alt="">
+                        </div>
                     </div>
                 </div>
                 <?php

@@ -25,30 +25,48 @@
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-.roomform-box .option-grid{
+.roomform-box .option-grid {
     display: grid;
     grid-template-columns: auto 40px 40px 40px;
     column-gap: 8px;
     grid-template-areas:
-    "plus quit edit del"
-    ". . . ."
-    ". . . .";
+        "plus quit edit del"
+        ". . . ."
+        ". . . .";
 }
 
-.plus { grid-area: plus; }
-.quit { grid-area: quit; }
-.edit { grid-area: edit; }
-.del { grid-area: del; }
+.plus {
+    grid-area: plus;
+}
 
-.roomform-box a{
+.quit {
+    grid-area: quit;
+}
+
+.edit {
+    grid-area: edit;
+}
+
+.del {
+    grid-area: del;
+}
+
+.roomform-box a {
     height: 40px;
 }
 
-.roomform-box .plus-btn{
+.roomform-box p {
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.roomform-box .plus-btn {
     width: 40px;
     padding: 0;
     background-image: url(../img/tool/plus-icon.png);
-    background-color:#88BC45;
+    background-color: #88BC45;
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -79,7 +97,7 @@
     background-color: rgb(216, 40, 40);
 }
 
-.roomform-box .quit-btn{
+.roomform-box .quit-btn {
     width: 40px;
     padding: 0;
     background-image: url(../img/tool/quit-icon.png);
@@ -89,11 +107,11 @@
     background-position: center;
 }
 
-.roomform-box .quit-btn:hover{
+.roomform-box .quit-btn:hover {
     background-color: #7d7d7d;
 }
 
-.roomform-box .correct-btn{
+.roomform-box .correct-btn {
     width: 40px;
     padding: 0;
     background-image: url(../img/tool/correct-icon.png);
@@ -102,7 +120,8 @@
     background-position: center;
 }
 
-.roomform-box .plus-btn:hover,.roomform-box .correct-btn:hover{
+.roomform-box .plus-btn:hover,
+.roomform-box .correct-btn:hover {
     background-color: #719c39;
 }
 
@@ -119,7 +138,7 @@
     background-color: rgb(216, 40, 40);
 }
 
-.roomform-box .delimg-btn{
+.roomform-box .delimg-btn {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -271,7 +290,8 @@
     cursor: pointer;
 }
 
-.roomform-box input#come_date,.roomform-box input#birthday{
+.roomform-box input#come_date,
+.roomform-box input#birthday {
     background-image: url("../img/tool/calendar.png");
     background-repeat: no-repeat;
     background-size: 20px;
@@ -279,7 +299,8 @@
     cursor: pointer;
 }
 
-.roomform-box input#come_date:disabled,.roomform-box input#birthday:disabled{
+.roomform-box input#come_date:disabled,
+.roomform-box input#birthday:disabled {
     cursor: default;
 }
 
@@ -313,7 +334,7 @@
     overflow: hidden;
 }
 
-.roomform-box .img-grid .img-box img{
+.roomform-box .img-grid .img-box img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -321,4 +342,109 @@
 
 .roomform-box .placeholder-error::-webkit-input-placeholder {
     color: red
+}
+
+@media screen and (max-width: 1599px) {
+    .box {
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px) {
+    .box {
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px) {
+    .box {
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .roomform-box {
+        padding: 24px;
+    }
+
+    .grid-container {
+        gap: 8px 8px;
+    }
+
+    #address-box {
+        padding-top: 8px !important;
+    }
+
+    #copy-box {
+        padding-top: 8px !important;
+    }
+
+    .roomform-box .img-grid .img-box{
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    input:placeholder-shown {
+        text-overflow: ellipsis;
+    }
+
+    .grid-container {
+        grid-template-areas:
+            "come come come status status status . . ."
+            "title_name title_name firstname firstname firstname lastname lastname lastname nickname"
+            "id_card id_card id_card birthday birthday birthday age phone phone"
+            "email email email race race nationality nationality job job";
+    }
+
+    .roomform-box .img-grid .img-box{
+        height: 220px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #box-padding {
+        padding: 0 !important;
+    }
+
+    .roomform-box {
+        padding: 24px 16px;
+        border-radius: 0;
+        min-height: auto;
+    }
+
+    .roomform-box .new_customer{
+        min-height: calc(100vh - 128px);
+    }
+
+    .roomform-box .new_customer h3{
+        text-align: center;
+        line-height: 40px;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "come come come come come status status status status status"
+            "title_name title_name title_name title_name title_name title_name title_name title_name title_name title_name"
+            "firstname firstname firstname firstname firstname firstname firstname firstname firstname firstname"
+            "lastname lastname lastname lastname lastname lastname lastname lastname lastname lastname"
+            "nickname nickname nickname nickname nickname id_card id_card id_card id_card id_card"
+            "birthday birthday birthday birthday birthday age age age age age"
+            "phone phone phone phone phone phone phone phone phone phone"
+            "email email email email email email email email email email"
+            "race race race nationality nationality nationality job job job job";
+    }
+
+    .roomform-box .img-grid {
+        grid-template-columns: 100%;
+        row-gap: 16px;
+    }
+
+    h5 {
+        height: 19px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 }

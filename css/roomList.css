@@ -52,6 +52,10 @@ body{
     column-gap: 8px;
 }
 
+.roomList-box .header .option-grid a{
+    height: 40px;
+}
+
 .roomList-box .header .option-grid .history-btn{
     width: 40px;
     background-image: url("../img/tool/history-icon.png");
@@ -75,7 +79,6 @@ body{
 }
 
 button {
-    margin-left: 8px;
     width: auto;
     height: 40px;
     padding: 0 16px;
@@ -87,6 +90,10 @@ button {
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
+}
+
+#search_room{
+    margin-left: 8px;
 }
 
 .roomList-box .input-grid button {

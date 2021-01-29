@@ -334,11 +334,13 @@
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
             "come come come come come status status status status status"
-            "title_name title_name title_name title_name title_name . . . . ."
-            "firstname firstname firstname firstname firstname lastname lastname lastname lastname lastname"
+            "title_name title_name title_name title_name title_name title_name title_name title_name title_name title_name"
+            "firstname firstname firstname firstname firstname firstname firstname firstname firstname firstname"
+            "lastname lastname lastname lastname lastname lastname lastname lastname lastname lastname"
             "nickname nickname nickname nickname nickname id_card id_card id_card id_card id_card"
             "birthday birthday birthday birthday birthday age age age age age"
-            "phone phone phone phone phone email email email email email"
+            "phone phone phone phone phone phone phone phone phone phone"
+            "email email email email email email email email email email"
             "race race race nation nation nation position position position position";
     }
 

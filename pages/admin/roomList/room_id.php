@@ -13,9 +13,9 @@ if($_SESSION["level"] == "admin"){
         return "$strDay $strMonthThai $strYear";
     }
     if(intval($get_people) == 1 || $get_people == ""){
-        $sql = "SELECT room_id, come_date, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
+        $sql = "SELECT room_id, come_date, member_status, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
     }else if(intval($get_people) == 2 ){
-        $sql = "SELECT room_id, come_date, name_title2, firstname2, lastname2, nickname2, id_card2, phone2, email2, birthday2, age2, race2, nationality2, job2, address2, pic_idcard2, pic_home2, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
+        $sql = "SELECT room_id, come_date, member_status, name_title2, firstname2, lastname2, nickname2, id_card2, phone2, email2, birthday2, age2, race2, nationality2, job2, address2, pic_idcard2, pic_home2, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
     }
     $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
     $row = mysqli_fetch_array($result);
@@ -32,17 +32,19 @@ if($_SESSION["level"] == "admin"){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/roomform.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/room_id_form.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
     <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="roomform-box">
                 <?php if($row == null){ ?>
                 <div class="new_customer">
@@ -80,13 +82,17 @@ if($_SESSION["level"] == "admin"){
                         <div class="grid-container">
                             <div class="come" style="position:relative;">
                                 <p>วันที่เริ่มเข้าพัก</p>
-                                <input type="text" name="come" id="come_date" placeholder="วันที่เริ่มเข้าพัก" value="<?php if($row != null){ echo DateThai($come_date); }?>" <?php if($row != null){ echo "disabled"; } ?>>
+                                <input type="text" <?php if($row != null){ echo "style='background-image: none'"; } ?> name="come" id="come_date" placeholder="วันที่เริ่มเข้าพัก" value="<?php if($row != null){ echo DateThai($come_date); }?>" <?php if($row != null){ echo "disabled"; } ?>>
                                 <h5 id="come_error" style="color:red;"></h5>
                             </div>
-                            <!-- <div class="status">
+                            <?php
+                            if($row != null){
+                            ?>
+                            <div class="status">
                                 <p>สถานะการเข้าพัก</p>
-                                <input type="text">
-                            </div> -->
+                                <input type="text" value="<?php echo $member_status; ?>" disabled>
+                            </div>
+                            <?php } ?>
                             <div class="title_name">
                                 <p>คำนำหน้าชื่อ</p>
                                 <select name="title_name" id="title_name" <?php if($row != null){ echo "disabled"; } ?>>
@@ -154,12 +160,12 @@ if($_SESSION["level"] == "admin"){
                                 <h5 id="job_error" style="color:red;"></h5>
                             </div>
                         </div>
-                        <div style="padding-top:16px;height:146px;">
+                        <div id="address-box" style="padding-top:16px;height:146px;">
                             <p>ที่อยู่</p>
                             <textarea name="address" id="address" placeholder="ที่อยู่" <?php if($row != null){ echo "disabled"; } ?>><?php if($row != null){ if(intval($get_people) == 1 || $get_people == ""){ echo $address; }else if(intval($get_people) == 2){ echo $address2; }} ?></textarea>
                             <h5 id="ad_error" style="color:red;"></h5>
                         </div>
-                        <div style="padding-top:32px;">
+                        <div id="copy-box" style="padding-top:32px;">
                             <h3>สำเนาเอกสาร</h3>
                             <div class="hr"></div>
                             <div class="img-grid">
@@ -167,68 +173,27 @@ if($_SESSION["level"] == "admin"){
                                     <p>สำเนาบัตรประชาชน</p>
                                     <div class="img-box" id="id_box">
                                         <img <?php if($row != null){ if(intval($get_people) == 1 || $get_people == ""){ if($pic_idcard != ""){ echo "src='../../images/roommember/$room_id/$come_date/$pic_idcard'"; }}else if(intval($get_people) == 2){ if($pic_home2 != ""){ echo "src='../../images/roommember/$room_id/$come_date/$pic_idcard2'"; }}} ?> id="img_id" alt="" <?php if($row != null){ if(intval($get_people) == 1 || $get_people == ""){ if($pic_idcard == ""){ echo "style='display:none;'"; }}else if(intval($get_people) == 2){ if($pic_idcard2 == ""){ echo "style='display:none;'"; }}}else{ echo "style='display:none;'"; } ?>>
-                                        <?php 
-                                        if($row != null){ 
-                                            if(intval($get_people) == 1 || $get_people == ""){
-                                                if($pic_idcard != ""){ 
-                                        ?>
-                                        <button type="submit" id="del-idimg" class="delimg-btn" name="del-idimg" style="display:none;"></button>
-                                        <?php   }
-                                            }else if(intval($get_people) == 2){
-                                                if($pic_idcard2 != ""){
-                                        ?>
-                                        <button type="submit" id="del-idimg" class="delimg-btn" name="del-idimg" style="display:none;"></button>
-                                        <?php }}} ?>
                                     </div>
                                     <h5 id="idimg_error" style="color:red;"></h5>
                                     <?php
                                     if($row != null){
-                                        if(intval($get_people) == 1 || $get_people == ""){
-                                            if($pic_idcard == ""){
                                     ?>
                                     <input type="file" name="id_img" id="id_img" <?php if($row != null){ echo "disabled"; } ?> >
-                                    <?php
-                                            }
-                                        }else if(intval($get_people) == 2){
-                                            if($pic_idcard2 == ""){
-                                    ?>
-                                    <input type="file" name="id_img" id="id_img" <?php if($row != null){ echo "disabled"; } ?> >
-                                    <?php }}}else{ ?>
-                                        <input type="file" name="id_img" id="id_img">
+                                    <?php }else{ ?>
+                                    <input type="file" name="id_img" id="id_img">
                                     <?php } ?>
                                 </div>
                                 <div>
                                     <p>สำเนาทะเบียนบ้าน</p>
                                     <div class="img-box" id="home_box">
                                         <img <?php if($row != null){ if(intval($get_people) == 1 || $get_people == ""){ if($pic_home != ""){ echo "src='../../images/roommember/$room_id/$come_date/$pic_home'"; }}else if(intval($get_people) == 2){ if($pic_home2 != ""){ echo "src='../../images/roommember/$room_id/$come_date/$pic_home2'"; }}} ?> id="img_home" alt="" <?php if($row != null){ if(intval($get_people) == 1 || $get_people == ""){ if($pic_home == ""){ echo "style='display:none;'"; }}else if(intval($get_people) == 2){ if($pic_home2 == ""){ echo "style='display:none;'"; }}}else{ echo "style='display:none;'"; } ?>>
-                                        <?php 
-                                        if($row != null){ 
-                                            if(intval($get_people) == 1 || $get_people == ""){
-                                                if($pic_home != ""){
-                                        ?>
-                                        <button type="submit" id="del-homeimg" class="delimg-btn" name="del-homeimg" style="display:none;"></button>
-                                        <?php 
-                                                }
-                                            }else if(intval($get_people) == 2){
-                                                if($pic_home2 != ""){
-                                        ?>
-                                        <button type="submit" id="del-homeimg" class="delimg-btn" name="del-homeimg" style="display:none;"></button>
-                                        <?php }}} ?>
                                     </div>
                                     <h5 id="homeimg_error" style="color:red;"></h5>
                                     <?php
                                     if($row != null){
-                                        if(intval($get_people) == 1 || $get_people == ""){
-                                            if($pic_home == ""){
                                     ?>
                                     <input type="file" name="home_img" id="home_img" <?php if($row != null){ echo "disabled"; } ?>>
-                                    <?php 
-                                            }
-                                        }else if(intval($get_people) == 2){
-                                            if($pic_home2 == ""){
-                                    ?>
-                                    <input type="file" name="home_img" id="home_img" <?php if($row != null){ echo "disabled"; } ?>>
-                                    <?php }}}else{ ?>
+                                    <?php }else{ ?>
                                     <input type="file" name="home_img" id="home_img">
                                     <?php } ?>
                                 </div>

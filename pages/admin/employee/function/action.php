@@ -14,7 +14,6 @@ if($_SESSION["level"] == "admin"){
             $day = date("d",$str_date);
             return "$year-$month-$day"; 
         }
-        $come = BasicDate($_POST['come']);
         $title_name = $_POST['title_name'];
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
@@ -38,7 +37,7 @@ if($_SESSION["level"] == "admin"){
         $target3 = "../../../images/employee/$id_card/".basename($profile_img);
         $get_data = mysqli_query($conn,"SELECT * FROM employee WHERE employee_id = $id");
         $result_get = mysqli_fetch_assoc($get_data);
-        $update_data = "UPDATE employee SET come_date = '$come', title_name = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', position = '$position', id_card = '$id_card', tel = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nat', address = '$add' WHERE employee_id = $id";
+        $update_data = "UPDATE employee SET title_name = '$title_name', firstname = '$firstname', lastname = '$lastname', nickname = '$nickname', position = '$position', id_card = '$id_card', tel = '$tel', email = '$email', birthday = '$birthday', age = $age, race = '$race', nationality = '$nat', address = '$add' WHERE employee_id = $id";
         $update_level = "UPDATE login SET username = '$email', email = '$email', level = '$position' WHERE username = '".$result_get["email"]."'";
         $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน', 'แก้ไขข้อมูลพนักงาน (".$result_get["title_name"].$result_get["firstname"]." ".$result_get["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
         if($pic_idcard != ""){

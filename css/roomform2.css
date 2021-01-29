@@ -148,7 +148,7 @@
 }
 
 .hr {
-    margin: 16px auto 32px auto;
+    margin: 16px auto 0px auto;
     border-bottom: 1px solid rgb(131, 120, 47, 0.7);
     opacity: 0.5;
 }
@@ -180,6 +180,7 @@
 }
 
 .grid-container {
+    padding-top: 32px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -235,6 +236,13 @@
     height: 86px;
 }
 
+.roomform-box p {
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .roomform-box input:not([type=file]),
 .roomform-box select {
     margin-top: 8px;
@@ -266,4 +274,82 @@
 
 .roomform-box .placeholder-error::-webkit-input-placeholder {
     color: red
+}
+
+@media screen and (max-width: 1599px) {
+    .box {
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px) {
+    .box {
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px) {
+    .box {
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .roomform-box {
+        padding: 24px;
+    }
+
+    .grid-container {
+        gap: 8px 8px;
+    }
+
+    #copy-box {
+        padding-top: 16px !important;
+    }
+
+    .roomform-box .img-box {
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    input:placeholder-shown {
+        text-overflow: ellipsis;
+    }
+
+    .roomform-box .img-grid .img-box {
+        height: 220px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #box-padding {
+        padding: 0 !important;
+    }
+
+    .roomform-box {
+        padding: 24px 16px;
+        border-radius: 0;
+        min-height: auto;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "check_in check_out"
+            "night night"
+            "name_title name_title"
+            "firstname firstname"
+            "lastname lastname"
+            "id_card id_card"
+            "email email"
+            "tel tel";
+    }
+
+    h5 {
+        height: 19px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 }

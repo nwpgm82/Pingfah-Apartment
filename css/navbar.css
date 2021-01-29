@@ -133,6 +133,7 @@ body {
 }
 
 .topbar h3{
+    height: 27px;
     text-overflow: ellipsis;
     display: block;
     overflow: hidden;

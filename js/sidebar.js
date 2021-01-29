@@ -1,61 +1,61 @@
-var dropdown = document.getElementsByClassName("dropdown-btn");
-var dropdown2 = document.getElementsByClassName("dropdown-btn2");
-console.log(window.location.pathname);
-for (let i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-        if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-            document.getElementById("arrow-up").style.display = "none"
-            document.getElementById("arrow-down").style.display = "block"
-        } else {
-            dropdownContent.style.display = "block";
-            document.getElementById("arrow-up").style.display = "block"
-            document.getElementById("arrow-down").style.display = "none"
-        }
-    });
-}
+// var dropdown = document.getElementsByClassName("dropdown-btn");
+// var dropdown2 = document.getElementsByClassName("dropdown-btn2");
+// // console.log(window.location.pathname);
+// for (let i = 0; i < dropdown.length; i++) {
+//     dropdown[i].addEventListener("click", function () {
+//         this.classList.toggle("active");
+//         var dropdownContent = this.nextElementSibling;
+//         if (dropdownContent.style.display === "block") {
+//             dropdownContent.style.display = "none";
+//             document.getElementById("arrow-up").style.display = "none"
+//             document.getElementById("arrow-down").style.display = "block"
+//         } else {
+//             dropdownContent.style.display = "block";
+//             document.getElementById("arrow-up").style.display = "block"
+//             document.getElementById("arrow-down").style.display = "none"
+//         }
+//     });
+// }
 
-for (let j = 0; j < dropdown2.length; j++) {
-    dropdown2[j].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var dropdownContent2 = this.nextElementSibling;
-        if (dropdownContent2.style.display === "block") {
-            dropdownContent2.style.display = "none";
-            document.getElementById("arrow-up2").style.display = "none"
-            document.getElementById("arrow-down2").style.display = "block"
-        } else {
-            dropdownContent2.style.display = "block";
-            document.getElementById("arrow-up2").style.display = "block"
-            document.getElementById("arrow-down2").style.display = "none"
-        }
-    });
-}
+// for (let j = 0; j < dropdown2.length; j++) {
+//     dropdown2[j].addEventListener("click", function () {
+//         this.classList.toggle("active");
+//         var dropdownContent2 = this.nextElementSibling;
+//         if (dropdownContent2.style.display === "block") {
+//             dropdownContent2.style.display = "none";
+//             document.getElementById("arrow-up2").style.display = "none"
+//             document.getElementById("arrow-down2").style.display = "block"
+//         } else {
+//             dropdownContent2.style.display = "block";
+//             document.getElementById("arrow-up2").style.display = "block"
+//             document.getElementById("arrow-down2").style.display = "none"
+//         }
+//     });
+// }
 
-function menubar() {
-    // localStorage.removeItem("i");
-    let main = document.querySelector("#main")
-    let employee = document.querySelector("#employee")
-    let roomdetail = document.querySelector("#roomdetail")
-    let gallery = document.querySelector("#gallery")
-    let roomlist = document.querySelector("#roomlist")
-    let daily = document.querySelector("#daily")
-    let dailycost = document.querySelector("#dailycost")
-    let cost = document.querySelector("#cost")
-    let repair_report = document.querySelector("#repair_report")
-    let repair = document.querySelector("#repair")
-    let package = document.querySelector("#package")
-    let rule = document.querySelector("#rule")
-    let appeal = document.querySelector("#appeal")
+// function menubar() {
+//     // localStorage.removeItem("i");
+//     let main = document.querySelector("#main")
+//     let employee = document.querySelector("#employee")
+//     let roomdetail = document.querySelector("#roomdetail")
+//     let gallery = document.querySelector("#gallery")
+//     let roomlist = document.querySelector("#roomlist")
+//     let daily = document.querySelector("#daily")
+//     let dailycost = document.querySelector("#dailycost")
+//     let cost = document.querySelector("#cost")
+//     let repair_report = document.querySelector("#repair_report")
+//     let repair = document.querySelector("#repair")
+//     let package = document.querySelector("#package")
+//     let rule = document.querySelector("#rule")
+//     let appeal = document.querySelector("#appeal")
 
-    let header = document.querySelector("#topbar-page")
+//     let header = document.querySelector("#topbar-page")
 
-    localStorage.setItem("i", window.location.pathname)
-    localStorage.getItem("i")
-    console.log(localStorage.getItem("i"))
+//     localStorage.setItem("i", window.location.pathname)
+//     localStorage.getItem("i")
+//     console.log(localStorage.getItem("i"))
     
-}
+// }
 
 $(document).ready(function () {
     let main = $("#main")
@@ -108,13 +108,13 @@ $(document).ready(function () {
         roomlist.css("color", "#fff")
         header.html("รายการห้องพัก")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/roomHistory.php") {
-        roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        roomlist.style.color = "#fff"
-        header.innerHTML = "ประวัติการเข้าพัก"
+        roomlist.css("background-color", "rgba(131, 120, 47, 0.7)")
+        roomlist.css("color", "#fff")
+        header.html("ประวัติการเข้าพัก")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/room_id.php") {
-        roomlist.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        roomlist.style.color = "#fff"
-        header.innerHTML = "รายละเอียดข้อมูลผู้เข้าพัก"
+        roomlist.css("background-color", "rgba(131, 120, 47, 0.7)")
+        roomlist.css("color", "#fff")
+        header.html("รายละเอียดข้อมูลผู้เข้าพัก")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/daily/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/daily/dailyDetail.php") {
         daily.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         daily.style.color = "#fff"
@@ -163,7 +163,9 @@ $(document).ready(function () {
                 }, 400)
                 // $(".sidebar img").css("width","244px")
                 // $(".sidebar img").css("height","80px")
-                $("#topbar-page").fadeOut(400)
+                $("#topbar-page").animate({
+                    opacity : 0
+                },400)
                 $(".profile").fadeOut(400)
                 $(".bg-close").fadeIn(400)
             } else {
@@ -179,7 +181,9 @@ $(document).ready(function () {
                 }, 400)
                 // $(".sidebar img").css("width","")
                 // $(".sidebar img").css("height","")
-                $("#topbar-page").fadeIn(400)
+                $("#topbar-page").animate({
+                    opacity : 1
+                },400)
                 $(".profile").fadeIn(400)
                 $(".bg-close").fadeOut(400)
             }
