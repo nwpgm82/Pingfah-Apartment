@@ -51,27 +51,26 @@ if($_SESSION["level"] == "admin"){
             <div class="history-box">
                 <h3>ค้นหาประวัติการเข้าพัก</h3>
                 <div class="search">
-                            <label class="search-topic" style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
-                            <div class="from-box" style="position:relative;">
-                                <input type="text" class="roundtrip-input" id="date_from"
-                                    value="<?php if(isset($from)){ echo DateThai($from); } ?>">
-                                <h5 id="from_error" style="color:red;"></h5>
-                            </div>
-                            <label class="to-text" style="padding:10px 8px 0 8px;">~</label>
-                            <div class="to-box" style="position:relative;">
-                                <input type="text" class="roundtrip-input" id="date_to"
-                                    value="<?php if(isset($to)){ echo DateThai($to); } ?>">
-                                <h5 id="to_error" style="color:red;"></h5>
-                            </div>
-                            <button class="search-btn" type="button" id="searchHistory" style="margin-left:16px;">ค้นหา</button>
-                            <?php
-                            if(isset($from) || isset($to) || isset($check)){
-                            ?>
-                            <div style="padding:0 16px;">
-                                <a href="roomHistory.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
-                            </div>
-                            <?php } ?>
-                       
+                    <label class="search-topic" style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
+                    <div class="from-box" style="position:relative;">
+                        <input type="text" class="roundtrip-input" id="date_from"
+                            value="<?php if(isset($from)){ echo DateThai($from); } ?>">
+                        <h5 id="from_error" style="color:red;"></h5>
+                    </div>
+                    <label class="to-text" style="padding:10px 8px 0 8px;">~</label>
+                    <div class="to-box" style="position:relative;">
+                        <input type="text" class="roundtrip-input" id="date_to"
+                            value="<?php if(isset($to)){ echo DateThai($to); } ?>">
+                        <h5 id="to_error" style="color:red;"></h5>
+                    </div>
+                    <button class="search-btn" type="button" id="searchHistory" style="margin-left:16px;">ค้นหา</button>
+                    <?php
+                    if(isset($from) || isset($to) || isset($check)){
+                    ?>
+                    <div class="cancel-box" style="padding:0 16px;">
+                        <a href="roomHistory.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
+                    </div>
+                    <?php } ?>
                 </div>
                 <div class="hr" style="margin-top:16px;"></div>
                 <div>

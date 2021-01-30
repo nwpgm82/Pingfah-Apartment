@@ -40,7 +40,7 @@ if($_SESSION["level"] == "admin"){
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/emHistory.js"></script>
     <script src="../../../js/sidebar.js"></script>
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
@@ -66,9 +66,8 @@ if($_SESSION["level"] == "admin"){
                     <?php
                     if(isset($from) || isset($to) || isset($check)){
                     ?>
-                    <div style="padding:0 16px;">
-                        <a href="emHistory.php"><button type="button"
-                                class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
+                    <div class="cancel-box" style="padding:0 16px;">
+                        <a href="emHistory.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
                     </div>
                     <?php } ?>
                 </div>

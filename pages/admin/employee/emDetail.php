@@ -32,7 +32,7 @@ if($_SESSION["level"] == "admin"){
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/emDetail.js"></script>
     <script src="../../../js/sidebar.js"></script>
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>

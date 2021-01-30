@@ -31,6 +31,13 @@
     opacity: 0.5;
 }
 
+.selectRoom-box p {
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .box .selectRoom-box input:not([type=file]) {
     margin-top: 8px;
     width: 100%;
@@ -185,4 +192,86 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+@media screen and (max-width: 1599px){
+    .box{
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px){
+    .box{
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px){
+    .box{
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px){
+    .selectRoom-box{
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .grid-container{
+        grid-template-areas: 
+        "room_select room_select room_select room_select . . . . . ."
+        "name_title name_title firstname firstname firstname firstname lastname lastname lastname lastname"
+        "id_card id_card id_card email email email email tel tel tel"
+        "check_in check_in check_in check_in check_out check_out check_out check_out night night"
+        "people people air air fan fan room_status room_status total_price total_price";
+        gap: 8px;
+    }
+
+    #copy-box{
+        padding-top: 8px !important;
+    }
+}
+
+@media screen and (max-width: 767px){
+    #box-padding{
+        padding: 0 !important;
+    }
+
+    .selectRoom-box{
+        padding: 24px 16px;
+        border-radius: 0;
+    }
+    .grid-container{
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+        "room_select room_select"
+        "name_title name_title"
+        "firstname firstname"
+        "lastname lastname"
+        "id_card id_card"
+        "email email"
+        "tel tel"
+        "check_in check_out"
+        "night people"
+        "air fan"
+        "room_status room_status"
+        "total_price total_price";
+        gap: 8px;
+    }
+    .box .selectRoom-box .img-box{
+        height: 300px;
+    }
+
+    .box .selectRoom-box .grid-box{
+        grid-template-columns: 100%;
+        gap: 16px 0;
+    }
+
+    #roomselect_box{
+        display: grid !important;
+        grid-template-columns: 100%;
+        gap: 8px 0;
+    }
 }

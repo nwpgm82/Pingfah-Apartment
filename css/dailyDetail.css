@@ -43,6 +43,13 @@
     background-color: rgb(131, 120, 47, 1);
 }
 
+.dailyDetail-box p {
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 /* .dailyDetail-box .edit-btn {
     width: 40px;
     padding: 0;
@@ -198,7 +205,7 @@
 }
 
 .box .dailyDetail-box .img-box {
-    width: 50%;
+    width: 100%;
     height: 500px;
     border: 1px solid rgb(131, 120, 47, 0.7);
     border-radius: 4px;
@@ -226,4 +233,75 @@
 
 .box .dailyDetail-box .img-box .del-btn:hover{
     background-color: rgb(216, 40, 40);
+}
+
+@media screen and (max-width: 1599px){
+    .box{
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px){
+    .box{
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px){
+    .box{
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px){
+    .dailyDetail-box{
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .grid-container{
+        grid-template-areas: 
+        "room_select room_select room_select room_select . . . . . ."
+        "name_title name_title firstname firstname firstname firstname lastname lastname lastname lastname"
+        "id_card id_card id_card email email email email tel tel tel"
+        "check_in check_in check_in check_in check_out check_out check_out check_out night night"
+        "people people air air fan fan room_status room_status total_price total_price";
+        gap: 8px;
+    }
+
+    #copy-box{
+        padding-top: 8px !important;
+    }
+}
+
+@media screen and (max-width: 767px){
+    #box-padding{
+        padding: 0 !important;
+    }
+
+    .dailyDetail-box{
+        padding: 24px 16px;
+        border-radius: 0;
+    }
+    .grid-container{
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+        "room_select room_select"
+        "name_title name_title"
+        "firstname firstname"
+        "lastname lastname"
+        "id_card id_card"
+        "email email"
+        "tel tel"
+        "check_in check_out"
+        "night people"
+        "air fan"
+        "room_status room_status"
+        "total_price total_price";
+        gap: 8px;
+    }
+    .box .dailyDetail-box .img-box{
+        height: 300px;
+    }
 }

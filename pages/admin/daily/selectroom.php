@@ -27,14 +27,16 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/selectroom.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../../../js/admin/select_room.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="selectRoom-box">
                 <!-- <h3>รายละเอียดการจอง</h3> -->
                 <h3>เลขที่ในการจอง : </strong><?php echo $code; ?></h3>
@@ -105,32 +107,22 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                     </div>
                     <form action="function/addSelectRoom.php?daily_id=<?php echo $daily_id; ?>" method="POST" enctype="multipart/form-data">
-                        <div style="padding-top:32px;height:582px;">
+                        <div id="copy-box" style="padding-top:32px;">
                             <h3>เอกสาร</h3>
                             <div class="hr"></div>
-                            <div class="grid-img">
-                                <div>
-                                    <p>สำเนาบัตรประชาชน</p>
-                                    <div class="img-box" id="id_box">
-                                        <img id="img_id" style="display:none;">
-                                    </div>
-                                    <h5 id="idimg_error" style="color:red;"></h5>
-                                    <input type="file" name="id_img" id="id_img">
+                            <div>
+                                <p>สำเนาบัตรประชาชน</p>
+                                <div class="img-box" id="id_box">
+                                    <img id="img_id" style="display:none;">
                                 </div>
-                                <div>
-                                    <p>สำเนาบัตรประชาชน</p>
-                                    <div class="img-box" id="id_box">
-                                        <img id="img_id" style="display:none;">
-                                    </div>
-                                    <h5 id="idimg_error" style="color:red;"></h5>
-                                    <input type="file" name="id_img" id="id_img">
-                                </div>
+                                <h5 id="idimg_error" style="color:red;"></h5>
+                                <input type="file" name="id_img" id="id_img">
                             </div>
                         </div>
                         <div style="padding-top:32px;">
                             <h3>เลือกห้องที่ต้องการเข้าพัก</h3>
                             <div class="hr"></div>
-                            <div style="display:flex;align-items:center;width:100%;">
+                            <div id="roomselect_box" style="display:flex;align-items:center;width:100%;">
                                 <p><strong>ห้องที่ท่านเลือก :</strong></p>
                                 <input id="room_select" name="room_select">
                             </div>

@@ -2,7 +2,6 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
     $daily_id = $_REQUEST['daily_id'];
     function DateThai($strDate)
     {
@@ -28,16 +27,19 @@ if($_SESSION['level'] == 'admin'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/dailyDetail.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/dailyDetail.js"></script>
-    <title>Document</title>
+    <script src="../../../js/sidebar.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
+    <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="dailyDetail-box">
                 <!-- <h3>รายละเอียดการจอง</h3> -->
                 <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -69,7 +71,7 @@ if($_SESSION['level'] == 'admin'){
                             <input type="text" name="lastname" value="<?php echo $lastname; ?>" disabled>
                         </div>
                         <div class="id_card">
-                            <p>เลขบัตรประชาชน / Passport</p>
+                            <p>เลขบัตรประชาชน / Passport No.</p>
                             <input type="text" name="id_card" value="<?php echo $id_card; ?>" disabled>
                         </div>
                         <div class="email">
@@ -115,7 +117,7 @@ if($_SESSION['level'] == 'admin'){
                             <input type="number" name="total_price" value="<?php echo $total_price; ?>" disabled>
                         </div>
                     </div>
-                    <div style="padding-top:32px;">
+                    <div id="copy-box" style="padding-top:32px;">
                         <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>
                         <div class="hr"></div>
                         <div class="img-box">

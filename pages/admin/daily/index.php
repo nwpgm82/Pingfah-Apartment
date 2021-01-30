@@ -2,7 +2,6 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
     $check_in = @$_REQUEST['check_in'];
     $check_out = @$_REQUEST['check_out'];
     $code = @$_REQUEST['code'];
@@ -36,7 +35,7 @@ if($_SESSION['level'] == 'admin'){
     }
     $datax = implode(",", $datax);
     $datax2 = implode(",", $datax2);
-    echo $datax;
+    // echo $datax;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,53 +45,49 @@ if($_SESSION['level'] == 'admin'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/daily.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
-    <title>Document</title>
+    <script src="../../../js/sidebar.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
+    <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="daily-box">
                 <h3>ค้นหารายการเช่ารายวัน</h3>
                 <div class="search">
-                    <div style="padding-right:16px">
-                        <div style="height:57px;display:flex;align-items:flex-start;">
-                            <label style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
-                            <div style="position:relative;">
-                                <input type="text" class="roundtrip-input" id="check_in"
-                                    value="<?php if(isset($check_in)){ echo DateThai($check_in); } ?>">
-                                <h5 id="checkIn_error" style="color:red;"></h5>
-                            </div>
-                            <label style="padding:10px 8px 0 8px;">~</label>
-                            <div style="position:relative;">
-                                <input type="text" class="roundtrip-input" id="check_out"
-                                    value="<?php if(isset($check_out)){ echo DateThai($check_out); } ?>">
-                                <h5 id="checkOut_error" style="color:red;"></h5>
-                            </div>
-                            <button type="button" id="searchDate">ค้นหา</button>
-                        </div>
+                    <label class="search-topic" style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
+                    <div class="from-box" style="position:relative;">
+                        <input type="text" class="roundtrip-input" id="check_in"
+                            value="<?php if(isset($check_in)){ echo DateThai($check_in); } ?>">
+                        <h5 id="checkIn_error" style="color:red;"></h5>
                     </div>
-                    <div style="height:57px;display:flex;align-items:flex-start;">
-                        <label style="padding:10px 8px 0 0;">ค้นหาเลขที่ในการจอง</label>
-                        <div>
-                            <input type="text" id="code" value="<?php echo $code?>">
-                            <h5 id="code_error" style="color:red;"></h5>
-                        </div>
-                        <button type="button" id="searchCode">ค้นหา</button>
+                    <label class="to-text" style="padding:10px 8px 0 8px;">~</label>
+                    <div class="to-box" style="position:relative;">
+                        <input type="text" class="roundtrip-input" id="check_out"
+                            value="<?php if(isset($check_out)){ echo DateThai($check_out); } ?>">
+                        <h5 id="checkOut_error" style="color:red;"></h5>
                     </div>
+                    <button class="search-btn" type="button" id="searchDate">ค้นหา</button>
+                    <label class="searchcode-topic" style="padding:10px 8px 0 0;">ค้นหาเลขที่ในการจอง</label>
+                    <div class="searchcode-box" >
+                        <input type="text" id="code" value="<?php echo $code?>">
+                        <h5 id="code_error" style="color:red;"></h5>
+                    </div>
+                    <button class="searchcode-btn" type="button" id="searchCode">ค้นหา</button>
                     <?php
                     if(isset($check_in) || isset($check_out) || isset($check) || isset($code)){
                     ?>
-                    <div>
+                    <div class="cancel-box">
                         <a href="index.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
                     </div>
                     <?php } ?>
                 </div>
-
                 <div class="hr"></div>
                 <div>
                     <div class="card">
@@ -171,7 +166,7 @@ if($_SESSION['level'] == 'admin'){
                     <?php
                     if(!isset($code)){
                     ?>
-                        <div style="display:flex;align-items:center;">
+                        <div class="checkbox-grid">
                             <div style="padding:32px 16px 32px 0;display: flex;align-items: center;">
                                 <input type="checkbox" id="all" <?php if(!isset($check)){ echo "checked";} ?>>
                                 <label for="scales">ทั้งหมด</label>
@@ -204,63 +199,65 @@ if($_SESSION['level'] == 'admin'){
                         </div>
                         <?php } ?>
                         <?php
-                    if ($result->num_rows > 0) {
-                    ?>
-                        <table>
-                            <tr>
-                                <th>ลำดับ</th>
-                                <th>ชื่อผู้เช่า</th>
-                                <th>วันที่เข้าพัก</th>
-                                <!-- <th>จำนวนผู้พัก (ท่าน)</th>
-                                <th>ห้องแอร์ (ห้อง)</th>
-                                <th>ห้องพัดลม (ห้อง)</th> -->
-                                <th>เลขที่ในการจอง</th>
-                                <th>สถานะ</th>
-                                <th>เพิ่มเติม</th>
-                            </tr>
-                            <?php
-                        while($row = $result->fetch_assoc()) {
+                        if ($result->num_rows > 0) {
                         ?>
-                            <form action="function/acceptRent.php?daily_id=<?php echo $row["daily_id"]; ?>" method="POST">
+                        <div style="overflow-x: auto;overflow-y: hidden;">
+                            <table>
                                 <tr>
-                                    <td><?php echo $num; ?></td>
-                                    <td><?php echo $row['name_title'].$row['firstname'] ." " .$row['lastname']; ?></td>
-                                    <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']) ." (".$row['night']." คืน)"?></td>
-                                    <td><?php echo $row['code']; ?></td>
-                                    <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอาท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอาท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else if($row['daily_status'] == "รอการเข้าพัก"){ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; }else{ echo "<button type='button' class='waiting-btn'>รอการยืนยัน</button>";} ?></td>
-                                    <td>
-                                    <?php
-                                    if($row['daily_status'] == 'รอการยืนยัน'){
-                                    ?>
-                                        <button type="submit" class="acceptRent-btn">ยืนยัน</button>
-                                         
-                                    <?php
-                                    }else if($row['daily_status'] == 'รอการเข้าพัก'){
-                                    ?>
-                                        <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button type="button" class="select_room">เลือกห้อง</button></a>
-                                    <?php 
-                                    }else if($row['daily_status'] == 'เข้าพักแล้ว'){
-                                    ?>
-                                        <button type="button" class="checkout-btn" onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอาท์</button>
-                                    <?php 
-                                    }
-                                    ?>
-                                    <?php
-                                    if($row["daily_status"] != "รอการยืนยัน" && $row["daily_status"] != "ยกเลิกการจอง"){
-                                    ?>
-                                    <a href="../../receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่ามัดจำห้องพัก</button></a>
-                                    <?php 
-                                    }else{ 
-                                    ?>
-                                    <button type="button" class="un-print">ค่ามัดจำห้องพัก</button>
-                                    <?php } ?>
-                                    <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button type="button">รายละเอียด</button></a>
-                                    <button type="button" class="del-btn" id="<?php echo $row['daily_id']; ?>">ลบ</button>
-                                    </td>
+                                    <th>ลำดับ</th>
+                                    <th>ชื่อผู้เช่า</th>
+                                    <th>วันที่เข้าพัก</th>
+                                    <!-- <th>จำนวนผู้พัก (ท่าน)</th>
+                                    <th>ห้องแอร์ (ห้อง)</th>
+                                    <th>ห้องพัดลม (ห้อง)</th> -->
+                                    <th>เลขที่ในการจอง</th>
+                                    <th>สถานะ</th>
+                                    <th>เพิ่มเติม</th>
                                 </tr>
-                            </form>
-                            <?php $num++; } ?>
-                        </table>
+                                <?php
+                                while($row = $result->fetch_assoc()) {
+                                ?>
+                                <form action="function/acceptRent.php?daily_id=<?php echo $row["daily_id"]; ?>" method="POST">
+                                    <tr>
+                                        <td><?php echo $num; ?></td>
+                                        <td><?php echo $row['name_title'].$row['firstname'] ." " .$row['lastname']; ?></td>
+                                        <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out']) ." (".$row['night']." คืน)"?></td>
+                                        <td><?php echo $row['code']; ?></td>
+                                        <td><?php if($row['daily_status'] == 'เข้าพักแล้ว'){ echo "<button type='button' class='confirmed-btn'>เข้าพักแล้ว</button>"; }else if($row['daily_status'] == "เช็คเอาท์แล้ว"){ echo "<button type='button' class='checkoutStatus-btn'>เช็คเอาท์แล้ว</button>"; }else if($row['daily_status'] == "ยกเลิกการจอง"){ echo "<button type='button' class='canceldaily-btn'>ยกเลิกการจอง</button>"; }else if($row['daily_status'] == "รอการเข้าพัก"){ echo "<button type='button' class='pending-btn'>รอการเข้าพัก</button>"; }else{ echo "<button type='button' class='waiting-btn'>รอการยืนยัน</button>";} ?></td>
+                                        <td>
+                                        <?php
+                                        if($row['daily_status'] == 'รอการยืนยัน'){
+                                        ?>
+                                            <button type="submit" class="acceptRent-btn">ยืนยัน</button>
+
+                                        <?php
+                                        }else if($row['daily_status'] == 'รอการเข้าพัก'){
+                                        ?>
+                                            <a href="selectroom.php?daily_id=<?php echo $row['daily_id']; ?>"><button type="button" class="select_room">เลือกห้อง</button></a>
+                                        <?php 
+                                        }else if($row['daily_status'] == 'เข้าพักแล้ว'){
+                                        ?>
+                                            <button type="button" class="checkout-btn" onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอาท์</button>
+                                        <?php 
+                                        }
+                                        ?>
+                                        <?php
+                                        if($row["daily_status"] != "รอการยืนยัน" && $row["daily_status"] != "ยกเลิกการจอง"){
+                                        ?>
+                                        <a href="../../receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่ามัดจำห้องพัก</button></a>
+                                        <?php 
+                                        }else{ 
+                                        ?>
+                                        <button type="button" class="un-print">ค่ามัดจำห้องพัก</button>
+                                        <?php } ?>
+                                        <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button type="button">รายละเอียด</button></a>
+                                        <button type="button" class="del-btn" id="<?php echo $row['daily_id']; ?>">ลบ</button>
+                                        </td>
+                                    </tr>
+                                </form>
+                                <?php $num++; } ?>
+                            </table>
+                        </div>
                         <?php
                         ///////pagination
                         if(isset($check_in) && isset($check_out) && !isset($check)){
@@ -381,6 +378,10 @@ if($_SESSION['level'] == 'admin'){
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
     }
+    $(window).resize(function(){
+        drawChart();
+        drawChart2();
+    });
     </script>
 </body>
 

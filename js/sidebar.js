@@ -116,9 +116,9 @@ $(document).ready(function () {
         roomlist.css("color", "#fff")
         header.html("รายละเอียดข้อมูลผู้เข้าพัก")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/daily/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/daily/dailyDetail.php") {
-        daily.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        daily.style.color = "#fff"
-        header.innerHTML = "รายการเช่ารายวัน"
+        daily.css("background-color", "rgba(131, 120, 47, 0.7)")
+        daily.css("color", "#fff")
+        header.html("รายการเช่ารายวัน")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/dailyCost/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/dailyCost/dailyCostDetail.php") {
         dailycost.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         dailycost.style.color = "#fff"
