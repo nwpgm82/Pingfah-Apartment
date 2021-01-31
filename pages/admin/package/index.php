@@ -43,7 +43,7 @@ if($_SESSION['level'] == 'admin'){
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/sidebar.js"></script>
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>

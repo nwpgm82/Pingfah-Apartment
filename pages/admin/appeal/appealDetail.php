@@ -22,7 +22,7 @@ if($_SESSION["level"] == "admin"){
     <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../../../js/sidebar.js"></script>
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
