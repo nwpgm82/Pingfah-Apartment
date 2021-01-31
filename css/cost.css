@@ -463,7 +463,7 @@
         grid-template-areas: 
         "search_topic search_topic search_topic search_topic search_topic search_topic"
         "from_box from_box to_text to_text to_box to_box"
-        "search_btn search_btn search_btn cancel_box cancel_box cancel_box";
+        "search_btn search_btn . . cancel_box cancel_box";
         gap: 16px 8px;
     }
 

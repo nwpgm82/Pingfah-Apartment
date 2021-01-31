@@ -2,14 +2,12 @@
 session_start();
 if($_SESSION["level"] == "admin"){
     include("../../connection.php");
-    include("../../../components/sidebar.php");
     $id = $_REQUEST["appeal_id"];
-    function DateThai($strDate)
-    {
-        $strYear = date("Y",strtotime($strDate))+543;
+    function DateThai($strDate){
+        $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));
-        $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strDay= date("d",strtotime($strDate));
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
@@ -21,12 +19,16 @@ if($_SESSION["level"] == "admin"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/appealDetail.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
+    <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="appealDetail-box">
                 <h3>รายละเอียดการร้องเรียน</h3>
                 <div class="hr"></div>
@@ -36,17 +38,17 @@ if($_SESSION["level"] == "admin"){
                 if($result->num_rows > 0){
                     while($row = $result->fetch_assoc()) {
                 ?>
-                <div class="row">
-                    <div class="col-2">
-                        <label>เลขห้อง</label>
+                <div class="grid-container">
+                    <div>
+                        <p>เลขห้อง</p>
                         <input type="text" value="<?php echo $row['room_id']; ?>" disabled>
                     </div>
-                    <div class="col-5">
-                        <label>หัวข้อร้องเรียน</label>
+                    <div>
+                        <p>หัวข้อร้องเรียน</p>
                         <input type="text" value="<?php echo $row['appeal_topic']; ?>" disabled>
                     </div>
-                    <div class="col-5">
-                        <label>วันที่ร้องเรียน</label>
+                    <div>
+                        <p>วันที่ร้องเรียน</p>
                         <input type="text" value="<?php echo DateThai($row['appeal_date']); ?>" disabled>
                     </div>
                 </div>
