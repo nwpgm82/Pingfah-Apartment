@@ -475,23 +475,19 @@ input[type=number] {
 
 @media screen and (max-width: 1199px){
     .box-grid{
-        grid-template-columns: 1fr auto;
-        gap: 16px;
-        grid-template-areas: 
-        "roomSearch roomSearch"
-        "roomList icon"
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
     }
 
     .roomList-box:first-child{
-        grid-area: roomList;
+        order: 2;
     }
-
     .roomList-box:nth-child(2){
-        grid-area: roomSearch;
+        order: 1;
     }
-
     .roomList-box:last-child{
-        grid-area: icon;
+        order: 3;
     }
 
     .roomList-box{
@@ -513,25 +509,10 @@ input[type=number] {
         padding: 0 !important;
     }
 
-    .box-grid{
-        display: flex;
-        flex-direction: column;
-    }
-
     .roomList-box{
         padding: 24px 16px;
         border-radius: 0;
         min-height:auto
-    }
-    
-    .roomList-box:first-child{
-        order: 2;
-    }
-    .roomList-box:nth-child(2){
-        order: 1;
-    }
-    .roomList-box:last-child{
-        order: 3;
     }
 
     .roomList-box .search{
