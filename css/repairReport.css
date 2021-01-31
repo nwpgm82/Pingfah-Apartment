@@ -60,7 +60,6 @@
 
 .repairReport-box input[type=text]{
     position: relative;
-    margin: 0 8px;
     width: 200px;
     height: 40px;
     padding: 0 12px;
@@ -118,7 +117,9 @@
 
 .repairReport-box .search {
     padding-top: 32px;
+    height: 89px;
     display: flex;
+    align-items: flex-start;
 }
 
 .repairReport-box .search .cancel-sort{
@@ -149,10 +150,10 @@
 .repairReport-box table {
     margin-top: 32px;
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
     border-collapse: collapse;
     border-radius: 4px;
-    table-layout: fixed;
+    /* table-layout: fixed; */
 }
 
 .repairReport-box table th:nth-child(1){
@@ -247,6 +248,7 @@
 .repairReport-box table .pending-status {
     width: 100%;
     height: 40px;
+    padding: 16px;
     border-radius: 4px;
     color: #fff;
     background-color: rgb(170, 170, 170);
@@ -261,6 +263,7 @@
 .repairReport-box table .inprogress-status {
     width: 100%;
     height: 40px;
+    padding: 16px;
     border-radius: 4px;
     color: #fff;
     background-color: #8ac5d7;
@@ -275,6 +278,7 @@
 .repairReport-box table .success-status {
     width: 100%;
     height: 40px;
+    padding: 16px;
     border-radius: 4px;
     color: #fff;
     background-color: #B1D78A;
@@ -310,4 +314,95 @@
 .pagination a:hover:not(.active) {
     background-color: rgb(131, 120, 47, 0.7);
     border: 1px solid rgb(131, 120, 47, 0.7);
+}
+
+@media screen and (max-width: 1599px) {
+    .box {
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px) {
+    .box {
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px) {
+    .box {
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px){
+    .repairReport-box{
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .repairReport-box input[type=text]#date_from, .repairReport-box input[type=text]#date_to {
+        width: 100%;
+        background-position: 96% 50%;
+    }
+
+    .repairReport-box .search{
+        padding-top: 24px;
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr 26px 1fr;
+        gap: 16px 0px;
+        grid-template-areas:
+        "search-topic . ."
+        "from-box to-text to-box"
+        "search-btn . cancel-box"
+    }
+
+    .search-topic{
+        grid-area: search-topic;
+    }
+    .from-box{
+        grid-area: from-box;
+    }
+    .to-text{
+        grid-area: to-text;
+    }
+    .to-box{
+        grid-area: to-box;
+    }
+    .search-btn{
+        grid-area: search-btn;
+        margin: 0 !important;
+    }
+
+    .cancel-box{
+        grid-area: cancel-box;
+        padding: 0 !important;
+    }
+
+    .repairReport-box .search .cancel-sort{
+        width: 100%;
+    }
+
+    .repairReport-box .search input.roundtrip-input{
+        width: 100%;
+        background-position: 96% 50%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #box-padding {
+        padding: 0 !important;
+    }
+    
+    .repairReport-box {
+        padding: 24px 16px;
+        border-radius: 0;
+    }
+
+    
+
+    .repairReport-box input{
+        width: 100%;
+    }
 }

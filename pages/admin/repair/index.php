@@ -2,7 +2,6 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../../components/sidebar.php');
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
     $check = @$_REQUEST['status'];
@@ -44,44 +43,47 @@ if($_SESSION['level'] == 'admin'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/repair.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
-    <title>Document</title>
+    <script src="../../../js/sidebar.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
+    <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="repair-box">
                 <h3>ค้นหารายการแจ้งซ่อม</h3>
                 <div class="search">
-                    <div style="padding-right:16px">
-                        <div style="height:57px;display:flex;align-items:flex-start;">
-                            <label style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
-                            <div style="position:relative;">
+                    <div id="first" style="padding-right:16px">
+                        <div id="sub-search" style="height:57px;display:flex;align-items:flex-start;">
+                            <label class="search_topic" style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
+                            <div class="from_box" style="position:relative;">
                                 <input type="text" class="roundtrip-input" id="date_from"
                                     value="<?php if(isset($from)){ echo DateThai($from); } ?>">
                                 <h5 id="from_error" style="color:red;"></h5>
                             </div>
-                            <label style="padding:10px 8px 0 8px;">~</label>
-                            <div style="position:relative;">
+                            <label class="to_text" style="padding:10px 8px 0 8px;">~</label>
+                            <div class="to_box" style="position:relative;">
                                 <input type="text" class="roundtrip-input" id="date_to"
                                     value="<?php if(isset($to)){ echo DateThai($to); } ?>">
                                 <h5 id="to_error" style="color:red;"></h5>
                             </div>
-                            <button type="button" id="searchDate" style="margin-left:16px;">ค้นหา</button>
+                            <button class="search_btn" type="button" id="searchDate" style="margin:0 16px;">ค้นหา</button>
                             <?php
                             if(isset($from) || isset($to) || isset($check)){
                             ?>
-                            <div style="padding:0 16px;">
+                            <div class="cancel_box">
                                 <a href="index.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
                             </div>
                             <?php } ?>
                         </div>
                     </div>
-                    <a href="addRepair.php"><button>เพิ่มรายการแจ้งซ่อม</button></a>
+                    <a id="second" href="addRepair.php"><button>เพิ่มรายการแจ้งซ่อม</button></a>
                 </div>
                 <div class="hr" style="margin-top:16px;"></div>
                 <div>
@@ -109,7 +111,7 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <div class="hr"></div>
                     <h3>รายการแจ้งซ่อมทั้งหมด</h3>
-                    <div style="display:flex;align-items:center;">
+                    <div id="checkbox-grid" style="display:flex;align-items:center;">
                         <div style="padding:32px 16px 32px 0;display:flex;">
                             <input type="checkbox" id="all" <?php if(!isset($check)){ echo "checked"; } ?>>
                             <label for="scales">ทั้งหมด</label>
@@ -162,69 +164,71 @@ if($_SESSION['level'] == 'admin'){
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                 ?>
-                    <table>
-                        <tr>
-                            <th>ลำดับ</th>
-                            <th>เลขห้อง</th>
-                            <th>อุปกรณ์</th>
-                            <th>หมวดหมู่</th>
-                            <th>รายได้</th>
-                            <th>รายจ่าย</th>
-                            <th>กำไร</th>
-                            <th>วันที่แจ้งซ่อม</th>
-                            <th>วันที่ซ่อมเสร็จ</th>
-                            <th>สถานะ</th>
-                            <th>เพิ่มเติม</th>
-                        </tr>
-                        <?php while($row = $result->fetch_assoc()){ ?>
-                        <tr>
-                            <td><?php echo $num; ?></td>
-                            <td><?php echo $row['room_id']; ?></td>
-                            <td><?php echo $row['repair_appliance']; ?></td>
-                            <td><?php echo $row['repair_category']; ?></td>
-                            <td><?php echo $row['repair_income']; ?></td>
-                            <td><?php echo $row['repair_expenses']; ?></td>
-                            <td><?php echo $row['repair_profit']; ?></td>
-                            <td><?php echo DateThai($row['repair_date']); ?></td>
-                            <td><?php if(isset($row['repair_successdate'])){ echo DateThai($row['repair_successdate']); }?></td>
-                            <td>
-                                <?php
-                                if($row['repair_status'] == 'รอคิวซ่อม'){
-                            ?>
-                                <div class="pending-status">
-                                    <p><?php echo $row['repair_status']; ?></p>
-                                </div>
-                                <?php
-                                }else if($row['repair_status'] == 'กำลังซ่อม'){
-                            ?>
-                                <div class="inprogress-status">
-                                    <p><?php echo $row['repair_status']; ?></p>
-                                </div>
-                                <?php
-                                }else if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){
-                            ?>
-                                <div class="success-status">
-                                    <p><?php echo $row['repair_status']; ?></p>
-                                </div>
-                                <?php
-                                }else{
-                                    echo "error!";
-                                }
-                            ?>
-                            </td>
-                            <td>
-                                <div class="flex-more">
-                                    <div>
-                                        <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>" title="ดูข้อมูลเพิ่มเติม"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                    <div style="overflow-x:auto;overflow-y:hidden;">
+                        <table>
+                            <tr>
+                                <th>ลำดับ</th>
+                                <th>เลขห้อง</th>
+                                <th>อุปกรณ์</th>
+                                <th>หมวดหมู่</th>
+                                <th>รายได้</th>
+                                <th>รายจ่าย</th>
+                                <th>กำไร</th>
+                                <th>วันที่แจ้งซ่อม</th>
+                                <th>วันที่ซ่อมเสร็จ</th>
+                                <th>สถานะ</th>
+                                <th>เพิ่มเติม</th>
+                            </tr>
+                            <?php while($row = $result->fetch_assoc()){ ?>
+                            <tr>
+                                <td><?php echo $num; ?></td>
+                                <td><?php echo $row['room_id']; ?></td>
+                                <td><?php echo $row['repair_appliance']; ?></td>
+                                <td><?php echo $row['repair_category']; ?></td>
+                                <td><?php echo $row['repair_income']; ?></td>
+                                <td><?php echo $row['repair_expenses']; ?></td>
+                                <td><?php echo $row['repair_profit']; ?></td>
+                                <td><?php echo DateThai($row['repair_date']); ?></td>
+                                <td><?php if(isset($row['repair_successdate'])){ echo DateThai($row['repair_successdate']); }?></td>
+                                <td>
+                                    <?php
+                                    if($row['repair_status'] == 'รอคิวซ่อม'){
+                                    ?>
+                                    <div class="pending-status">
+                                        <p><?php echo $row['repair_status']; ?></p>
                                     </div>
-                                    <div>
-                                        <button class="del-btn" id="<?php echo $row['repair_id']; ?>" title="ลบข้อมูล"></button>
+                                    <?php
+                                    }else if($row['repair_status'] == 'กำลังซ่อม'){
+                                    ?>
+                                    <div class="inprogress-status">
+                                        <p><?php echo $row['repair_status']; ?></p>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php $num++; } ?>
-                    </table>
+                                    <?php
+                                    }else if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){
+                                    ?>
+                                    <div class="success-status">
+                                        <p><?php echo $row['repair_status']; ?></p>
+                                    </div>
+                                    <?php
+                                    }else{
+                                        echo "error!";
+                                    }
+                                ?>
+                                </td>
+                                <td>
+                                    <div class="flex-more">
+                                        <div>
+                                            <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>" title="ดูข้อมูลเพิ่มเติม"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                        </div>
+                                        <div>
+                                            <button class="del-btn" id="<?php echo $row['repair_id']; ?>" title="ลบข้อมูล"></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php $num++; } ?>
+                        </table>
+                    </div>
                     <?php
                     ///////pagination
                     if(isset($from) && isset($to) && !isset($check)){
@@ -300,8 +304,16 @@ if($_SESSION['level'] == 'admin'){
     google.charts.load('current', {
         'packages': ['corechart']
     });
+    <?php
+    if(strlen($datax) != 0){
+    ?>
     google.charts.setOnLoadCallback(drawChart);
+    <?php } ?>
+    <?php
+    if(strlen($datax2) != 0){
+    ?>
     google.charts.setOnLoadCallback(drawChart2);
+    <?php } ?>
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
@@ -340,6 +352,10 @@ if($_SESSION['level'] == 'admin'){
         var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
         chart.draw(data, options);
     }
+    $(window).resize(function(){
+        drawChart();
+        drawChart2();
+    });
     </script>
 </body>
 

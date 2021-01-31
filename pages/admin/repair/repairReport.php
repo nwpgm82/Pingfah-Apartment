@@ -2,7 +2,6 @@
 session_start();
 if($_SESSION["level"] == "admin"){
     include("../../connection.php");
-    include("../../../components/sidebar.php");
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
     $num = 1;
@@ -31,43 +30,42 @@ if($_SESSION["level"] == "admin"){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/repairReport.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
-    <title>Document</title>
+    <script src="../../../js/sidebar.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
+    <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="repairReport-box">
                 <h3>ค้นหารายการแจ้งซ่อมที่ซ่อมเสร็จแล้ว</h3>
                 <div class="search">
-                    <div style="padding-right:16px">
-                        <div style="height:57px;display:flex;align-items:flex-start;">
-                            <label style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
-                            <div style="position:relative;">
-                                <input type="text" class="roundtrip-input" id="date_from"
-                                    value="<?php if(isset($from)){ echo DateThai($from); } ?>">
-                                <h5 id="from_error" style="color:red;"></h5>
-                            </div>
-                            <label style="padding:10px 8px 0 8px;">~</label>
-                            <div style="position:relative;">
-                                <input type="text" class="roundtrip-input" id="date_to"
-                                    value="<?php if(isset($to)){ echo DateThai($to); } ?>">
-                                <h5 id="to_error" style="color:red;"></h5>
-                            </div>
-                            <button type="button" id="searchDate" style="margin-left:16px;">ค้นหา</button>
-                            <?php
-                            if(isset($from) || isset($to) || isset($check)){
-                            ?>
-                            <div style="padding:0 16px;">
-                                <a href="repairReport.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
-                            </div>
-                            <?php } ?>
-                        </div>
+                    <label class="search-topic" style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
+                    <div class="from-box" style="position:relative;">
+                        <input type="text" class="roundtrip-input" id="date_from"
+                            value="<?php if(isset($from)){ echo DateThai($from); } ?>">
+                        <h5 id="from_error" style="color:red;"></h5>
                     </div>
+                    <label class="to-text" style="padding:10px 8px 0 8px;">~</label>
+                    <div class="to-box" style="position:relative;">
+                        <input type="text" class="roundtrip-input" id="date_to"
+                            value="<?php if(isset($to)){ echo DateThai($to); } ?>">
+                        <h5 id="to_error" style="color:red;"></h5>
+                    </div>
+                    <button class="search-btn" type="button" id="searchDate" style="margin-left:16px;">ค้นหา</button>
+                    <?php
+                    if(isset($from) || isset($to) || isset($check)){
+                    ?>
+                    <div class="cancel-box" style="padding:0 16px;">
+                        <a href="repairReport.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
+                    </div>
+                    <?php } ?>
                 </div>
                 <div class="hr" style="margin-top:16px;"></div>
                 <div>
@@ -97,45 +95,47 @@ if($_SESSION["level"] == "admin"){
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                 ?>
-                    <table>
-                        <tr>
-                            <th>ลำดับ</th>
-                            <th>เลขห้อง</th>
-                            <th>อุปกรณ์</th>
-                            <th>หมวดหมู่</th>
-                            <th>รายได้</th>
-                            <th>รายจ่าย</th>
-                            <th>กำไร</th>
-                            <th>วันที่แจ้งซ่อม</th>
-                            <th>วันที่ซ่อมเสร็จ</th>
-                            <th>สถานะ</th>
-                            <th>เพิ่มเติม</th>
-                        </tr>
-                        <?php while($row = $result->fetch_assoc()){ ?>
-                        <tr>
-                            <td><?php echo $num; ?></td>
-                            <td><?php echo $row['room_id']; ?></td>
-                            <td><?php echo $row['repair_appliance']; ?></td>
-                            <td><?php echo $row['repair_category']; ?></td>
-                            <td><?php echo $row['repair_income']; ?></td>
-                            <td><?php echo $row['repair_expenses']; ?></td>
-                            <td><?php echo $row['repair_profit']; ?></td>
-                            <td><?php echo DateThai($row['repair_date']); ?></td>
-                            <td><?php echo DateThai($row['repair_successdate']); ?></td>
-                            <td>
-                                <div class="success-status">
-                                    <p><?php echo $row['repair_status']; ?></p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="flex-more">
-                                    <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>" title="ดูข้อมูลเพิ่มเติม"><button>ดูข้อมูลเพิ่มเติม</button></a>
-                                    <button class="del-btn" id="<?php echo $row['repair_id']; ?>" title="ลบข้อมูล"></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php $num++; } ?>
-                    </table>
+                    <div style="overflow-x:scroll;">
+                        <table>
+                            <tr>
+                                <th>ลำดับ</th>
+                                <th>เลขห้อง</th>
+                                <th>อุปกรณ์</th>
+                                <th>หมวดหมู่</th>
+                                <th>รายได้</th>
+                                <th>รายจ่าย</th>
+                                <th>กำไร</th>
+                                <th>วันที่แจ้งซ่อม</th>
+                                <th>วันที่ซ่อมเสร็จ</th>
+                                <th>สถานะ</th>
+                                <th>เพิ่มเติม</th>
+                            </tr>
+                            <?php while($row = $result->fetch_assoc()){ ?>
+                            <tr>
+                                <td><?php echo $num; ?></td>
+                                <td><?php echo $row['room_id']; ?></td>
+                                <td><?php echo $row['repair_appliance']; ?></td>
+                                <td><?php echo $row['repair_category']; ?></td>
+                                <td><?php echo $row['repair_income']; ?></td>
+                                <td><?php echo $row['repair_expenses']; ?></td>
+                                <td><?php echo $row['repair_profit']; ?></td>
+                                <td><?php echo DateThai($row['repair_date']); ?></td>
+                                <td><?php echo DateThai($row['repair_successdate']); ?></td>
+                                <td>
+                                    <div class="success-status">
+                                        <p><?php echo $row['repair_status']; ?></p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex-more">
+                                        <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>" title="ดูข้อมูลเพิ่มเติม"><button>ดูข้อมูลเพิ่มเติม</button></a>
+                                        <button class="del-btn" id="<?php echo $row['repair_id']; ?>" title="ลบข้อมูล"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php $num++; } ?>
+                        </table>
+                    </div>
                     <?php
                     ///////pagination
                     $sql2 = "SELECT * FROM repair";
@@ -179,9 +179,7 @@ if($_SESSION["level"] == "admin"){
     </div>
     <script src="../../../js/admin/repairReport.js"></script>
     <script>
-    google.charts.load('current', {
-        'packages': ['corechart']
-    });
+    google.charts.load("current", {packages: ["line"]});
     <?php
     if(strlen($datax) != 0){
     ?>
@@ -202,15 +200,17 @@ if($_SESSION["level"] == "admin"){
             vAxis: { format: "decimal"}
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
+        var chart = new google.charts.Line(document.getElementById('curve_chart'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
     }
+    $(window).resize(function(){
+        drawChart();
+    });
     </script>
 </body>
 
 </html>
 <?php
 }else{
-    header("Location : ../../login.php");
+    Header("Location: ../../login.php");
 }

@@ -6,11 +6,11 @@ var accept = document.getElementById("accept_btn")
 function edit_rule(){
     if(btn == false){
         edit.style.display = "none"
-        accept.style.display = "block"
+        accept.style.display = "flex"
         text.disabled = false
         btn = true
     }else{
-        edit.style.display = "block"
+        edit.style.display = "flex"
         accept.style.display = "none"
         btn = false
         text.disabled = true

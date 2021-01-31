@@ -2,7 +2,6 @@
 session_start();
 if($_SESSION['level'] == 'admin'){ 
     include('../../connection.php');
-    include('../../../components/sidebar.php');
 ?>
 
 <!DOCTYPE html>
@@ -13,17 +12,20 @@ if($_SESSION['level'] == 'admin'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/addRepair.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
-    <title>Document</title>
+    <script src="../../../js/sidebar.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
+    <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="addRepair-box">
-                <h3>เพิ่มรายการแจ้งซ่อม</h3>
+                <h3>รายละเอียดความเสียหาย</h3>
                 <div class="hr"></div>
                 <form action="../repair/function/repairAccept.php" method="POST">
                     <div style="margin-top: 32px;">

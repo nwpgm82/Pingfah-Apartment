@@ -270,6 +270,9 @@ if($_SESSION["level"] == "admin"){
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
     }
+    $(window).resize(function(){
+        drawChart();
+    });
     </script>
 </body>
 

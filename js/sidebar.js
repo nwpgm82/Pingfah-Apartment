@@ -81,22 +81,30 @@ $(document).ready(function () {
         header.html("เพิ่มข้อมูลการชำระเงิน")
         $("#dropdown2").css("display","block")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repairReport.php") {
-        repair_report.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        repair_report.style.color = "#fff"
-        header.innerHTML = "รายการค่าใช้จ่ายจากการแจ้งซ่อม"
+        repair_report.css("background-color", "rgba(131, 120, 47, 0.7)")
+        repair_report.css("color", "#fff")
+        header.html("รายการค่าใช้จ่ายจากการแจ้งซ่อม")
         $("#dropdown2").css("display","block")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/repair/addRepair.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repairDetail.php") {
-        repair.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        repair.style.color = "#fff"
-        header.innerHTML = "รายการแจ้งซ่อม"
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/package/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/package/addPackage.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/index.php") {
+        repair.css("background-color", "rgba(131, 120, 47, 0.7)")
+        repair.css("color", "#fff")
+        header.html("รายการแจ้งซ่อม")
+    } else if(localStorage.getItem("i") == "/Pingfah/pages/admin/repair/addRepair.php"){
+        repair.css("background-color", "rgba(131, 120, 47, 0.7)")
+        repair.css("color", "#fff")
+        header.html("เพิ่มรายการแจ้งซ่อม")
+    } else if(localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repairDetail.php"){
+        repair.css("background-color", "rgba(131, 120, 47, 0.7)")
+        repair.css("color", "#fff")
+        header.html("ข้อมูลการแจ้งซ่อม")
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/package/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/package/addPackage.php") {
         package.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         package.style.color = "#fff"
         header.innerHTML = "รายการพัสดุ"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/rule/index.php") {
-        rule.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        rule.style.color = "#fff"
-        header.innerHTML = "กฎระเบียบหอพัก"
+        rule.css("background-color", "rgba(131, 120, 47, 0.7)")
+        rule.css("color", "#fff")
+        header.html("กฎระเบียบหอพัก")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/appeal/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/appeal/appealDetail.php") {
         appeal.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
         appeal.style.color = "#fff"
@@ -169,7 +177,9 @@ $(document).ready(function () {
             $(".box").animate({
                 paddingLeft: 0
             }, 400)
-            $("#topbar-page").fadeIn(400)
+            $("#topbar-page").animate({
+                opacity : 1
+            },400)
             $(".profile").fadeIn(400)
             $(".bg-close").fadeOut(400)
         }else{

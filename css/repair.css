@@ -146,10 +146,10 @@
 
 .repair-box table {
     width: 100%;
-    overflow: hidden;
-    border-collapse: collapse;
     border-radius: 4px;
-    table-layout: fixed;
+    /* overflow: hidden; */
+    border-collapse: collapse;
+    /* table-layout: fixed; */
 }
 
 .repair-box table th:nth-child(1){
@@ -236,6 +236,7 @@
 .repair-box table .pending-status {
     width: 100%;
     height: 40px;
+    padding: 16px;
     border-radius: 4px;
     color: #fff;
     background-color: rgb(170, 170, 170);
@@ -249,6 +250,7 @@
 .repair-box table .inprogress-status {
     width: 100%;
     height: 40px;
+    padding: 16px;
     border-radius: 4px;
     color: #fff;
     background-color: #8ac5d7;
@@ -262,6 +264,7 @@
 .repair-box table .success-status {
     width: 100%;
     height: 40px;
+    padding: 16px;
     border-radius: 4px;
     color: #fff;
     background-color: #B1D78A;
@@ -296,4 +299,145 @@
 .pagination a:hover:not(.active) {
     background-color: rgb(131, 120, 47, 0.7);
     border: 1px solid rgb(131, 120, 47, 0.7);
+}
+
+@media screen and (max-width: 1623px) {
+    .repair-box .search {
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 1599px) {
+    .box {
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px) {
+    .box {
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px) {
+    .box {
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px){
+    .repair-box {
+        padding: 24px;
+    }
+
+    .repair-box input[type=text]{
+        width: 100%;
+    }
+
+    .repair-box input[type=text]#date_from, .repair-box input[type=text]#date_to{
+        background-position: 95% 50%;
+    }
+
+    .repair-box .search{
+        display: grid;
+        grid-template-columns: 1fr auto;
+        column-gap: 64px;
+    }
+
+    #sub-search{
+        height: auto !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 4px 4px 1fr 1fr;
+        grid-template-areas: 
+        "search_topic search_topic search_topic search_topic search_topic search_topic"
+        "from_box from_box to_text to_text to_box to_box"
+        "search_btn search_btn . . cancel_box cancel_box";
+        gap: 16px 8px;
+    }
+
+    .search_topic{
+        grid-area: search_topic;
+        padding: 10px 0 0 0 !important;
+    }
+
+    .from_box{
+        grid-area: from_box;
+    }
+
+    .to_text{
+        grid-area: to_text;
+        text-align: center;
+        padding: 10px 0 0 0 !important;
+    }
+
+    .to_box{
+        grid-area: to_box;
+    }
+
+    .search_btn{
+        grid-area: search_btn;
+        margin: 0 !important;
+    }
+
+    .cancel_box{
+        grid-area: cancel_box;
+    }
+
+    .repair-box .card .sub-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        row-gap: 16px;
+        min-height: 782px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #box-padding {
+        padding: 0 !important;
+    }
+
+    .repair-box {
+        padding: 24px 16px;
+        border-radius: 0;
+    }
+
+    .repair-box .search{
+        grid-template-columns: 100%;
+        grid-template-areas:
+        "a"
+        "div";
+        row-gap: 16px;
+    }
+
+    .repair-box #first{
+        grid-area: div;
+        padding: 0 !important;
+    }
+
+    .repair-box #second{
+        grid-area: a;
+    }
+
+    .repair-box #second button{
+        width: 100%;
+    }
+
+    #sub-search{
+        grid-template-areas: 
+        "search_topic search_topic search_topic search_topic search_topic search_topic"
+        "from_box from_box to_text to_text to_box to_box"
+        "search_btn search_btn search_btn cancel_box cancel_box cancel_box";
+        gap: 16px 8px;
+    }
+
+    #checkbox-grid{
+        padding: 32px 0;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 8px;
+    }
+
+    #checkbox-grid div{
+        padding: 0 !important;
+    }
 }

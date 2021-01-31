@@ -43,7 +43,7 @@ $(document).ready(function () {
             to_toeng[1] = replace[to_toeng[1]]
             to_toeng = to_toeng.join(" ")
             to_toeng = BasicDate(new Date(to_toeng))
-            location.href = `index.php?from=${from_toeng}&to=${to_toeng}`
+            location.href = `repairReport.php?from=${from_toeng}&to=${to_toeng}`
         }
     })
     from.change(function () {

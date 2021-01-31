@@ -2,7 +2,6 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../../components/sidebar.php'); 
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +19,7 @@ if($_SESSION['level'] == 'admin'){
 </head>
 
 <body>
+    <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
         <div id="box-padding" style="padding:24px;">
             <div class="addcost-box">

@@ -2,7 +2,6 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../../components/sidebar.php'); 
 ?>
 
 <!DOCTYPE html>
@@ -12,12 +11,16 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/rule.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
+    <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="rule-box">
                 <h3>กฎระเบียบหอพัก " บ้านพิงฟ้า "</h3>
                 <div class="hr"></div>
@@ -34,10 +37,10 @@ if($_SESSION['level'] == 'admin'){
                           echo "0 results";
                         }
                     ?></textarea>
-                    <div id="edit_btn" style="margin-top:32px;display:block">
+                    <div id="edit_btn" style="display:flex;justify-content:center;margin-top:32px">
                         <button type="button" class="edit_btn" onclick="edit_rule()">แก้ไข</button>
                     </div>
-                    <div id="accept_btn" style="margin-top:32px;display:none">
+                    <div id="accept_btn" style="justify-content:center;flex-flow:wrap;column-gap:16px;margin-top:32px;display:none">
                         <button type="submit" name="rule_accept">ยืนยันการแก้ไข</button>
                         <button type="button" class="cancel_btn" onclick="edit_rule()">ยกเลิก</button>
                     </div>
