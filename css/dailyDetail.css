@@ -108,13 +108,13 @@
     transition: 0.3s;
 }
 
-.box .dailyDetail-box input[type=number]::-webkit-inner-spin-button, 
-.box .dailyDetail-box input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
+.box .dailyDetail-box input[type=number]::-webkit-inner-spin-button,
+.box .dailyDetail-box input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
 }
 
 .box .dailyDetail-box input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 .grid-container {
@@ -199,7 +199,7 @@
     height: 86px;
 }
 
-.total_price{
+.total_price {
     grid-area: total_price;
     height: 86px;
 }
@@ -231,77 +231,75 @@
     background-position: center;
 }
 
-.box .dailyDetail-box .img-box .del-btn:hover{
+.box .dailyDetail-box .img-box .del-btn:hover {
     background-color: rgb(216, 40, 40);
 }
 
-@media screen and (max-width: 1599px){
-    .box{
+@media screen and (max-width: 1599px) {
+    .box {
         padding: 80px 0 0 calc(100% - 1340px);
     }
 }
 
-@media screen and (max-width: 1569px){
-    .box{
+@media screen and (max-width: 1569px) {
+    .box {
         padding: 80px 0 0 230px;
     }
 }
 
-@media screen and (max-width: 1449px){
-    .box{
+@media screen and (max-width: 1449px) {
+    .box {
         padding: 80px 0 0 0;
     }
 }
 
-@media screen and (max-width: 1199px){
-    .dailyDetail-box{
+@media screen and (max-width: 1199px) {
+    .dailyDetail-box {
         padding: 24px;
     }
-}
 
-@media screen and (max-width: 1023px){
-    .grid-container{
-        grid-template-areas: 
-        "room_select room_select room_select room_select . . . . . ."
-        "name_title name_title firstname firstname firstname firstname lastname lastname lastname lastname"
-        "id_card id_card id_card email email email email tel tel tel"
-        "check_in check_in check_in check_in check_out check_out check_out check_out night night"
-        "people people air air fan fan room_status room_status total_price total_price";
-        gap: 8px;
-    }
-
-    #copy-box{
+    #copy-box {
         padding-top: 8px !important;
     }
 }
 
-@media screen and (max-width: 767px){
-    #box-padding{
+@media screen and (max-width: 1023px) {
+    .grid-container {
+        grid-template-areas:
+            "room_select room_select room_select room_select . . . . . ."
+            "name_title name_title firstname firstname firstname firstname lastname lastname lastname lastname"
+            "id_card id_card id_card email email email email tel tel tel"
+            "check_in check_in check_in check_in check_out check_out check_out check_out night night"
+            "people people air air fan fan room_status room_status total_price total_price";
+        gap: 8px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #box-padding {
         padding: 0 !important;
     }
 
-    .dailyDetail-box{
+    .dailyDetail-box {
         padding: 24px 16px;
         border-radius: 0;
     }
-    .grid-container{
+
+    .grid-container {
         grid-template-columns: 1fr 1fr;
-        grid-template-areas: 
-        "room_select room_select"
-        "name_title name_title"
-        "firstname firstname"
-        "lastname lastname"
-        "id_card id_card"
-        "email email"
-        "tel tel"
-        "check_in check_out"
-        "night people"
-        "air fan"
-        "room_status room_status"
-        "total_price total_price";
+        grid-template-areas:
+            "room_select room_select"
+            "name_title name_title"
+            "firstname firstname"
+            "lastname lastname"
+            "id_card id_card"
+            "email email"
+            "tel tel"
+            "check_in check_out"
+            "night people"
+            "air fan"
+            "room_status room_status"
+            "total_price total_price";
         gap: 8px;
-    }
-    .box .dailyDetail-box .img-box{
-        height: 300px;
     }
 }

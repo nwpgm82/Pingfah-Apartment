@@ -27,7 +27,7 @@ if($_SESSION["level"] == "admin"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/roomform2.css">
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>

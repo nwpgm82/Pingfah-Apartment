@@ -12,17 +12,19 @@ if($_SESSION['level'] == 'admin'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/addcost.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../../../js/admin/addcost.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
 <body>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="addcost-box">
                 <h3>รายละเอียดการชำระเงิน</h3>
-                <div class="hr"></div>
+                <div id="hr" class="hr"></div>
                 <form action="function/addcostData.php" method="POST">
                     <div class="grid">
                         <div>
@@ -101,7 +103,7 @@ if($_SESSION['level'] == 'admin'){
 
     <script>
     if ($("#room_select").val() != "") {
-        $("#water_price").val((parseFloat($("#water_people").val()) * <?php echo @$detail_result["water_bill"]; ?>).toFixed(2))
+        $("#water_price").val((parseFloat($("#water_people").val()) * <?php if(isset($detail_result["water_bill"])){ echo $detail_result["water_bill"]; }else{ echo 0; } ?>).toFixed(2))
     }
     $("#elec_unit").keyup(function() {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
@@ -111,7 +113,7 @@ if($_SESSION['level'] == 'admin'){
         if ($("#elec_unit").val() != "") {
             $("#elec_unit").css("border-color", "")
             $("#total_price").css("border-color", "")
-            $("#elec_price").val((parseFloat($("#elec_unit").val()) * <?php echo @$detail_result["elec_bill"]; ?>).toFixed(2))
+            $("#elec_price").val((parseFloat($("#elec_unit").val()) * <?php if(isset($detail_result["elec_bill"])){ echo $detail_result["elec_bill"]; }else{ echo 0; } ?>).toFixed(2))
             $("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat($("#elec_price").val())).toFixed(2))
         } else {
             $("#elec_price").val("0.00")

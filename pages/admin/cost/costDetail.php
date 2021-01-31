@@ -36,19 +36,21 @@ if($_SESSION['level'] == 'admin'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/costDetail.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../../../js/admin/costDetail.js"></script>
-    <title>Document</title>
+    <script src="../../../js/sidebar.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
     <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="costDetail-box">
                 <form action="function/editcost.php?cost_id=<?php echo $cost_id; ?>" method="POST">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <h3>รายละเอียดการชำระเงิน</h3>
+                        <h3>ข้อมูลการชำระเงิน</h3>
                         <button type="button" class="edit-btn" title="แก้ไขข้อมูล"></button>
                         <div class="edit-option" style="display:none;">
                             <button type="submit" class="correct-btn" id="accept-edit" name="accept-edit" title="ยืนยันการแก้ไข"></button>

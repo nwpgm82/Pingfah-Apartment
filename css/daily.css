@@ -61,6 +61,8 @@
     padding-top: 32px;
     height: 89px;
     display: flex;
+    flex-flow: wrap;
+    row-gap: 16px;
     align-items: flex-start;
 }
 
@@ -132,6 +134,7 @@
 }
 
 .daily-box .cancel-sort {
+    margin: 0 !important;
     background-color: #fff;
     border: 1px solid gray;
     color: grey;
@@ -139,6 +142,12 @@
 
 .daily-box .cancel-sort:hover {
     background-color: rgb(235, 235, 235);
+}
+
+.daily-box .option-grid {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 8px;
 }
 
 .daily-box .select_room {
@@ -154,6 +163,10 @@
 }
 
 .daily-box .del-btn {
+    width: 40px;
+    background-image: url("../img/tool/trash-icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
     background-color: #FF4646;
     transition: 0.3s;
 }
@@ -338,11 +351,6 @@
     text-align: center;
 }
 
-.daily-box table td:last-child {
-    width: 170px;
-    text-align: right;
-}
-
 .daily-box table td p {
     font-size: 16px;
     font-weight: 500;
@@ -372,6 +380,12 @@
 .pagination a:hover:not(.active) {
     background-color: rgb(131, 120, 47, 0.7);
     border: 1px solid rgb(131, 120, 47, 0.7);
+}
+
+@media screen and (max-width: 1623px) {
+    .daily-box .search {
+        height: auto;
+    }
 }
 
 @media screen and (max-width: 1599px) {
@@ -414,6 +428,7 @@
 
     .search-topic {
         grid-area: search-topic;
+        padding: 0 !important;
     }
 
     .from-box {
@@ -436,6 +451,7 @@
 
     .searchcode-topic {
         grid-area: searchcode-topic;
+        padding: 0 !important;
     }
 
     .searchcode-box {
@@ -448,7 +464,7 @@
 
     .cancel-box {
         grid-area: cancel-box;
-        padding: 0 !important;
+        padding: 16px 0 0 0!important;
     }
 
     .daily-box input#check_in,
@@ -461,7 +477,6 @@
     }
 
     .daily-box .cancel-sort {
-        margin: 0 !important;
         width: 100%;
     }
 
@@ -501,45 +516,7 @@
         ;
 
     }
-
-    .search-topic {
-        grid-area: search-topic;
-    }
-
-    .from-box {
-        grid-area: from-box;
-    }
-
-    .to-text {
-        grid-area: to-text;
-    }
-
-    .to-box {
-        grid-area: to-box;
-    }
-
-    .search-btn {
-        grid-area: search-btn;
-        margin: 0 !important;
-    }
-
-    .searchcode-topic {
-        grid-area: searchcode-topic;
-    }
-
-    .searchcode-box {
-        grid-area: searchcode-box;
-    }
-
-    .searchcode-btn {
-        grid-area: searchcode-btn;
-    }
-
-    .cancel-box {
-        grid-area: cancel-box;
-        padding: 0 !important;
-    }
-
+    
     .daily-box .checkbox-grid {
         padding: 32px 0;
         display: grid;
