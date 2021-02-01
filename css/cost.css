@@ -384,8 +384,25 @@
 
     .cost-box .search{
         display: grid;
-        grid-template-columns: 1fr auto;
-        column-gap: 64px;
+        grid-template-columns: 100%;
+        grid-template-areas:
+        "a"
+        "div";
+        row-gap: 16px;
+    }
+
+    .cost-box #first{
+        grid-area: div;
+        padding: 0 !important;
+    }
+
+    .cost-box #second{
+        grid-area: a;
+    }
+
+    .cost-box #second button{
+        width: 100%;
+        height: 60px;
     }
 
     #sub-search{
@@ -438,33 +455,12 @@
         border-radius: 0;
     }
 
-    .cost-box .search{
-        grid-template-columns: 100%;
-        grid-template-areas:
-        "a"
-        "div";
-        row-gap: 16px;
-    }
-
-    .cost-box #first{
-        grid-area: div;
-        padding: 0 !important;
-    }
-
-    .cost-box #second{
-        grid-area: a;
-    }
-
-    .cost-box #second button{
-        width: 100%;
-    }
-
     #sub-search{
         grid-template-areas: 
         "search_topic search_topic search_topic search_topic search_topic search_topic"
         "from_box from_box to_text to_text to_box to_box"
-        "search_btn search_btn . . cancel_box cancel_box";
-        gap: 16px 8px;
+        "search_btn search_btn search_btn search_btn search_btn search_btn"
+        "cancel_box cancel_box cancel_box cancel_box cancel_box cancel_box";
     }
 
     #checkbox-grid{

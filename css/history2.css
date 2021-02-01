@@ -312,6 +312,14 @@
         border-radius: 0;
     }
 
+    .history-box .search{
+        grid-template-areas:
+        "search-topic search-topic search-topic"
+        "from-box to-text to-box"
+        "search-btn search-btn search-btn"
+        "cancel-box cancel-box cancel-box"
+    }
+
     .search-btn{
         grid-area: search-btn;
         margin: 0 !important;

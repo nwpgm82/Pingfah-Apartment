@@ -27,10 +27,12 @@ if($_SESSION['level'] == 'admin'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../css/addPackage.css">
     <link rel="stylesheet" href="../../../css/my-style.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/admin/addPackage.js"></script>
+    <script src="../../../js/sidebar.js"></script>
     <title>Document</title>
 </head>
 
@@ -39,9 +41,11 @@ if($_SESSION['level'] == 'admin'){
     <div class="box">
         <div style="padding:24px;">
             <div class="addPackage-box">
-                <h3>รายละเอียดพัสดุ</h3>
+                <div>
+                   <h3>รายละเอียดพัสดุ</h3> 
+                </div>
                 <div class="hr"></div>
-                <form action="function/editPackage.php?package_id=<?php echo $package_id; ?>" method="POST">
+                <form action="function/editPackage.php?package_id=<?php echo $package_id; ?>" method="POST" onsubmit="return confirm('คุณต้องการบันทึกการแก้ไขใช่หรือไม่ ?')">
                     <div class="flex-detail">
                         <div>
                             <p>เลขพัสดุ</p>
@@ -58,14 +62,12 @@ if($_SESSION['level'] == 'admin'){
                     <div class="flex-detail">
                         <div>
                             <p>ชื่อเจ้าของพัสดุ</p>
-                            <input type="text" name="name" id="package_name" value="<?php echo $package_name; ?>">
+                            <input type="text" name="name" id="package_name" value="<?php echo $package_name; ?>" disabled>
                             <h5 id="name_error" style="color:red;"></h5>
                         </div>
                         <div>
                             <p>เลขห้อง</p>
-                            <select name="room" id="package_room">
-                                <option value="">--</option>
-                            </select>
+                            <input type="text" value="<?php echo $package_room ?>" disabled>
                             <h5 id="room_error" style="color:red;"></h5>
                         </div>
                     </div>
@@ -78,7 +80,7 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <div class="hr"></div>
                     <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
-                        <button type="submit">ยืนยัน</button>
+                        <button type="submit">ยืนยันการแก้ไข</button>
                     </div>
                 </form>
             </div>

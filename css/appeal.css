@@ -274,6 +274,14 @@
         min-height: calc(100vh - 80px);
     }
 
+    .appeal-box .search {
+        grid-template-areas:
+            "search-topic search-topic search-topic"
+            "from-box to-text to-box"
+            "search-btn search-btn search-btn"
+            "cancel-box cancel-box cancel-box"
+    }
+
     .appeal-box input {
         width: 100%;
     }

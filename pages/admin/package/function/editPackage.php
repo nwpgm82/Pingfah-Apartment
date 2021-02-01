@@ -16,9 +16,7 @@ if($_SESSION['level'] == 'admin'){
   $num = $_POST['num'];
   $company = $_POST['company'];
   $arrived = BasicDate($_POST['arrived']);
-  $name = $_POST['name'];
-  $room = $_POST['room'];
-      $sql = "UPDATE package SET package_num = '$num', package_company = '$company', package_arrived = '$arrived', package_name = '$name', package_room = '$room' WHERE package_id = $package_id";
+      $sql = "UPDATE package SET package_num = '$num', package_company = '$company', package_arrived = '$arrived' WHERE package_id = $package_id";
       if ($conn->query($sql) === TRUE) {
         echo "<script>";
         echo "alert('แก้ไขพัสดุเรียบร้อยแล้ว');";

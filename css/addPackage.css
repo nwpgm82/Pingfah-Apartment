@@ -89,3 +89,45 @@
     background-color: #fff;
     cursor: default;
 }
+
+@media screen and (max-width: 1599px) {
+    .box {
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px) {
+    .box {
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px) {
+    .box {
+        padding: 80px 0 0 0;
+    }
+    .addPackage-box{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #box-padding {
+        padding: 0 !important;
+    }
+
+    .addPackage-box {
+        padding: 24px 16px;
+        border-radius: 0;
+        min-height: calc(100vh - 80px);
+    }
+
+    .addPackage-box .flex-detail{
+        grid-template-columns: 100%;
+        height: auto;
+    }
+
+    .addPackage-box input[type=text]#package_arrived{
+        background-position: 97% 50%;
+    }
+}

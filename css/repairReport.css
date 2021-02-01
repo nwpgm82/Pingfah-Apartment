@@ -400,7 +400,18 @@
         border-radius: 0;
     }
 
-    
+    .repairReport-box .search{
+        padding-top: 24px;
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr 26px 1fr;
+        gap: 16px 0px;
+        grid-template-areas:
+        "search-topic . ."
+        "from-box to-text to-box"
+        "search-btn search-btn search-btn"
+        "cancel-box cancel-box cancel-box"
+    }
 
     .repairReport-box input{
         width: 100%;

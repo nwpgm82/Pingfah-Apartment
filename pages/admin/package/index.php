@@ -49,41 +49,41 @@ if($_SESSION['level'] == 'admin'){
 <body>
     <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="package-box">
                 <h3>ค้นหารายการพัสดุ</h3>
                 <div class="search">
-                    <div style="padding-right:16px">
-                        <div style="height:57px;display:flex;align-items:flex-start;">
-                            <label style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
-                            <div style="position:relative;">
+                    <div class="sub-search">
+                        <div id="first-sub" class="sub-searchsub">
+                            <label class="search_topic" style="padding:10px 8px 0 0;">ค้นหาตามวันที่</label>
+                            <div class="from_box" style="position:relative;">
                                 <input type="text" class="roundtrip-input" id="date_from" value="<?php if(isset($from)){ echo DateThai($from); } ?>">
                                 <h5 id="from_error" style="color:red;"></h5>
                             </div>
-                            <label style="padding:10px 8px 0 8px;">~</label>
-                            <div style="position:relative;">
+                            <label class="to_text" style="padding:10px 8px 0 8px;">~</label>
+                            <div class="to_box" style="position:relative;">
                                 <input type="text" class="roundtrip-input" id="date_to" value="<?php if(isset($to)){ echo DateThai($to); } ?>">
                                 <h5 id="to_error" style="color:red;"></h5>
                             </div>
-                            <button type="button" id="searchDate" style="margin-left:16px;">ค้นหา</button>
-                            <div style="padding:0 16px;display:flex;flex-start;">
-                                <label style="padding:10px 8px 0 0;">ค้นหาเลขพัสดุ</label>
-                                <div>
-                                    <input type="text" class="searchPackage" id="code">
-                                    <h5 id="code_error" style="color:red"></h5>
-                                </div>  
-                            </div>
-                            <button id="searchCode">ค้นหาเลขพัสดุ</button>
-                            <?php
-                            if(isset($from) || isset($to) || isset($code) || isset($check)){
-                            ?>
-                            <div style="padding:0 16px;">
-                                <a href="index.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
-                            </div>
-                            <?php } ?>
+                            <button class="search_btn" type="button" id="searchDate" style="margin:0 16px;">ค้นหา</button>
                         </div>
+                        <div id="second-sub" class="sub-searchsub">
+                            <label style="padding:10px 8px 0 0;">ค้นหาเลขพัสดุ</label>
+                            <div>
+                                <input type="text" class="searchPackage" id="code">
+                                <h5 id="code_error" style="color:red"></h5>
+                            </div>
+                            <button style="margin:0 16px;" id="searchCode">ค้นหาเลขพัสดุ</button> 
+                        </div>
+                        <?php
+                        if(isset($from) || isset($to) || isset($code) || isset($check)){
+                        ?>
+                        <div id="cancel_box">
+                            <a href="index.php"><button type="button" class="cancel-sort">ยกเลิกการกรองทั้งหมด</button></a>
+                        </div>
+                        <?php } ?>
                     </div>
-                    <a href="addPackage.php"><button>เพิ่มรายการพัสดุ</button></a>
+                    <a id="addPackage" href="addPackage.php"><button>เพิ่มรายการพัสดุ</button></a>                    
                 </div>
                 <div class="hr" style="margin-top:16px;"></div>
                 <div>
@@ -157,76 +157,79 @@ if($_SESSION['level'] == 'admin'){
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                     ?>
-                    <table>
-                        <tr>
-                            <th>ลำดับ</th>
-                            <th>เลขพัสดุ</th>
-                            <th>บริษัทขนส่ง</th>
-                            <th>วันที่พัสดุมาถึง</th>
-                            <th>วันที่รับพัสดุ</th>
-                            <th>เจ้าของพัสดุ</th>
-                            <th>เลขห้อง</th>
-                            <th>สถานะ</th>
-                            <th>รับพัสดุโดย</th>
-                            <th>เพิ่มเติม</th>
-                        </tr>
-                        <?php
-                        while($row = $result->fetch_assoc()) {
-                        ?>
-                        <form action="../package/function/receivedPackage.php?package_id=<?php echo $row["package_id"]; ?>"
-                            onsubmit="return confirm('คุณต้องการยืนยันการรับพัสดุใช่หรือไม่ ? ');" method="POST">
+                    <div style="overflow-x:auto;overflow-y:hidden;">
+                        <table>
                             <tr>
-                                <td><?php echo $num; ?></td>
-                                <td><?php echo $row["package_num"]; ?></td>
-                                <td><?php echo $row["package_company"]; ?></td>
-                                <td><?php echo DateThai($row["package_arrived"]); ?></td>
-                                <td><?php if(isset($row["package_receiveddate"])){ echo DateThai($row["package_receiveddate"]); } ?>
-                                </td>
-                                <td><?php echo $row["package_name"]; ?></td>
-                                <td><?php echo $row["package_room"]; ?></td>
-                                <td style="width:200px">
-                                    <?php 
-                                        if($row["package_status"] == 'รับพัสดุแล้ว'){
-                                            echo "<div class='status_received'>";
-                                            echo "<p>" .$row["package_status"] ."</p>";
-                                            echo "</div>";
-                                        }else{
-                                            echo "<div class='status_pending'>";
-                                            echo "<p>" .$row["package_status"] ."</p>";
-                                            echo "</div>";
-                                        }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    if(!isset($row["package_received"])){
-                                        echo "<input type='text' name='received' placeholder='ชื่อผู้รับ' required>";
-                                    }else{
-                                        echo $row["package_received"];
-                                    }
-                                    ?>
-                                </td>
-                                <td>
-                                    <div class="option">
+                                <th>ลำดับ</th>
+                                <th>เลขพัสดุ</th>
+                                <th>บริษัทขนส่ง</th>
+                                <th>วันที่พัสดุมาถึง</th>
+                                <th>วันที่รับพัสดุ</th>
+                                <th>เจ้าของพัสดุ</th>
+                                <th>เลขห้อง</th>
+                                <th>สถานะ</th>
+                                <th>ชื่อผู้รับพัสดุ</th>
+                                <th>เพิ่มเติม</th>
+                            </tr>
+                            <?php
+                            while($row = $result->fetch_assoc()) {
+                            ?>
+                            <form action="../package/function/receivedPackage.php?package_id=<?php echo $row["package_id"]; ?>"
+                                onsubmit="return confirm('คุณต้องการยืนยันการรับพัสดุใช่หรือไม่ ? ');" method="POST">
+                                <tr>
+                                    <td><?php echo $num; ?></td>
+                                    <td><?php echo $row["package_num"]; ?></td>
+                                    <td><?php echo $row["package_company"]; ?></td>
+                                    <td><?php echo DateThai($row["package_arrived"]); ?></td>
+                                    <td><?php if(isset($row["package_receiveddate"])){ echo DateThai($row["package_receiveddate"]); } ?>
+                                    </td>
+                                    <td><?php echo $row["package_name"]; ?></td>
+                                    <td><?php echo $row["package_room"]; ?></td>
+                                    <td style="width:200px">
+                                        <?php 
+                                            if($row["package_status"] == 'รับพัสดุแล้ว'){
+                                                echo "<div class='status_received'>";
+                                                echo "<p>" .$row["package_status"] ."</p>";
+                                                echo "</div>";
+                                            }else{
+                                                echo "<div class='status_pending'>";
+                                                echo "<p>" .$row["package_status"] ."</p>";
+                                                echo "</div>";
+                                            }
+                                        ?>
+                                    </td>
+                                    <td>
                                         <?php
                                         if(!isset($row["package_received"])){
-                                        ?>
-                                        <button type="submit" class="received-btn" title="รับพัสดุ">รับพัสดุ</button>
-                                        <?php 
+                                            echo "<input type='text' name='received' placeholder='ชื่อผู้รับ' required>";
                                         }else{
+                                            echo $row["package_received"];
+                                        }
                                         ?>
-                                        <button type="button" class="package-received">รับพัสดุแล้ว</button>
-                                        <?php
-                                        } 
-                                        ?>
-                                        <a href="editPackage.php?package_id=<?php echo $row["package_id"]; ?>" title="แก้ไขพัสดุ"><button type="button" class="edit-btn"></button></a>
-                                        <button type="button" class="del-btn" id="<?php echo $row["package_id"]; ?>" title="ลบพัสดุ"></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </form>
-                        <?php $num++; } ?>
-                    </table>
+                                    </td>
+                                    <td>
+                                        <div class="option">
+                                            <?php
+                                            if(!isset($row["package_received"])){
+                                            ?>
+                                            <button type="submit" class="received-btn" title="รับพัสดุ">รับพัสดุ</button>
+                                            <a href="editPackage.php?package_id=<?php echo $row["package_id"]; ?>" title="แก้ไขพัสดุ"><button type="button" class="edit-btn"></button></a>
+                                            <?php 
+                                            }else{
+                                            ?>
+                                            <button type="button" class="package-received">รับพัสดุแล้ว</button>
+                                            <button type="button" class="edit-btn" style="background-color:#ddd;cursor:default;"></button>
+                                            <?php
+                                            } 
+                                            ?>
+                                            <button type="button" class="del-btn" id="<?php echo $row["package_id"]; ?>" title="ลบพัสดุ"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </form>
+                            <?php $num++; } ?>
+                        </table>
+                    </div>
                     <?php
                     ///////pagination
                     if(isset($date) && !isset($check)){
@@ -327,6 +330,9 @@ if($_SESSION['level'] == 'admin'){
         var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
+        $(window).resize(function(){
+            drawChart();
+        })
     }
     </script>
 </body>
