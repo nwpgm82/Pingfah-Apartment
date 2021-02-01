@@ -35,9 +35,9 @@ $(document).ready(function () {
         employee.css("color", "#fff")
         header.html("รายละเอียดข้อมูลพนักงาน")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/detail.php") {
-        roomdetail.style.backgroundColor = "rgba(131, 120, 47, 0.7)"
-        roomdetail.style.color = "#fff"
-        header.innerHTML = "ประเภทห้องพัก"
+        roomdetail.css("background-color", "rgba(131, 120, 47, 0.7)")
+        roomdetail.css("color", "#fff")
+        header.html("ประเภทห้องพัก")
         document.querySelector("#dropdown").style.display = "block"
     } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/gallery/index.php") {
         gallery.style.backgroundColor = "rgba(131, 120, 47, 0.7)"

@@ -16,8 +16,9 @@
 
 .detail-box {
     width: 100%;
-    min-height: 800px;
+    /* min-height: 800px; */
     border-radius: 4px;
+    padding: 36px;
     background-color: #fff;
     -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
@@ -28,6 +29,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* padding: 36px; */
 }
 
 .detail-box .header .inputfile {
@@ -64,15 +66,32 @@
 
 .hr {
     margin: 16px auto 0px auto;
-    border-bottom: 1px solid rgb(131, 120, 47, 0.7);
-    opacity: 0.5;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.4);
 }
 
 .detail-box .roomDetail {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
     width: 100%;
-    padding: 32px 0;
+    padding-top: 16px;
+}
+
+.detail-box .roomDetail .roomDetail-box{
+    width: 100%;
+    border: 1px solid rgb(131, 120, 47, 0.7);
+    border-radius: 4px;
+}
+
+.detail-box .roomDetail .roomDetail-box .topic-box{
+    padding: 16px;
+}
+
+.detail-box .roomDetail .roomDetail-box .content{
+    padding: 20px 16px 32px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px 8px;
 }
 
 .detail-box .roomDetail input {
@@ -130,24 +149,30 @@
 }
 
 .detail-box .detail-grid{
-    padding-top:16px;
+    margin-top: 16px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 850px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+    border-top: 1px solid rgb(131, 120, 47, 0.7);
+    border-left: 1px solid rgb(131, 120, 47, 0.7);
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 .detail-box .detail-grid .sub-grid{
-    margin: 16px 0;
-    display: grid;
-    grid-template-columns: auto 1fr 1fr;
+    display: flex;
+    padding: 16px;
+    column-gap: 16px;
     width: 100%;
     align-items: center;
+    border-bottom: 1px solid rgb(131, 120, 47, 0.7);
+    border-right: 1px solid rgb(131, 120, 47, 0.7);
 }
 
 .detail-box .detail-grid .sub-grid input[type=checkbox]{
     width: 20px;
     height: 20px;
-    margin: 0 8px;
+    /* margin: 0 8px; */
     cursor: pointer;
 }
 
@@ -157,6 +182,7 @@
 
 .detail-box .detail-grid .sub-grid img{
     width: 40px;
+    object-fit: cover;
 }
 
 
@@ -180,15 +206,35 @@
 }
 
 .detail-box .edit-btn{
+    width: 40px;
     background-color:darkturquoise;
+    background-image: url("../img/tool/edit-icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .detail-box .edit-btn:hover{
     background-color: rgb(0, 165, 165);
 }
 
+.detail-box .correct-btn{
+    width: 40px;
+    background-image: url("../img/tool/correct-icon.png");
+    background-color: #88BC45;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.detail-box .correct-btn:hover{
+    background-color: #719c39;
+}
+
 .detail-box .cancel-btn{
+    width: 40px;
     background-color: rgb(255, 70, 70);
+    background-image: url("../img/tool/cancel-icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .detail-box .cancel-btn:hover,
@@ -198,12 +244,15 @@
 
 .detail-box .grid .del-btn{
     margin: 0;
-    width: auto;
+    width: 40px;
     height: 40px;
     padding: 0 16px;
     border-radius: 4px;
     border: none;
     background-color: rgb(255, 70, 70);
+    background-image: url("../img/tool/trash-icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
     position: absolute;
     top: 8px;
     right: 8px;
