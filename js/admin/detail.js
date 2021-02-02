@@ -40,14 +40,12 @@ function cancelEdit() {
     document.getElementById("accept").style.display = "none"
 }
 $(document).ready(function () {
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var room_type = url.searchParams.get("type");
+    let url_string = window.location.href;
+    let url = new URL(url_string);
+    let room_type = url.searchParams.get("type");
     $('#file').change(function () {
-        //on change event  
-        var formdata = new FormData();
-        var files = $("#file")[0].files[0];
-        alert(files.name)
+        let formdata = new FormData();
+        let files = $("#file")[0].files[0];
         formdata.append("file", files);
         $.ajax({
             url: `function/addImage.php?type=${room_type}`,
@@ -55,19 +53,43 @@ $(document).ready(function () {
             data: formdata,
             processData: false,
             contentType: false,
-            success: function (result) {
-                $(".grid").prepend(`<div class='img-box'><img src='../../images/roomdetail/${room_type}/${result}'><button type='button' class='del-btn' name='${result}'></button></div>`)
-                // location.href = `detail.php?type=${room_type}`
-                $("#file").val("")
+            success: function () {
+                document.location.reload()
             }
         });
     });
-
-    $(".del-btn").click(function (event) {
+    $(document).on("click", ".del-btn", function (event) {
         if (confirm('คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?')) {
             // console.log(event.target.name)
-            location.href = `function/delImage.php?type=${room_type}&gal_name=${event.target.name}`
-
+            let img_name = event.target.name
+            $.ajax({
+                url: `function/delImage.php?type=${room_type}`,
+                type: 'post',
+                data: {
+                    img_name: img_name,
+                    request: 2
+                },
+                success: function () {
+                    document.location.reload()
+                }
+            });
         }
+    })
+    $(".edit-btn").click(function () {
+        let inputs = $("input")
+        inputs.each(function () {
+            $(this).prop("disabled", false)
+        })
+        $("#edit").hide()
+        $("#accept").css("display", "flex")
+        $("#accept").css("column-gap", "8px")
+    })
+    $(".cancel-btn").click(function () {
+        let inputs = $("input")
+        inputs.each(function () {
+            $(this).prop("disabled", true)
+        })
+        $("#edit").css("display", "flex")
+        $("#accept").hide()
     })
 })

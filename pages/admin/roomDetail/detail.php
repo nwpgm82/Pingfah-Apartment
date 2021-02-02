@@ -33,17 +33,17 @@ if($_SESSION['level'] == 'admin'){
 <body>
     <?php include('../../../components/sidebar.php'); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="detail-box">
                 <form action="function/addData.php?type=<?php echo $type; ?>" method="POST" enctype="multipart/form-data">
                     <div class="header">
                         <h3>ห้อง<?php echo $type_show; ?></h3>
-                        <div id="edit" style="display:flex;justify-content:center;align-items:center;">
-                            <button type="button" class="edit-btn" onclick="edit()"></button>
+                        <div id="edit" style="display:flex;">
+                            <button type="button" class="edit-btn"></button>
                         </div>
-                        <div id="accept" style="display:none;justify-content:center;align-items:center;">
+                        <div id="accept" style="display:none;">
                             <button type="submit" name="accept" class="correct-btn"></button>
-                            <button type="button" class="cancel-btn" onclick="cancelEdit()"></button>
+                            <button type="button" class="cancel-btn"></button>
                         </div>
                     </div>
                     <div class="hr"></div>
@@ -51,67 +51,56 @@ if($_SESSION['level'] == 'admin'){
                         <h3>รายละเอียดของลักษณะการเข้าพัก</h3>
                         <div class="roomDetail">
                             <div class="roomDetail-box">
-                                    <div class="topic-box">
-                                        <h3>รายวัน</h3>
+                                <div class="topic-box">
+                                    <h3>รายวัน</h3>
+                                </div>
+                                <div class="hr" style="margin:0;"></div>
+                                <div class="content">
+                                    <div>
+                                        <p>ค่าเช่าห้อง(รายวัน) | <strong>บาท/วัน</strong></p>
+                                        <input type="text" name="daily_price" value="<?php echo $row['daily_price']; ?>" disabled>
                                     </div>
-                                    <div class="hr" style="margin:0;"></div>
-                                    <div class="content">
-                                        <div>
-                                            <p>ค่าเช่าห้อง (รายวัน)</p>
-                                            <input type="text" name="daily_price" value="<?php echo $row['daily_price']; ?>" disabled>
-                                            <label>บาท/วัน</label>
-                                        </div>
-                                        <div>
-                                            <p>ค่ามัดจำห้องพัก</p>
-                                            <input type="text" name="daily_deposit" value="<?php echo $row['daily_deposit']; ?>" disabled>
-                                            <label>บาท/ห้อง</label>
-                                        </div>
-                                        <div>
-                                            <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
-                                            <input type="text" name="daily_tax" value="<?php echo $row['daily_tax']; ?>" disabled>
-                                            <label>%</label>
-                                        </div>
+                                    <div>
+                                        <p>ค่ามัดจำห้องพัก | <strong>บาท/ห้อง</strong></p>
+                                        <input type="text" name="daily_deposit" value="<?php echo $row['daily_deposit']; ?>" disabled>
                                     </div>
+                                    <div>
+                                        <p>ภาษีมูลค่าเพิ่ม(VAT) | <strong>%</strong></p>
+                                        <input type="text" name="daily_tax" value="<?php echo $row['daily_tax']; ?>" disabled>
+                                    </div>
+                                </div>
                             </div>
                             <!-- ------------------ -->
                             <div class="roomDetail-box">
-                                    <div class="topic-box">
-                                        <h3>รายเดือน</h3>
+                                <div class="topic-box">
+                                    <h3>รายเดือน</h3>
+                                </div>
+                                <div class="hr" style="margin:0;"></div>
+                                <div class="content">
+                                    <div>
+                                        <p>ค่าเช่าห้อง(รายเดือน) | <strong>บาท/เดือน</strong></p>
+                                        <input type="text" name="price" value="<?php echo $row['price']; ?>" disabled>
                                     </div>
-                                    <div class="hr" style="margin:0;"></div>
-                                    <div class="content">
-                                        <div>
-                                            <p>ค่าเช่าห้อง(รายเดือน)</p>
-                                            <input type="text" name="price" value="<?php echo $row['price']; ?>" disabled>
-                                            <label>บาท/เดือน</label>
-                                        </div>
-                                        <div>
-                                            <p>ค่าน้ำ</p>
-                                            <input type="text" name="water_bill" value="<?php echo $row['water_bill']; ?>" disabled>
-                                            <label>บาท/คน</label>
-                                        </div>
-                                        <div>
-                                            <p>ค่าไฟ (หน่วย)</p>
-                                            <input type="text" name="elec_bill"
-                                                value="<?php echo $row['elec_bill']; ?>"
-                                                disabled>
-                                            <label>บาท/เดือน</label>
-                                        </div>
-                                        <div>
-                                            <p>ค่าเคเบิล</p>
-                                            <input type="text" name="cable_charge"
-                                                value="<?php echo $row['cable_charge']; ?>"
-                                                disabled>
-                                            <label>บาท/เดือน</label>
-                                        </div>
-                                        <div>
-                                            <p>ค่าปรับ</p>
-                                            <input type="text" name="fines"
-                                                value="<?php echo $row['fines']; ?>"
-                                                disabled>
-                                            <label>บาท/วัน</label>
-                                        </div>
+                                    <div>
+                                        <p>ค่าน้ำ | <strong>บาท/คน</strong></p>
+                                        <input type="text" name="water_bill" value="<?php echo $row['water_bill']; ?>" disabled>
                                     </div>
+                                    <div>
+                                        <p>ค่าไฟ (หน่วย) | <strong>บาท/เดือน</strong></p>
+                                        <input type="text" name="elec_bill"
+                                            value="<?php echo $row['elec_bill']; ?>" disabled>
+                                    </div>
+                                    <div>
+                                        <p>ค่าเคเบิล | <strong>บาท/เดือน</strong></p>
+                                        <input type="text" name="cable_charge"
+                                            value="<?php echo $row['cable_charge']; ?>" disabled>
+                                    </div>
+                                    <div>
+                                        <p>ค่าปรับ | <strong>บาท/วัน</strong></p>
+                                        <input type="text" name="fines"
+                                            value="<?php echo $row['fines']; ?>" disabled>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,7 @@ if($_SESSION['level'] == 'admin'){
   include('../../../connection.php');
   $type = $_REQUEST['type'];
   // $gal_id = $_REQUEST['gal_id'];
-  $gal_name = $_REQUEST['gal_name'];
+  $gal_name = $_POST["img_name"];
   $folder_path = "../../../images/roomdetail/$type/$gal_name";
   if($type == "fan"){
     $countCheck = mysqli_query($conn,"SELECT COUNT(gal_name) AS total FROM fan_gal WHERE gal_name = '$gal_name' GROUP BY gal_name HAVING COUNT(gal_name)");
