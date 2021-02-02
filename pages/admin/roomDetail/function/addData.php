@@ -9,8 +9,10 @@ if($_SESSION['level'] == 'admin'){
     }else if($type == "air"){
       $type_show = "แอร์";
     }
-    $price = $_POST['price'];
     $daily_price = $_POST['daily_price'];
+    $daily_deposit = $_POST['daily_deposit'];
+    $daily_tax = $_POST['daily_tax'];
+    $price = $_POST['price'];
     $water = $_POST['water_bill'];
     $elec = $_POST['elec_bill'];
     $cable = $_POST['cable_charge'];
@@ -18,29 +20,64 @@ if($_SESSION['level'] == 'admin'){
     if(isset($_POST['sv_fan'])){
       $sv_fan = $_POST['sv_fan'];
     }else{
-      $sv_fan = null;
+      $sv_fan = "off";
     }
     if(isset($_POST['sv_air'])){
       $sv_air = $_POST['sv_air'];
     }else{
-      $sv_air = null;
+      $sv_air = "off";
     }
     if(isset($_POST['sv_wifi'])){
       $sv_wifi = $_POST['sv_wifi'];
     }else{
-      $sv_wifi = null;
+      $sv_wifi = "off";
     }
     if(isset($_POST['sv_furniture'])){
       $sv_furniture = $_POST['sv_furniture'];
     }else{
-      $sv_furniture = null;
+      $sv_furniture = "off";
     }
     if(isset($_POST['sv_readtable'])){
       $sv_readtable = $_POST['sv_readtable'];
     }else{
-      $sv_readtable = null;
+      $sv_readtable = "off";
     }
-    $sql = "UPDATE roomdetail SET price = $price, daily_price = $daily_price, water_bill = $water, elec_bill = $elec, cable_charge = $cable, fines = $fines, sv_fan ='$sv_fan', sv_air ='$sv_air', sv_wifi ='$sv_wifi', sv_furniture ='$sv_furniture', sv_readtable ='$sv_readtable' WHERE type = '$type_show' ";
+    if(isset($_POST['sv_telephone'])){
+      $sv_telephone = $_POST['sv_telephone'];
+    }else{
+      $sv_telephone = "off";
+    }
+    if(isset($_POST['sv_television'])){
+      $sv_television = $_POST['sv_television'];
+    }else{
+      $sv_television = "off";
+    }
+    if(isset($_POST['sv_refrigerator'])){
+      $sv_refrigerator = $_POST['sv_refrigerator'];
+    }else{
+      $sv_refrigerator = "off";
+    }
+    if(isset($_POST['sv_waterbottle'])){
+      $sv_waterbottle = $_POST['sv_waterbottle'];
+    }else{
+      $sv_waterbottle = "off";
+    }
+    if(isset($_POST['sv_toilet'])){
+      $sv_toilet = $_POST['sv_toilet'];
+    }else{
+      $sv_toilet = "off";
+    }
+    if(isset($_POST['sv_hairdryer'])){
+      $sv_hairdryer = $_POST['sv_hairdryer'];
+    }else{
+      $sv_hairdryer = "off";
+    }
+    if(isset($_POST['sv_towel'])){
+      $sv_towel = $_POST['sv_towel'];
+    }else{
+      $sv_towel = "off";
+    }
+    $sql = "UPDATE roomdetail SET water_bill = $water, elec_bill = $elec, cable_charge = $cable, fines = $fines, price = $price, daily_price = $daily_price, daily_deposit = $daily_deposit, daily_tax = $daily_tax, sv_fan ='$sv_fan', sv_air ='$sv_air', sv_wifi ='$sv_wifi', sv_furniture ='$sv_furniture', sv_readtable ='$sv_readtable', sv_telephone = '$sv_telephone', sv_television = '$sv_television', sv_refrigerator = '$sv_refrigerator', sv_waterbottle = '$sv_waterbottle', sv_toilet = '$sv_toilet', sv_hairdryer = '$sv_hairdryer', sv_towel = '$sv_towel' WHERE type = '$type_show' ";
     if ($conn->query($sql) === TRUE) {
       echo "<script>";
       echo "alert('แก้ไขข้อมูลสำเร็จ');";

@@ -26,7 +26,6 @@ if($_SESSION['level'] == 'admin'){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="../../../js/admin/detail.js"></script>
     <script src="../../../js/sidebar.js"></script>
     <title>Pingfah Apartment</title>
 </head>
@@ -59,17 +58,17 @@ if($_SESSION['level'] == 'admin'){
                                     <div class="content">
                                         <div>
                                             <p>ค่าเช่าห้อง (รายวัน)</p>
-                                            <input type="text" name="daily_price" value="<?php if(isset($row['daily_price'])){ echo $row['daily_price']; }else{ echo 0; } ?>" disabled>
+                                            <input type="text" name="daily_price" value="<?php echo $row['daily_price']; ?>" disabled>
                                             <label>บาท/วัน</label>
                                         </div>
                                         <div>
                                             <p>ค่ามัดจำห้องพัก</p>
-                                            <input type="text" name="daily_deposit" disabled>
+                                            <input type="text" name="daily_deposit" value="<?php echo $row['daily_deposit']; ?>" disabled>
                                             <label>บาท/ห้อง</label>
                                         </div>
                                         <div>
                                             <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
-                                            <input type="text" name="daily_deposit" disabled>
+                                            <input type="text" name="daily_tax" value="<?php echo $row['daily_tax']; ?>" disabled>
                                             <label>%</label>
                                         </div>
                                     </div>
@@ -83,32 +82,32 @@ if($_SESSION['level'] == 'admin'){
                                     <div class="content">
                                         <div>
                                             <p>ค่าเช่าห้อง(รายเดือน)</p>
-                                            <input type="text" name="price" value="<?php if(isset($row['price'])){ echo $row['price']; }else{ echo 0; } ?>" disabled>
+                                            <input type="text" name="price" value="<?php echo $row['price']; ?>" disabled>
                                             <label>บาท/เดือน</label>
                                         </div>
                                         <div>
                                             <p>ค่าน้ำ</p>
-                                            <input type="text" name="water_bill" value="<?php if(isset($row['water_bill'])){ echo $row['water_bill']; }else{ echo 0; } ?>" disabled>
+                                            <input type="text" name="water_bill" value="<?php echo $row['water_bill']; ?>" disabled>
                                             <label>บาท/คน</label>
                                         </div>
                                         <div>
                                             <p>ค่าไฟ (หน่วย)</p>
                                             <input type="text" name="elec_bill"
-                                                value="<?php if(isset($row['elec_bill'])){ echo $row['elec_bill']; }else{ echo 0; } ?>"
+                                                value="<?php echo $row['elec_bill']; ?>"
                                                 disabled>
                                             <label>บาท/เดือน</label>
                                         </div>
                                         <div>
                                             <p>ค่าเคเบิล</p>
                                             <input type="text" name="cable_charge"
-                                                value="<?php if(isset($row['cable_charge'])){ echo $row['cable_charge']; }else{ echo 0; } ?>"
+                                                value="<?php echo $row['cable_charge']; ?>"
                                                 disabled>
                                             <label>บาท/เดือน</label>
                                         </div>
                                         <div>
                                             <p>ค่าปรับ</p>
                                             <input type="text" name="fines"
-                                                value="<?php if(isset($row['fines'])){ echo $row['fines']; }else{ echo 0; } ?>"
+                                                value="<?php echo $row['fines']; ?>"
                                                 disabled>
                                             <label>บาท/วัน</label>
                                         </div>
@@ -145,39 +144,39 @@ if($_SESSION['level'] == 'admin'){
                                 <img src="../../../img/tool/table.png">
                             </div>
                             <div class="sub-grid">
-                                <input type="checkbox" name="sv_readtable" <?php if($row['sv_readtable'] == 'on'){ echo "checked"; }?> disabled>
+                                <input type="checkbox" name="sv_telephone" <?php if($row['sv_telephone'] == 'on'){ echo "checked"; }?> disabled>
                                 <label>โทรศัพท์</label>
-                                <img src="../../../img/tool/table.png">
+                                <img src="../../../img/tool/telephone.png">
                             </div>
                             <div class="sub-grid">
-                                <input type="checkbox" name="sv_readtable" <?php if($row['sv_readtable'] == 'on'){ echo "checked"; }?> disabled>
+                                <input type="checkbox" name="sv_television" <?php if($row['sv_television'] == 'on'){ echo "checked"; }?> disabled>
                                 <label>โทรทัศน์ดาวเทียม / เคเบิล</label>
-                                <img src="../../../img/tool/table.png">
+                                <img src="../../../img/tool/television.png">
                             </div>
                             <div class="sub-grid">
-                                <input type="checkbox" name="sv_readtable" <?php if($row['sv_readtable'] == 'on'){ echo "checked"; }?> disabled>
+                                <input type="checkbox" name="sv_refrigerator" <?php if($row['sv_refrigerator'] == 'on'){ echo "checked"; }?> disabled>
                                 <label>ตู้เย็น</label>
-                                <img src="../../../img/tool/table.png">
+                                <img src="../../../img/tool/refrigerator.png">
                             </div>
                             <div class="sub-grid">
-                                <input type="checkbox" name="sv_readtable" <?php if($row['sv_readtable'] == 'on'){ echo "checked"; }?> disabled>
+                                <input type="checkbox" name="sv_waterbottle" <?php if($row['sv_waterbottle'] == 'on'){ echo "checked"; }?> disabled>
                                 <label>น้ำบรรจุขวด</label>
-                                <img src="../../../img/tool/table.png">
+                                <img src="../../../img/tool/waterbottle.png">
                             </div>
                             <div class="sub-grid">
-                                <input type="checkbox" name="sv_readtable" <?php if($row['sv_readtable'] == 'on'){ echo "checked"; }?> disabled>
+                                <input type="checkbox" name="sv_toilet" <?php if($row['sv_toilet'] == 'on'){ echo "checked"; }?> disabled>
                                 <label>ของใช้ในห้องน้ำ</label>
-                                <img src="../../../img/tool/table.png">
+                                <img src="../../../img/tool/toilet-items.png">
                             </div>
                             <div class="sub-grid">
-                                <input type="checkbox" name="sv_readtable" <?php if($row['sv_readtable'] == 'on'){ echo "checked"; }?> disabled>
+                                <input type="checkbox" name="sv_hairdryer" <?php if($row['sv_hairdryer'] == 'on'){ echo "checked"; }?> disabled>
                                 <label>ไดร์เป่าผม</label>
-                                <img src="../../../img/tool/table.png">
+                                <img src="../../../img/tool/hairdryer.png">
                             </div>
                             <div class="sub-grid">
-                                <input type="checkbox" name="sv_readtable" <?php if($row['sv_readtable'] == 'on'){ echo "checked"; }?> disabled>
+                                <input type="checkbox" name="sv_towel" <?php if($row['sv_towel'] == 'on'){ echo "checked"; }?> disabled>
                                 <label>ผ้าเช็ดตัว</label>
-                                <img src="../../../img/tool/table.png">
+                                <img src="../../../img/tool/towel.png">
                             </div>
                         </div>
                     </div>
@@ -212,7 +211,7 @@ if($_SESSION['level'] == 'admin'){
                     ?>
                     <div class="img-box">
                         <img src="../../images/roomdetail/<?php echo $type; ?>/<?php echo $row['gal_name']; ?>">
-                        <button type="button" class="del-btn" id="del-btn" onclick="delImg('<?php echo $type; ?>',<?php echo $row['gal_id']; ?>,'<?php echo $row['gal_name']; ?>')"></button>
+                        <button type="button" class="del-btn" name="<?php echo $row['gal_name']; ?>"></button>
                     </div>
                     <?php
                             $num++;
@@ -259,6 +258,7 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
+    <script src="../../../js/admin/detail.js"></script>
 </body>
 
 </html>
