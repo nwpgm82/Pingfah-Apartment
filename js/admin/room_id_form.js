@@ -47,7 +47,7 @@ $(document).ready(function () {
         var ext = getExtension(filename);
         switch (ext.toLowerCase()) {
             case 'jpg':
-            case 'pdf':
+            // case 'pdf':
             case 'png':
                 //etc
                 return true;
@@ -250,7 +250,7 @@ $(document).ready(function () {
     id_img.change(function () {
         if (isImage(id_img.val()) == false) {
             $("#id_box").css("border-color", "red")
-            $("#idimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 5 MB เท่านั้น")
+            $("#idimg_error").html("รองรับไฟล์ประเภท jpg, png ขนาดไม่เกิน 5 MB เท่านั้น")
             id_img.val("")
             $('#img_id').attr('src', "");
             $("#img_id").hide()
@@ -278,7 +278,7 @@ $(document).ready(function () {
     home_img.change(function () {
         if (isImage(home_img.val()) == false) {
             $("#home_box").css("border-color", "red")
-            $("#homeimg_error").html("รองรับไฟล์ประเภท jpg, pdf, png ขนาดไม่เกิน 5 MB เท่านั้น")
+            $("#homeimg_error").html("รองรับไฟล์ประเภท jpg, png ขนาดไม่เกิน 5 MB เท่านั้น")
             home_img.val("")
             $('#img_home').attr('src', "");
             $("#img_home").hide()

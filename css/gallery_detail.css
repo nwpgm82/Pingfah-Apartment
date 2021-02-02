@@ -67,7 +67,7 @@
 
 .gallery-card .grid{
     width: 100%;
-    height: 728px;
+    /* height: 728px; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 16px;
@@ -76,7 +76,7 @@
 
 .gallery-card .grid .img-box{
     width: 100%;
-    height: 356px;
+    max-height: 356px;
     overflow: hidden;
     position: relative;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
@@ -93,19 +93,21 @@
 }
 
 .gallery-card .grid .img-box .del-btn{
-    width: auto;
+    width: 40px;
     height: 40px;
     padding: 0 16px;
     border-radius: 4px;
     border: none;
     background-color: rgb(255, 70, 70);
+    background-image: url("../img/tool/trash-icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
     position: absolute;
     top: 8px;
     right: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -138,4 +140,43 @@
 .pagination a:hover:not(.active) {
     background-color: rgb(131, 120, 47, 0.7);
     border: 1px solid rgb(131, 120, 47, 0.7);
+}
+
+@media screen and (max-width: 1599px){
+    .box{
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px){
+    .box{
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px){
+    .box{
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px){
+    .gallery-card{
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 767px){
+    #box-padding{
+        padding: 0 !important;
+    }
+
+    .gallery-card{
+        padding: 24px 16px;
+        border-radius: 0;
+    }
+
+    .gallery-card .grid{
+        grid-template-columns: 1fr 1fr;
+    }
 }

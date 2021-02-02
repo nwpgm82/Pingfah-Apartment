@@ -2,7 +2,6 @@
 session_start();
 if($_SESSION['level'] == 'admin'){
     include('../../connection.php');
-    include('../../../components/sidebar.php'); 
     $num = 1;
     $sql = "SELECT * FROM roomDetail";
     $result = $conn->query($sql);
@@ -16,11 +15,15 @@ if($_SESSION['level'] == 'admin'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../../../css/roomDetail.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="../../../js/sidebar.js"></script>
 </head>
 
 <body>
-    <div style="padding:24px;">
-        <div class="box">
+    <?php include('../../../components/sidebar.php'); ?>
+    <div class="box">
+        <div id="box-padding" style="padding:24px;">
             <div class="roomDetail-box">
                 <h3>ประเภทห้องพักทั้งหมด</h3>
                 <div class="hr"></div>

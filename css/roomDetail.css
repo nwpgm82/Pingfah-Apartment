@@ -35,13 +35,13 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 16px;
-    width: 70%;
+    width: 100%;
 }
 
 .roomDetail-box .card{
     display: grid;
-    grid-template-columns: 0.8fr 1fr;
-    height: 200px;
+    grid-template-columns: 1fr 1fr;
+    height: 300px;
     border-radius: 4px;
     -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
@@ -93,7 +93,7 @@
 .roomDetail-box .card .mySlides1,
 .roomDetail-box .card .mySlides2 {
     display: none;
-    height: 200px;
+    height: 300px;
 }
 
 /* Add a pointer when hovering over the thumbnail images */
@@ -106,7 +106,7 @@
 .roomDetail-box .card .next {
     cursor: pointer;
     position: absolute;
-    top: 35%;
+    top: 38%;
     width: auto;
     padding: 16px;
     /* margin-top: -50px; */
@@ -129,4 +129,52 @@
 .roomDetail-box .card .prev:hover,
 .roomDetail-box .card .next:hover {
     background-color: rgba(0, 0, 0, 0.8);
+}
+
+@media screen and (max-width: 1599px){
+    .box{
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px){
+    .box{
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px){
+    .box{
+        padding: 80px 0 0 0;
+    }
+}
+
+@media screen and (max-width: 1199px){
+    .roomDetail-box{
+        padding: 24px;
+    }
+    .roomDetail-box .grid{
+        grid-template-columns: 100%;
+    }
+}
+
+@media screen and (max-width: 767px){
+    #box-padding{
+        padding: 0 !important;
+    }
+
+    .roomDetail-box{
+        padding: 24px 16px;
+        border-radius: 0;
+        min-height: 100vh;
+    }
+
+    .roomDetail-box .card{
+        grid-template-columns: 100%;
+        height: auto;
+    }
+
+    .roomDetail-box .card .detail{
+        row-gap: 16px;
+    }
 }

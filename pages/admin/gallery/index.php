@@ -2,7 +2,6 @@
 session_start();
 if($_SESSION["level"] == "admin"){
     include("../../connection.php");
-    include("../../../components/sidebar.php");
 }
 ?>
 <!DOCTYPE html>
@@ -11,16 +10,19 @@ if($_SESSION["level"] == "admin"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../css/gallery_detail.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="../../../css/gallery_detail.css">
-    <title>Document</title>
+    <script src="../../../js/sidebar.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
+    <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="gallery-card">
                 <div class="header">
                     <h3>รายการแกลลอรี่ทั้งหมด</h3>
@@ -46,7 +48,7 @@ if($_SESSION["level"] == "admin"){
                     ?>
                     <div class="img-box">
                         <img src="../../images/gallery/<?php echo $row['gallery_name']; ?>" alt="">
-                        <button class="del-btn" onclick="delImg(<?php echo $row['gallery_id']; ?>,'<?php echo $row['gallery_name']; ?>')">X</button>
+                        <button class="del-btn" onclick="delImg(<?php echo $row['gallery_id']; ?>,'<?php echo $row['gallery_name']; ?>')"></button>
                     </div>
                     <?php
                         }

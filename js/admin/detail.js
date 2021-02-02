@@ -1,62 +1,49 @@
-function preview_image(event, pic) {
-    console.log(pic)
-    var reader = new FileReader();
-    reader.onload = function () {
-        var output = document.getElementById(`output_image${pic}`);
-        output.src = reader.result;
-    }
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-function delImg(type, gal_id, gal_name) {
-    if (confirm('คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?')) {
-        location.href = `function/delData.php?type=${type}&gal_id=${gal_id}&gal_name=${gal_name}`
-    }
-}
-
-function edit() {
-    let input = document.getElementsByTagName("input")
-    for (let i = 0; i < (input.length - 1); i++) {
-        input[i].disabled = false
-    }
-    // for(var i = 0; i < del_btn.length; i++) {
-    //     del_btn[i].style.display = "block";
-    // }
-    // document.getElementById("file").disabled = false
-    document.getElementById("edit").style.display = "none"
-    document.getElementById("accept").style.display = "flex"
-}
-
-function cancelEdit() {
-    let input = document.getElementsByTagName("input")
-    for (let i = 0; i < (input.length - 1); i++) {
-        input[i].disabled = true
-    }
-    // for(var i = 0; i < del_btn.length; i++) {
-    //     del_btn[i].style.display = "none";
-    // }
-    // document.getElementById("file").disabled = true
-    document.getElementById("edit").style.display = "flex"
-    document.getElementById("accept").style.display = "none"
-}
 $(document).ready(function () {
     let url_string = window.location.href;
     let url = new URL(url_string);
     let room_type = url.searchParams.get("type");
+
+    function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+                // case 'pdf':
+            case 'png':
+                //etc
+                return true;
+        }
+        return false;
+    }
     $('#file').change(function () {
         let formdata = new FormData();
         let files = $("#file")[0].files[0];
+        let file_size = $("#file")[0].files[0].size
         formdata.append("file", files);
-        $.ajax({
-            url: `function/addImage.php?type=${room_type}`,
-            type: "POST",
-            data: formdata,
-            processData: false,
-            contentType: false,
-            success: function () {
-                document.location.reload()
+        if (isImage($("#file").val()) != false) {
+            if (file_size < 5242880) {
+                $.ajax({
+                    url: `function/addImage.php?type=${room_type}`,
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    success: function () {
+                        document.location.reload()
+                    }
+                });
+            } else {
+                alert("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 5 MB)")
+                $("#file").val("")
             }
-        });
+        } else {
+            alert("รองรับไฟล์ประเภท jpg, png ขนาดไม่เกิน 5 MB เท่านั้น")
+            $("#file").val("")
+        }
     });
     $(document).on("click", ".del-btn", function (event) {
         if (confirm('คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?')) {

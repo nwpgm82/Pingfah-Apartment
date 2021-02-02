@@ -1,24 +1,49 @@
 $(document).ready(function () {
+    function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+            // case 'pdf':
+            case 'png':
+                //etc
+                return true;
+        }
+        return false;
+    }
     $("#submitForm").on("change", function () {
         var formData = new FormData(this)
-        $.ajax({
-            url: "function/addImage.php",
-            type: "POST",
-            cache: false,
-            contentType: false, // you can also use multipart/form-data replace of false
-            processData: false,
-            data: formData,
-            success: function (response) {
-                // alert("Image uploaded Successfully");
-                location.href = "index.php"
+        let file_size = $("#file")[0].files[0].size
+        if (isImage($("#file").val()) != false) {
+            if (file_size < 5242880) {
+                $.ajax({
+                    url: "function/addImage.php",
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (response) {
+                        document.location.reload()
+                    }
+                });
+            } else {
+                alert("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 5 MB)")
+                $("#file").val("")
             }
-        });
+        }else{
+            alert("รองรับไฟล์ประเภท jpg, png ขนาดไม่เกิน 5 MB เท่านั้น")
+            $("#file").val("")
+        }
     })
 })
 
-
-function delImg(id,name){
-    if(confirm("คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?")){
+function delImg(id, name) {
+    if (confirm("คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?")) {
         location.href = `function/delImage.php?id=${id}&name=${name}`
     }
 }
