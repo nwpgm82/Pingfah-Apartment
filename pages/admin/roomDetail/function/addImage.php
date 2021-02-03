@@ -3,6 +3,11 @@ session_start();
 if($_SESSION["level"] == "admin"){
     include("../../../connection.php");
     $type = $_REQUEST["type"];
+    if($type == "fan"){
+        $type_show = "พัดลม";
+    }else if($type == "air"){
+        $type_show = "แอร์";
+    }
     $main_path = "../../../images/roomdetail/";
     if(!is_dir($main_path)){
         mkdir($main_path);
@@ -23,8 +28,9 @@ if($_SESSION["level"] == "admin"){
         }else if($type == "air"){
             $sql = "INSERT INTO air_gal (gal_name) VALUES ('$file')";
         }
+        $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลหอพัก', 'เพิ่มรูปภาพ $file (ห้อง$type_show)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
         if(move_uploaded_file($_FILES['file']['tmp_name'], $target)){
-            if ($conn->query($sql) === TRUE) {
+            if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
                 echo $file; 
                 exit;   
             } else {

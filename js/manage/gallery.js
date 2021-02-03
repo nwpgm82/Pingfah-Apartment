@@ -40,10 +40,27 @@ $(document).ready(function () {
             $("#file").val("")
         }
     })
+    $(document).on("click", ".del-btn", function (event) {
+        if (confirm("คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?")) {
+            let img_id = event.target.id
+            let img_name = event.target.name
+            $.ajax({
+                url: `function/delImage.php`,
+                type: 'post',
+                data: {
+                    id: img_id,
+                    img_name: img_name
+                },
+                success: function () {
+                    document.location.reload()
+                }
+            });
+        }
+    })
 })
 
-function delImg(id, name) {
-    if (confirm("คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?")) {
-        location.href = `function/delImage.php?id=${id}&name=${name}`
-    }
-}
+// function delImg(id, name) {
+//     if (confirm("คุณต้องการลบรูปภาพนี้ใช่หรือไม่ ?")) {
+//         location.href = `function/delImage.php?id=${id}&name=${name}`
+//     }
+// }

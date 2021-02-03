@@ -54,7 +54,8 @@ if($_SESSION["level"] == "admin"){
                 if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $id_target) && move_uploaded_file($_FILES["home_img"]["tmp_name"], $home_target)){
                     $addData = "INSERT INTO roommember (room_id, come_date, member_cat, member_status, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, people) VALUES ('$room_id','$come','รายเดือน','กำลังเข้าพัก','$title_name','$firstname', '$lastname', '$nickname', '$id_card', '$tel', '$email', '$birthday' , $age, '$race', '$nation', '$job', '$address', '$id_img', '$home_img', 1)";
                     $change_status = "UPDATE roomlist SET room_status = 'ไม่ว่าง' WHERE room_id = '$room_id' ";
-                    if($conn->query($addData) === TRUE && $conn->query($change_status) === TRUE){
+                    $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เพิ่มข้อมูลลูกค้า(ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+                    if($conn->query($addData) === TRUE && $conn->query($change_status) === TRUE && $conn->query($addLogs) === TRUE){
                         echo "<script>";
                         echo "alert('เพิ่มข้อมูลผู้พักห้อง $room_id เรียบร้อยแล้ว');";
                         echo "location.href = '../index.php';";
@@ -73,7 +74,8 @@ if($_SESSION["level"] == "admin"){
             $home_target = "../../../images/roommember/$room_id/".$result_search["come_date"]."/".basename($home_img);
             if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $id_target) && move_uploaded_file($_FILES["home_img"]["tmp_name"], $home_target)){
                 $addData = "UPDATE roommember SET name_title2 = '$title_name', firstname2 = '$firstname', lastname2 = '$lastname', nickname2 = '$nickname', id_card2 = '$id_card', phone2 = '$tel', email2 = '$email', birthday2 = '$birthday', age2 = $age, race2 = '$race', nationality2 = '$nation', job2 = '$job', address2 = '$address', pic_idcard2 = '$id_img', pic_home2 = '$home_img', people = 2 WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
-                if($conn->query($addData) === TRUE){
+                $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เพิ่มข้อมูลลูกค้า(ห้อง $room_id)(คนที่ 2)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+                if($conn->query($addData) === TRUE && $conn->query($addLogs) === TRUE){
                     echo "<script>";
                     echo "alert('เพิ่มข้อมูลผู้พักห้อง $room_id (คนที่ 2) เรียบร้อยแล้ว');";
                     echo "location.href = '../index.php';";
@@ -86,32 +88,32 @@ if($_SESSION["level"] == "admin"){
             }
         }
     }
-    if(isset($_POST["del-idimg"])){
-        if(intval($get_people) == 1){
-            $delimg_update = "UPDATE roommember SET pic_idcard = '' WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
-        }else if(intval($get_people) == 2){
-            $delimg_update = "UPDATE roommember SET pic_idcard2 = null WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
-        }
-        if($conn->query($delimg_update) === TRUE){
-            echo "<script>";
-            echo "alert('ลบรูปสำเนาบัตรประชาชนเรียบร้อยแล้ว');";
-            echo "location.href = '../room_id.php?ID=$room_id';";
-            echo "</script>";
-        }
-    }
-    if(isset($_POST["del-homeimg"])){
-        if(intval($get_people) == 1){
-            $delimg_update = "UPDATE roommember SET pic_home = '' WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
-        }else if(intval($get_people) == 2){
-            $delimg_update = "UPDATE roommember SET pic_home2 = null WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
-        }
-        if($conn->query($delimg_update) === TRUE){
-            echo "<script>";
-            echo "alert('ลบรูปสำเนาทะเบียนบ้านเรียบร้อยแล้ว');";
-            echo "location.href = '../room_id.php?ID=$room_id';";
-            echo "</script>";
-        }
-    }
+    // if(isset($_POST["del-idimg"])){
+    //     if(intval($get_people) == 1){
+    //         $delimg_update = "UPDATE roommember SET pic_idcard = '' WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
+    //     }else if(intval($get_people) == 2){
+    //         $delimg_update = "UPDATE roommember SET pic_idcard2 = null WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
+    //     }
+    //     if($conn->query($delimg_update) === TRUE){
+    //         echo "<script>";
+    //         echo "alert('ลบรูปสำเนาบัตรประชาชนเรียบร้อยแล้ว');";
+    //         echo "location.href = '../room_id.php?ID=$room_id';";
+    //         echo "</script>";
+    //     }
+    // }
+    // if(isset($_POST["del-homeimg"])){
+    //     if(intval($get_people) == 1){
+    //         $delimg_update = "UPDATE roommember SET pic_home = '' WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
+    //     }else if(intval($get_people) == 2){
+    //         $delimg_update = "UPDATE roommember SET pic_home2 = null WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
+    //     }
+    //     if($conn->query($delimg_update) === TRUE){
+    //         echo "<script>";
+    //         echo "alert('ลบรูปสำเนาทะเบียนบ้านเรียบร้อยแล้ว');";
+    //         echo "location.href = '../room_id.php?ID=$room_id';";
+    //         echo "</script>";
+    //     }
+    // }
     if(isset($_POST["accept-edit"])){
         $idimg_path = "../../../images/roommember/$room_id/".$result_search["come_date"]."/".basename($id_img);
         $homeimg_path = "../../../images/roommember/$room_id/".$result_search["come_date"]."/".basename($home_img);
@@ -152,7 +154,12 @@ if($_SESSION["level"] == "admin"){
                 echo $conn->error;
             }
         }
-        if($conn->query($update_data) === TRUE){
+        if(intval($get_people) == 1){
+            $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'แก้ไขข้อมูลลูกค้า(ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+        }else if(intval($get_people) == 2){
+            $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'แก้ไขข้อมูลลูกค้า(ห้อง $room_id)(คนที่ 2)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+        }
+        if($conn->query($update_data) === TRUE && $conn->query($addLogs) === TRUE){
             echo "<script>";
             echo "alert('อัปเดตข้อมูลเรียบร้อยแล้ว');";
             echo "location.href = '../room_id.php?ID=$room_id&people=$get_people';";
@@ -169,7 +176,8 @@ if($_SESSION["level"] == "admin"){
             }
         }
         $del_data = "DELETE FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
-        if($conn->query($del_data) === TRUE && rmdir("../../../images/roommember/$room_id/".$result_search["come_date"]."/")){
+        $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'ลบข้อมูลลูกค้า(ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+        if($conn->query($del_data) === TRUE && rmdir("../../../images/roommember/$room_id/".$result_search["come_date"]."/") && $conn->query($addLogs) === TRUE){
             echo "<script>";
             echo "alert('ลบข้อมูลเรียบร้อยแล้ว');";
             echo "location.href = '../room_id.php?ID=$room_id';";
@@ -182,7 +190,8 @@ if($_SESSION["level"] == "admin"){
         $out_date = date('Y-m-d');
         $update_status = "UPDATE roommember SET member_status = 'แจ้งออกแล้ว', out_date = '$out_date' WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
         $update_room_status = "UPDATE roomlist SET room_status = 'ว่าง' WHERE room_id = '$room_id' ";
-        if($conn->query($update_status) === TRUE && $conn->query($update_room_status) === TRUE){
+        $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เปลี่ยนสถานะเป็น แจ้งออกแล้ว (ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+        if($conn->query($update_status) === TRUE && $conn->query($update_room_status) === TRUE && $conn->query($addLogs) === TRUE){
             echo "<script>";
             echo "alert('แจ้งออกเรียบร้อยแล้ว');";
             echo "location.href = '../room_id.php?ID=$room_id';";

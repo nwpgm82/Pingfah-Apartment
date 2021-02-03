@@ -75,7 +75,7 @@ if($_SESSION['level'] == 'admin'){
             </div>
         </div>
     </div>
-    <script src="../../../js/admin/roomDetail.js"></script>
+    <script src="../../../js/manage/roomDetail.js"></script>
 </body>
 
 </html>

@@ -389,7 +389,7 @@ $(document).ready(function () {
         if (confirm("คุณต้องการบันทึกการแก้ไขนี้ใช่หรือไม่")) {
             let inputs = $("input");
             const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            inputs.each(function () {
+            inputs.each(function (i) {
                 if (i == 0 || i == 1 || i == 13 || i == 14) {
                     return true;
                 } else {
@@ -444,7 +444,6 @@ $(document).ready(function () {
         } else {
             event.preventDefault()
         }
-
     })
     $("#cancel-edit").click(function () {
         $("#option-btn").show()
@@ -464,21 +463,22 @@ $(document).ready(function () {
         $("#edit-option").hide()
         $("#del-idimg").hide()
         $("#del-homeimg").hide()
+        document.location.reload()
     })
-    $("#del-idimg").click(function (event) {
-        if (confirm("คุณต้องการลบรูปภาพใช่หรือไม่ ?")) {
-            $("#form-box").submit()
-        } else {
-            event.preventDefault()
-        }
-    })
-    $("#del-homeimg").click(function (event) {
-        if (confirm("คุณต้องการลบรูปภาพใช่หรือไม่ ?")) {
-            $("#form-box").submit()
-        } else {
-            event.preventDefault()
-        }
-    })
+    // $("#del-idimg").click(function (event) {
+    //     if (confirm("คุณต้องการลบรูปภาพใช่หรือไม่ ?")) {
+    //         $("#form-box").submit()
+    //     } else {
+    //         event.preventDefault()
+    //     }
+    // })
+    // $("#del-homeimg").click(function (event) {
+    //     if (confirm("คุณต้องการลบรูปภาพใช่หรือไม่ ?")) {
+    //         $("#form-box").submit()
+    //     } else {
+    //         event.preventDefault()
+    //     }
+    // })
     $("#del_data").click(function (event) {
         if (confirm("คุณต้องการลบข้อมูลใช่หรือไม่")) {
             $("#form-box").submit()

@@ -30,7 +30,7 @@ if($_SESSION['level'] == 'admin'){
     <link rel="stylesheet" href="../../../css/employee.css">
     <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="../../../js/admin/employee.js"></script>
+    <script src="../../../js/manage/employee.js"></script>
     <script src="../../../js/sidebar.js"></script>
     <title>Pingfah Apartment</title>
 </head>
