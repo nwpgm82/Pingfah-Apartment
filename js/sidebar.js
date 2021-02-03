@@ -118,6 +118,10 @@ $(document).ready(function () {
         appeal.css("background-color", "rgba(131, 120, 47, 0.7)")
         appeal.css("color", "#fff")
         header.html("ข้อมูลการร้องเรียน")
+    } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/myprofile/index.php") {
+        $(".profile").css("background-color", "rgba(131, 120, 47, 0.7)")
+        $(".profile").css("color", "#fff")
+        header.html("ข้อมูลส่วนตัว")
     }
     $(".burger").click(function () {
         if(window.matchMedia('(max-width: 767px)').matches){

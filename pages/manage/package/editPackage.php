@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     include('../../connection.php');
     $package_id = $_REQUEST["package_id"];
     function DateThai($strDate)
@@ -108,6 +108,6 @@ if($_SESSION['level'] == 'admin'){
 </html>
 <?php
 }else{
-    header("Location : ../../login.php");
+    Header("Location: ../../login.php");
 }
 ?>

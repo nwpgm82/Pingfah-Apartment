@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     include('../../connection.php');
 ?>
 
@@ -37,6 +37,9 @@ if($_SESSION['level'] == 'admin'){
                           echo "0 results";
                         }
                     ?></textarea>
+                    <?php
+                    if($_SESSION['level'] == 'admin'){
+                    ?>
                     <div id="edit_btn" style="display:flex;justify-content:center;margin-top:32px">
                         <button type="button" class="edit_btn" onclick="edit_rule()">แก้ไข</button>
                     </div>
@@ -44,6 +47,7 @@ if($_SESSION['level'] == 'admin'){
                         <button type="submit" name="rule_accept">ยืนยันการแก้ไข</button>
                         <button type="button" class="cancel_btn" onclick="edit_rule()">ยกเลิก</button>
                     </div>
+                    <?php } ?>
                 </form>
             </div>
         </div>

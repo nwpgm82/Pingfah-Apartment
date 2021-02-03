@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     include('../../connection.php');
     function DateThai($strDate){
         $strYear = date("Y",strtotime($strDate))+543;
@@ -82,6 +82,6 @@ if($_SESSION['level'] == 'admin'){
 </html>
 <?php
 }else{
-    header("Location : ../../login.php");
+    Header("Location: ../../login.php");
 }
 ?>
