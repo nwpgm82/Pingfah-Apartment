@@ -13,11 +13,8 @@ if(isset($_POST['login'])){
         $_SESSION['password'] = $row['password'];
         $_SESSION['level'] = $row['level'];
         
-        if($_SESSION['level'] == 'admin'){
-            Header("Location: admin/index.php");
-        }
-        else if($_SESSION['level'] == 'employee'){
-            Header("Location: employee/index.php");
+        if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
+            Header("Location: manage/index.php");
         }else if($_SESSION['level'] == 'guest'){
             $_SESSION['rule'] = 0;
             Header("Location: guest/index.php");

@@ -18,7 +18,7 @@
 <body>
     <div class="box">
         <div class="gallery">
-            <h2>แกลลอรี่</h2>
+            <h2>แกลเลอรี่</h2>
             <div class="hr"></div>
             <div class="grid">
                 <?php

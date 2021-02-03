@@ -14,107 +14,107 @@ $(document).ready(function () {
     let appeal = $("#appeal")
     let header = $("#topbar-page")
     localStorage.setItem("i", window.location.pathname)
-    if (localStorage.getItem("i") == "/Pingfah/pages/admin/index.php") {
+    if (localStorage.getItem("i") == "/Pingfah/pages/manage/index.php") {
         main.css("background-color", "rgba(131, 120, 47, 0.7)")
         main.css("color", "#fff")
         header.html("หน้าหลัก")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/employee/index.php") {
         employee.css("background-color", "rgba(131, 120, 47, 0.7)")
         employee.css("color", "#fff")
         header.html("จัดการพนักงาน")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/addemployee.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/employee/addemployee.php") {
         employee.css("background-color", "rgba(131, 120, 47, 0.7)")
         employee.css("color", "#fff")
         header.html("เพิ่มพนักงาน")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emHistory.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/employee/emHistory.php") {
         employee.css("background-color", "rgba(131, 120, 47, 0.7)")
         employee.css("color", "#fff")
         header.html("ประวัติของพนักงาน")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/employee/emDetail.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/employee/emDetail.php") {
         employee.css("background-color", "rgba(131, 120, 47, 0.7)")
         employee.css("color", "#fff")
         header.html("รายละเอียดข้อมูลพนักงาน")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/roomDetail/index.php") {
         roomdetail.css("background-color", "rgba(131, 120, 47, 0.7)")
         roomdetail.css("color", "#fff")
         header.html("ประเภทห้องพัก")
         $("#dropdown").show()
-    } else if(localStorage.getItem("i") == "/Pingfah/pages/admin/roomDetail/detail.php"){
+    } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/roomDetail/detail.php"){
         roomdetail.css("background-color", "rgba(131, 120, 47, 0.7)")
         roomdetail.css("color", "#fff")
         header.html("รายละเอียดห้องพัก")
         $("#dropdown").show()
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/gallery/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/gallery/index.php") {
         gallery.css("background-color", "rgba(131, 120, 47, 0.7)")
         gallery.css("color", "#fff")
-        header.html("แกลลอรี่")
+        header.html("แกลเลอรี่")
         $("#dropdown").css("display","block")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/roomList/index.php") {
         roomlist.css("background-color", "rgba(131, 120, 47, 0.7)")
         roomlist.css("color", "#fff")
         header.html("รายการห้องพัก")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/roomHistory.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/roomList/roomHistory.php") {
         roomlist.css("background-color", "rgba(131, 120, 47, 0.7)")
         roomlist.css("color", "#fff")
         header.html("ประวัติการเข้าพัก")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/roomList/room_id.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/roomList/room_id.php" || localStorage.getItem("i") == "/Pingfah/pages/manage/roomList/roomdaily_id.php" || localStorage.getItem("i") == "/Pingfah/pages/manage/roomList/memberDetail.php" || localStorage.getItem("i") == "/Pingfah/pages/manage/roomList/memberDetail_daily.php") {
         roomlist.css("background-color", "rgba(131, 120, 47, 0.7)")
         roomlist.css("color", "#fff")
         header.html("รายละเอียดข้อมูลผู้เข้าพัก")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/daily/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/daily/dailyDetail.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/daily/index.php" || localStorage.getItem("i") == "/Pingfah/pages/manage/daily/dailyDetail.php") {
         daily.css("background-color", "rgba(131, 120, 47, 0.7)")
         daily.css("color", "#fff")
         header.html("รายการเช่ารายวัน")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/dailyCost/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/dailyCost/dailyCostDetail.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/dailyCost/index.php" || localStorage.getItem("i") == "/Pingfah/pages/manage/dailyCost/dailyCostDetail.php") {
         dailycost.css("background-color", "rgba(131, 120, 47, 0.7)")
         dailycost.css("color", "#fff")
         header.html("รายการชำระเงินรายวัน")
         $("#dropdown2").show()
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/cost/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/cost/index.php") {
         cost.css("background-color", "rgba(131, 120, 47, 0.7)")
         cost.css("color", "#fff")
         header.html("รายการชำระเงินรายเดือน")
         $("#dropdown2").show()
-    } else if(localStorage.getItem("i") == "/Pingfah/pages/admin/cost/costDetail.php"){
+    } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/cost/costDetail.php"){
         cost.css("background-color", "rgba(131, 120, 47, 0.7)")
         cost.css("color", "#fff")
         header.html("รายละเอียดการชำระเงิน")
         $("#dropdown2").show()
-    } else if(localStorage.getItem("i") == "/Pingfah/pages/admin/cost/addcost.php"){
+    } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/cost/addcost.php"){
         cost.css("background-color", "rgba(131, 120, 47, 0.7)")
         cost.css("color", "#fff")
         header.html("เพิ่มข้อมูลการชำระเงิน")
         $("#dropdown2").show()
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repairReport.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/repair/repairReport.php") {
         repair_report.css("background-color", "rgba(131, 120, 47, 0.7)")
         repair_report.css("color", "#fff")
         header.html("รายการค่าใช้จ่ายจากการแจ้งซ่อม")
         $("#dropdown2").show()
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/repair/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/repair/index.php") {
         repair.css("background-color", "rgba(131, 120, 47, 0.7)")
         repair.css("color", "#fff")
         header.html("รายการแจ้งซ่อม")
-    } else if(localStorage.getItem("i") == "/Pingfah/pages/admin/repair/addRepair.php"){
+    } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/repair/addRepair.php"){
         repair.css("background-color", "rgba(131, 120, 47, 0.7)")
         repair.css("color", "#fff")
         header.html("เพิ่มรายการแจ้งซ่อม")
-    } else if(localStorage.getItem("i") == "/Pingfah/pages/admin/repair/repairDetail.php"){
+    } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/repair/repairDetail.php"){
         repair.css("background-color", "rgba(131, 120, 47, 0.7)")
         repair.css("color", "#fff")
         header.html("ข้อมูลการแจ้งซ่อม")
-    }else if (localStorage.getItem("i") == "/Pingfah/pages/admin/package/index.php" || localStorage.getItem("i") == "/Pingfah/pages/admin/package/addPackage.php") {
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/manage/package/index.php" || localStorage.getItem("i") == "/Pingfah/pages/manage/package/addPackage.php") {
         package.css("background-color", "rgba(131, 120, 47, 0.7)")
         package.css("color", "#fff")
         header.html("รายการพัสดุ")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/rule/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/rule/index.php") {
         rule.css("background-color", "rgba(131, 120, 47, 0.7)")
         rule.css("color", "#fff")
         header.html("กฎระเบียบหอพัก")
-    } else if (localStorage.getItem("i") == "/Pingfah/pages/admin/appeal/index.php") {
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/appeal/index.php") {
         appeal.css("background-color", "rgba(131, 120, 47, 0.7)")
         appeal.css("color", "#fff")
         header.html("รายการร้องเรียน")
-    } else if(localStorage.getItem("i") == "/Pingfah/pages/admin/appeal/appealDetail.php"){
+    } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/appeal/appealDetail.php"){
         appeal.css("background-color", "rgba(131, 120, 47, 0.7)")
         appeal.css("color", "#fff")
         header.html("ข้อมูลการร้องเรียน")
