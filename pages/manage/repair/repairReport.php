@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION["level"] == "admin"){
+if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
     include("../../connection.php");
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];

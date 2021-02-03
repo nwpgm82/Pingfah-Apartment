@@ -1,9 +1,8 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     include('../../connection.php');
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +14,7 @@ if($_SESSION['level'] == 'admin'){
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../../../js/manage/addcost.js"></script>
     <script src="../../../js/sidebar.js"></script>
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
@@ -126,12 +125,8 @@ if($_SESSION['level'] == 'admin'){
 </body>
 
 </html>
-
 <?php
-}else if($_SESSION['level'] == 'employee'){
-    Header("Location: ../../employee/cost/addcost.php");
-}
-else{
+}else{
    Header("Location: ../../login.php"); 
 }
 

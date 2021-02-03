@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
   include('../../../connection.php');
   function BasicDate($tdate){
     $search = ["มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
@@ -23,8 +23,10 @@ if($_SESSION['level'] == 'admin'){
   }else{
     $sql = "UPDATE repair SET repair_status = '$status' WHERE repair_id = $repair_id";
   }
-
-  if ($conn->query($sql) === TRUE) {
+  $searchData = mysqli_query($conn, "SELECT room_id FROM repair WHERE repair_id = $repair_id");
+  $result = mysqli_fetch_assoc($searchData);
+  $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('แจ้งซ่อม', 'เปลี่ยนสถานะการแจ้งซ่อมเป็น $status (ห้อง ".$result["room_id"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+  if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
       echo "<script>";
       echo "alert('แก้ไขสถานะสำเร็จ');";
       echo "location.href = '../index.php';";

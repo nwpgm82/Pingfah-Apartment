@@ -5,7 +5,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
     $id = $_REQUEST['dailycost_id'];
     $search = mysqli_query($conn, "SELECT * FROM dailycost WHERE dailycost_id = $id");
     $result = mysqli_fetch_assoc($search);
-    $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เพิ่มหลักฐานการชำระเงินค่าเช่าห้องพัก (".$result["name_title"].$result["firstname"]." ".$result["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+    $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ชำระเงิน(รายวัน)', 'เพิ่มหลักฐานการชำระเงินค่าเช่าห้องพัก (".$result["name_title"].$result["firstname"]." ".$result["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
     $folder_path = "../../../images/daily/";
     // var_dump(is_dir($folder_path));
     if(is_dir($folder_path)){

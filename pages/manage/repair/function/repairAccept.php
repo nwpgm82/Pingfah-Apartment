@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
   include('../../../connection.php');
   function BasicDate($tdate){
     $search = ["มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
@@ -21,7 +21,8 @@ if($_SESSION['level'] == 'admin'){
       // $status = $_POST['repair_status'];
       // echo $room_id .$app .$cate .$detail .$date .$status;
       $sql = "INSERT INTO repair (room_id, repair_appliance, repair_category, repair_detail, repair_date, repair_status) VALUES ('$room_id', '$app', '$cate', '$detail', '$date', 'รอคิวซ่อม')";
-      if ($conn->query($sql) === TRUE) {
+      $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('แจ้งซ่อม', 'เพิ่มรายการแจ้งซ่อม (ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+      if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
           echo "<script>";
           echo "alert('ลงรายการแจ้งซ่อมเรียบร้อย');";
           echo "location.href = '../index.php';";

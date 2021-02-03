@@ -9,7 +9,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
     $countTotal = mysqli_fetch_assoc($countCheck);
     $search = mysqli_query($conn, "SELECT * FROM dailycost WHERE dailycost_id = $id");
     $result = mysqli_fetch_assoc($search);
-    $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'ลบหลักฐานการชำระเงินค่าเช่าห้องพัก (".$result["name_title"].$result["firstname"]." ".$result["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+    $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ชำระเงิน(รายวัน)', 'ลบหลักฐานการชำระเงินค่าเช่าห้องพัก (".$result["name_title"].$result["firstname"]." ".$result["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
     if($countTotal['total'] > 1){
         $del = "UPDATE dailycost SET payment_img = NULL WHERE dailycost_id = $id";
         if($conn->query($del) === TRUE && $conn->query($addLogs) === TRUE){

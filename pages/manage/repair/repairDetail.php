@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     include('../../connection.php');
     $repair_id = $_REQUEST["repair_id"];
     function DateThai($strDate)
