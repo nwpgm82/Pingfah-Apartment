@@ -6,10 +6,10 @@ var url_string = window.location.href
 var url = new URL(url_string)
 var peoplePath = parseInt(url.searchParams.get("people"))
 
-function checkRoomLoad() {
-    check_in_date.innerHTML = formatDate(new Date(check_in.value))
-    check_out_date.innerHTML = formatDate(new Date(check_out.value))
-}
+// function checkRoomLoad() {
+//     check_in_date.innerHTML = formatDate(new Date(check_in.value))
+//     check_out_date.innerHTML = formatDate(new Date(check_out.value))
+// }
 
 var slideIndex1 = 1;
 var slideIndex2 = 1;

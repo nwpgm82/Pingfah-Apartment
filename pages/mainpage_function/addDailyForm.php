@@ -54,7 +54,7 @@ if(isset($_POST['accept_daily'])){
     $airTotal = intval($roomData["airTotal"]) - intval($dailyData["daily_airTotal"]);
     $fanTotal = intval($roomData["fanTotal"]) - intval($dailyData["daily_fanTotal"]);
     if(intval($_SESSION["air"]) <= $airTotal && intval($_SESSION["fan"]) <= $fanTotal){
-        $sql = "INSERT INTO daily (name_title, firstname, lastname, id_card, email, tel, code, check_in, check_out, night, people, air_room, fan_room, daily_status, total_price, payment_price, payment_datebefore) VALUES ('$name_title', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '".$_SESSION["check_in"]."', '".$_SESSION["check_out"]."',".$_SESSION["night"].",".$_SESSION["people"].",".$_SESSION["air"].",".$_SESSION["fan"].", 'รอการยืนยัน',".ceil($_SESSION["total_price"]).",".$_SESSION["total_room"].", '".$_SESSION["payment_datebefore"]."')";
+        $sql = "INSERT INTO daily (name_title, firstname, lastname, id_card, email, tel, code, check_in, check_out, night, people, air_room, fan_room, daily_status, total_room_price, vat, total_price, payment_price, payment_datebefore) VALUES ('$name_title', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '".$_SESSION["check_in"]."', '".$_SESSION["check_out"]."',".$_SESSION["night"].",".$_SESSION["people"].",".$_SESSION["air"].",".$_SESSION["fan"].", 'รอการยืนยัน',".ceil($_SESSION["total_room_price"]).",".$_SESSION["vat"].",".ceil($_SESSION["total_price"]).",".$_SESSION["total_room"].", '".$_SESSION["payment_datebefore"]."')";
         ///////////////////// อีเมล ////////////////////////
         require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
         header('Content-Type: text/html; charset=utf-8');
@@ -115,12 +115,14 @@ if(isset($_POST['accept_daily'])){
                             <p style='font-size:16px;color:#000'><strong>เบอร์โทรศัพท์ :</strong> $tel</p>
                             <p style='font-size:16px;color:#000'><strong>จำนวนผู้พัก :</strong> ".$_SESSION["people"]." ท่าน</p>
                             <p style='font-size:16px;color:#000'><strong>จำนวนห้องพัก : ห้องแอร์ </strong>".$_SESSION["air"]." ห้อง <strong>| ห้องพัดลม : </strong>".$_SESSION["fan"]." ห้อง</p>
+                            <p style='font-size:16px;color:#000'><strong>ราคาห้องพักรวม :</strong> ".ceil($_SESSION["total_room_price"])." บาท</p>
+                            <p style='font-size:16px;color:#000'><strong>ภาษีมูลค่าเพิ่ม (VAT) :</strong> ".$_SESSION["vat"]."%</p>
                             <p style='font-size:16px;color:#000'><strong>ราคารวม :</strong> ".ceil($_SESSION["total_price"])." บาท</p>
                             <p style='font-size:16px;color:#000'><strong>วันที่เข้าพัก :</strong> ".DateThai($_SESSION["check_in"])." <strong>ถึง</strong> ".DateThai($_SESSION["check_out"])." (".$_SESSION["night"]." คืน)</p>
                         </div>
                         <div style='padding-top:32px;'>
                             <h2 style='color:#000'>ขั้นตอนในการจองห้องพัก</h2>
-                            <p style='font-size:16px;color:#000'>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style='color:red;'>".$_SESSION["total_room"]." บาท (จำนวนห้องพัก x 300)</strong> มาที่บัญชีพร้อมเพย์ <strong>095-6722914 (นวพล นรเดชานันท์) หรือสแกน QR code ได้ที่ข้างล่าง</strong> ก่อนวันที่ <strong style='color:red;'>".DateThai($_SESSION["payment_datebefore"])."</strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
+                            <p style='font-size:16px;color:#000'>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style='color:red;'>".$_SESSION["total_room"]." บาท</strong> มาที่บัญชีพร้อมเพย์ <strong>095-6722914 (นวพล นรเดชานันท์) หรือสแกน QR code ได้ที่ข้างล่าง</strong> ก่อนวันที่ <strong style='color:red;'>".DateThai($_SESSION["payment_datebefore"])."</strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
                             <p style='font-size:16px;color:#000'>2. เมื่อโอนเงินแล้วให้อัปโหลดสลิปในเมนู <a href='/localhost/Pingfah/pages/checkCode.php' target='_blank'>ตรวจสอบการจอง</a> </p>
                             <p style='font-size:16px;color:#000'>3. เมื่ออัปโหลดสลิปแล้วให้แจ้งเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
                             <p style='font-size:16px;color:#000'>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>

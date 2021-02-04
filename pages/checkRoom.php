@@ -19,10 +19,10 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../js/datedropper.pro.min.js"></script>
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
-<body onload="checkRoomLoad()">
+<body>
     <?php include("../components/maintopbar.php"); ?>
     <div class="box">
         <div class="checkRoom">
@@ -124,7 +124,7 @@
                                 <?php $column1++; } } ?>
                             </div>
                         </div>
-                        <div style="padding:16px;width: 882px !important;">
+                        <div style="padding: 32px 32px 16px 32px;width: 882px !important;">
                             <h2>ห้องแอร์</h2>
                             <div class="hr" style="margin:16px 0;"></div>
                             <div class="detail">
@@ -181,12 +181,68 @@
                                             <label>โต๊ะอ่านหนังสือ</label>
                                         </div>
                                         <?php } ?>
+                                        <?php
+                                        if($row["sv_telephone"] == "on"){
+                                        ?>
+                                        <div class="sub-grid">
+                                            <img src="../img/tool/telephone.png">
+                                            <label>โทรศัพท์</label>
+                                        </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_television"] == "on"){
+                                        ?>
+                                        <div class="sub-grid">
+                                            <img src="../img/tool/television.png">
+                                            <label>โทรทัศน์ดาวเทียม / เคเบิล</label>
+                                        </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_refrigerator"] == "on"){
+                                        ?>
+                                        <div class="sub-grid">
+                                            <img src="../img/tool/refrigerator.png">
+                                            <label>ตู้เย็น</label>
+                                        </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_waterbottle"] == "on"){
+                                        ?>
+                                        <div class="sub-grid">
+                                            <img src="../img/tool/waterbottle.png">
+                                            <label>น้ำบรรจุขวด</label>
+                                        </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_toilet"] == "on"){
+                                        ?>
+                                        <div class="sub-grid">
+                                            <img src="../img/tool/toilet-items.png">
+                                            <label>ของใช้ในห้องน้ำ</label>
+                                        </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_hairdryer"] == "on"){
+                                        ?>
+                                        <div class="sub-grid">
+                                            <img src="../img/tool/hairdryer.png">
+                                            <label>ไดร์เป่าผม</label>
+                                        </div>
+                                        <?php } ?>
+                                        <?php
+                                        if($row["sv_towel"] == "on"){
+                                        ?>
+                                        <div class="sub-grid">
+                                            <img src="../img/tool/towel.png">
+                                            <label>ผ้าเช็ดตัว</label>
+                                        </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
                             <div style="display: flex;justify-content: space-between;align-items:center;">
                                 <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int; ?> ห้อง</p>
-                                <div>
+                                <div style="display: flex;align-items: center;gap: 8px;">
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
                                     <button type="button" id="DesAir">-</button>
                                     <input type="number" id="people1" min="0" max="<?php echo $total_int; ?>" value="0"
@@ -242,7 +298,7 @@
                                 <?php $column2++; } } ?>
                             </div>
                         </div>
-                        <div style="padding:16px;width: 882px !important;">
+                        <div style="padding: 32px 32px 16px 32px;width: 882px !important;">
                             <h2>ห้องพัดลม</h2>
                             <div class="hr" style="margin:16px 0;"></div>
                             <div class="detail">
@@ -304,7 +360,7 @@
                             </div>
                             <div style="display: flex;justify-content: space-between;align-items:center;">
                                 <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int2; ?> ห้อง</p>
-                                <div>
+                                <div style="display: flex;align-items: center;gap: 8px;">
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
                                     <button type="button" id="DesFan">-</button>
                                     <input type="number" id="people2" min="0" max="<?php echo $total_int2; ?>" value="0"

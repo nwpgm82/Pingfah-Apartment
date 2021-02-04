@@ -11,10 +11,12 @@
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    $getAir_price = mysqli_query($conn,"SELECT daily_price FROM roomdetail WHERE type='แอร์'");
+    $getAir_price = mysqli_query($conn,"SELECT daily_price, daily_deposit FROM roomdetail WHERE type='แอร์'");
     $getAir_result = mysqli_fetch_assoc($getAir_price); 
-    $getFan_price = mysqli_query($conn,"SELECT daily_price FROM roomdetail WHERE type='พัดลม'");
+    $getFan_price = mysqli_query($conn,"SELECT daily_price, daily_deposit FROM roomdetail WHERE type='พัดลม'");
     $getFan_result = mysqli_fetch_assoc($getFan_price);
+    $getVAT = mysqli_query($conn, "SELECT daily_vat FROM roomdetail WHERE type = 'แอร์' OR type = 'พัดลม'");
+    $getVAT_result = mysqli_fetch_assoc($getVAT);
     $_SESSION["check_in"] = @$_POST['check_in'];
     $_SESSION["check_out"] = @$_POST['check_out'];
     $_SESSION["people"] = @$_POST['people'];
@@ -28,10 +30,10 @@
     }else{
         $_SESSION["fan"] = 0;
     }
-    $vat = 7;
-    $total_price = (intval($_SESSION["air"]) * $getAir_result["daily_price"]) + (intval($_SESSION["fan"]) * $getFan_result["daily_price"]);
-    $cal_vat = ($total_price/100)*$vat;
-    $_SESSION["total_price"] = $total_price + $cal_vat;
+    $_SESSION["vat"] = $getVAT_result["daily_vat"];
+    $_SESSION["total_room_price"] = (intval($_SESSION["air"]) * $getAir_result["daily_price"]) + (intval($_SESSION["fan"]) * $getFan_result["daily_price"]);
+    $cal_vat = ($_SESSION["total_room_price"]/100) * $_SESSION["vat"];
+    $_SESSION["total_price"] = $_SESSION["total_room_price"] + $cal_vat;
     $date1 = date_create($_SESSION["check_in"]);
     $date2 = date_create($_SESSION["check_out"]);
     $diff= date_diff($date1,$date2);
@@ -44,7 +46,7 @@
         $_SESSION["payment_datebefore"] = $datetime->format('Y-m-d');
         $datetime_result = DateThai($datetime->format('Y-m-d'));
     }
-    $_SESSION["total_room"] = (intval($_SESSION["air"]) + intval($_SESSION["fan"])) * 300;
+    $_SESSION["total_room"] = (intval($_SESSION["air"]) * $getAir_result["daily_deposit"]) + (intval($_SESSION["fan"]) * $getFan_result["daily_deposit"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -122,19 +124,23 @@
                         <p>ห้องพัดลม(ห้อง)</p>
                         <input type="text" name="fan" id="fan" value="<?php echo $_SESSION["fan"]; ?>" disabled>
                     </div>
-                    <div class="total_price">
-                        <p>ราคารวม (บาท)</p>
-                        <input type="text" name="total_price" id="total_price" value="<?php echo number_format($_SESSION["total_price"]); ?>" disabled>
+                    <div class="total_room">
+                        <p>ราคาห้องพักรวม (บาท)</p>
+                        <input type="text" id="total_room_price" value="<?php echo number_format($_SESSION["total_room_price"]); ?>" disabled>
                     </div>
                     <div class="vat">
                         <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
-                        <input type="text" name="total_price" id="total_price" value="<?php echo $vat."%"; ?>" disabled>
+                        <input type="text" name="vat" id="vat" value="<?php echo $_SESSION["vat"]."%"; ?>" disabled>
+                    </div>
+                    <div class="total_price">
+                        <p>ราคารวม (บาท)</p>
+                        <input type="text" name="total_price" id="total_price" value="<?php echo number_format($_SESSION["total_price"]); ?>" disabled>
                     </div>
                 </div>
                 <div style="padding-top:32px;">
                     <h3>ขั้นตอนในการจองห้องพัก</h3>
                     <div style="line-height:40px;padding-top:16px;">
-                        <p>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style="color:red;"><?php echo number_format($_SESSION["total_room"]); ?> บาท (จำนวนห้องพัก x 300)</strong> มาที่บัญชีพร้อมเพย์ <strong>095-6722914 (นวพล นรเดชานันท์)</strong> หรือ สแกน QR code ได้<a href="../img/tool/qr-code.png" target="_blank">ที่นี่</a> ก่อนวันที่ <strong style="color:red;"><?php echo $datetime_result; ?></strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
+                        <p>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style="color:red;"><?php echo number_format($_SESSION["total_room"]); ?> บาท</strong> มาที่บัญชีพร้อมเพย์ <strong>095-6722914 (นวพล นรเดชานันท์)</strong> หรือ สแกน QR code ได้<a href="../img/tool/qr-code.png" target="_blank">ที่นี่</a> ก่อนวันที่ <strong style="color:red;"><?php echo $datetime_result; ?></strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
                         <p>2. เมื่อโอนเงินแล้วให้อัปโหลดสลิปในเมนู <a href="checkCode.php" target="_blank">ตรวจสอบการจอง</a> </p>
                         <p>3. เมื่ออัปโหลดสลิปแล้วให้แจ้งเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
                         <p>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>

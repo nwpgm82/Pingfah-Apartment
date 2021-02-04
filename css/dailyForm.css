@@ -92,7 +92,7 @@ body {
         "name_title name_title firstname firstname firstname lastname lastname lastname"
         "id_card id_card email email email email tel tel"
         "check_in check_in check_out check_out night people air fan"
-        "total_price vat . . . . . .";
+        "total_room vat total_price . . . . .";
 }
 
 .name_title {
@@ -155,13 +155,18 @@ body {
     height: 86px;
 }
 
-.total_price{
-    grid-area: total_price;
+.total_room{
+    grid-area: total_room;
     height: 86px;
 }
 
 .vat{
     grid-area: vat;
+    height: 86px;
+}
+
+.total_price{
+    grid-area: total_price;
     height: 86px;
 }
 
