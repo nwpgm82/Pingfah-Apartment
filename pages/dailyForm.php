@@ -17,6 +17,8 @@
     $getFan_result = mysqli_fetch_assoc($getFan_price);
     $getVAT = mysqli_query($conn, "SELECT daily_vat FROM roomdetail WHERE type = 'แอร์' OR type = 'พัดลม'");
     $getVAT_result = mysqli_fetch_assoc($getVAT);
+    $getPrompt = mysqli_query($conn, "SELECT * FROM promptpay");
+    $getPrompt_result = mysqli_fetch_assoc($getPrompt);
     $_SESSION["check_in"] = @$_POST['check_in'];
     $_SESSION["check_out"] = @$_POST['check_out'];
     $_SESSION["people"] = @$_POST['people'];
@@ -140,7 +142,7 @@
                 <div style="padding-top:32px;">
                     <h3>ขั้นตอนในการจองห้องพัก</h3>
                     <div style="line-height:40px;padding-top:16px;">
-                        <p>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style="color:red;"><?php echo number_format($_SESSION["total_room"]); ?> บาท</strong> มาที่บัญชีพร้อมเพย์ <strong>095-6722914 (นวพล นรเดชานันท์)</strong> หรือ สแกน QR code ได้<a href="../img/tool/qr-code.png" target="_blank">ที่นี่</a> ก่อนวันที่ <strong style="color:red;"><?php echo $datetime_result; ?></strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
+                        <p>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style="color:red;"><?php echo number_format($_SESSION["total_room"]); ?> บาท</strong> มาที่บัญชีพร้อมเพย์ <strong><?php echo $getPrompt_result["prompt_num"]; ?> (นวพล นรเดชานันท์)</strong> หรือ สแกน QR code ได้<a href="../img/tool/qr-code.png" target="_blank">ที่นี่</a> ก่อนวันที่ <strong style="color:red;"><?php echo $datetime_result; ?></strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
                         <p>2. เมื่อโอนเงินแล้วให้อัปโหลดสลิปในเมนู <a href="checkCode.php" target="_blank">ตรวจสอบการจอง</a> </p>
                         <p>3. เมื่ออัปโหลดสลิปแล้วให้แจ้งเจ้าของหอพัก หรือพนักงานเพื่อแจ้งให้ทราบว่าท่านได้โอนเงินแล้ว</p>
                         <p>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>

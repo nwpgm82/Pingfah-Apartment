@@ -97,6 +97,8 @@
 
 .roomDetail-box .content .topic-box{
     padding: 16px;
+    display: flex;
+    column-gap: 16px;
 }
 
 .roomDetail-box .content .img-box{

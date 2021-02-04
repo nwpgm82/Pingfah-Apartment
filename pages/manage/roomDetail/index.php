@@ -126,9 +126,16 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         <h3>รายละเอียดการชำระเงิน</h3>
                         <div class="content">
                             <div class="topic-box">
-                                <p>เลขพร้อมเพย์ (PromptPay No.)</p>
-                                <input type="text" id="prompt_num" value="<?php if($resultPrompt != null){ echo $resultPrompt["prompt_num"]; } ?>" maxlength="10" disabled>
-                                <h5 id="prompt_error" style="color:red;"></h5>
+                                <div>
+                                    <p>เลขพร้อมเพย์ (PromptPay No.)</p>
+                                    <input type="text" id="prompt_num" value="<?php if($resultPrompt != null){ echo $resultPrompt["prompt_num"]; } ?>" maxlength="10" disabled>
+                                    <h5 id="prompt_error" style="color:red;"></h5>
+                                </div>
+                                <div>
+                                    <p>ชื่อเจ้าของพร้อมเพย์ (PromptPay Name.)</p>
+                                    <input type="text">
+                                    <h5 id="prompt_name_error" style="color:red;"></h5>
+                                </div>
                             </div>
                             <div class="hr" style="margin:0;"></div>
                             <div style="padding:16px;">
