@@ -25,7 +25,7 @@ $(document).ready(function () {
         }
         return false;
     }
-    $('#file').change(function () {
+    $(document).on("change", "#file", function(){
         let formdata = new FormData();
         let files = $("#file")[0].files[0];
         let file_size = $("#file")[0].files[0].size
@@ -39,7 +39,7 @@ $(document).ready(function () {
                     processData: false,
                     contentType: false,
                     success: function () {
-                        document.location.reload()
+                        $("#gal-box").load(location.href + " #gal-content")
                     }
                 });
             } else {
@@ -69,14 +69,13 @@ $(document).ready(function () {
         }
     })
     $(".correct-btn").click(function () {
-        if ($("#daily_price").val() != "" && $("#daily_deposit").val() != "" && $("#daily_tax").val() != "" && $("#price").val() != "" && $("#water_bill").val() != "" && $("#elec_bill").val() != "" && $("#cable_charge").val() != "" && $("#fines").val() != "") {
+        if ($("#daily_price").val() != "" && $("#daily_deposit").val() != "" && $("#price").val() != "" && $("#water_bill").val() != "" && $("#elec_bill").val() != "" && $("#cable_charge").val() != "" && $("#fines").val() != "") {
             $.ajax({
                 url: `function/addData.php?type=${room_type}`,
                 type: 'post',
                 data: {
                     daily_price: $("#daily_price").val(),
                     daily_deposit: $("#daily_deposit").val(),
-                    daily_tax: $("#daily_tax").val(),
                     price: $("#price").val(),
                     water_bill: $("#water_bill").val(),
                     elec_bill: $("#elec_bill").val(),
@@ -141,15 +140,6 @@ $(document).ready(function () {
         } else {
             $(this).css("border-color", "")
             $("#daily_deposit_error").html("")
-        }
-    })
-    $("#daily_tax").keyup(function () {
-        if ($(this).val() == "") {
-            $(this).css("border-color", "red")
-            $("#daily_tax_error").html("โปรดระบุภาษีมูลค่าเพิ่ม(VAT)")
-        } else {
-            $(this).css("border-color", "")
-            $("#daily_tax_error").html("")
         }
     })
     $("#price").keyup(function () {

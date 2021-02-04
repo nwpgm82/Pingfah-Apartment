@@ -62,3 +62,129 @@ function showSlides2(m) {
     // dots[slideIndex2 - 1].className += " active";
     //   captionText.innerHTML = dots[slideIndex-1].alt;
 }
+
+$(document).ready(function(){
+    function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+            // case 'pdf':
+            case 'png':
+                //etc
+                return true;
+        }
+        return false;
+    }
+    $(document).on("click", "#edit-vat", function () {
+        $("#edit-vat").hide()
+        $("#vat-option").css("display","flex")
+        $("#daily_vat").prop("disabled", false)
+    })
+    $(document).on("click", "#correct-vat", function () {
+        if($("#daily_vat").val() != ""){
+            $.ajax({
+                url: `function/edit_vat.php`,
+                type: 'post',
+                data: {
+                    vat: $("#daily_vat").val()
+                },
+                success: function () {
+                    $('#vat-box').load(location.href + ' #vat-content');
+                }
+            });
+        }
+    })
+    $(document).on("click", "#cancel-vat", function () {
+        $('#vat-box').load(location.href + ' #vat-content');
+    })
+    $(document).on("keyup", "#daily_vat", function () {
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+        if ($(this).val() == "") {
+            $(this).css("border-color", "red")
+            $("#daily_vat_error").html("โปรดระบุภาษีมูลค่าเพิ่ม(VAT)")
+        } else {
+            $(this).css("border-color", "")
+            $("#daily_vat_error").html("")
+        }
+    })
+
+    $(document).on("click", "#edit-prompt", function(){
+        $("#edit-prompt").hide()
+        $("#prompt-option").css("display","flex")
+        $("#prompt_num").prop("disabled", false)
+        $("#prompt_img").prop("disabled", false)
+    })
+    $(document).on("click", "#correct-prompt", function () {
+        if($("#prompt_num").val() != ""){
+            let formdata = new FormData();
+            let prompt_num = $("#prompt_num").val()
+            let files = $("#prompt_img")[0].files[0]
+            formdata.append("prompt_num", prompt_num)
+            if(files){
+                formdata.append("prompt_img", files)
+            }
+            $.ajax({
+                url: `function/edit_prompt.php`,
+                type: "POST",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+                    $("#prompt-box").load(location.href + " #prompt-content")   
+                }
+            });
+        }
+    })
+    $(document).on("click", "#cancel-prompt", function(){
+        $("#prompt-box").load(location.href + " #prompt-content")
+    })
+    $(document).on("keyup", "#prompt_num", function(event){
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+        if ($(this).val() == "") {
+            $(this).css("border-color", "red")
+            $("#prompt_error").html("โปรดระบุเลขพร้อมเพย์")
+        } else {
+            $(this).css("border-color", "")
+            $("#prompt_error").html("")
+        }
+    })
+    $(document).on("change", "#prompt_img", function(){
+        if (isImage($("#prompt_img").val()) == false) {
+            $(".img-box").css("border-color", "red")
+            $("#img_error").html("รองรับไฟล์ประเภท jpg, png ขนาดไม่เกิน 5 MB เท่านั้น")
+            $("#prompt_img").val("")
+            $('#img_prompt').attr('src', "");
+            $("#img_prompt").hide()
+        } else {
+            if (this.files && this.files[0]) {
+                if (this.files[0].size < 5242880) {
+                    $("#img_prompt").show()
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#img_prompt').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]); // convert to base64 string
+                    $(".img-box").css("border-color", "")
+                    $("#img_error").html("")
+                } else {
+                    $(".img-box").css("border-color", "red")
+                    $("#img_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 5 MB)")
+                    $("#prompt_img").val("")
+                    $('#img_prompt').attr('src', "");
+                    $("#img_prompt").hide()
+                }
+            }
+        }
+    })
+})

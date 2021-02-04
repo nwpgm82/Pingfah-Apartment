@@ -76,61 +76,72 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         <?php $num++; } ?>
                     </div>
                 </div>
-                <div class="roomDetail-box">
-                    <?php
-                    $getvat = mysqli_query($conn,"SELECT daily_vat FROM roomdetail WHERE type = 'แอร์' OR type = 'พัดลม'");
-                    $getvat_result = mysqli_fetch_assoc($getvat);
-                    ?> 
+                <div id="vat-box">
+                    <div class="roomDetail-box" id="vat-content">
+                        <?php
+                        $getvat = mysqli_query($conn,"SELECT daily_vat FROM roomdetail WHERE type = 'แอร์' OR type = 'พัดลม'");
+                        $getvat_result = mysqli_fetch_assoc($getvat);
+                        ?> 
+                        <div class="header">
+                            <h3>ภาษีมูลค่าเพิ่ม (VAT)</h3>
+                            <?php
+                            if($_SESSION["level"] == "admin"){
+                            ?>
+                            <button type="button" class="edit-btn" id="edit-vat"></button>
+                            <div class="option-grid" id="vat-option" style="display:none;">
+                                <button type="button" class="correct-btn" id="correct-vat"></button>
+                                <button type="button" class="cancel-btn" id="cancel-vat"></button>
+                            </div>
+                            <?php } ?>
+                        </div>
+                        <div class="hr"></div>
+                        <div>
+                            <p>ภาษีมูลค่าเพิ่ม(VAT) | <strong>%</strong></p>
+                            <input type="text" id="daily_vat" name="daily_vat" value="<?php echo $getvat_result['daily_vat']; ?>" maxlength="10" disabled>
+                            <h5 id="daily_vat_error" style="color:red;"></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="prompt-box">
+                <div class="roomDetail-box" id="prompt-content" style="margin-top:32px;">
                     <div class="header">
-                        <h3>ภาษีมูลค่าเพิ่ม (VAT)</h3>
+                        <h3>รายละเอียดอื่น ๆ</h3>
                         <?php
                         if($_SESSION["level"] == "admin"){
                         ?>
-                        <button type="button" class="edit-btn"></button>
-                        <div class="option-grid" style="display:none;">
-                            <button type="button" class="correct-btn"></button>
-                            <button type="button" class="cancel-btn"></button>
+                        <button type="button" class="edit-btn" id="edit-prompt"></button>
+                        <div class="option-grid" id="prompt-option" style="display:none;">
+                            <button type="button" class="correct-btn" id="correct-prompt"></button>
+                            <button type="button" class="cancel-btn" id="cancel-prompt"></button>
                         </div>
                         <?php } ?>
                     </div>
                     <div class="hr"></div>
                     <div>
-                        <p>ภาษีมูลค่าเพิ่ม | <strong>%</strong></p>
-                        <input type="text" name="vat" value="<?php if($getvat_result["daily_vat"] != "" || $getvat_result["daily_vat"] != null){ echo $getvat_result["daily_vat"]; }else{ echo 0; } ?>" disabled>
-                    </div>
-                </div>
-            </div>
-            <div class="roomDetail-box" style="margin-top:32px;">
-                <div class="header">
-                    <h3>รายละเอียดอื่น ๆ</h3>
-                    <?php
-                    if($_SESSION["level"] == "admin"){
-                    ?>
-                    <button type="button" class="edit-btn"></button>
-                    <div class="option-grid" style="display:none;">
-                        <button type="button" class="correct-btn"></button>
-                        <button type="button" class="cancel-btn"></button>
-                    </div>
-                    <?php } ?>
-                </div>
-                <div class="hr"></div>
-                <div>
-                    <h3>รายละเอียดการชำระเงิน</h3>
-                    <div class="content">
-                        <div class="topic-box">
-                            <p>เลขพร้อมเพย์ (PromptPay No.)</p>
-                            <input type="text" disabled>
-                        </div>
-                        <div class="hr" style="margin:0;"></div>
-                        <div style="padding:16px;">
-                            <div class="img-box">
-                                <img src="" alt="">
+                        <?php
+                        $searchPrompt = mysqli_query($conn, "SELECT * FROM promptpay");
+                        $resultPrompt = mysqli_fetch_assoc($searchPrompt);
+                        ?>
+                        <h3>รายละเอียดการชำระเงิน</h3>
+                        <div class="content">
+                            <div class="topic-box">
+                                <p>เลขพร้อมเพย์ (PromptPay No.)</p>
+                                <input type="text" id="prompt_num" value="<?php if($resultPrompt != null){ echo $resultPrompt["prompt_num"]; } ?>" maxlength="10" disabled>
+                                <h5 id="prompt_error" style="color:red;"></h5>
                             </div>
-                            <?php
-                            if($_SESSION["level"] == "admin"){
-                            ?>
-                            <input type="file" name="" id="" disabled>
-                            <?php } ?>
+                            <div class="hr" style="margin:0;"></div>
+                            <div style="padding:16px;">
+                                <div class="img-box">
+                                    <img src="<?php if($resultPrompt != null){ echo "../../images/promptpay/".$resultPrompt["prompt_img"]; } ?>" alt="" id="img_prompt" <?php if($resultPrompt == null){ echo "style='display:none;'"; } ?>>
+                                </div>
+                                <h5 id="img_error" style="color:red;"></h5>
+                                <?php
+                                if($_SESSION["level"] == "admin"){
+                                ?>
+                                <input type="file" name="" id="prompt_img" accept="images/*" disabled>
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
                 </div>

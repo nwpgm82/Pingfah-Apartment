@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION["level"] == "employee"){
+if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
   include("../connection.php");
   function DateThai($strDate){
     $strYear = date("Y",strtotime($strDate));
