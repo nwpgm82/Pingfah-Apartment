@@ -133,7 +133,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                 </div>
                                 <div>
                                     <p>ชื่อเจ้าของพร้อมเพย์ (PromptPay Name.)</p>
-                                    <input type="text">
+                                    <input type="text" id="prompt_name" value="<?php if($resultPrompt != null){ echo $resultPrompt["prompt_name"]; } ?>" disabled>
                                     <h5 id="prompt_name_error" style="color:red;"></h5>
                                 </div>
                             </div>

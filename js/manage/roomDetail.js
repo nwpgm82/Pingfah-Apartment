@@ -102,7 +102,7 @@ $(document).ready(function(){
     $(document).on("click", "#cancel-vat", function () {
         $('#vat-box').load(location.href + ' #vat-content');
     })
-    $(document).on("keyup", "#daily_vat", function () {
+    $(document).on("keyup", "#daily_vat", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();
@@ -120,14 +120,17 @@ $(document).ready(function(){
         $("#edit-prompt").hide()
         $("#prompt-option").css("display","flex")
         $("#prompt_num").prop("disabled", false)
+        $("#prompt_name").prop("disabled", false)
         $("#prompt_img").prop("disabled", false)
     })
     $(document).on("click", "#correct-prompt", function () {
-        if($("#prompt_num").val() != ""){
+        if($("#prompt_num").val() != "" && $("#prompt_name").val() != ""){
             let formdata = new FormData();
             let prompt_num = $("#prompt_num").val()
+            let prompt_name = $("#prompt_name").val()
             let files = $("#prompt_img")[0].files[0]
             formdata.append("prompt_num", prompt_num)
+            formdata.append("prompt_name", prompt_name)
             if(files){
                 formdata.append("prompt_img", files)
             }
@@ -157,6 +160,15 @@ $(document).ready(function(){
         } else {
             $(this).css("border-color", "")
             $("#prompt_error").html("")
+        }
+    })
+    $(document).on("keyup", "#prompt_name", function(){
+        if ($(this).val() == "") {
+            $(this).css("border-color", "red")
+            $("#prompt_name_error").html("โปรดระบุชื่อเจ้าของพร้อมเพย์")
+        } else {
+            $(this).css("border-color", "")
+            $("#prompt_name_error").html("")
         }
     })
     $(document).on("change", "#prompt_img", function(){
