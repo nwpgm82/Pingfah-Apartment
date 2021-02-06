@@ -106,7 +106,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                 }else if(isset($code)){
                     $sql = "SELECT * FROM dailycost WHERE code = '$code'";
                 }else{
-                    $sql = "SELECT * FROM dailycost LIMIT {$start} , {$perpage}";
+                    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id LIMIT {$start} , {$perpage}";
                 }
                 $result = $conn->query($sql);
                 if(isset($code)){
@@ -135,7 +135,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         ?>
                         <tr>
                             <td><?php echo $num; ?></td>
-                            <td><?php echo $row['room_id']; ?></td>
+                            <td><?php echo $row['room_select']; ?></td>
                             <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
                             <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out'])."(".$night." คืน)"; ?>
                             </td>
