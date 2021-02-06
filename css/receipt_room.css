@@ -76,13 +76,9 @@
     table-layout: fixed;
 }
 
-.letter table tr{
+.letter table tr:last-child{
     height: 40px;
     border: 1px solid #000;
-}
-
-.letter table tr:nth-child(2) td{
-    padding: 8px 0 60px 0;
 }
 
 .letter table tr th:nth-child(1){
@@ -111,10 +107,15 @@
 
 .letter table tr td:not(:nth-child(2)){
     text-align: center;
-    border: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
 }
 
-.letter table tr:nth-child(2) td:nth-child(2){
-    padding-left: 8px;
+.letter table tr td{
+    padding: 16px 0 16px 8px;
+}
+
+.letter table tr:nth-last-child(2) td{
+    padding: 16px 0 32px 8px;
 }
 

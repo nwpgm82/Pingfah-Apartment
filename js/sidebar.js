@@ -65,6 +65,10 @@ $(document).ready(function () {
         daily.css("background-color", "rgba(131, 120, 47, 0.7)")
         daily.css("color", "#fff")
         header.html("รายการเช่ารายวัน")
+    } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/daily/confirm_checkout.php"){
+        daily.css("background-color", "rgba(131, 120, 47, 0.7)")
+        daily.css("color", "#fff")
+        header.html("เช็คเอาท์ ?")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/dailyCost/index.php" || localStorage.getItem("i") == "/Pingfah/pages/manage/dailyCost/dailyCostDetail.php") {
         dailycost.css("background-color", "rgba(131, 120, 47, 0.7)")
         dailycost.css("color", "#fff")

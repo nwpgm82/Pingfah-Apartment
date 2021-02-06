@@ -76,11 +76,11 @@ if ($result->num_rows > 0) {
                         <div style='background-color: #edeadb;width:900px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;' >
                             <img src='https://pingfah-apartment.000webhostapp.com/img/logo.png' style='width:250px;height:60px;'>
                         </div>
-                        <div style='background-color: #f6f4ec;width:900px;margin:0 auto;padding:16px;'>
+                        <div style='background-color: #f6f4ec;width:900px;height:424px;margin:0 auto;padding:16px;'>
                             <p><strong>ยกเลิกการจองห้องพักเนื่องจากท่านไม่ได้เข้าพักในวันที่ท่านกำหนดไว้</strong></p>
                         </div>
                         <div style='background-color: #edeadb;width:900px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;'>
-                            <p style='color:#000'><strong>ติดต่อสอบถาม :</strong> 098-9132002 (เจ้าของหอพัก), 093-2266753 (แม่บ้าน)</p>
+                            <p style='color:#000'><strong>ติดต่อสอบถาม :</strong> 098-9132002 (เจ้าของหอพัก)</p>
                         </div>
                     </body>
                 </html>
@@ -137,7 +137,7 @@ if ($result->num_rows > 0) {
                         <div style='background-color: #edeadb;width:900px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;' >
                             <img src='https://pingfah-apartment.000webhostapp.com/img/logo.png' style='width:250px;height:60px;'>
                         </div>
-                        <div style='background-color: #f6f4ec;width:900px;margin:0 auto;padding:16px;'>
+                        <div style='background-color: #f6f4ec;width:900px;height:424px;margin:0 auto;padding:16px;'>
                             <p><strong>ยกเลิกการจองห้องพักเนื่องจากท่านไม่ได้ชำระเงินค่ามัดจำห้องพักก่อนวันที่ทางหอพักกำหนด</strong></p>
                         </div>
                         <div style='background-color: #edeadb;width:900px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;'>

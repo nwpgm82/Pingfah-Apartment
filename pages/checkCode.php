@@ -39,7 +39,7 @@ function DateThai($strDate)
         <?php
         if(isset($code)){
             include("connection.php");
-            $sql = "SELECT * FROM daily WHERE code = '$code' LIMIT 1";
+            $sql = "SELECT * FROM daily WHERE code = '$code' AND daily_status != 'ยกเลิกการจอง'";
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
@@ -149,11 +149,11 @@ function DateThai($strDate)
                                             <?php
                                             if($row["daily_status"] != "รอการยืนยัน" && $row["daily_status"] != "ยกเลิกการจอง"){
                                             ?>
-                                            <a href="receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank" ><button class="print"></button></a>
+                                            <a href="receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank" ><button type="button" class="print"></button></a>
                                             <?php
                                             }else{
                                             ?>
-                                            <button class="print" style="margin:0 16px;" disabled></button>
+                                            <button type="button" class="print" style="margin:0 16px;" disabled></button>
                                             <?php } ?>
                                         </div> 
                                     </li>
@@ -163,11 +163,11 @@ function DateThai($strDate)
                                             <?php
                                             if($row["daily_status"] == "เช็คเอาท์แล้ว" && $row["daily_status"] != "ยกเลิกการจอง"){
                                             ?>
-                                            <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button class="print"></button></a>
+                                            <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print"></button></a>
                                             <?php 
                                             }else{
                                             ?>
-                                            <button class="print" style="margin:0 16px;" disabled></button>
+                                            <button type="button" class="print" style="margin:0 16px;" disabled></button>
                                             <?php } ?>
                                         </div>
                                     </li>

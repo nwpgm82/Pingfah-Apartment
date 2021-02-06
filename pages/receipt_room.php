@@ -1,7 +1,7 @@
 <?php
 include("connection.php");
 $code_request = $_REQUEST["code"];
-$sql = "SELECT * FROM dailycost WHERE code = '$code_request'";
+$sql = "SELECT * FROM dailycost INNER JOIN daily ON dailycost.deposit = daily.payment_price WHERE daily.code";
 $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
 $row = mysqli_fetch_array($result);
 if($row != null){
@@ -125,6 +125,13 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                     <td><?php echo $total_room; ?></td>
                     <td><?php echo $night; ?></td>
                     <td><?php echo $total_price; ?></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>คืนค่ามัดจำห้องพัก</td>
+                    <td><?php echo $total_room; ?></td>
+                    <td></td>
+                    <td><?php echo "-".$total_price; ?></td>
                 </tr>
                 <tr>
                     <td colspan="3"><?php echo bathformat($total_price) ?></td>

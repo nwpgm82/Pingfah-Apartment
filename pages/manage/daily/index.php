@@ -238,7 +238,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                                 <?php 
                                                 }else if($row['daily_status'] == 'เข้าพักแล้ว'){
                                                 ?>
-                                                    <button type="button" class="checkout-btn" onclick="check_out(<?php echo $row['daily_id']; ?>)">เช็คเอาท์</button>
+                                                    <a href="confirm_checkout.php?daily_id=<?php echo $row["daily_id"]; ?>"><button type="button" class="checkout-btn">เช็คเอาท์</button></a>
                                                 <?php 
                                                 }
                                                 ?>
