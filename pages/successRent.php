@@ -28,8 +28,9 @@ function DateThai($strDate)
             <div style="line-height:60px;">
                 <h1 style="text-align:center;color:rgb(131, 120, 47, 1)">จองห้องพักสำเร็จ</h1>
                 <h2 style="text-align:center;color:rgb(131, 120, 47, 1)">เลขที่ในการจอง : <?php if(isset($_REQUEST['code'])){ echo $_REQUEST['code'];} ?></h2>
-                <div style="padding:32px 0;width:480px;">
-                    <p style="color:rgb(131, 120, 47, 1);text-align:center;"><strong>*** เมื่อวางเงินมัดจำแล้วให้อัปโหลดสลิปได้ที่เมนู <a href="checkCode.php" style="color:">ตรวจสอบการจอง</a> ***</strong></p>
+                <div style="padding:32px 0;max-width:650px;">
+                    <p style="color:rgb(131, 120, 47, 1);text-align:center;"><strong>*** รอการตรวจสอบข้อมูล และยืนยันข้อมูลประมาณ 10-30 นาที เมื่อสถานะยืนยันแล้วท่านจะได้รับอีเมลอีกครั้ง หากสถานะยังไม่เปลี่ยนแปลงภายในเวลาที่กำหนดโปรดติดต่อเจ้าของหอพัก ***</strong></p>
+                    <p style="color:rgb(131, 120, 47, 1);text-align:center;"><strong>*** สามารถตรวจสอบสถานะได้ที่เมนู <a href="checkCode.php" style="color:">ตรวจสอบการจอง</a> ***</strong></p>
                 </div>
                 <div style="display:flex;justify-content:center;align-items:center;">
                     <button id="close-window">ปิดหน้านี้</button>

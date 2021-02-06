@@ -4,6 +4,51 @@ $(document).ready(function () {
     let id_card = $("#id_card")
     let email = $("#email")
     let tel = $("#tel")
+    let deposit_img = $("#deposit_img")
+    function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+            // case 'pdf':
+            case 'png':
+                //etc
+                return true;
+        }
+        return false;
+    }
+    deposit_img.change(function () {
+        if (isImage(deposit_img.val()) == false) {
+            $(".img-box").css("border-color", "red")
+            $("#qr_error").html("รองรับไฟล์ประเภท jpg, png ขนาดไม่เกิน 5 MB เท่านั้น")
+            deposit_img.val("")
+            $('#img_id').attr('src', "");
+            $("#img_id").hide()
+        } else {
+            if (this.files && this.files[0]) {
+                if (this.files[0].size < 5242880) {
+                    $("#img_id").show()
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#img_id').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]); // convert to base64 string
+                    $(".img-box").css("border-color", "")
+                    $("#qr_error").html("")
+                } else {
+                    $(".img-box").css("border-color", "red")
+                    $("#qr_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 5 MB)")
+                    deposit_img.val("")
+                    $('#img_id').attr('src', "");
+                    $("#img_id").hide()
+                }
+            }
+        }
+    })
     firstname.keyup(function () {
         if (firstname.val() == "") {
             firstname.css("border-color", "red")
@@ -96,6 +141,9 @@ $(document).ready(function () {
                         $("#tel_error").html("โปรดระบุเบอร์โทรศัพท์ของท่าน")
                     } else if ($(this).attr("id") == "email") {
                         $("#em_error").html("โปรดระบุอีเมลของท่าน")
+                    }else if($(this).attr("id") == "deposit_img"){
+                        $(".img-box").css("border-color", "red")
+                        $("#qr_error").html("โปรดเพิ่มรูปภาพหลักฐานการมัดจำค่าห้องพัก")
                     }
                     event.preventDefault()
                 }

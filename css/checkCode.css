@@ -256,11 +256,17 @@ body::before{
     display: flex;
     align-items: center;
 }
+
 .box .checkCode-box .grid-box ul li div a{
+    margin: 0 16px;
     width: 40px;
     height: 40px;
-    margin: 0 16px;
-    padding: 0 16px;
+}
+
+.box .checkCode-box .grid-box ul li .print{
+    width: 40px;
+    height: 40px;
+    margin: 0;
     border-radius: 4px;
     border: none;
     background-color: rgb(131, 120, 47, 0.7);
@@ -274,6 +280,15 @@ body::before{
     transition: 0.3s;
 }
 
-.box .checkCode-box .grid-box ul li div a:hover{
+.box .checkCode-box .grid-box ul li .print:disabled{
+    background-color: #ddd;
+    cursor: default;
+}
+
+.box .checkCode-box .grid-box ul li .print:hover{
     background-color: rgb(131, 120, 47, 1);
+}
+
+.box .checkCode-box .grid-box ul li .print:disabled:hover{
+    background-color: #ddd;
 }

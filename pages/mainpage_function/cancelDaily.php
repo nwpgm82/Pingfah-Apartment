@@ -52,10 +52,10 @@
                  <img src='https://pingfah-apartment.000webhostapp.com/img/logo.png' style='width:250px;height:60px;'>
              </div>
              <div style='background-color: #f6f4ec;width:900px;margin:0 auto;padding:16px;'>
-                 <p><strong>การจองห้องพักได้ถูกยกเลิกเนื่องจากไม่ได้วางเงินค่ามัดจำค่าห้องพักตามที่กำหนดไว้</strong></p>
+                 <p><strong>คุณได้ยกเลิกการจองห้องพักแล้ว</strong></p>
              </div>
              <div style='background-color: #edeadb;width:900px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;'>
-                 <p style='color:#000'><strong>ติดต่อสอบถาม :</strong> 098-9132002 (เจ้าของหอพัก), 093-2266753 (แม่บ้าน)</p>
+                 <p style='color:#000'><strong>ติดต่อสอบถาม :</strong> 098-9132002 (เจ้าของหอพัก)</p>
              </div>
          </body>
      </html>

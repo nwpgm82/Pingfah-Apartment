@@ -98,18 +98,18 @@ function DateThai($strDate)
                 </div>
                 <div class="total_price">
                     <p>ราคารวม (บาท)</p>
-                    <input type="text" value="<?php echo number_format($row["total_price"]); ?>" disabled>
+                    <input type="text" value="<?php echo $row["total_price"]; ?>" disabled>
                 </div>
                 <div class="vat">
                     <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
-                    <input type="text" name="total_price" id="total_price" value="7%" disabled>
+                    <input type="text" name="total_price" id="total_price" value="<?php echo $row["vat"]."%"; ?>" disabled>
                 </div>
                 <div class="status">
                     <label>สถานะการจอง :</label>
                     <input type="text" class="input-status" value="<?php echo $row['daily_status']; ?>" disabled>
                 </div>
             </div>
-            <div style="padding-top:32px;">
+            <!-- <div style="padding-top:32px;">
                 <h3>ขั้นตอนในการจองห้องพัก</h3>
                 <div style="line-height:40px;padding-top:16px;">
                     <p>1. เมื่อจองห้องพักแล้ว ให้โอนเงินจำนวน <strong style="color:red;"><?php echo number_format($row['payment_price']); ?> บาท (จำนวนห้องพัก x 300)</strong> มาที่บัญชีพร้อมเพย์ <strong>095-6722914 (นวพล นรเดชานันท์)</strong> หรือ สแกน QR code ได้<a href="../img/tool/qr-code.png" target="_blank">ที่นี่</a> ก่อนวันที่ <strong style="color:red;"><?php echo DateThai($row['payment_datebefore']); ?></strong> มิเช่นนั้นการจองห้องพักจะถือว่าเป็นโมฆะ</p>
@@ -118,7 +118,7 @@ function DateThai($strDate)
                     <p>4. รอการยืนยันจากเจ้าของหอพัก หรือพนักงาน</p>
                     <p>5. เมื่อได้รับการยืนยันแล้ว ให้ท่านชำระเงิน ณ ที่พัก และเข้าพักตามวันที่ท่านได้จองห้องพักไว้ <strong>(เข้าพักได้ในเวลา 14.00 น. เป็นต้นไป)</strong></p>
                 </div>
-            </div>
+            </div> -->
             <form action="mainpage_function/addPayment_image.php?daily_id=<?php echo $row['daily_id']; ?>" method="POST" enctype="multipart/form-data">
                 <div style="padding-top:32px;height:659px;">
                     <div class="grid-box">
@@ -126,7 +126,7 @@ function DateThai($strDate)
                             <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>
                             <div class="hr"></div>
                             <div class="img-box" id="id_box">
-                                <img id="img_id" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['daily_id']."/".$row['payment_img']."'"; } ?> <?php if(!isset($row['payment_img'])){ echo "style='display:none;'"; }?> />
+                                <img id="img_id" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['code']."/deposit/".$row['payment_img']."'"; } ?> <?php if(!isset($row['payment_img'])){ echo "style='display:none;'"; }?> />
                                 <?php
                                 if(isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
                                 <button class="del-btn" type="button" id="del-btn1" style="margin:0;" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')"></button>
@@ -143,27 +143,34 @@ function DateThai($strDate)
                             <div class="hr"></div>
                             <div>
                                 <ul>
-                                    <?php
-                                    if($row["daily_status"] != "รอการยืนยัน"){
-                                    ?>
                                     <li>
                                         <div>
                                             <p>ใบเสร็จค่ามัดจำห้องพัก</p>
-                                            <a href="receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank" class="print"></a>
+                                            <?php
+                                            if($row["daily_status"] != "รอการยืนยัน" && $row["daily_status"] != "ยกเลิกการจอง"){
+                                            ?>
+                                            <a href="receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank" ><button class="print"></button></a>
+                                            <?php
+                                            }else{
+                                            ?>
+                                            <button class="print" style="margin:0 16px;" disabled></button>
+                                            <?php } ?>
                                         </div> 
                                     </li>
-                                    <?php
-                                    if($row["daily_status"] != "รอการยืนยัน" && $row["daily_status"] != "รอการเข้าพัก"){
-                                    ?>
                                     <li>
                                         <div>
                                             <p>ใบเสร็จค่าห้องพัก</p>
-                                            <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank" class="print"></a>
+                                            <?php
+                                            if($row["daily_status"] == "เช็คเอาท์แล้ว" && $row["daily_status"] != "ยกเลิกการจอง"){
+                                            ?>
+                                            <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button class="print"></button></a>
+                                            <?php 
+                                            }else{
+                                            ?>
+                                            <button class="print" style="margin:0 16px;" disabled></button>
+                                            <?php } ?>
                                         </div>
                                     </li>
-                                    <?php
-                                    }}
-                                    ?>
                                 </ul>
                             </div>
                         </div>
