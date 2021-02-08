@@ -164,7 +164,15 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                         <img src="../../../img/tool/printer.png" alt="" style="width:20px;height:20px;position:absolute;top:10px;left:8px;">
                                     </div>
                                     <div style="position:relative;">
+                                    <?php
+                                    if($row["daily_status"] == "เช็คเอาท์แล้ว"){
+                                    ?>
                                         <a href="receipt_room_full.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่าเช่าห้องพัก (แบบเต็ม)</button></a>
+                                    <?php
+                                    }else{
+                                    ?>
+                                        <button type="button" class="print" disabled>ค่าเช่าห้องพัก (แบบเต็ม)</button>
+                                    <?php } ?>
                                         <img src="../../../img/tool/printer.png" alt="" style="width:20px;height:20px;position:absolute;top:10px;left:8px;">
                                     </div>
                                     <button type="button" class="cancel-btn" data-name="print<?php echo $row["dailycost_id"]; ?>"></button>
