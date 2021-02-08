@@ -16,9 +16,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         return "$strDay $strMonthThai $strYear";
     }
     if($check_in != "" && $check_out != ""){
-        $query = "SELECT check_in ,SUM(total_price) as daily_price FROM dailycost WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in";
+        $query = "SELECT b.check_in ,SUM(a.total_price) as daily_price FROM dailycost WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in";
     }else{
-        $query = "SELECT check_in ,SUM(total_price) as daily_price FROM dailycost GROUP BY check_in";
+        $query = "SELECT b.check_in ,SUM(a.total_allprice) as daily_price FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id GROUP BY b.check_in";
     }
     
     $query_result = mysqli_query($conn, $query);
@@ -84,12 +84,19 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     <?php
                     if(strlen($datax) != 0){
                     ?>
-                    <div id="columnchart_material1" class="chart"></div>
+                    <div id="curve_chart" class="chart"></div>
                     <?php
                     }else{
                         echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>";
                     }
                     ?>
+                </div>
+                <div style="padding-top:32px;">
+                    <?php
+                    $search_totalprice = mysqli_query($conn, "SELECT SUM(total_allprice) as allprice FROM dailycost");
+                    $result_totalprice = mysqli_fetch_assoc($search_totalprice);
+                    ?>
+                    <h3>รายได้รวมทั้งหมด : <?php echo number_format($result_totalprice["allprice"], 2); ?> บาท</h3>
                 </div>
                 <div class="hr"></div>
                 <?php
@@ -120,7 +127,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     <table>
                         <tr>
                             <th>ลำดับ</th>
-                            <th>เลขห้องที่จอง</th>
+                            <!-- <th>เลขห้องที่จอง</th> -->
                             <th>ชื่อผู้เช่า</th>
                             <th>วันที่เข้าพัก</th>
                             <th>เลขที่ในการจอง</th>
@@ -135,19 +142,33 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         ?>
                         <tr>
                             <td><?php echo $num; ?></td>
-                            <td><?php echo $row['room_select']; ?></td>
+                            <!-- <td><?php echo $row['room_select']; ?></td> -->
                             <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
-                            <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out'])."(".$night." คืน)"; ?>
+                            <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out'])." (".$night." คืน)"; ?>
                             </td>
                             <td><?php echo $row['code']; ?></td>
-                            <td><?php echo $row['total_price']; ?></td>
+                            <td><?php echo $row['total_allprice']; ?></td>
                             <td><button class="status-success"><?php echo $row['pay_status']; ?></button></td>
                             <td>
-                                <div class="option-grid">
-                                    <a href="../../receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่าเช่าห้องพัก</button></a> 
+                                <div class="option-grid" id="print<?php echo $row["dailycost_id"]; ?>">
+                                    <div style="position:relative;">
+                                       <button class="print" style="padding-left:48px;" data-target="print<?php echo $row["dailycost_id"]; ?>">ค่าเช่าห้องพัก</button>
+                                       <img src="../../../img/tool/printer.png" alt="" style="width:20px;height:20px;position:absolute;top:10px;left:16px;">
+                                    </div>
                                     <a href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
                                     <button type="button" class="del" id="<?php echo $row['daily_id']; ?>"></button>
                                 </div>
+                                <div class="popup" id="popup-print<?php echo $row["dailycost_id"]; ?>">
+                                    <div style="position:relative;">
+                                        <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่าเช่าห้องพัก</button></a>
+                                        <img src="../../../img/tool/printer.png" alt="" style="width:20px;height:20px;position:absolute;top:10px;left:8px;">
+                                    </div>
+                                    <div style="position:relative;">
+                                        <a href="receipt_room_full.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่าเช่าห้องพัก (แบบเต็ม)</button></a>
+                                        <img src="../../../img/tool/printer.png" alt="" style="width:20px;height:20px;position:absolute;top:10px;left:8px;">
+                                    </div>
+                                    <button type="button" class="cancel-btn" data-name="print<?php echo $row["dailycost_id"]; ?>"></button>
+                                </div> 
                             </td>
                         </tr>
                         <?php $num++; } ?>
@@ -179,9 +200,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     </div>
     <script src="../../../js/manage/dailyCost.js"></script>
     <script>
-    google.charts.load('current', {
-        'packages': ['bar']
-    });
+    google.charts.load("current", {packages: ["line"]});
     <?php
     if(strlen($datax) != 0){
     ?>
@@ -201,9 +220,8 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
             vAxis: { format: "decimal"}
         };
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
+        var chart = new google.charts.Line(document.getElementById('curve_chart'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
     }
     $(window).resize(function(){
         drawChart();

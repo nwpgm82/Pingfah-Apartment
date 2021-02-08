@@ -33,7 +33,7 @@
     }
     $_SESSION["vat"] = $getVAT_result["daily_vat"];
     $_SESSION["total_room_price"] = (intval($_SESSION["air"]) * $getAir_result["daily_price"]) + (intval($_SESSION["fan"]) * $getFan_result["daily_price"]);
-    $cal_vat = ($_SESSION["total_room_price"]/100) * $_SESSION["vat"];
+    $cal_vat = ($_SESSION["total_room_price"] * $_SESSION["vat"])/100;
     $_SESSION["total_price"] = $_SESSION["total_room_price"] + $cal_vat;
     // $date1 = date_create($_SESSION["check_in"]);
     // $date2 = date_create($_SESSION["check_out"]);

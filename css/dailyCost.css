@@ -157,37 +157,37 @@
 }
 
 .dailycost-box table th:nth-child(2) {
-    width: 13%;
+    width: 15%;
 }
 
 .dailycost-box table th:nth-child(3) {
-    width: 12%;
+    width: 27%;
 }
 
 .dailycost-box table th:nth-child(4) {
-    width: 22%;
-}
-
-.dailycost-box table th:nth-child(5) {
     width: 10%;
 }
 
-.dailycost-box table th:nth-child(6) {
+.dailycost-box table th:nth-child(5) {
     width: 7%;
 }
 
-.dailycost-box table th:nth-child(7) {
+.dailycost-box table th:nth-child(6) {
     width: 11%;
 }
 
-.dailycost-box table th:nth-child(8) {
-    width: 20%;
+.dailycost-box table th:nth-child(7) {
+    width: 25%;
 }
 
 .dailycost-box table td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.dailycost-box table td:nth-child(1) {
+    text-align: center;
 }
 
 .dailycost-box table th {
@@ -244,10 +244,25 @@
 }
 
 .dailycost-box .print {
-    padding: 0px 16px 0px 48px;
-    background-image: url("../img/tool/printer.png");
+    padding: 0px 16px 0px 36px;
+    /* background-image: url("../img/tool/printer.png");
     background-repeat: no-repeat;
-    background-position: 12% 50%;
+    background-position: 12% 50%; */
+}
+
+.dailycost-box .popup{
+    height: auto;
+    display: none;
+    justify-content: space-between;
+    column-gap: 8px;
+}
+
+.dailycost-box .cancel-btn{
+    width: 40px;
+    background-image: url(../img/tool/cancel-icon.png);
+    background-color: rgb(255, 70, 70);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* .dailycost-box .un-print{
