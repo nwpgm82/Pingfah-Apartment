@@ -6,7 +6,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
     $name = $_REQUEST["name"];
     $search = mysqli_query($conn, "SELECT * FROM daily WHERE daily_id = $id");
     $result = mysqli_fetch_assoc($search);
-    $pic_location = "../../../images/daily/$id/$name";
+    $pic_location = "../../../images/daily/".$result["code"]."/deposit/$name";
     function DateThai($strDate){
         $strYear = date("Y",strtotime($strDate));
         $strMonth= date("n",strtotime($strDate));

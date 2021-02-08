@@ -16,7 +16,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         return "$strDay $strMonthThai $strYear";
     }
     if($check_in != "" && $check_out != ""){
-        $query = "SELECT b.check_in ,SUM(a.total_price) as daily_price FROM dailycost WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in";
+        $query = "SELECT b.check_in ,SUM(a.total_allprice) as daily_price FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) GROUP BY check_in";
     }else{
         $query = "SELECT b.check_in ,SUM(a.total_allprice) as daily_price FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id GROUP BY b.check_in";
     }
@@ -109,9 +109,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                 $start = ($page - 1) * $perpage;
                 $num = $start + 1;
                 if(isset($check_in) && isset($check_out)){
-                    $sql = "SELECT * FROM dailycost WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) LIMIT {$start} , {$perpage}";
+                    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) LIMIT {$start} , {$perpage}";
                 }else if(isset($code)){
-                    $sql = "SELECT * FROM dailycost WHERE code = '$code'";
+                    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE a.code = '$code'";
                 }else{
                     $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id LIMIT {$start} , {$perpage}";
                 }
@@ -150,32 +150,14 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <td><?php echo $row['total_allprice']; ?></td>
                             <td><button class="status-success"><?php echo $row['pay_status']; ?></button></td>
                             <td>
-                                <div class="option-grid" id="print<?php echo $row["dailycost_id"]; ?>">
-                                    <div style="position:relative;">
-                                       <button class="print" style="padding-left:48px;" data-target="print<?php echo $row["dailycost_id"]; ?>">ค่าเช่าห้องพัก</button>
-                                       <img src="../../../img/tool/printer.png" alt="" style="width:20px;height:20px;position:absolute;top:10px;left:16px;">
-                                    </div>
+                                <div class="option-grid">
+                                    <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่าเช่าห้องพัก</button></a>
                                     <a href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
+                                    <?php
+                                    if($_SESSION["level"] == "admin"){
+                                    ?>
                                     <button type="button" class="del" id="<?php echo $row['daily_id']; ?>"></button>
-                                </div>
-                                <div class="popup" id="popup-print<?php echo $row["dailycost_id"]; ?>">
-                                    <div style="position:relative;">
-                                        <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่าเช่าห้องพัก</button></a>
-                                        <img src="../../../img/tool/printer.png" alt="" style="width:20px;height:20px;position:absolute;top:10px;left:8px;">
-                                    </div>
-                                    <div style="position:relative;">
-                                    <?php
-                                    if($row["daily_status"] == "เช็คเอาท์แล้ว"){
-                                    ?>
-                                        <a href="receipt_room_full.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่าเช่าห้องพัก (แบบเต็ม)</button></a>
-                                    <?php
-                                    }else{
-                                    ?>
-                                        <button type="button" class="print" disabled>ค่าเช่าห้องพัก (แบบเต็ม)</button>
                                     <?php } ?>
-                                        <img src="../../../img/tool/printer.png" alt="" style="width:20px;height:20px;position:absolute;top:10px;left:8px;">
-                                    </div>
-                                    <button type="button" class="cancel-btn" data-name="print<?php echo $row["dailycost_id"]; ?>"></button>
                                 </div> 
                             </td>
                         </tr>

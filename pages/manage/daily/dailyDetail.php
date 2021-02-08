@@ -124,9 +124,12 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <?php
                             if(isset($payment_img)){
                             ?>
-                            <img src="../../images/daily/<?php echo $daily_id; ?>/<?php echo $payment_img; ?>" alt="">
+                            <img src="../../images/daily/<?php echo $code; ?>/deposit/<?php echo $payment_img; ?>" alt="">
+                            <?php
+                            if($daily_status == "รอการยืนยัน"){
+                            ?>
                             <button type="button" class="del-btn" onclick="delImg(<?php echo $daily_id; ?>,'<?php echo $payment_img; ?>')"></button>
-                            <?php } ?>
+                            <?php }} ?>
                         </div>
                     </div>
                 </div>

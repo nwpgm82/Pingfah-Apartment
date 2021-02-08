@@ -116,17 +116,4 @@ $(document).ready(function () {
             location.href = `function/delDailyCost.php?id=${event.target.id}`
         }
     })
-
-    $(".print").click(function(){
-        let tar = $(this).data("target")
-        // console.log(event.target.id)
-        $(`#${tar}`).hide()
-        $(`#popup-${tar}`).css("display", "flex")
-    })
-
-    $(".cancel-btn").click(function(){
-        let tar = $(this).data("name")
-        $(`#${tar}`).css("display", "flex")
-        $(`#popup-${tar}`).hide()
-    })
 })

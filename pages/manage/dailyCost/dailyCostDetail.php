@@ -12,7 +12,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    $sql = "SELECT * FROM dailycost WHERE dailycost_id = $dailycost_id";
+    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE a.dailycost_id = $dailycost_id";
     $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
     $row = mysqli_fetch_array($result);
     if($row != null){
@@ -45,7 +45,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     <div class="grid-container">
                         <div class="room_select">
                             <p>เลขห้องที่จอง</p>
-                            <input type="text" value="<?php echo $room_id; ?>" disabled>
+                            <input type="text" value="<?php echo $room_select; ?>" disabled>
                         </div>
                         <div class="name_title">
                             <p>คำนำหน้าชื่อ</p>
@@ -79,9 +79,29 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <p>เช็คเอาท์</p>
                             <input type="text" value="<?php echo DateThai($check_out); ?>" disabled>
                         </div>
+                        <div class="daily_status">
+                            <p>สถานะการเข้าพัก</p>
+                            <input type="text" value="<?php echo $daily_status; ?>" disabled>
+                        </div>
+                        <div class="total_room_price">
+                            <p>ค่าเช่าห้องพัก (บาท)</p>
+                            <input type="text" value="<?php echo number_format($total_room_price,2); ?>" disabled>
+                        </div>
+                        <div class="vat">
+                            <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
+                            <input type="text" value="<?php echo number_format($vat,2)."%"; ?>" disabled>
+                        </div>
                         <div class="total_price">
-                            <p>ราคารวม (บาท)</p>
-                            <input type="text" value="<?php echo $total_price ?>" disabled>
+                            <p>ยอดรวมหลังเพิ่มภาษีมูลค่าเพิ่ม (บาท)</p>
+                            <input type="text" value="<?php echo number_format($total_price,2); ?>" disabled>
+                        </div>
+                        <div class="damages">
+                            <p>ค่าปรับ (ค่าเสียหาย) (บาท)</p>
+                            <input type="text" value="<?php echo number_format($damages,2); ?>" disabled>
+                        </div>
+                        <div class="total_allprice">
+                            <p>จำนวนเงินรวมทั้งสิ้น (บาท)</p>
+                            <input type="text" value="<?php echo number_format($total_allprice,2); ?>" disabled>
                         </div>
                         <div class="status">
                             <p>สถานะการชำระเงิน</p>
@@ -89,27 +109,79 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         </div>
                     </div>
                 </div>
-                <div id="copy-box" style="padding-top:32px;">
-                    <h3>หลักฐานการชำระเงินค่าห้องพัก</h3>
-                    <div class="hr"></div>
-                    <div class="img-box">
-                        <?php
-                        if($pay_img != null || $pay_img != ""){
-                        ?>
-                        <img src="../../images/daily/<?php echo $dailycost_id; ?>/<?php echo $pay_img; ?>" alt="">
-                        <button class="del-btn" onclick="delImg(<?php echo $dailycost_id; ?>,'<?php echo $pay_img; ?>')">X</button>
-                        <?php } ?>
+                <form action="function/addImage.php?dailycost_id=<?php echo $dailycost_id; ?>" method="POST"
+                    enctype="multipart/form-data">
+                    <div id="copy-box" style="padding-top:32px;">
+                        <h3>หลักฐานการชำระเงินค่าห้องพัก</h3>
+                        <div class="hr"></div>
+                        <div class="pay_grid">
+                            <div>
+                                <p>หลักฐานชำระเงินค่าห้องพัก</p>
+                                <div class="img-box" id="img-box">
+                                    <?php
+                                    if($pay_img != null || $pay_img != ""){
+                                    ?>
+                                    <img src="../../images/daily/<?php echo $code; ?>/payment/<?php echo $pay_img; ?>"
+                                        alt="">
+                                    <button type="button" class="del-btn"
+                                        onclick="delImg(<?php echo $dailycost_id; ?>)"></button>
+                                    <?php 
+                                    }else{
+                                    ?>
+                                    <img id="img_payment" src="" alt="" style="display:none;">
+                                    <?php
+                                    } 
+                                    ?>
+                                </div>
+                                <h5 id="pay_error" style="color:red;"></h5>
+                                <?php
+                                if($pay_img == null){
+                                ?>
+                                <div style="padding-top:16px;">
+                                    <input type="file" name="file" id="file" class="inputfile" />
+                                </div>
+                                <?php } ?>
+                            </div>
+                            <!---------------------- ยังไม่เสร็จ ----------------------------------------->
+                            <div>
+                                <p>หลักฐานชำระเงินค่าห้องพัก (กรณีที่มีค่าเสียหาย)</p>
+                                <div class="img-box" id="img-box2">
+                                    <?php
+                                    if($payafter_d_img != null || $payafter_d_img != ""){
+                                    ?>
+                                    <img src="../../images/daily/<?php echo $code; ?>/payment/<?php echo $payafter_d_img; ?>"
+                                        alt="">
+                                    <button type="button" class="del-btn"
+                                        onclick="delImg(<?php echo $dailycost_id; ?>)"></button>
+                                    <?php 
+                                    }else{
+                                    ?>
+                                    <img id="img_payment" src="" alt="" style="display:none;">
+                                    <?php
+                                    } 
+                                    ?>
+                                </div>
+                                <h5 id="pay_error" style="color:red;"></h5>
+                                <?php
+                                if($payafter_d_img == null){
+                                ?>
+                                <div style="padding-top:16px;">
+                                    <input type="file" name="file" id="file2" class="inputfile" />
+                                </div>
+                                <?php } ?>
+                            </div>
+                            <!-- ---------------------------------------------------------------------- -->
+                        </div>
                     </div>
                     <?php
-                    if($pay_img == null){
+                    if($pay_img == null || $payafter_d_img == null){
                     ?>
-                    <div style="padding-top:16px;">
-                        <form id="submitForm" enctype="multipart/form-data">
-                            <input type="file" name="file" id="file" class="inputfile" />
-                        </form>
+                    <div class="hr"></div>
+                    <div style="display:flex;justify-content:center;align-items:center;">
+                        <button id="submitForm" disabled>ยืนยันการแก้ไข</button>
                     </div>
                     <?php } ?>
-                </div>
+                </form>
             </div>
         </div>
     </div>

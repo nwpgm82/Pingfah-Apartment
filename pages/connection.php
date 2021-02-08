@@ -3,7 +3,7 @@ $conn= mysqli_connect("localhost","root","","Pingfah") or die("Error: " . mysqli
 mysqli_query($conn, "SET NAMES 'utf8' ");
 date_default_timezone_set('Asia/Bangkok');
 if(date("d") == "6"){
-    $get_cost = "SELECT fines, total FROM cost WHERE cost_status = 'ยังไม่ได้ชำระเงิน'";
+    $get_cost = "SELECT fines, total FROM cost WHERE cost_status = 'รอการชำระเงิน'";
     $get_result = $conn->query($get_cost);
     if ($get_result->num_rows > 0) {
         while($cost = $get_result->fetch_assoc()) {
@@ -13,7 +13,7 @@ if(date("d") == "6"){
                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
             }
             $detail_result = mysqli_fetch_assoc($get_detail);
-            $updatefines = "UPDATE cost SET fines = ".$detail_result["fines"].", total = total + ".$detail_result["fines"]." WHERE cost_status != 'ชำระเงินแล้ว' ";
+            $updatefines = "UPDATE cost SET fines = ".$detail_result["fines"].", total = total + ".$detail_result["fines"].", cost_status = 'ยังไม่ได้ชำระเงิน' WHERE cost_status != 'ชำระเงินแล้ว' ";
             $conn->query($updatefines) === TRUE;
         }
     }

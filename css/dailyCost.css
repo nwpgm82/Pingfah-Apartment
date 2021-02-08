@@ -244,10 +244,10 @@
 }
 
 .dailycost-box .print {
-    padding: 0px 16px 0px 36px;
-    /* background-image: url("../img/tool/printer.png");
+    padding: 0px 16px 0px 48px;
+    background-image: url("../img/tool/printer.png");
     background-repeat: no-repeat;
-    background-position: 12% 50%; */
+    background-position: 12% 50%;
 }
 
 .dailycost-box .popup{
@@ -263,6 +263,10 @@
     background-color: rgb(255, 70, 70);
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.dailycost-box .cancel-btn:hover{
+    background-color: rgb(216, 40, 40);
 }
 
 /* .dailycost-box .un-print{
