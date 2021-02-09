@@ -25,7 +25,7 @@
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-.cost-box .card{
+.cost-box .card {
     display: flex;
     width: 100%;
     min-height: 400px;
@@ -62,22 +62,23 @@
     transition: 0.3s;
 }
 
-.cost-box input[type=text]#date_from, .cost-box input[type=text]#date_to{
+.cost-box input[type=text]#date_from,
+.cost-box input[type=text]#date_to {
     background-image: url("../img/tool/calendar.png");
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-size: 20px;
     background-position: 92% 50%;
     cursor: pointer;
 }
 
-.cost-box input[type=checkbox]{
+.cost-box input[type=checkbox] {
     width: 20px;
     height: 20px;
     margin-right: 8px;
     cursor: pointer;
 }
 
-.cost-box .dateText{
+.cost-box .dateText {
     position: absolute;
     top: 1px;
     left: 20px;
@@ -109,14 +110,14 @@
     justify-content: space-between;
 }
 
-.cost-box .cancel-sort{
+.cost-box .cancel-sort {
     width: 100%;
     background-color: #fff;
     border: 1px solid gray;
     color: grey;
 }
 
-.cost-box .cancel-sort:hover{
+.cost-box .cancel-sort:hover {
     background-color: rgb(235, 235, 235);
 }
 
@@ -126,6 +127,23 @@
 
 .cost-box button:hover {
     background-color: rgb(131, 120, 47, 1);
+}
+
+.cost-box .print {
+    width: 40px;
+    height: 40px;
+    background-image: url("../img/tool/printer.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.cost-box .print:disabled {
+    background-color: #ddd;
+    cursor: default;
+}
+
+.cost-box .print:disabled:hover {
+    background-color: #ddd;
 }
 
 .cost-box table {
@@ -140,37 +158,44 @@
     height: 50px;
 }
 
-.cost-box table th:nth-child(1){
+.cost-box table th:nth-child(1) {
     width: 5%;
 }
-.cost-box table th:nth-child(2){
+
+.cost-box table th:nth-child(2) {
     width: 8%;
 }
-.cost-box table th:nth-child(3){
+
+.cost-box table th:nth-child(3) {
     width: 12%;
 }
-.cost-box table th:nth-child(4){
+
+.cost-box table th:nth-child(4) {
     width: 13%;
 }
-.cost-box table th:nth-child(5){
+
+.cost-box table th:nth-child(5) {
     width: 7%;
 }
-.cost-box table th:nth-child(6){
+
+.cost-box table th:nth-child(6) {
     width: 7%;
 }
-.cost-box table th:nth-child(7){
-    width: 11%;
-}
-.cost-box table th:nth-child(8){
+
+.cost-box table th:nth-child(7) {
     width: 11%;
 }
 
-.cost-box table th:nth-child(9){
+.cost-box table th:nth-child(8) {
+    width: 11%;
+}
+
+.cost-box table th:nth-child(9) {
     width: 26%;
 }
 
 
-.cost-box table td:first-child{
+.cost-box table td:first-child {
     text-align: center;
 }
 
@@ -181,13 +206,13 @@
     padding: 0 16px;
 }
 
-.cost-box table td{
+.cost-box table td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.cost-box table td:last-child{
+.cost-box table td:last-child {
     width: 290px;
 }
 
@@ -226,7 +251,7 @@
     background-color: #B1D78A;
 }
 
-.cost-box table .status-pending{
+.cost-box table .status-pending {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -249,7 +274,7 @@
     background-color: #D68B8B;
 }
 
-.cost-box table .status-out{
+.cost-box table .status-out {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -260,7 +285,10 @@
     background-color: rgb(255, 199, 95);
 }
 
-.cost-box table .status-success p, .cost-box table .status-nosuccess p, .cost-box table .status-pending p, .cost-box table .status-out p {
+.cost-box table .status-success p,
+.cost-box table .status-nosuccess p,
+.cost-box table .status-pending p,
+.cost-box table .status-out p {
     font-size: 16px;
     font-weight: 500;
     color: #fff;
@@ -281,13 +309,13 @@
     cursor: default;
 }
 
-.cost-box table .more{
+.cost-box table .more {
     width: 100%;
 }
 
-.cost-box .option{
+.cost-box .option {
     display: grid;
-    grid-template-columns: 1fr 1fr 40px;
+    grid-template-columns: 40px 150px 140px 40px;
     column-gap: 8px;
 }
 
@@ -305,18 +333,17 @@
     background-color: rgb(0, 165, 165);
 }
 
-.cost-box .del-btn{
+.cost-box .del-btn {
     width: 40px;
-    padding: 0;
-    display: block;
+    height: 40px;
     background-image: url(../img/tool/trash-icon.png);
     background-color: rgb(255, 70, 70);
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.cost-box .del-btn:hover{
-    background-color:rgb(216, 40, 40);
+.cost-box .del-btn:hover {
+    background-color: rgb(216, 40, 40);
 }
 
 .pagination {
@@ -369,78 +396,79 @@
     }
 }
 
-@media screen and (max-width: 1199px){
+@media screen and (max-width: 1199px) {
     .cost-box {
         padding: 24px;
     }
 
-    .cost-box input[type=text]{
+    .cost-box input[type=text] {
         width: 100%;
     }
 
-    .cost-box input[type=text]#date_from, .cost-box input[type=text]#date_to{
+    .cost-box input[type=text]#date_from,
+    .cost-box input[type=text]#date_to {
         background-position: 95% 50%;
     }
 
-    .cost-box .search{
+    .cost-box .search {
         display: grid;
         grid-template-columns: 100%;
         grid-template-areas:
-        "a"
-        "div";
+            "a"
+            "div";
         row-gap: 16px;
     }
 
-    .cost-box #first{
+    .cost-box #first {
         grid-area: div;
         padding: 0 !important;
     }
 
-    .cost-box #second{
+    .cost-box #second {
         grid-area: a;
     }
 
-    .cost-box #second button{
+    .cost-box #second button {
         width: 100%;
         height: 60px;
     }
 
-    #sub-search{
+    #sub-search {
         height: auto !important;
         display: grid !important;
         grid-template-columns: 1fr 1fr 4px 4px 1fr 1fr;
-        grid-template-areas: 
-        "search_topic search_topic search_topic search_topic search_topic search_topic"
-        "from_box from_box to_text to_text to_box to_box"
-        "search_btn search_btn . . cancel_box cancel_box";
+        grid-template-areas:
+            "search_topic search_topic search_topic search_topic search_topic search_topic"
+            "from_box from_box to_text to_text to_box to_box"
+            "search_btn search_btn . . cancel_box cancel_box";
         gap: 16px 8px;
     }
 
-    .search_topic{
+    .search_topic {
         grid-area: search_topic;
         padding: 10px 0 0 0 !important;
     }
 
-    .from_box{
+    .from_box {
         grid-area: from_box;
     }
 
-    .to_text{
+    .to_text {
         grid-area: to_text;
         text-align: center;
         padding: 10px 0 0 0 !important;
     }
 
-    .to_box{
+    .to_box {
         grid-area: to_box;
     }
 
-    .search_btn{
+    .search_btn {
         grid-area: search_btn;
         margin: 0 !important;
     }
 
-    .cancel_box{
+    .cancel_box {
         grid-area: cancel_box;
     }
 }
@@ -455,22 +483,22 @@
         border-radius: 0;
     }
 
-    #sub-search{
-        grid-template-areas: 
-        "search_topic search_topic search_topic search_topic search_topic search_topic"
-        "from_box from_box to_text to_text to_box to_box"
-        "search_btn search_btn search_btn search_btn search_btn search_btn"
-        "cancel_box cancel_box cancel_box cancel_box cancel_box cancel_box";
+    #sub-search {
+        grid-template-areas:
+            "search_topic search_topic search_topic search_topic search_topic search_topic"
+            "from_box from_box to_text to_text to_box to_box"
+            "search_btn search_btn search_btn search_btn search_btn search_btn"
+            "cancel_box cancel_box cancel_box cancel_box cancel_box cancel_box";
     }
 
-    #checkbox-grid{
+    #checkbox-grid {
         padding: 32px 0;
         display: grid !important;
         grid-template-columns: 1fr 1fr;
         gap: 32px 8px;
     }
 
-    #checkbox-grid div{
+    #checkbox-grid div {
         padding: 0 !important;
     }
 }

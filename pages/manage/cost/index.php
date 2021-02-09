@@ -140,7 +140,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         $start = ($page - 1) * $perpage;
                         $num = $start + 1;
                         if(isset($from) && isset($to) && !isset($check)){
-                            $sql ="SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') ORDER BY date LIMIT {$start} , {$perpage}";
+                            $sql ="SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE (date BETWEEN '$from' AND '$to') ORDER BY date LIMIT {$start} , {$perpage}";
                         }else if(!isset($from) && !isset($to) && isset($check)){
                             if($check == "success"){
                                 $check_s = "ชำระเงินแล้ว";
@@ -149,7 +149,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             }else if($check = "pending"){
                                 $check_s = "รอการชำระเงิน";
                             }
-                            $sql = "SELECT * FROM cost WHERE cost_status = '$check_s' ORDER BY date LIMIT {$start} , {$perpage}";
+                            $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE cost_status = '$check_s' ORDER BY date LIMIT {$start} , {$perpage}";
                         }else if(isset($from) && isset($to) && isset($check)){
                             if($check == "success"){
                                 $check_s = "ชำระเงินแล้ว";
@@ -158,9 +158,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             }else if($check == "pending"){
                                 $check_s = "รอการชำระเงิน";
                             }
-                            $sql = "SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') AND cost_status = '$check_s' ORDER BY date LIMIT {$start} , {$perpage}";
+                            $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE (date BETWEEN '$from' AND '$to') AND cost_status = '$check_s' ORDER BY date LIMIT {$start} , {$perpage}";
                         }else{
-                            $sql = "SELECT * FROM cost ORDER BY date LIMIT {$start} , {$perpage} ";
+                            $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id ORDER BY date LIMIT {$start} , {$perpage} ";
                         }
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
@@ -234,6 +234,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                         ?>
                                         <td>
                                             <div class="option">
+                                                <button type="button" class="print" disabled></button>
                                                 <button type="submit" class="confirm-status" title="ยืนยันการชำระเงิน">ยืนยันการชำระเงิน</button>
                                                 <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more" title="ดูข้อมูลเพิ่มเติม">ดูข้อมูลเพิ่มเติม</button></a>
                                                 <button type="button" class="del-btn" id="<?php echo $row["cost_id"]; ?>" title="ลบข้อมูล"></button>
@@ -245,6 +246,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                         ?>
                                         <td>
                                             <div class="option">
+                                                <a href="receipt_month.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="print"></button></a>
                                                 <button type="button" class="confirmed-status">ชำระเงินแล้ว</button>
                                                 <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more" title="ดูข้อมูลเพิ่มเติม">ดูข้อมูลเพิ่มเติม</button></a>
                                                 <button type="button" class="del-btn" id="<?php echo $row["cost_id"]; ?>" title="ลบข้อมูล"></button>
