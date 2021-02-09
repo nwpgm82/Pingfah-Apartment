@@ -1,12 +1,11 @@
 <?php
-include("../../connection.php");
+include("connection.php");
 $code_request = $_REQUEST["code"];
-$sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE b.code = '$code_request'";
+$sql = "SELECT *, SUM(air_room + fan_room) AS total_room FROM daily WHERE code = '$code_request' AND daily_status != 'รอการยืนยัน'";
 $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
 $row = mysqli_fetch_array($result);
 if($row != null){
 extract($row);
-$total_room = sizeof(explode(", ",$room_select));
 $calculate = strtotime($check_out) - strtotime($check_in);
 $night = floor($calculate / 86400);
 }
@@ -85,33 +84,26 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../css/receipt_room.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="../css/receipt_deposit.css">
+    <title>Pingfah Apartment</title>
 </head>
-
 <body>
     <div class="letter">
         <div>
             <div class="header">
-                <img src="../../../img/main_logo.png" alt="">
-                <strong>
-                    <p style="text-align:center;font-size:16px;">ใบเสร็จค่าเช่าห้องพัก</p>
-                </strong>
+                <img src="../img/main_logo.png" alt="">
+                <strong><p style="text-align:center;font-size:16px;">ใบเสร็จค่ามัดจำห้องพัก</p></strong>
                 <div style="text-align:right;position:relative;">
                     <p>เลขที่ในการจอง : ..................................</p>
                     <p class="code_text"><?php echo $code_request; ?></p>
                 </div>
             </div>
             <div style="position:relative;padding-bottom:20px;line-height:30px;">
-                <p>ชื่อ : ............................................................... อีเมล :
-                    ........................................................... เบอร์โทรศัพท์ :
-                    ...................................</p>
-                <p>เช็คอิน : ........................................... เช็คเอาท์ :
-                    ........................................... (<?php echo $night; ?> คืน)</p>
+                <p>ชื่อ : ............................................................... อีเมล : .................................................................... เบอร์โทรศัพท์ : ......................................</p>
+                <p>เช็คอิน : ........................................... เช็คเอาท์ : ........................................... (<?php echo $night; ?> คืน)</p>
                 <p class="name"><?php echo $name_title.$firstname." ".$lastname; ?></p>
                 <p class="email"><?php echo $email; ?></p>
                 <p class="tel"><?php echo textFormat($tel,'___-_______','-'); ?></p>
@@ -123,60 +115,30 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                     <th>ลำดับ</th>
                     <th>รายการ</th>
                     <th>จำนวนห้องพัก</th>
-                    <th>จำนวนวันที่พัก</th>
                     <th>จำนวนเงิน</th>
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td>ค่าเช่าห้องพัก</td>
+                    <td>เงินค่ามัดจำห้องพัก</td>
                     <td><?php echo $total_room; ?></td>
-                    <td><?php echo $night; ?></td>
-                    <td><?php echo number_format($total_room_price,2); ?></td>
+                    <td><?php echo number_format($payment_price,2); ?></td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong><?php echo bathformat($total_allprice) ?></strong></td>
-                    <td colspan="2" style="text-align:center;"><strong>จำนวนภาษีมูลค่าเพิ่ม
-                            <?php echo number_format($vat)."%"; ?></strong></td>
-                    <td><?php echo number_format(($total_room_price * $vat)/100,2); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td colspan="2" style="text-align:center;"><strong>จำนวนเงินรวมทั้งสิ้น</strong></td>
-                    <td><?php echo number_format($total_price,2); ?></td>
+                    <td colspan="2"><?php echo bathformat($payment_price) ?></td>
+                    <td style="text-align:center;">รวมเป็นเงิน</td>
+                    <td><?php echo number_format($payment_price,2); ?></td>
                 </tr>
             </table>
-            <div style="padding-top:64px;">
-                <div class="sig">
-                    <div class="sub-sig">
-                        <p>เจ้าของหอพักบ้านพิงฟ้า</p>
-                        <div class="sub-sub-sig" style="padding-bottom:28px;">
-                            <p style="text-align:center;">............................................................
-                            </p>
-                            <p style="text-align:center;">(.....................................................)</p>
-                            <p style="width:max-content;position:absolute;bottom:30px;left:50%;transform: translateX(-50%);">นายนวพล นรเดชานันท์</p>
-                        </div>
-                    </div>
-                    <div class="sub-sig">
-                        <p>ผู้รับเงิน</p>
-                        <div class="sub-sub-sig">
-                            <p style="text-align:center;">............................................................
-                            </p>
-                            <p style="text-align:center;">(.....................................................)</p>
-                            <p style="text-align:center;">วันที่........../........../...............</p>
-                        </div>
-                    </div>
+            <div style="padding-top:40px;">
+                <div style="display:flex;justify-content:flex-end;align-items:center;">
+                    <p>ลายเซ็นเจ้าของหอพัก ......................................................</p>
+                </div>
+                <div style="padding-top:8px;display:flex;justify-content:flex-end;align-items:center;">
+                    <p style="padding-right:26px;">(นายนวพล นรเดชานันท์)</p>
                 </div>
             </div>
         </div>
-        <p style="font-size:12px;">สอบถามเพิ่มเติม : 098-9132002 (เจ้าของหอพักบ้านพิงฟ้า)</p>
+        <p style="font-size:12px;">สอบถามเพิ่มเติม : 098-9132002 (เจ้าของหอพักบ้านพิงฟ้า) หรือ 087-5777192 (พนักงาน)</p>
     </div>
 </body>
-
 </html>

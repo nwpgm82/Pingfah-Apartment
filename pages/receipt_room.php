@@ -1,5 +1,5 @@
 <?php
-include("../../connection.php");
+include("connection.php");
 $code_request = $_REQUEST["code"];
 $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE b.code = '$code_request'";
 $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
@@ -89,7 +89,7 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../css/receipt_room.css">
+    <link rel="stylesheet" href="../css/receipt_room.css">
     <title>Document</title>
 </head>
 
@@ -97,7 +97,7 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
     <div class="letter">
         <div>
             <div class="header">
-                <img src="../../../img/main_logo.png" alt="">
+                <img src="../img/main_logo.png" alt="">
                 <strong>
                     <p style="text-align:center;font-size:16px;">ใบเสร็จค่าเช่าห้องพัก</p>
                 </strong>

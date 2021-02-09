@@ -1,5 +1,5 @@
 <?php
-include("connection.php");
+include("../../connection.php");
 $code_request = $_REQUEST["code"];
 $sql = "SELECT *, SUM(air_room + fan_room) AS total_room FROM daily WHERE code = '$code_request' AND daily_status != 'รอการยืนยัน'";
 $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
@@ -87,14 +87,14 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/receipt_deposit.css">
+    <link rel="stylesheet" href="../../../css/receipt_deposit.css">
     <title>Pingfah Apartment</title>
 </head>
 <body>
     <div class="letter">
         <div>
             <div class="header">
-                <img src="../img/main_logo.png" alt="">
+                <img src="../../../img/main_logo.png" alt="">
                 <strong><p style="text-align:center;font-size:16px;">ใบเสร็จค่ามัดจำห้องพัก</p></strong>
                 <div style="text-align:right;position:relative;">
                     <p>เลขที่ในการจอง : ..................................</p>
@@ -121,12 +121,12 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                     <td>1</td>
                     <td>เงินค่ามัดจำห้องพัก</td>
                     <td><?php echo $total_room; ?></td>
-                    <td><?php echo $payment_price; ?></td>
+                    <td><?php echo number_format($payment_price,2); ?></td>
                 </tr>
                 <tr>
                     <td colspan="2"><?php echo bathformat($payment_price) ?></td>
                     <td style="text-align:center;">รวมเป็นเงิน</td>
-                    <td><?php echo $payment_price; ?></td>
+                    <td><?php echo number_format($payment_price,2); ?></td>
                 </tr>
             </table>
             <div style="padding-top:40px;">

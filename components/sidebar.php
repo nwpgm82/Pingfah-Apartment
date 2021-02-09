@@ -45,7 +45,7 @@
                     <a href="/Pingfah/pages/manage/dailyCost/index.php">
                         <li id="dailycost">- รายวัน</li>
                     </a>
-                    <a href="/Pingfah/pages/manage/cost/index.php">
+                    <a href="/Pingfah/pages/manage/cost/index.php?status=unsuccess">
                         <li id="cost">- รายเดือน</li>
                     </a>
                     <a href="/Pingfah/pages/manage/repair/repairReport.php">

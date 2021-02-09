@@ -1,5 +1,5 @@
 <?php
-include("../../connection.php");
+include("connection.php");
 $code_request = $_REQUEST["code"];
 $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE b.code = '$code_request'";
 $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
@@ -89,17 +89,17 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../css/receipt_room.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="../css/receipt_room.css">
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
     <div class="letter">
         <div>
             <div class="header">
-                <img src="../../../img/main_logo.png" alt="">
+                <img src="../img/main_logo.png" alt="">
                 <strong>
-                    <p style="text-align:center;font-size:16px;">ใบเสร็จค่าเช่าห้องพัก</p>
+                    <p style="text-align:center;font-size:16px;">ใบเสร็จค่าเสียหาย</p>
                 </strong>
                 <div style="text-align:right;position:relative;">
                     <p>เลขที่ในการจอง : ..................................</p>
@@ -121,35 +121,23 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
             <table>
                 <tr>
                     <th>ลำดับ</th>
-                    <th>รายการ</th>
-                    <th>จำนวนห้องพัก</th>
-                    <th>จำนวนวันที่พัก</th>
+                    <th colspan="3">รายการ</th>
                     <th>จำนวนเงิน</th>
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td>ค่าเช่าห้องพัก</td>
-                    <td><?php echo $total_room; ?></td>
-                    <td><?php echo $night; ?></td>
-                    <td><?php echo number_format($total_room_price,2); ?></td>
+                    <td colspan="3">ค่าปรับ (ค่าเสียหาย)</td>
+                    <td><?php echo number_format($damages,2); ?></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="3"></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><strong><?php echo bathformat($total_allprice) ?></strong></td>
-                    <td colspan="2" style="text-align:center;"><strong>จำนวนภาษีมูลค่าเพิ่ม
-                            <?php echo number_format($vat)."%"; ?></strong></td>
-                    <td><?php echo number_format(($total_room_price * $vat)/100,2); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td colspan="2" style="text-align:center;"><strong>จำนวนเงินรวมทั้งสิ้น</strong></td>
-                    <td><?php echo number_format($total_price,2); ?></td>
+                    <td colspan="3"><strong><?php echo bathformat($damages) ?></strong></td>
+                    <td style="text-align:center;"><strong>จำนวนเงินรวมทั้งสิ้น</strong></td>
+                    <td><?php echo number_format($damages,2); ?></td>
                 </tr>
             </table>
             <div style="padding-top:64px;">
