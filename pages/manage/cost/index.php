@@ -104,9 +104,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     </div>
                     <div style="padding-top:32px;">
                         <div style="line-height:40px;">
-                            <p>ชำระเงินแล้ว : <?php echo number_format($totalresult["total_cost"]); ?> บาท</p>
-                            <p>ยังไม่ได้ชำระเงิน : <?php echo number_format($totalresult["untotal_cost"]); ?> บาท
-                            </p>
+                            <h3>ชำระเงินแล้ว : <?php echo number_format($totalresult["total_cost"],2); ?> บาท</h3>
+                            <h3>รอการชำระเงิน : <?php echo number_format($totalresult["pendingtotal_price"],2); ?> บาท</h3>
+                            <h3>ยังไม่ได้ชำระเงิน : <?php echo number_format($totalresult["untotal_cost"],2); ?> บาท</h3>
                         </div>
                     </div>
                     <div class="hr"></div>
