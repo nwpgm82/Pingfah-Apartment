@@ -148,18 +148,8 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                 </tr>
                 <tr>
                     <td colspan="2"></td>
-                    <td colspan="2" style="text-align:center;"><strong>ยอดรวมหลังเพิ่มภาษีมูลค่าเพิ่ม</strong></td>
-                    <td><?php echo number_format($total_price,2); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td colspan="2" style="text-align:center;"><strong>ค่าปรับ (ค่าเสียหาย)</strong></td>
-                    <td><?php echo number_format($damages,2); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
                     <td colspan="2" style="text-align:center;"><strong>จำนวนเงินรวมทั้งสิ้น</strong></td>
-                    <td><?php echo number_format($total_allprice,2); ?></td>
+                    <td><?php echo number_format($total_price,2); ?></td>
                 </tr>
             </table>
             <div style="padding-top:64px;">

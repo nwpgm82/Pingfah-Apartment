@@ -110,6 +110,7 @@
 .damages{
     grid-area: damages;
     height: 86px;
+    position: relative;
 }
 
 .total_allprice{
@@ -126,6 +127,24 @@
     display: block;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.box .dailyCostDetail-box .print{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 32px;
+    right: 4px;
+    background-image: url("../img/tool/printer.png");
+    background-color: rgb(131, 120, 47, 0.7);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.box .dailyCostDetail-box .print:hover{
+    background-color: rgb(131, 120, 47, 1);
 }
 
 .box .dailyCostDetail-box input:not([type=file]) {

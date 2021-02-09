@@ -143,7 +143,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         <tr>
                             <td><?php echo $num; ?></td>
                             <!-- <td><?php echo $row['room_select']; ?></td> -->
-                            <td><?php echo $row['firstname'] ." " .$row['lastname']; ?></td>
+                            <td><?php echo $row["name_title"].$row['firstname'] ." " .$row['lastname']; ?></td>
                             <td><?php echo DateThai($row['check_in']) ."&nbsp; ~ &nbsp;" .DateThai($row['check_out'])." (".$night." คืน)"; ?>
                             </td>
                             <td><?php echo $row['code']; ?></td>

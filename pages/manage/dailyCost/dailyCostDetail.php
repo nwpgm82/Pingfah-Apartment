@@ -98,6 +98,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         <div class="damages">
                             <p>ค่าปรับ (ค่าเสียหาย) (บาท)</p>
                             <input type="text" value="<?php echo number_format($damages,2); ?>" disabled>
+                            <?php
+                            if($damages != 0){
+                            ?>
+                            <a href="receipt_damages.php?code=<?php echo $code; ?>" class="print" target="_blank"></a>
+                            <?php } ?>
                         </div>
                         <div class="total_allprice">
                             <p>จำนวนเงินรวมทั้งสิ้น (บาท)</p>
@@ -123,8 +128,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                     ?>
                                     <img src="../../images/daily/<?php echo $code; ?>/payment/<?php echo $pay_img; ?>"
                                         alt="">
-                                    <button type="button" class="del-btn"
-                                        onclick="delImg(<?php echo $dailycost_id; ?>)"></button>
+                                    <button type="button" class="del-btn" id="<?php echo $dailycost_id; ?>" name="payment"></button>
                                     <?php 
                                     }else{
                                     ?>
@@ -149,24 +153,23 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                     <?php
                                     if($payafter_d_img != null || $payafter_d_img != ""){
                                     ?>
-                                    <img src="../../images/daily/<?php echo $code; ?>/payment/<?php echo $payafter_d_img; ?>"
+                                    <img src="../../images/daily/<?php echo $code; ?>/damages/<?php echo $payafter_d_img; ?>"
                                         alt="">
-                                    <button type="button" class="del-btn"
-                                        onclick="delImg(<?php echo $dailycost_id; ?>)"></button>
+                                    <button type="button" class="del-btn" id="<?php echo $dailycost_id; ?>" name="damages"></button>
                                     <?php 
                                     }else{
                                     ?>
-                                    <img id="img_payment" src="" alt="" style="display:none;">
+                                    <img id="img_d" src="" alt="" style="display:none;">
                                     <?php
                                     } 
                                     ?>
                                 </div>
-                                <h5 id="pay_error" style="color:red;"></h5>
+                                <h5 id="d_error" style="color:red;"></h5>
                                 <?php
                                 if($payafter_d_img == null){
                                 ?>
                                 <div style="padding-top:16px;">
-                                    <input type="file" name="file" id="file2" class="inputfile" />
+                                    <input type="file" name="file2" id="file2" class="inputfile" />
                                 </div>
                                 <?php } ?>
                             </div>

@@ -245,7 +245,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                                 <?php
                                                 if($row["daily_status"] != "รอการยืนยัน" && $row["daily_status"] != "ยกเลิกการจอง"){
                                                 ?>
-                                                <a href="../../receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่ามัดจำห้องพัก</button></a>
+                                                <a href="receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่ามัดจำห้องพัก</button></a>
                                                 <?php 
                                                 }else{ 
                                                 ?>
