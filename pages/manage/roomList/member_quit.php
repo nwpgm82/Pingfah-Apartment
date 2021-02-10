@@ -121,7 +121,7 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
     </div>
     <script>
     $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val())).toFixed(2)))
-    $("#elec_unit").keyup(function() {
+    $("#elec_unit").keyup(function(event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();
