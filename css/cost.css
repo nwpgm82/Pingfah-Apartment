@@ -146,6 +146,24 @@
     background-color: #ddd;
 }
 
+.cost-box .qr {
+    width: 40px;
+    height: 40px;
+    background-image: url("../img/tool/qr-icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.cost-box .qr:disabled {
+    background-color: #ddd;
+    cursor: default;
+}
+
+.cost-box .qr:disabled:hover {
+    background-color: #ddd;
+}
+
+
 .cost-box table {
     width: 100%;
     border-radius: 4px;
@@ -315,7 +333,7 @@
 
 .cost-box .option {
     display: grid;
-    grid-template-columns: 40px 150px 140px 40px;
+    grid-template-columns: 40px 40px 150px 140px 40px;
     column-gap: 8px;
 }
 
