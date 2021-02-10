@@ -125,8 +125,8 @@
     grid-template-areas:
         "room_select room_select room_select name_title firstname firstname firstname lastname lastname lastname"
         "id_card id_card id_card email email email email tel tel tel"
-        "check_in check_in check_out check_out night people air fan room_status room_status"
-        "total_price . . . . . . . . .";
+        "check_in check_in check_out check_out night people air fan . ."
+        "total_room_price total_room_price vat vat total_price total_price room_status room_status . .";
 }
 
 .room_select {
@@ -204,6 +204,16 @@
     height: 86px;
 }
 
+.total_room_price{
+    grid-area: total_room_price;
+    height: 86px;
+}
+
+.vat{
+    grid-area: vat;
+    height: 86px;
+}
+
 .box .dailyDetail-box .img-box {
     width: 100%;
     height: 500px;
@@ -270,7 +280,8 @@
             "name_title name_title firstname firstname firstname firstname lastname lastname lastname lastname"
             "id_card id_card id_card email email email email tel tel tel"
             "check_in check_in check_in check_in check_out check_out check_out check_out night night"
-            "people people air air fan fan room_status room_status total_price total_price";
+            "people people air air fan fan . . . ."
+            "total_room_price total_room_price vat vat total_price total_price room_status room_status . .";
         gap: 8px;
     }
 }
@@ -295,11 +306,14 @@
             "id_card id_card"
             "email email"
             "tel tel"
-            "check_in check_out"
+            "check_in check_in"
+            "check_out check_out"
             "night people"
             "air fan"
-            "room_status room_status"
-            "total_price total_price";
+            "total_room_price total_room_price"
+            "vat vat"
+            "total_price total_price"
+            "room_status room_status";
         gap: 8px;
     }
 }

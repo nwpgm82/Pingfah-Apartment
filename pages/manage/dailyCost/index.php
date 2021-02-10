@@ -151,7 +151,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <td><button class="status-success"><?php echo $row['pay_status']; ?></button></td>
                             <td>
                                 <div class="option-grid">
-                                    <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่าเช่าห้องพัก</button></a>
+                                    <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print" title="ใบเสร็จค่าเช่าห้องพัก"></button></a>
                                     <a href="dailyCostDetail.php?dailycost_id=<?php echo $row['dailycost_id']; ?>"><button>รายละเอียด</button></a>
                                     <?php
                                     if($_SESSION["level"] == "admin"){

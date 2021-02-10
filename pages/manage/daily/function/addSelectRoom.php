@@ -16,7 +16,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     // $sql = "INSERT INTO dailycost (dailycost_id, room_id, name_title, firstname, lastname, id_card, email, tel, check_in, check_out, total_price, pay_status, code) VALUES ($daily_id, '$room_str', '".$resultSearch["name_title"]."', '".$resultSearch["firstname"]."', '".$resultSearch["lastname"]."', '".$resultSearch["id_card"]."', '".$resultSearch["email"]."', '".$resultSearch["tel"]."', '".$resultSearch["check_in"]."', '".$resultSearch["check_out"]."', ".$resultSearch["total_price"].", 'ชำระเงินแล้ว', '".$resultSearch["code"]."')";
     $sql = "UPDATE daily SET daily_status = 'เข้าพักแล้ว', room_select = '$room_str' WHERE daily_id = $daily_id";
     $sql2 = "INSERT INTO dailycost (dailycost_id, code, total_allprice, pay_status) VALUES ($daily_id, '".$resultSearch["code"]."', ".$resultSearch["total_price"].", 'ชำระเงินแล้ว')";
-    $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เปลี่ยนสถานะเป็น กำลังเข้าพัก (".$resultSearch["name_title"].$resultSearch["firstname"]." ".$resultSearch["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+    $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เปลี่ยนสถานะเป็น เข้าพักแล้ว (".$resultSearch["name_title"].$resultSearch["firstname"]." ".$resultSearch["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
     $uploaded = false;
     for($i = 0; $i < sizeof($room) ; $i++){
         mkdir("../../../images/roommember/$room[$i]/".$resultSearch["check_in"]."/");

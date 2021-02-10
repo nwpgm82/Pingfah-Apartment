@@ -403,7 +403,7 @@
         if(people != 0){
             $("#people1").val(parseInt($("#people1").val()) + 1)
             people = people - 1
-            total_price = total_price + <?php echo intval($getAir_result["daily_price"]); ?>;
+            total_price = total_price + <?php echo intval($getAir_result["daily_price"]) * $_SESSION["night"]; ?>;
         }
         $("#total_price").html(formatNumber(total_price))
     })
@@ -411,7 +411,7 @@
         if(parseInt($("#people1").val()) != 0){
             $("#people1").val(parseInt($("#people1").val()) - 1)
             people = people + 1
-            total_price = total_price - <?php echo intval($getAir_result["daily_price"]); ?>;
+            total_price = total_price - <?php echo intval($getAir_result["daily_price"]) * $_SESSION["night"]; ?>;
         }
         $("#total_price").html(formatNumber(total_price))
     })
@@ -419,7 +419,7 @@
         if(people != 0){
             $("#people2").val(parseInt($("#people2").val()) + 1)
             people = people - 1
-            total_price = total_price + <?php echo intval($getFan_result["daily_price"]); ?>;
+            total_price = total_price + <?php echo intval($getFan_result["daily_price"]) * $_SESSION["night"]; ?>;
         }
         $("#total_price").html(formatNumber(total_price))
     })
@@ -427,7 +427,7 @@
         if(parseInt($("#people2").val()) != 0){
             $("#people2").val(parseInt($("#people2").val()) - 1)
             people = people + 1
-            total_price = total_price - <?php echo intval($getFan_result["daily_price"]); ?>;
+            total_price = total_price - <?php echo intval($getFan_result["daily_price"]) * $_SESSION["night"]; ?>;
         }
         $("#total_price").html(formatNumber(total_price))
     })

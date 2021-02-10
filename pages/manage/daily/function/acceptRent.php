@@ -2,9 +2,10 @@
 session_start();
 if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
     include "../../../connection.php";
+    require_once "../../../../lib/PromptPayQR.php";
     $daily_id = $_REQUEST["daily_id"];
     $sql = "UPDATE daily SET daily_status = 'รอการเข้าพัก' WHERE daily_id = $daily_id";
-    $search = mysqli_query($conn, "SELECT name_title, firstname, lastname, email FROM daily WHERE daily_id = $daily_id");
+    $search = mysqli_query($conn, "SELECT name_title, firstname, lastname, email, code, total_price FROM daily WHERE daily_id = $daily_id");
     $result_search = mysqli_fetch_assoc($search);
     $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เปลี่ยนสถานะเป็น รอการเข้าพัก (" . $result_search["name_title"] . $result_search["firstname"] . " " . $result_search["lastname"] . ")', '" . $_SESSION["name"] . "', '" . $_SESSION["level"] . "')";
     ///////////////////// อีเมล ////////////////////////
@@ -61,6 +62,19 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
     if ($email_receiver) {
         $mail->msgHTML($email_content);
         if ($mail->send() && $conn->query($sql) === true && $conn->query($addLogs) === true) {
+            mkdir("../../../images/daily/".$result_search["code"]."/promptpay/");
+            $folder_prompt = "../../../images/daily/".$result_search["code"]."/promptpay/qr-code.png";
+            $promptData = mysqli_query($conn,"SELECT prompt_num FROM promptpay");
+            $promptData_result = mysqli_fetch_assoc($promptData);
+            $PromptPayQR = new PromptPayQR(); // new object
+            $PromptPayQR->size = 6;
+            $PromptPayQR->id = $promptData_result["prompt_num"]; // PromptPay ID
+            $PromptPayQR->amount = $result_search["total_price"]; // Set amount (not necessary)
+            $data = $PromptPayQR->generate();
+            list($type, $data) = explode(';', $data);
+            list(, $data) = explode(',', $data);
+            $data = base64_decode($data);
+            file_put_contents($folder_prompt, $data);
             echo "<script>";
             echo "alert('ยืนยันการเข้าพักเรียบร้อยแล้ว');";
             echo "location.href = '../index.php';";

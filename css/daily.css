@@ -180,23 +180,42 @@
 }
 
 .daily-box .print {
-    padding: 0px 16px 0px 48px;
+    width: 40px;
+    height: 40px;
     background-image: url("../img/tool/printer.png");
     background-repeat: no-repeat;
-    background-position: 12% 50%;
+    background-position: center;
 }
 
 .daily-box .un-print {
-    padding: 0px 16px 0px 48px;
+    width: 40px;
+    height: 40px;
     background-color: #ddd;
     background-image: url("../img/tool/printer.png");
     background-repeat: no-repeat;
-    background-position: 12% 50%;
+    background-position: center;
 }
 
 .daily-box .un-print:hover {
     background-color: #ddd;
     cursor: default;
+}
+
+.daily-box .qr {
+    width: 40px;
+    height: 40px;
+    background-image: url("../img/tool/qr-icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.daily-box .qr:disabled {
+    background-color: #ddd;
+    cursor: default;
+}
+
+.daily-box .qr:disabled:hover {
+    background-color: #ddd;
 }
 
 .daily-box select {

@@ -259,11 +259,9 @@
         "room_select room_select room_select room_select room_select . . . . . . ."
         "name_title name_title firstname firstname firstname firstname firstname lastname lastname lastname lastname lastname"
         "id_card id_card id_card id_card email email email email tel tel tel tel"
-        "check_in check_in check_in check_out check_out check_out total_price total_price total_price status status status";
-    }
-
-    #copy-box{
-        padding-top: 8px !important;
+        "check_in check_in check_in check_out check_out check_out daily_status daily_status daily_status . . ."
+        "total_room_price total_room_price total_room_price total_room_price vat vat vat vat total_price total_price total_price total_price"
+        "damages damages damages damages total_allprice total_allprice total_allprice total_allprice status status status status";
     }
 }
 
@@ -287,8 +285,20 @@
         "id_card id_card"
         "email email"
         "tel tel"
-        "check_in check_out"
-        "total_price status";
+        "check_in check_in"
+        "check_out check_out"
+        "daily_status daily_status"
+        "total_room_price total_room_price"
+        "vat vat"
+        "total_price total_price"
+        "damages damages"
+        "total_allprice total_allprice"
+        "status status";
         gap: 8px;
+    }
+
+    .box .dailyCostDetail-box .pay_grid{
+        grid-template-columns: 100%;
+        row-gap: 16px;
     }
 }

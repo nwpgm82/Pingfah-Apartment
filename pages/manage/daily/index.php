@@ -245,11 +245,20 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                                 <?php
                                                 if($row["daily_status"] != "รอการยืนยัน" && $row["daily_status"] != "ยกเลิกการจอง"){
                                                 ?>
-                                                <a href="receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print">ค่ามัดจำห้องพัก</button></a>
+                                                <a href="receipt_deposit.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print" title="ค่ามัดจำห้องพัก"></button></a>
                                                 <?php 
                                                 }else{ 
                                                 ?>
-                                                <button type="button" class="un-print">ค่ามัดจำห้องพัก</button>
+                                                <button type="button" class="un-print"></button>
+                                                <?php } ?>
+                                                <?php
+                                                if($row["daily_status"] == "รอการเข้าพัก"){
+                                                ?>
+                                                <a href="../../images/daily/<?php echo $row["code"]; ?>/promptpay/qr-code.png" target="_blank"><button type="button" class="qr" title="QR Code สำหรับชำระค่าเช่าห้องพัก"></button></a>
+                                                <?php
+                                                }else{
+                                                ?>
+                                                <button class="qr" disabled></button>
                                                 <?php } ?>
                                                 <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button type="button">รายละเอียด</button></a>
                                                 <button type="button" class="del-btn" id="<?php echo $row['daily_id']; ?>"></button>
