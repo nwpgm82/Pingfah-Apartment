@@ -20,7 +20,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
       $date = BasicDate($_POST['repair_date']);
       // $status = $_POST['repair_status'];
       // echo $room_id .$app .$cate .$detail .$date .$status;
-      $sql = "INSERT INTO repair (room_id, repair_appliance, repair_category, repair_detail, repair_date, repair_status) VALUES ('$room_id', '$app', '$cate', '$detail', '$date', 'รอคิวซ่อม')";
+      $get_member_id = mysqli_query($conn, "SELECT member_id FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'");
+      $get_result = mysqli_fetch_assoc($get_member_id);
+      $sql = "INSERT INTO repair (member_id, room_id, repair_appliance, repair_category, repair_detail, repair_date, repair_status) VALUES (".$get_result["member_id"].", '$room_id', '$app', '$cate', '$detail', '$date', 'รอคิวซ่อม')";
       $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('แจ้งซ่อม', 'เพิ่มรายการแจ้งซ่อม (ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
       if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
           echo "<script>";

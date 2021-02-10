@@ -61,6 +61,10 @@ $(document).ready(function () {
         roomlist.css("background-color", "rgba(131, 120, 47, 0.7)")
         roomlist.css("color", "#fff")
         header.html("รายละเอียดข้อมูลผู้เข้าพัก")
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/manage/roomList/member_quit.php") {
+        roomlist.css("background-color", "rgba(131, 120, 47, 0.7)")
+        roomlist.css("color", "#fff")
+        header.html("แจ้งออก ?")
     } else if (localStorage.getItem("i") == "/Pingfah/pages/manage/daily/index.php" || localStorage.getItem("i") == "/Pingfah/pages/manage/daily/dailyDetail.php") {
         daily.css("background-color", "rgba(131, 120, 47, 0.7)")
         daily.css("color", "#fff")

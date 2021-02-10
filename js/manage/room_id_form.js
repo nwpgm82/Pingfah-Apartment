@@ -486,11 +486,11 @@ $(document).ready(function () {
             event.preventDefault()
         }
     })
-    $("#quit").click(function (event) {
-        if (confirm("คุณต้องการแจ้งออกใช่หรือไม่")) {
-            $("#form-box").submit()
-        } else {
-            event.preventDefault()
-        }
-    })
+    // $("#quit").click(function (event) {
+    //     if (confirm("คุณต้องการแจ้งออกใช่หรือไม่")) {
+    //         $("#form-box").submit()
+    //     } else {
+    //         event.preventDefault()
+    //     }
+    // })
 })

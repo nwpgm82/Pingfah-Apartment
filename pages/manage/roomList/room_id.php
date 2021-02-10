@@ -68,7 +68,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                                 <?php }else{ ?>
                                 <a href="room_id.php?ID=<?php echo $room_id; ?>&people=<?php if(intval($get_people) == 1 || $get_people == ""){ echo "2"; }else if(intval($get_people) == 2){ echo "1"; } ?>"><button type="button">คนที่ <?php if(intval($get_people) == 1 || $get_people == ""){ echo "2"; }else if(intval($get_people) == 2){ echo "1"; } ?></button></a>
                                 <?php } ?>
-                                <button type="submit" class="quit quit-btn" id="quit" name="quit" title="แจ้งออก"></button>
+                                <a href="member_quit.php?ID=<?php echo $room_id; ?>"><button type="button" class="quit quit-btn" id="quit" name="quit" title="แจ้งออก"></button></a>
                                 <button type="button" class="edit edit-btn" id="edit" title="แก้ไข"></button>
                                 <?php
                                 if($_SESSION["level"] == "admin"){
