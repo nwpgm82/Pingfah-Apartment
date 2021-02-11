@@ -128,7 +128,7 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
     <script>
     let elec = $("#elec_price")
     const deposit = $("#deposit").val()
-    $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val())).toFixed(2)))
+    $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) - parseFloat($("#deposit").val())).toFixed(2)))
     $("#elec_unit").keyup(function(event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -136,16 +136,16 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
         }
         if ($("#elec_unit").val() != "") {
             $("#elec_unit").css("border-color", "")
-            elec.val((parseFloat($("#elec_unit").val()) * <?php if(isset($member_result["elec_bill"])){ echo $member_result["elec_bill"]; }else{ echo 0; } ?>).toFixed(2))
+            elec.val(Math.ceil((parseFloat($("#elec_unit").val()) * <?php if(isset($member_result["elec_bill"])){ echo $member_result["elec_bill"]; }else{ echo 0; } ?>).toFixed(2)))
         } else {
             elec.val("0.00")
             $("#elec_unit").css("border-color", "red")
         }
         if(parseFloat($("#deposit").val()) <= 0){
-                $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) + Math.abs($("#deposit").val())).toFixed(2)))
-            }else{
-                $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val())).toFixed(2)))
-            }
+            $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) + Math.abs($("#deposit").val())).toFixed(2)))
+        }else{
+            $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) - parseFloat($("#deposit").val())).toFixed(2)))
+        }
     })
     $("#fines").keyup(function(event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
@@ -158,12 +158,12 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
             if(parseFloat($("#deposit").val()) <= 0){
                 $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) + Math.abs($("#deposit").val())).toFixed(2)))
             }else{
-                $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val())).toFixed(2)))
+                $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) - parseFloat($("#deposit").val())).toFixed(2)))
             }
         }else{
             $("#fines").css("border-color", "red")
             $("#deposit").val(deposit)
-            $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val())).toFixed(2)))
+            $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) - parseFloat($("#deposit").val())).toFixed(2)))
         }
     })
     </script>

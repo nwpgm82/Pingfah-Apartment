@@ -112,7 +112,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         if ($("#elec_unit").val() != "") {
             $("#elec_unit").css("border-color", "")
             $("#total_price").css("border-color", "")
-            $("#elec_price").val((parseFloat($("#elec_unit").val()) * <?php if(isset($detail_result["elec_bill"])){ echo $detail_result["elec_bill"]; }else{ echo 0; } ?>).toFixed(2))
+            $("#elec_price").val(Math.ceil((parseFloat($("#elec_unit").val()) * <?php if(isset($detail_result["elec_bill"])){ echo $detail_result["elec_bill"]; }else{ echo 0; } ?>).toFixed(2)))
             $("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat($("#elec_price").val())).toFixed(2))
         } else {
             $("#elec_price").val("0.00")

@@ -193,23 +193,24 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
         $water = $_POST["water_price"];
         $elec = $_POST["elec_price"];
         $cable = $_POST["cable_charge"];
-        $fines = $_POST["fines"];
+        // $fines = $_POST["fines"];
+        $deposit = $_POST["deposit"];
         $total = $_POST["total_price"];
-        $search_roomlist = mysqli_query($conn, "SELECT a.member_id ,b.room_type FROM roommember a INNER JOIN roomlist b ON a.room_id = b.room_id WHERE a.room_id = '$room_id' AND a.member_status = 'กำลังเข้าพัก'");
-        $result_roomlist = mysqli_fetch_assoc($search_roomlist);
-        $cost = "INSERT INTO cost (member_id, room_id, room_type, cost_status, date, pay_date, room_cost, water_bill, elec_bill, cable_charge, fines, total) VALUES (".$result_roomlist["member_id"].", '$room_id', '".$result_roomlist["room_type"]."', 'ชำระเงินแล้ว', '$current_date', '$out_date', $room_cost, $water, $elec, $cable, $fines, $total)";
-        $update_status = "UPDATE roommember SET member_status = 'แจ้งออกแล้ว', out_date = '$out_date' WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
-        $update_room_status = "UPDATE roomlist SET room_status = 'ว่าง' WHERE room_id = '$room_id' ";
-        $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เปลี่ยนสถานะเป็น แจ้งออกแล้ว (ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
-        $addLogs2 = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ชำระเงิน(รายเดือน)', 'เพิ่มรายการชำระเงินค่าเช่าห้องพัก (ห้อง $room_id)($current_date)', '" . $_SESSION["name"] . "', '" . $_SESSION["level"] . "')";
-        if($conn->query($cost) === TRUE && $conn->query($update_status) === TRUE && $conn->query($update_room_status) === TRUE && $conn->query($addLogs) === TRUE && $conn->query($addLogs2) === TRUE){
-            echo "<script>";
-            echo "alert('แจ้งออกเรียบร้อยแล้ว');";
-            echo "location.href = '../room_id.php?ID=$room_id';";
-            echo "</script>";
-        }else{
-            echo $conn->error;
-        }
+        // $search_roomlist = mysqli_query($conn, "SELECT a.member_id ,b.room_type FROM roommember a INNER JOIN roomlist b ON a.room_id = b.room_id WHERE a.room_id = '$room_id' AND a.member_status = 'กำลังเข้าพัก'");
+        // $result_roomlist = mysqli_fetch_assoc($search_roomlist);
+        // $cost = "INSERT INTO cost (member_id, room_id, room_type, cost_status, date, pay_date, room_cost, water_bill, elec_bill, cable_charge, fines, total) VALUES (".$result_roomlist["member_id"].", '$room_id', '".$result_roomlist["room_type"]."', 'ชำระเงินแล้ว', '$current_date', '$out_date', $room_cost, $water, $elec, $cable, $fines, $total)";
+        // $update_status = "UPDATE roommember SET member_status = 'แจ้งออกแล้ว', out_date = '$out_date' WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
+        // $update_room_status = "UPDATE roomlist SET room_status = 'ว่าง' WHERE room_id = '$room_id' ";
+        // $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เปลี่ยนสถานะเป็น แจ้งออกแล้ว (ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
+        // $addLogs2 = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ชำระเงิน(รายเดือน)', 'เพิ่มรายการชำระเงินค่าเช่าห้องพัก (ห้อง $room_id)($current_date)', '" . $_SESSION["name"] . "', '" . $_SESSION["level"] . "')";
+        // if($conn->query($cost) === TRUE && $conn->query($update_status) === TRUE && $conn->query($update_room_status) === TRUE && $conn->query($addLogs) === TRUE && $conn->query($addLogs2) === TRUE){
+        //     echo "<script>";
+        //     echo "alert('แจ้งออกเรียบร้อยแล้ว');";
+        //     echo "location.href = '../room_id.php?ID=$room_id';";
+        //     echo "</script>";
+        // }else{
+        //     echo $conn->error;
+        // }
     }
 }
 ?>
