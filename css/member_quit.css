@@ -43,6 +43,11 @@
     transition: 0.3s;
 }
 
+.quit-box input:read-only{
+    background-color: #EFEFEF4D;
+    cursor: default;
+}
+
 .quit-box input[type=checkbox]{
     margin: 0 8px;
     width: 20px;
@@ -55,22 +60,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 16px 8px;
-}
-
-.come_date{
-    grid-area: come_date;
-}
-
-.month_count{
-    grid-area: month_count;
-}
-
-.deposit{
-    grid-area: deposit;
-}
-
-.reason{
-    grid-area: reason;
 }
 
 .quit-box button {
@@ -89,4 +78,50 @@
 
 .quit-box button:hover {
     background-color: rgb(131, 120, 47, 1);
+}
+
+.quit-box button:disabled {
+    background-color: #ddd;
+    cursor: default;
+}
+
+.quit-box button:disabled:hover {
+    background-color: #ddd;
+}
+
+@media screen and (max-width: 1599px) {
+    .box {
+        padding: 80px 0 0 calc(100% - 1340px);
+    }
+}
+
+@media screen and (max-width: 1569px) {
+    .box {
+        padding: 80px 0 0 230px;
+    }
+}
+
+@media screen and (max-width: 1449px) {
+    .box {
+        padding: 80px 0 0 0;
+    }
+    .quit-box{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #box-padding {
+        padding: 0 !important;
+    }
+
+    .quit-box {
+        padding: 24px 16px;
+        border-radius: 0;
+        min-height: calc(100vh - 80px);
+    }
+
+    .grid-container{
+        grid-template-columns: 100%;
+    }
 }

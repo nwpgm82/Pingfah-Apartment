@@ -103,6 +103,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                         <input type="text" id="fines" name="fines" value="<?php echo $row['fines']; ?>" maxlength="10" disabled>
                                         <h5 id="fines_error" style="color:red;"></h5>
                                     </div>
+                                    <div>
+                                        <p>เงินประกัน | <strong>บาท</strong></p>
+                                        <input type="text" id="deposit" name="deposit" value="<?php echo $row['deposit']; ?>" maxlength="10" disabled>
+                                        <h5 id="d_error" style="color:red;"></h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>

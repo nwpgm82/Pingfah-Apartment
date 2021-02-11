@@ -1,35 +1,28 @@
 $(document).ready(function(){
-    $("#elec_unit").keyup(function(event) {
-        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
-        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-            event.preventDefault();
-        }
-        if ($("#elec_unit").val() != "") {
-            $("#elec_unit").css("border-color", "")
-            $("#elec_price").val((parseFloat($("#elec_unit").val()) * <?php if(isset($member_result["elec_bill"])){ echo $member_result["elec_bill"]; }else{ echo 0; } ?>).toFixed(2))
-        } else {
-            $("#elec_price").val("0.00")
-            $("#elec_unit").css("border-color", "red")
-        }
-        if(event.which == 8){
-            $("#total_price").val((parseFloat($("#total_price").val()) + parseFloat($("#elec_price").val())).toFixed(2)) 
+    $("#confirm_quit").click(function(event){
+        let err_count = 0
+        let inputs = $("input")
+        inputs.each(function(){
+            if($(this).val() == ""){
+                err_count = err_count + 1
+                $(this).css("border-color","red")
+            }
+        })
+        if(err_count == 0){
+            if(confirm("คุณต้องการยืนยันการแจ้งออกใช่หรือไม่ ?")){
+                $("form").submit()
+            }else{
+                event.preventDefault()
+            }
         }else{
-            $("#total_price").val((parseFloat($("#total_price").val()) + parseFloat($("#elec_price").val())).toFixed(2)) 
+            event.preventDefault()
         }
     })
-    $("#fines").keyup(function() {
-        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
-        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-            event.preventDefault();
+    $("#checkbox").click(function(){
+        if($(this).prop("checked") == true){
+            $("#confirm_quit").prop("disabled",false)
+        }else{
+            $("#confirm_quit").prop("disabled",true)
         }
-        if ($("#fines").val() != "") {
-            $("#fines").css("border-color", "")
-            $("#total_price").val((parseFloat($("#total_price").val()) + parseFloat($("#fines").val())).toFixed(2))
-        } else {
-            $("#fines").css("border-color", "red")
-            $("#total_price").val((parseFloat($("#total_price").val()) + 0).toFixed(2))
-        }
-        
-        console.log($("#total_price").val())
     })
 })

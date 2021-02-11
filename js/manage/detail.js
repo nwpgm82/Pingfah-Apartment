@@ -81,6 +81,7 @@ $(document).ready(function () {
                     elec_bill: $("#elec_bill").val(),
                     cable_charge: $("#cable_charge").val(),
                     fines: $("#fines").val(),
+                    deposit: $("#deposit").val(),
                     sv_fan: $("#sv_fan").val(),
                     sv_air: $("#sv_air").val(),
                     sv_wifi: $("#sv_wifi").val(),
@@ -185,6 +186,15 @@ $(document).ready(function () {
         } else {
             $(this).css("border-color", "")
             $("#fines_error").html("")
+        }
+    })
+    $("#deposit").keyup(function () {
+        if ($(this).val() == "") {
+            $(this).css("border-color", "red")
+            $("#d_error").html("โปรดระบุเงินประกัน")
+        } else {
+            $(this).css("border-color", "")
+            $("#d_error").html("")
         }
     })
     $("input[type=checkbox]").click(function(){
