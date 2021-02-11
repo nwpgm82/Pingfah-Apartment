@@ -137,6 +137,15 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                     <td colspan="3">ค่าเคเบิล</td>
                     <td><?php echo number_format($cable_charge,2); ?></td>
                 </tr>
+                <?php
+                if($member_status = "แจ้งออกแล้ว" && $deposit_after != 0){
+                ?>
+                <tr>
+                    <td>5</td>
+                    <td colspan="3">คืนเงินค่าประกันห้องพักหลังหักค่าปรับ (ค่าเสียหาย)</td>
+                    <td>-<?php echo number_format($deposit_after,2); ?></td>
+                </tr>
+                <?php } ?>
                 <tr>
                     <td colspan="3"><strong><?php echo bathformat($total) ?></strong></td>
                     <td style="text-align:center;"><strong>จำนวนเงินรวมทั้งสิ้น</strong></td>

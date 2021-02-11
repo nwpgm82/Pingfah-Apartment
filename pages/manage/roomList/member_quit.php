@@ -23,14 +23,14 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
         return "$strDay $strMonthThai $strYear";
     }
     $id = $_REQUEST["ID"];
-    $member_data = mysqli_query($conn, "SELECT a.*, b.room_type, c.price, c.water_bill, c.elec_bill, c.cable_charge, c.deposit FROM roommember a INNER JOIN roomlist b ON a.room_id = b.room_id INNER JOIN roomdetail c ON b.room_type = c.type WHERE a.room_id = '$id' AND a.member_status = 'กำลังเข้าพัก'");
+    $member_data = mysqli_query($conn, "SELECT a.*, b.room_type, c.price, c.water_bill, c.elec_bill, c.cable_charge FROM roommember a INNER JOIN roomlist b ON a.room_id = b.room_id INNER JOIN roomdetail c ON b.room_type = c.type WHERE a.room_id = '$id' AND a.member_status = 'กำลังเข้าพัก'");
     $member_result = mysqli_fetch_assoc($member_data);
     $d1 = $member_result["come_date"];
     $d2 = date("Y-m-d");
     $month_count = (int)abs((strtotime($d1) - strtotime($d2))/(60*60*24*30));
     if ($month_count >= 6) {
         $room_deposit = "ได้";
-        $deposit = $member_result["deposit"];
+        $deposit = $member_result["member_deposit"];
     } else {
         $room_deposit = "ไม่ได้";
         $deposit = 0;
