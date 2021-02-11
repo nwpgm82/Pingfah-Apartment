@@ -6,7 +6,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     {
         $strYear = date("Y",strtotime($strDate))+543;
         $strMonth= date("n",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strMonthThai $strYear";
     }
@@ -15,12 +15,12 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         $strYear = date("Y",strtotime($strDate))+543;
         $strMonth= date("n",strtotime($strDate));
         $strDay= date("j",strtotime($strDate));
-        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
     $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as total_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระ' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date";
-    $query2 = "SELECT check_in ,SUM(price_total) as daily_price FROM dailycost GROUP BY check_in";
+    $query2 = "SELECT check_in ,SUM(a.total_allprice) as daily_price FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id GROUP BY check_in";
     $query3 = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
     $query4 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
     $result = mysqli_query($conn, $query);
@@ -82,9 +82,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <div>
                                 <h4>รายได้ทั้งหมด</h4>
                                 <?php
-                                    $sql = mysqli_query($conn,"SELECT SUM(total) as total_cost FROM cost WHERE cost_status = 'ชำระเงินแล้ว'");
-                                    $sql2 = mysqli_query($conn,"SELECT SUM(price_total) as total_cost2 FROM dailycost");
-                                    $sql3 = mysqli_query($conn,"SELECT SUM(repair_income - repair_expenses) as total_cost3 FROM repair");
+                                    $sql = mysqli_query($conn,"SELECT SUM(total) as total_cost FROM cost");
+                                    $sql2 = mysqli_query($conn,"SELECT SUM(total_allprice) as total_cost2 FROM dailycost");
+                                    $sql3 = mysqli_query($conn,"SELECT SUM(repair_profit) as total_cost3 FROM repair");
                                     $data = mysqli_fetch_assoc($sql);  
                                     $data2 = mysqli_fetch_assoc($sql2);
                                     $data3 = mysqli_fetch_assoc($sql3);
@@ -104,8 +104,8 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                     <h4>รายได้ต่อเดือน</h4>
                                     <?php
                                     $sql = mysqli_query($conn,"SELECT SUM(total) as total_cost FROM cost WHERE date = '".date("Y-m")."' AND cost_status = 'ชำระเงินแล้ว'");
-                                    $sql2 = mysqli_query($conn,"SELECT SUM(price_total) as total_dailycost FROM dailycost WHERE YEAR(check_in) = '".date("Y")."' AND MONTH(check_in) = '".date("m")."'");
-                                    $sql3 = mysqli_query($conn,"SELECT SUM(repair_income - repair_expenses) as total_repaircost FROM repair WHERE YEAR(repair_successdate) = '".date("Y")."' AND MONTH(repair_successdate) = '".date("m")."'");
+                                    $sql2 = mysqli_query($conn,"SELECT SUM(a.total_allprice) as total_dailycost FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE YEAR(b.check_in) = '".date("Y")."' AND MONTH(b.check_in) = '".date("m")."'");
+                                    $sql3 = mysqli_query($conn,"SELECT SUM(repair_profit) as total_repaircost FROM repair WHERE YEAR(repair_successdate) = '".date("Y")."' AND MONTH(repair_successdate) = '".date("m")."'");
                                     $datam = mysqli_fetch_assoc($sql);  
                                     $datam2 = mysqli_fetch_assoc($sql2);
                                     $datam3 = mysqli_fetch_assoc($sql3);
@@ -136,7 +136,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                 <p><?php echo $room['total_room']; ?> ห้อง</p>
                             </div>
                         </div>
-                        <a href="roomList/index.php?Status=available">
+                        <a href="roomList/index.php?Status=avai_all">
                             <div class="search-box">
                                 <p class="dateText1">ห้องว่างทั้งหมด</p>
                             </div>
@@ -176,7 +176,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                 <p><?php echo $overdue['total_overdue']; ?> รายการ</p>
                             </div>
                         </div>
-                        <a href="cost/index.php?Status=unsuccess">
+                        <a href="cost/index.php?status=unsuccess">
                             <div class="search-box">
                                 <p class="dateText1">รายการค้างชำระทั้งหมด</p>
                             </div>
@@ -196,7 +196,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                 <p><?php echo $package['total_package']; ?> ชิ้น</p>
                             </div>
                         </div>
-                        <a href="package/index.php?Status=unsuccess">
+                        <a href="package/index.php?status=unsuccess">
                             <div class="search-box">
                                 <p class="dateText1">รายการพัสดุที่ยังไม่ได้รับทั้งหมด</p>
                             </div>
