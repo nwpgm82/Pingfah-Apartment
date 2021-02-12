@@ -4,7 +4,7 @@ if ($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee') {
     include "../../../connection.php";
     $cost_id = $_REQUEST['cost_id'];
     $del = "DELETE FROM cost WHERE cost_id = $cost_id";
-    $search = mysqli_query($conn, "SELECT room_id, date FROM cost WHERE cost_id = $cost_id");
+    $search = mysqli_query($conn, "SELECT room_id, date, cost_status FROM cost WHERE cost_id = $cost_id");
     $result = mysqli_fetch_assoc($search);
     $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ชำระเงิน(รายเดือน)', 'ลบรายการชำระเงินค่าเช่าห้องพัก (ห้อง " . $result["room_id"] . ")(" . $result["date"] . ")', '" . $_SESSION["name"] . "', '" . $_SESSION["level"] . "')";
     if ($conn->query($del) === true && $conn->query($addLogs) === true) {

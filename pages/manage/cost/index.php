@@ -99,7 +99,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             <?php } ?>
                         </div>
                     </div>
+                    <?php
+                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                    ?>
                     <a id="second" href="addcost.php"><button>เพิ่มรายการชำระเงิน</button></a>
+                    <?php } ?>
                 </div>
                 <div class="hr" style="margin-top:16px;"></div>
                 <div>
@@ -157,7 +161,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                         $start = ($page - 1) * $perpage;
                         $num = $start + 1;
                         if(isset($from) && isset($to) && !isset($check)){
-                            $sql ="SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE (date BETWEEN '$from' AND '$to') ORDER BY date LIMIT {$start} , {$perpage}";
+                            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                $sql ="SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE (a.date BETWEEN '$from' AND '$to') ORDER BY a.date DESC LIMIT {$start} , {$perpage}";
+                            }else if($_SESSION["level"] == "guest"){
+                                $sql ="SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE a.member_id = ".$_SESSION["member_id"]." AND (a.date BETWEEN '$from' AND '$to') ORDER BY a.date DESC LIMIT {$start} , {$perpage}";
+                            }
                         }else if(!isset($from) && !isset($to) && isset($check)){
                             if($check == "success"){
                                 $check_s = "ชำระเงินแล้ว";
@@ -166,7 +174,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             }else if($check = "pending"){
                                 $check_s = "รอการชำระเงิน";
                             }
-                            $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE cost_status = '$check_s' ORDER BY date LIMIT {$start} , {$perpage}";
+                            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE a.cost_status = '$check_s' ORDER BY a.date DESC LIMIT {$start} , {$perpage}";
+                            }else if($_SESSION["level"] == "guest"){
+                                $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE a.member_id = ".$_SESSION["member_id"]." AND a.cost_status = '$check_s' ORDER BY a.date DESC LIMIT {$start} , {$perpage}";
+                            }
                         }else if(isset($from) && isset($to) && isset($check)){
                             if($check == "success"){
                                 $check_s = "ชำระเงินแล้ว";
@@ -175,12 +187,16 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             }else if($check == "pending"){
                                 $check_s = "รอการชำระเงิน";
                             }
-                            $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE (date BETWEEN '$from' AND '$to') AND cost_status = '$check_s' ORDER BY date LIMIT {$start} , {$perpage}";
+                            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE (a.date BETWEEN '$from' AND '$to') AND a.cost_status = '$check_s' ORDER BY a.date DESC LIMIT {$start} , {$perpage}";
+                            }else if($_SESSION["level"] == "guest"){
+                                $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE a.member_id = ".$_SESSION["member_id"]." AND (a.date BETWEEN '$from' AND '$to') AND a.cost_status = '$check_s' ORDER BY a.date DESC LIMIT {$start} , {$perpage}";
+                            }
                         }else{
                             if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-                                $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id ORDER BY date LIMIT {$start} , {$perpage} ";
+                                $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id ORDER BY a.date DESC LIMIT {$start} , {$perpage} ";
                             }else if($_SESSION["level"] == "guest"){
-                                $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE a.member_id = ".$_SESSION["member_id"]." ORDER BY date LIMIT {$start} , {$perpage} ";
+                                $sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE a.member_id = ".$_SESSION["member_id"]." ORDER BY a.date DESC LIMIT {$start} , {$perpage} ";
                             }
                         }
                         $result = $conn->query($sql);

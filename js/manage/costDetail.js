@@ -3,6 +3,22 @@ $(document).ready(function () {
     let cable = $("#cable_price").val()
     let water = $("#water_price").val()
     let elec = $("#elec_price").val()
+    function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+            // case 'pdf':
+            case 'png':
+                //etc
+                return true;
+        }
+        return false;
+    }
     $(".edit-btn").click(function () {
         $(".edit-btn").hide()
         $(".edit-option").css("display", "grid")
@@ -29,6 +45,30 @@ $(document).ready(function () {
             event.preventDefault()
         }
     })
+    //////////////////////-------->
+    $(document).on("click", "#edit-btn2", function () {
+        $("#edit-btn2").hide()
+        $("#edit-option2").css("display", "grid")
+        $("#pay_img").prop("disabled", false)
+        
+    })
+    $(document).on("click", "#cancel-edit2", function () {
+        $('#pay').load(location.href + ' #sub-pay');
+    })
+    $(document).on("click", "#accept-edit2", function (event) {
+        if($("#pay_img").val() != ""){
+            if(confirm("คุณต้องการอัปโหลดหลักฐานการชำระเงินค่าห้องพักใช่หรือไม่ ?")){
+                $("#pay_form").submit()
+            }else{
+                event.preventDefault()
+            }
+        }else{
+            $(".img-box").css("border-color","red")
+            $("#pay_error").html("โปรดอัปโหลดหลักฐานการชำระเงินค่าห้องพัก")
+            event.preventDefault()
+        }    
+    }) 
+    ///////////////////////------->
     $("#room_price").keyup(function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -92,5 +132,33 @@ $(document).ready(function () {
             $("#elec_error").html("โปรดระบุค่าไฟ")
         }
         $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec)).toFixed(2))
+    })
+    $(document).on("change", "#pay_img", function () {
+        if (isImage($("#pay_img").val()) == false) {
+            $(".img-box").css("border-color", "red")
+            $("#pay_error").html("รองรับไฟล์ประเภท jpg, png ขนาดไม่เกิน 5 MB เท่านั้น")
+            $("#pay_img").val("")
+            $('#img_pay').attr('src', "");
+            $("#img_pay").hide()
+        } else {
+            if (this.files && this.files[0]) {
+                if (this.files[0].size < 5242880) {
+                    $("#img_pay").show()
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#img_pay').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]); // convert to base64 string
+                    $(".img-box").css("border-color", "")
+                    $("#pay_error").html("")
+                } else {
+                    $(".img-box").css("border-color", "red")
+                    $("#pay_error").html("ขนาดรูปภาพใหญ่เกินไป (ไม่เกิน 5 MB)")
+                    $("#pay_img").val("")
+                    $('#img_pay').attr('src', "");
+                    $("#img_pay").hide()
+                }
+            }
+        }
     })
 })

@@ -15,8 +15,8 @@
 }
 
 .costDetail-box {
-    width: fit-content;
-    height: fit-content;
+    width: 100%;
+    min-height: 800px;
     padding: 36px;
     border-radius: 4px;
     background-color: #fff;
@@ -150,7 +150,7 @@
     height: 86px;
 }
 
-.costDetail-box input {
+.costDetail-box input:not([type=file]) {
     margin-top: 8px;
     width: 100%;
     height: 40px;
@@ -166,6 +166,19 @@
 .costDetail-box .edit-option {
     grid-template-columns: 40px 40px;
     column-gap: 8px;
+}
+
+.costDetail-box .img-box{
+    width: 100%;
+    height: 550px;
+    border: 1px solid rgb(131, 120, 47, 0.7);
+    border-radius: 4px;
+}
+
+.costDetail-box .img-box img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 @media screen and (max-width: 1599px) {

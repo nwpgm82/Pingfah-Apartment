@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSION['level'] == 'guest'){
     include('../../connection.php');
     function DateThai($strDate)
     {
@@ -20,7 +20,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         return "$strDay $strMonthThai $strYear";
     }
     $cost_id = $_REQUEST["cost_id"];
-    $sql = "SELECT * FROM cost WHERE cost_id = $cost_id";
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        $sql = "SELECT * FROM cost WHERE cost_id = $cost_id";
+    }else if($_SESSION["level"] == "guest"){
+        $sql = "SELECT * FROM cost WHERE cost_id = $cost_id AND member_id = ".$_SESSION["member_id"];
+    }
     $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
     $row = mysqli_fetch_array($result);
     if($row != null){
@@ -45,17 +49,24 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
 
 <body>
     <?php include('../../../components/sidebar.php'); ?>
+    <?php 
+    if($row != null){
+    ?>
     <div class="box">
-        <div id="box-padding" style="padding:24px;">
+        <div id="box-padding" style="padding:24px;display:grid;grid-template-columns: 1fr 1fr;column-gap:16px;">
             <div class="costDetail-box">
                 <form action="function/editcost.php?cost_id=<?php echo $cost_id; ?>" method="POST">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <h3>ข้อมูลการชำระเงิน</h3>
+                        <?php
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                        ?>
                         <button type="button" class="edit-btn" title="แก้ไขข้อมูล"></button>
                         <div class="edit-option" style="display:none;">
                             <button type="submit" class="correct-btn" id="accept-edit" name="accept-edit" title="ยืนยันการแก้ไข"></button>
                             <button type="button" class="cancel-btn" id="cancel-edit" title="ยกเลิกการแก้ไข"></button>
                         </div>
+                        <?php } ?>
                     </div>
                     <div class="hr"></div>
                     <div class="grid-container">
@@ -106,8 +117,37 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     </div>
                 </form>
             </div>
+            <div id="pay">
+                <form id="pay_form" action="function/addImage.php?cost_id=<?php echo $cost_id; ?>" method="POST" enctype="multipart/form-data">
+                    <div class="costDetail-box" id="sub-pay">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <h3>อัปโหลดรูปภาพหลักฐานการชำระเงิน</h3>
+                            <?php
+                            if($_SESSION["level"] == "guest"){
+                            ?>
+                            <button type="button" class="edit-btn" id="edit-btn2" title="แก้ไขข้อมูล"></button>
+                            <div class="edit-option" id="edit-option2" style="display:none;">
+                                <button type="submit" class="correct-btn" id="accept-edit2" name="accept-edit" title="ยืนยันการแก้ไข"></button>
+                                <button type="button" class="cancel-btn" id="cancel-edit2" title="ยกเลิกการแก้ไข"></button>
+                            </div>
+                            <?php } ?>
+                        </div>
+                        <div class="hr"></div>
+                        <div class="img-box">
+                            <img src="" id="img_pay" style="display:none;">
+                        </div>
+                        <h5 id="pay_error" style="color:red;"></h5>
+                        <?php
+                        if($_SESSION["level"] == "guest"){
+                        ?>
+                        <input type="file" id="pay_img" name="pay_img" style="margin-top:8px;" disabled>
+                        <?php } ?>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+    <?php } ?>
 </body>
 
 </html>
