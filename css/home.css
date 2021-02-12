@@ -150,7 +150,9 @@
 .c { grid-area: c; }
 
 .home-box .chart-grid .card2 {
+    display: flex;
     width: 100%;
+    min-height: 534px;
     padding: 16px;
     border: 1px solid rgb(131, 120, 47, 0.7);
     border-radius: 4px;
@@ -168,5 +170,6 @@
 
 .home-box .chart-grid .card2 .sub-grid {
     display: grid;
+    width: 100%;
     grid-template-columns: 1fr 1fr;
 }

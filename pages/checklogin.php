@@ -17,7 +17,8 @@ if(isset($_POST['login'])){
             Header("Location: manage/index.php");
         }else if($_SESSION['level'] == 'guest'){
             $_SESSION['rule'] = 0;
-            Header("Location: guest/index.php");
+            $_SESSION['member_id'] = $row['member_id'];
+            Header("Location: manage/index.php");
         }else{
         echo "<script>";
         echo "alert('บัญชีผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');"; 

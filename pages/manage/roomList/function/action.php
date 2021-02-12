@@ -56,13 +56,19 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                 if(move_uploaded_file($_FILES["id_img"]["tmp_name"], $id_target) && move_uploaded_file($_FILES["home_img"]["tmp_name"], $home_target)){
                     $addData = "INSERT INTO roommember (room_id, come_date, member_cat, member_status, member_deposit, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, people) VALUES ('$room_id','$come','รายเดือน','กำลังเข้าพัก',".$result_detail["deposit"].", '$title_name','$firstname', '$lastname', '$nickname', '$id_card', '$tel', '$email', '$birthday' , $age, '$race', '$nation', '$job', '$address', '$id_img', '$home_img', 1)";
                     $change_status = "UPDATE roomlist SET room_status = 'ไม่ว่าง' WHERE room_id = '$room_id' ";
-                    $addlogin = "INSERT INTO login (username, name, password, email, level) VALUES ('$room_id', '$room_id', MD5('$id_card'), '$email', 'guest')";
                     $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เพิ่มข้อมูลลูกค้า(ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
-                    if($conn->query($addData) === TRUE && $conn->query($change_status) === TRUE && $conn->query($addlogin) === TRUE && $conn->query($addLogs) === TRUE){
-                        echo "<script>";
-                        echo "alert('เพิ่มข้อมูลผู้พักห้อง $room_id เรียบร้อยแล้ว');";
-                        echo "location.href = '../index.php';";
-                        echo "</script>";
+                    if($conn->query($addData) === TRUE && $conn->query($change_status) === TRUE && $conn->query($addLogs) === TRUE){
+                        $l = mysqli_query($conn, "SELECT member_id FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'");
+                        $get_l = mysqli_fetch_assoc($l);
+                        $addlogin = "INSERT INTO login (username, member_id, name, password, email, level) VALUES ('$room_id', ".$get_l["member_id"].", '$room_id', MD5('$id_card'), '$email', 'guest')";
+                        if($conn->query($addlogin) === TRUE){
+                            echo "<script>";
+                            echo "alert('เพิ่มข้อมูลผู้พักห้อง $room_id เรียบร้อยแล้ว');";
+                            echo "location.href = '../index.php';";
+                            echo "</script>";
+                        }else{
+                            echo "Error: " . $addlogin . "<br>" . $conn->error;
+                        }  
                     }else{
                         echo "Error: " . $addData . "<br>" . $conn->error;
                     }

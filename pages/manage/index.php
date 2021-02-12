@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSION['level'] == 'guest'){
     include('../connection.php');
     function DateThai($strDate)
     {
@@ -19,24 +19,36 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date ORDER BY date ASC";
-    $query2 = "SELECT b.check_in ,SUM(a.total_allprice) as daily_price FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id GROUP BY b.check_in";
-    $query3 = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
-    $query4 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date ORDER BY date ASC";
+        $query2 = "SELECT b.check_in ,SUM(a.total_allprice) as daily_price FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id GROUP BY b.check_in";
+        $query3 = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
+        $query4 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
+    }else if($_SESSION["level"] == "guest"){
+        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost WHERE member_id = ".$_SESSION["member_id"]." GROUP BY date ORDER BY date ASC";
+        $query3 = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair WHERE member_id = ".$_SESSION["member_id"]." GROUP BY repair_category";
+        $query4 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair WHERE member_id = ".$_SESSION["member_id"]." GROUP BY repair_status";
+    }
     $result = mysqli_query($conn, $query);
-    $result2 = mysqli_query($conn, $query2);
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        $result2 = mysqli_query($conn, $query2);
+    }
     $result3 = mysqli_query($conn, $query3);
     $result4 = mysqli_query($conn, $query4);
     //echo $query;
     $datax = array();
-    $datax2 = array();
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        $datax2 = array();
+    }
     $datax3 = array();
     $datax4 = array();
     foreach ($result as $k) {
         $datax[] = "['".DateThai($k['date'])."'".", ".$k['successtotal_price'] .",".$k['pendingtotal_price'].",".$k['untotal_price']."]";
     }
-    foreach ($result2 as $j) {
-        $datax2[] = "['".DateThai2($j['check_in'])."'".", ".$j['daily_price']."]";
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        foreach ($result2 as $j) {
+            $datax2[] = "['".DateThai2($j['check_in'])."'".", ".$j['daily_price']."]";
+        }
     }
     foreach ($result3 as $l) {
       $datax3[] = "['".$l['repair_category']."'".", ".$l['total_cate']."]";
@@ -46,7 +58,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     }
     //cut last commar
     $datax = implode(",", $datax);
-    $datax2 = implode(",", $datax2);
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        $datax2 = implode(",", $datax2);
+    }
     $datax3 = implode(",", $datax3);
     $datax4 = implode(",", $datax4);
     // echo $datax;
@@ -77,6 +91,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                 <h3>Overview Dashboard</h3>
                 <div class="hr"></div>
                 <div class="grid">
+                    <?php
+                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                    ?>
                     <div class="card">
                         <div class="detail" style="border-bottom:none;">
                             <div>
@@ -169,6 +186,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <img src="../../img/tool/employee_icon.png" alt="">
                         </div>
                     </div>
+                    <?php } ?>
                     <div class="card">
                         <div class="detail">
                             <div>
@@ -229,6 +247,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <img src="../../img/tool/repair.png" alt="">
                         </div>
                     </div>
+                    <?php
+                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                    ?>
                     <div class="card">
                         <div class="detail">
                             <div>
@@ -249,18 +270,53 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <img src="../../img/tool/daily.png" alt="">
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
-                <div class="chart-grid">
+                <div class="chart-grid" <?php if($_SESSION["level"] == "guest"){  echo 'style="grid-template-areas:'."'a a' 'c c'".'"'; } ?>>
                     <div class="card2 a">
+                        <?php
+                        if(strlen($datax) != 0){
+                        ?>
                         <div id="columnchart_material1" class="chart"></div>
+                        <?php 
+                        }else{
+                            echo "<p style='margin:auto;'>ไม่มีข้อมูลชำระเงินห้องพักรายเดือน</p>";
+                        }
+                        ?>
                     </div>
+                    <?php
+                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                    ?>
                     <div class="card2 b">
+                        <?php
+                        if(strlen($datax2) != 0){
+                        ?>
                         <div id="curve_chart" class="chart"></div>
+                        <?php 
+                        }else{
+                            echo "<p style='margin:auto;'>ไม่มีข้อมูลชำระเงินห้องพักรายวัน</p>";
+                        }
+                        ?>
                     </div>
+                    <?php } ?>
                     <div class="card2 c">
                         <div class="sub-grid">
+                            <?php
+                            if(strlen($datax3) != 0){
+                            ?>
                             <div id="piechart" class="chart"></div>
+                            <?php 
+                            }else{
+                                echo "<p style='margin:auto;'>ไม่มีข้อมูลการแจ้งซ่อมแยกตามประเภท</p>";
+                            } ?>
+                            <?php
+                            if(strlen($datax4) != 0){
+                            ?>
                             <div id="piechart2" class="chart"></div>
+                            <?php 
+                            }else{
+                                echo "<p style='margin:auto;'>ไม่มีข้อมูลการแจ้งซ่อมแยกตามสถานะ</p>";
+                            } ?>
                         </div>
                     </div>
                 </div>
@@ -278,8 +334,16 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     google.charts.load("current", {
         packages: ["line"]
     });
+    <?php
+    if(strlen($datax) != 0){
+    ?>
     google.charts.setOnLoadCallback(drawChart);
+    <?php } ?>
+    <?php
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+    ?>
     google.charts.setOnLoadCallback(drawChart2);
+    <?php } ?>
     google.charts.setOnLoadCallback(drawChart3);
     google.charts.setOnLoadCallback(drawChart4);
 
@@ -300,7 +364,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
     }
-
+    <?php
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+    ?>
     function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
@@ -320,6 +386,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         var chart = new google.charts.Line(document.getElementById('curve_chart'));
         chart.draw(data, google.charts.Line.convertOptions(options));
     }
+    <?php } ?>
 
     function drawChart3() {
 

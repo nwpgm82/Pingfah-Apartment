@@ -14,6 +14,9 @@
                 <li id="employee">จัดการพนักงาน</li>
             </a>
             <?php } ?>
+            <?php
+            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+            ?>
             <li class="dropdown-btn">
                 ข้อมูลหอพัก
                 <div id="arrow-down" class="arrow-down"></div>
@@ -35,6 +38,7 @@
             <a href="/Pingfah/pages/manage/daily/index.php">
                 <li id="daily">รายการเช่ารายวัน</li>
             </a>
+            <?php } ?>
             <li class="dropdown-btn2">
                 รายการชำระเงิน
                 <div id="arrow-down2" class="arrow-down"></div>
@@ -42,9 +46,13 @@
             </li>
             <div id="dropdown2" class="dropdown-container">
                 <ul>
+                    <?php
+                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                    ?>
                     <a href="/Pingfah/pages/manage/dailyCost/index.php">
                         <li id="dailycost">- รายวัน</li>
                     </a>
+                    <?php } ?>
                     <a href="/Pingfah/pages/manage/cost/index.php?status=unsuccess">
                         <li id="cost">- รายเดือน</li>
                     </a>
