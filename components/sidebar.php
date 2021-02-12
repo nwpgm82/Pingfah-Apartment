@@ -69,6 +69,13 @@
             <a href="/Pingfah/pages/manage/rule/index.php">
                 <li id="rule">กฎระเบียบหอพัก</li>
             </a>
+            <?php
+            if($_SESSION["level"] == "admin"){
+            ?>
+            <a href="/Pingfah/pages/manage/logs.php">
+                <li id="logs">ประวัติการกระทำต่าง ๆ</li>
+            </a>
+            <?php } ?>
             <a href="/Pingfah/pages/logout.php">
                 <li class="logout">ออกจากระบบ</li>
             </a>

@@ -261,7 +261,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                                 <button class="qr" disabled></button>
                                                 <?php } ?>
                                                 <a href="dailyDetail.php?daily_id=<?php echo $row['daily_id']; ?>"><button type="button">รายละเอียด</button></a>
+                                                <?php
+                                                if($_SESSION["level"] == "admin"){
+                                                ?>
                                                 <button type="button" class="del-btn" id="<?php echo $row['daily_id']; ?>"></button>
+                                                <?php } ?>
                                             </div>
                                         </td>
                                     </tr>

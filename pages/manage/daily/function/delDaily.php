@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
+if($_SESSION['level'] == 'admin'){
     include("../../../connection.php");
     $id = $_REQUEST['daily_id'];
     $search = mysqli_query($conn, "SELECT * FROM daily WHERE daily_id = $id");

@@ -12,6 +12,7 @@ $(document).ready(function () {
     let package = $("#package")
     let rule = $("#rule")
     let appeal = $("#appeal")
+    let logs = $("#logs")
     let header = $("#topbar-page")
     localStorage.setItem("i", window.location.pathname)
     if (localStorage.getItem("i") == "/Pingfah/pages/manage/index.php") {
@@ -126,6 +127,10 @@ $(document).ready(function () {
         appeal.css("background-color", "rgba(131, 120, 47, 0.7)")
         appeal.css("color", "#fff")
         header.html("ข้อมูลการร้องเรียน")
+    }else if(localStorage.getItem("i") == "/Pingfah/pages/manage/logs.php"){
+        logs.css("background-color", "rgba(131, 120, 47, 0.7)")
+        logs.css("color", "#fff")
+        header.html("ประวัติการกระทำต่าง ๆ")
     } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/myprofile/index.php") {
         $(".profile").css("background-color", "rgba(131, 120, 47, 0.7)")
         $(".profile").css("color", "#fff")
