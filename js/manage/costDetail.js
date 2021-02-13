@@ -3,6 +3,7 @@ $(document).ready(function () {
     let cable = $("#cable_price").val()
     let water = $("#water_price").val()
     let elec = $("#elec_price").val()
+
     function getExtension(filename) {
         var parts = filename.split('.');
         return parts[parts.length - 1];
@@ -12,14 +13,14 @@ $(document).ready(function () {
         var ext = getExtension(filename);
         switch (ext.toLowerCase()) {
             case 'jpg':
-            // case 'pdf':
+                // case 'pdf':
             case 'png':
                 //etc
                 return true;
         }
         return false;
     }
-    $(".edit-btn").click(function () {
+    $(document).on("click", ".edit-btn", function () {
         $(".edit-btn").hide()
         $(".edit-option").css("display", "grid")
         let inputs = $("input")
@@ -32,51 +33,44 @@ $(document).ready(function () {
             }
         })
     })
-    $("#cancel-edit").click(function () {
-        $(".edit-btn").show()
-        $(".edit-option").hide()
-        let inputs = $("input")
-        inputs.each(function () {
-            $(this).prop("disabled", true)
-        })
+    $(document).on("click", "#cancel-edit", function () {
+        $('#c').load(location.href + ' #c_detail');
     })
-    $("#accept-edit").click(function (event) {
+    $(document).on("click", "#accept-edit", function (event) {
         if ($("#room_price").val() == "" || $("#cable_price").val() == "" || $("#water_price").val() == "" || $("#elec_price").val() == "") {
             event.preventDefault()
         }
     })
-    //////////////////////-------->
     $(document).on("click", "#edit-btn2", function () {
         $("#edit-btn2").hide()
         $("#edit-option2").css("display", "grid")
         $("#pay_img").prop("disabled", false)
-        
+
     })
     $(document).on("click", "#cancel-edit2", function () {
         $('#pay').load(location.href + ' #sub-pay');
     })
     $(document).on("click", "#accept-edit2", function (event) {
-        if($("#pay_img").val() != ""){
-            if(confirm("คุณต้องการอัปโหลดหลักฐานการชำระเงินค่าห้องพักใช่หรือไม่ ?")){
+        if ($("#pay_img").val() != "") {
+            if (confirm("คุณต้องการอัปโหลดหลักฐานการชำระเงินค่าห้องพักใช่หรือไม่ ?")) {
                 $("#pay_form").submit()
-            }else{
+            } else {
                 event.preventDefault()
             }
-        }else{
-            $(".img-box").css("border-color","red")
+        } else {
+            $(".img-box").css("border-color", "red")
             $("#pay_error").html("โปรดอัปโหลดหลักฐานการชำระเงินค่าห้องพัก")
             event.preventDefault()
-        }    
-    }) 
-    ///////////////////////------->
-    $("#room_price").keyup(function (event) {
+        }
+    })
+    $(document).on("keyup", "#room_price", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();
         }
         if ($("#room_price").val() != "") {
             room = $("#room_price").val()
-            $("#room_price").css("border-color","")
+            $("#room_price").css("border-color", "")
             $("#room_error").html("")
         } else {
             room = 0
@@ -85,7 +79,7 @@ $(document).ready(function () {
         }
         $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec)).toFixed(2))
     })
-    $("#cable_price").keyup(function (event) {
+    $(document).on("keyup", "#cable_price", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();
@@ -101,7 +95,7 @@ $(document).ready(function () {
         }
         $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec)).toFixed(2))
     })
-    $("#water_price").keyup(function (event) {
+    $(document).on("keyup", "#water_price", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();
@@ -117,7 +111,7 @@ $(document).ready(function () {
         }
         $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec)).toFixed(2))
     })
-    $("#elec_price").keyup(function (event) {
+    $(document).on("keyup", "#elec_price", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();

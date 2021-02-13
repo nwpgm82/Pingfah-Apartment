@@ -54,94 +54,106 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
     ?>
     <div class="box">
         <div id="box-padding" style="padding:24px;display:grid;grid-template-columns: 1fr 1fr;column-gap:16px;">
-            <div class="costDetail-box">
-                <form action="function/editcost.php?cost_id=<?php echo $cost_id; ?>" method="POST">
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <h3>ข้อมูลการชำระเงิน</h3>
-                        <?php
-                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-                        ?>
-                        <button type="button" class="edit-btn" title="แก้ไขข้อมูล"></button>
-                        <div class="edit-option" style="display:none;">
-                            <button type="submit" class="correct-btn" id="accept-edit" name="accept-edit" title="ยืนยันการแก้ไข"></button>
-                            <button type="button" class="cancel-btn" id="cancel-edit" title="ยกเลิกการแก้ไข"></button>
-                        </div>
-                        <?php } ?>
-                    </div>
-                    <div class="hr"></div>
-                    <div class="grid-container">
-                        <div class="room_id">
-                            <p>เลขห้อง</p>
-                            <input type="text" id="room_id" value="<?php echo $room_id; ?>" disabled>
-                        </div>
-                        <div class="room_type">
-                            <p>ประเภทห้องพัก</p>
-                            <input type="text" id="room_type" value="<?php echo $room_type; ?>" disabled>
-                        </div>
-                        <div class="date">
-                            <p>ประจำเดือน</p>
-                            <input type="text" id="cost_date" value="<?php echo DateThai($date); ?>" disabled>
-                        </div>
-                        <div class="room_cost">
-                            <p>ค่าห้องพัก (บาท)</p>
-                            <input type="text" id="room_price" name="room_price" value="<?php echo $room_cost; ?>" disabled>
-                            <h5 id="room_error" style="color:red;"></h5>
-                        </div>
-                        <div class="cable_charge">
-                            <p>ค่าเคเบิล (บาท)</p>
-                            <input type="text" id="cable_price" name="cable_price" value="<?php echo $cable_charge; ?>" disabled>
-                            <h5 id="cable_error" style="color:red;"></h5>
-                        </div>
-                        <div class="water_bill">
-                            <p>ค่าน้ำ (บาท)</p>
-                            <input type="text" id="water_price" name="water_price" value="<?php echo $water_bill; ?>" disabled>
-                            <h5 id="water_error" style="color:red;"></h5>
-                        </div>
-                        <div class="elec_bill">
-                            <p>ค่าไฟ (บาท)</p>
-                            <input type="text" id="elec_price" name="elec_price" value="<?php echo $elec_bill; ?>" disabled>
-                            <h5 id="elec_error" style="color:red;"></h5>
-                        </div>
-                        <div class="total">
-                            <p>ยอดรวม (บาท)</p>
-                            <input type="text" id="total_price" name="total_price" value="<?php echo $total; ?>" disabled>
-                        </div>
-                        <div class="cost_status">
-                            <p>สถานะการชำระเงิน</p>
-                            <input type="text" id="cost_status" value="<?php echo $cost_status; ?>" disabled>
-                        </div>
-                        <div class="pay_date">
-                            <p>วันที่ชำระเงิน</p>
-                            <input type="text" id="pay_date" value="<?php if(isset($pay_date)){ echo DateThai2($pay_date); } ?>" disabled>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div id="pay">
-                <form id="pay_form" action="function/addImage.php?cost_id=<?php echo $cost_id; ?>" method="POST" enctype="multipart/form-data">
-                    <div class="costDetail-box" id="sub-pay">
+            <div id="c">
+                <div class="costDetail-box" id="c_detail">
+                    <form action="function/editcost.php?cost_id=<?php echo $cost_id; ?>" method="POST">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
-                            <h3>อัปโหลดรูปภาพหลักฐานการชำระเงิน</h3>
+                            <h3>ข้อมูลการชำระเงิน</h3>
                             <?php
-                            if($_SESSION["level"] == "guest"){
-                            ?>
-                            <button type="button" class="edit-btn" id="edit-btn2" title="แก้ไขข้อมูล"></button>
-                            <div class="edit-option" id="edit-option2" style="display:none;">
-                                <button type="submit" class="correct-btn" id="accept-edit2" name="accept-edit" title="ยืนยันการแก้ไข"></button>
-                                <button type="button" class="cancel-btn" id="cancel-edit2" title="ยกเลิกการแก้ไข"></button>
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            if($cost_status != "ชำระเงินแล้ว"){
+                        ?>
+                            <button type="button" class="edit-btn" title="แก้ไขข้อมูล"></button>
+                            <?php } ?>
+                            <div class="edit-option" style="display:none;">
+                                <button type="submit" class="correct-btn" id="accept-edit" name="accept-edit"
+                                    title="ยืนยันการแก้ไข"></button>
+                                <button type="button" class="cancel-btn" id="cancel-edit"
+                                    title="ยกเลิกการแก้ไข"></button>
                             </div>
                             <?php } ?>
                         </div>
                         <div class="hr"></div>
+                        <div class="grid-container">
+                            <div class="room_id">
+                                <p>เลขห้อง</p>
+                                <input type="text" id="room_id" value="<?php echo $room_id; ?>" disabled>
+                            </div>
+                            <div class="room_type">
+                                <p>ประเภทห้องพัก</p>
+                                <input type="text" id="room_type" value="<?php echo $room_type; ?>" disabled>
+                            </div>
+                            <div class="date">
+                                <p>ประจำเดือน</p>
+                                <input type="text" id="cost_date" value="<?php echo DateThai($date); ?>" disabled>
+                            </div>
+                            <div class="room_cost">
+                                <p>ค่าห้องพัก (บาท)</p>
+                                <input type="text" id="room_price" name="room_price" value="<?php echo $room_cost; ?>"
+                                    disabled>
+                                <h5 id="room_error" style="color:red;"></h5>
+                            </div>
+                            <div class="cable_charge">
+                                <p>ค่าเคเบิล (บาท)</p>
+                                <input type="text" id="cable_price" name="cable_price"
+                                    value="<?php echo $cable_charge; ?>" disabled>
+                                <h5 id="cable_error" style="color:red;"></h5>
+                            </div>
+                            <div class="water_bill">
+                                <p>ค่าน้ำ (บาท)</p>
+                                <input type="text" id="water_price" name="water_price"
+                                    value="<?php echo $water_bill; ?>" disabled>
+                                <h5 id="water_error" style="color:red;"></h5>
+                            </div>
+                            <div class="elec_bill">
+                                <p>ค่าไฟ (บาท)</p>
+                                <input type="text" id="elec_price" name="elec_price" value="<?php echo $elec_bill; ?>"
+                                    disabled>
+                                <h5 id="elec_error" style="color:red;"></h5>
+                            </div>
+                            <div class="total">
+                                <p>ยอดรวม (บาท)</p>
+                                <input type="text" id="total_price" name="total_price" value="<?php echo $total; ?>"
+                                    disabled>
+                            </div>
+                            <div class="cost_status">
+                                <p>สถานะการชำระเงิน</p>
+                                <input type="text" id="cost_status" value="<?php echo $cost_status; ?>" disabled>
+                            </div>
+                            <div class="pay_date">
+                                <p>วันที่ชำระเงิน</p>
+                                <input type="text" id="pay_date"
+                                    value="<?php if(isset($pay_date)){ echo DateThai2($pay_date); } ?>" disabled>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="pay">
+                <form id="pay_form" action="function/addImage.php?cost_id=<?php echo $cost_id; ?>" method="POST"
+                    enctype="multipart/form-data">
+                    <div class="costDetail-box" id="sub-pay">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <h3>อัปโหลดรูปภาพหลักฐานการชำระเงิน</h3>
+                            <?php
+                            if($cost_status != "ชำระเงินแล้ว"){
+                            ?>
+                            <button type="button" class="edit-btn" id="edit-btn2" title="แก้ไขข้อมูล"></button>
+                            <?php } ?>
+                            <div class="edit-option" id="edit-option2" style="display:none;">
+                                <button type="submit" class="correct-btn" id="accept-edit2" name="accept-edit"
+                                    title="ยืนยันการแก้ไข"></button>
+                                <button type="button" class="cancel-btn" id="cancel-edit2"
+                                    title="ยกเลิกการแก้ไข"></button>
+                            </div>
+                        </div>
+                        <div class="hr"></div>
                         <div class="img-box">
-                            <img src="" id="img_pay" style="display:none;">
+                            <img src="<?php if($pay_img != null){ echo "../../images/cost/$date/$room_id/payment/$pay_img"; } ?>"
+                                id="img_pay" <?php if($pay_img == null){ echo "style='display:none;'"; } ?>>
                         </div>
                         <h5 id="pay_error" style="color:red;"></h5>
-                        <?php
-                        if($_SESSION["level"] == "guest"){
-                        ?>
                         <input type="file" id="pay_img" name="pay_img" style="margin-top:8px;" disabled>
-                        <?php } ?>
                     </div>
                 </form>
             </div>

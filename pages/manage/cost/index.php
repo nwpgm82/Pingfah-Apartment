@@ -281,9 +281,16 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                                 <button type="submit" class="confirm-status" title="ยืนยันการชำระเงิน">ยืนยันการชำระเงิน</button>
                                                 <?php 
                                                 }else if($_SESSION["level"] == "guest"){
+                                                    if($row["pay_img"] == null){
                                                 ?>
                                                 <button type="button" class="confirmed-status" title="รอการชำระเงิน">รอการชำระเงิน</button>
-                                                <?php } ?>
+                                                <?php 
+                                                    }else{
+                                                ?>
+                                                <button type="button" class="confirmed-status" title="รอการชำระเงิน">รอการตรวจสอบ</button>
+                                                <?php        
+                                                    }
+                                                 } ?>
                                                 <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more" title="ดูข้อมูลเพิ่มเติม">ดูข้อมูลเพิ่มเติม</button></a>
                                                 <button type="button" class="del-btn" id="<?php echo $row["cost_id"]; ?>" title="ลบข้อมูล"></button>
                                             </div>
