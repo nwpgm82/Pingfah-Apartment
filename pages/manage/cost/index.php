@@ -287,7 +287,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                                 <?php 
                                                     }else{
                                                 ?>
-                                                <button type="button" class="confirmed-status" title="รอการชำระเงิน">รอการตรวจสอบ</button>
+                                                <button type="button" class="confirmed-status" title="รอการตรวจสอบ">รอการตรวจสอบ</button>
                                                 <?php        
                                                     }
                                                  } ?>
