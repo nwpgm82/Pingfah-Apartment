@@ -157,27 +157,13 @@ function DateThai($strDate)
                                             <?php } ?>
                                         </div> 
                                     </li>
-                                    <li>
-                                        <div>
-                                            <p>ใบเสร็จค่าห้องพัก</p>
-                                            <?php
-                                            if($row["daily_status"] == "เช็คเอาท์แล้ว" && $row["daily_status"] != "ยกเลิกการจอง"){
-                                            ?>
-                                            <a href="receipt_room.php?code=<?php echo $row["code"]; ?>" target="_blank"><button type="button" class="print"></button></a>
-                                            <?php 
-                                            }else{
-                                            ?>
-                                            <button type="button" class="print" style="margin:0 16px;" disabled></button>
-                                            <?php } ?>
-                                        </div>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php
-                if($row["daily_status"] != "ยกเลิกการจอง" && $row["daily_status"] != "เช็คเอ้าท์แล้ว" && $row["daily_status"] != "เข้าพักแล้ว"){
+                if($row["daily_status"] != "ยกเลิกการจอง" && $row["daily_status"] != "เช็คเอาท์แล้ว" && $row["daily_status"] != "เข้าพักแล้ว"){
                 ?>
                 <div class="hr"></div>
                 <div style="display:flex;justify-content:center;">
