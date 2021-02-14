@@ -123,6 +123,10 @@ $(document).ready(function () {
         appeal.css("background-color", "rgba(131, 120, 47, 0.7)")
         appeal.css("color", "#fff")
         header.html("รายการร้องเรียน")
+    }else if (localStorage.getItem("i") == "/Pingfah/pages/manage/appeal/addAppeal.php") {
+        appeal.css("background-color", "rgba(131, 120, 47, 0.7)")
+        appeal.css("color", "#fff")
+        header.html("แจ้งร้องเรียน")
     } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/appeal/appealDetail.php"){
         appeal.css("background-color", "rgba(131, 120, 47, 0.7)")
         appeal.css("color", "#fff")
