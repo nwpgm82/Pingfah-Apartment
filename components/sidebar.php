@@ -68,10 +68,17 @@
                 <li id="package">รายการพัสดุ</li>
             </a>
             <?php
-            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "guest"){
+            if($_SESSION["level"] == "admin"){
             ?>
             <a href="/Pingfah/pages/manage/appeal/index.php">
                 <li id="appeal">รายการร้องเรียน</li>
+            </a>
+            <?php } ?>
+            <?php
+            if($_SESSION["level"] == "guest"){
+            ?>
+            <a href="/Pingfah/pages/manage/appeal/addAppeal.php">
+                <li id="appeal">แจ้งร้องเรียน</li>
             </a>
             <?php } ?>
             <a href="/Pingfah/pages/manage/rule/index.php">
