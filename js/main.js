@@ -142,7 +142,7 @@ $(document).ready(function () {
             });
         }
         if (people.val() <= 0) {
-            people.val(1)
+            people.css("border-color", "red")
         } else {
             people.css("border-color", "")
         }
