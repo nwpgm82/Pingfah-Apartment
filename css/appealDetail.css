@@ -39,7 +39,8 @@
 }
 
 .appealDetail-box .grid-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 16px;
     padding-top: 32px;
     min-height: 118px;
