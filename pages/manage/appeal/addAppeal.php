@@ -43,6 +43,9 @@ if($_SESSION["level"] == "guest"){
                         <textarea name="detail" id="detail"></textarea>
                         <h5 id="d_error" style="color:red;"></h5>
                     </div>
+                    <div style="display:flex;justify-content:flex-end;align-items:center;color:red;">
+                        <strong style="text-align:right;">*** เจ้าของหอพัก/แอดมิน เห็นได้เท่านั้น ***</strong>
+                    </div>
                     <div class="hr"></div>
                     <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
                         <button type="submit" id="confirm_appeal">ยืนยัน</button>
