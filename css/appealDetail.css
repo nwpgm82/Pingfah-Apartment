@@ -42,6 +42,7 @@
     display: flex;
     column-gap: 16px;
     padding-top: 32px;
+    height: 118px;
 }
 
 .box .appealDetail-box input {

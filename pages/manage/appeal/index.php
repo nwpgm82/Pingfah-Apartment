@@ -71,9 +71,9 @@ if($_SESSION['level'] == 'admin'){
                     $start = ($page - 1) * $perpage;
                     $num = $start + 1;
                     if(isset($from) && isset($to)){
-                        $sql = "SELECT * FROM appeal WHERE (appeal_date BETWEEN '$from' AND '$to') LIMIT {$start} , {$perpage}";
+                        $sql = "SELECT * FROM appeal WHERE (appeal_date BETWEEN '$from' AND '$to') ORDER BY appeal_id DESC LIMIT {$start} , {$perpage}";
                     }else{
-                        $sql = "SELECT * FROM appeal LIMIT {$start} , {$perpage}";
+                        $sql = "SELECT * FROM appeal ORDER BY appeal_id DESC LIMIT {$start} , {$perpage}";
                     }
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {

@@ -14,6 +14,7 @@ if($_SESSION["level"] == "guest"){
     <link rel="stylesheet" href="../../../css/appealDetail.css">
     <link rel="stylesheet" href="../../../css/navbar.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../../../js/manage/appeal_detail.js"></script>
     <script src="../../../js/sidebar.js"></script>
     <title>Pingfah Apartment</title>
 </head>
@@ -22,7 +23,7 @@ if($_SESSION["level"] == "guest"){
     <?php include("../../../components/sidebar.php"); ?>
     <div class="box">
         <div id="box-padding" style="padding:24px;">
-            <form action="">
+            <form action="function/appealAdd.php" method="POST">
                 <div class="appealDetail-box">
                     <h3>รายละเอียดการร้องเรียน</h3>
                     <div class="hr"></div>
@@ -33,16 +34,18 @@ if($_SESSION["level"] == "guest"){
                         </div>
                         <div>
                             <p>หัวข้อร้องเรียน</p>
-                            <input type="text">
+                            <input type="text" id="topic" name="topic">
+                            <h5 id="t_error" style="color:red;"></h5>
                         </div>
                     </div>
-                    <div style="padding-top:32px;">
+                    <div style="padding-top:32px;height:382px;">
                         <label>เนื้อหาการร้องเรียน</label>
-                        <textarea></textarea>
+                        <textarea name="detail" id="detail"></textarea>
+                        <h5 id="d_error" style="color:red;"></h5>
                     </div>
                     <div class="hr"></div>
                     <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
-                        <button>ยืนยัน</button>
+                        <button type="submit" id="confirm_appeal">ยืนยัน</button>
                     </div>
                 </div>
             </form>
