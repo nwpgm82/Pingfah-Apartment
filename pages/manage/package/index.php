@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSION['level'] == 'guest'){
     include('../../connection.php');
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
@@ -17,9 +17,17 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         return "$strDay $strMonthThai $strYear";
     }
     if(isset($from) && isset($to)){
-        $query = "SELECT package_arrived ,SUM(case WHEN package_status = 'รับพัสดุแล้ว' THEN 1 ELSE 0 END) as total_package, SUM(case WHEN package_status = 'ยังไม่ได้รับพัสดุ' THEN 1 ELSE 0 END) as untotal_package FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') GROUP BY package_arrived ORDER BY package_arrived ASC LIMIT 5";
+        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+            $query = "SELECT package_arrived ,SUM(case WHEN package_status = 'รับพัสดุแล้ว' THEN 1 ELSE 0 END) as total_package, SUM(case WHEN package_status = 'ยังไม่ได้รับพัสดุ' THEN 1 ELSE 0 END) as untotal_package FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') GROUP BY package_arrived";
+        }else if($_SESSION["level"] == "guest"){
+            $query = "SELECT package_arrived ,SUM(case WHEN package_status = 'รับพัสดุแล้ว' THEN 1 ELSE 0 END) as total_package, SUM(case WHEN package_status = 'ยังไม่ได้รับพัสดุ' THEN 1 ELSE 0 END) as untotal_package FROM package WHERE member_id = ".$_SESSION["member_id"]." AND (package_arrived BETWEEN '$from' AND '$to') GROUP BY package_arrived";
+        }
     }else{
-        $query = "SELECT package_arrived ,SUM(case WHEN package_status = 'รับพัสดุแล้ว' THEN 1 ELSE 0 END) as total_package, SUM(case WHEN package_status = 'ยังไม่ได้รับพัสดุ' THEN 1 ELSE 0 END) as untotal_package FROM package GROUP BY package_arrived ORDER BY package_arrived ASC LIMIT 5";
+        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+            $query = "SELECT package_arrived ,SUM(case WHEN package_status = 'รับพัสดุแล้ว' THEN 1 ELSE 0 END) as total_package, SUM(case WHEN package_status = 'ยังไม่ได้รับพัสดุ' THEN 1 ELSE 0 END) as untotal_package FROM package GROUP BY package_arrived";
+        }else if($_SESSION["level"] == "guest"){
+            $query = "SELECT package_arrived ,SUM(case WHEN package_status = 'รับพัสดุแล้ว' THEN 1 ELSE 0 END) as total_package, SUM(case WHEN package_status = 'ยังไม่ได้รับพัสดุ' THEN 1 ELSE 0 END) as untotal_package FROM package WHERE member_id = ".$_SESSION["member_id"]." GROUP BY package_arrived";
+        }
     }
     // $query = "SELECT COUNT(*) as total_package FROM package WHERE package_status = 'ยังไม่ได้รับพัสดุ' ORDER BY package_arrived";
     $result = mysqli_query($conn, $query);
@@ -83,7 +91,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         </div>
                         <?php } ?>
                     </div>
-                    <a id="addPackage" href="addPackage.php"><button>เพิ่มรายการพัสดุ</button></a>                    
+                    <?php
+                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                    ?>
+                    <a id="addPackage" href="addPackage.php"><button>เพิ่มรายการพัสดุ</button></a>    
+                    <?php } ?>                
                 </div>
                 <div class="hr" style="margin-top:16px;"></div>
                 <div>
@@ -134,25 +146,45 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     $start = ($page - 1) * $perpage;
                     $num = $start + 1;
                     if(isset($from) && isset($to) && !isset($check)){
-                        $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";
+                        }else if($_SESSION["level"] == "guest"){
+                            $sql = "SELECT * FROM package WHERE member_id = ".$_SESSION["member_id"]." AND (package_arrived BETWEEN '$from' AND '$to') ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";
+                        }
                     }else if(!isset($from) && !isset($to) && isset($check)){
                         if($check == "success"){
                             $check = "รับพัสดุแล้ว";
                         }else if($check == "unsuccess"){
                             $check = "ยังไม่ได้รับพัสดุ";
                         }
-                        $sql = "SELECT * FROM package WHERE package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql = "SELECT * FROM package WHERE package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";
+                        }else if($_SESSION["level"] == "guest"){
+                            $sql = "SELECT * FROM package WHERE member_id = ".$_SESSION["member_id"]." AND package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";
+                        }
                     }else if(isset($from) && isset($to) && isset($check)){
                         if($check == "success"){
                             $check = "รับพัสดุแล้ว";
                         }else if($check == "unsuccess"){
                             $check = "ยังไม่ได้รับพัสดุ";
                         }
-                        $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') AND package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";   
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') AND package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";   
+                        }else if($_SESSION["level"] == "guest"){    
+                            $sql = "SELECT * FROM package WHERE member_id = ".$_SESSION["member_id"]." AND (package_arrived BETWEEN '$from' AND '$to') AND package_status = '$check' ORDER BY package_arrived DESC LIMIT {$start} , {$perpage}";   
+                        }
                     }else if(isset($code)){
-                        $sql = "SELECT * FROM package WHERE package_num = '$code' LIMIT {$start} , {$perpage}";   
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql = "SELECT * FROM package WHERE package_num = '$code' LIMIT {$start} , {$perpage}";
+                        }else if($_SESSION["level"] == "guest"){ 
+                            $sql = "SELECT * FROM package WHERE member_id = ".$_SESSION["member_id"]." AND package_num = '$code' LIMIT {$start} , {$perpage}";   
+                        } 
                     }else{
-                        $sql = "SELECT * FROM package ORDER BY package_arrived DESC LIMIT {$start} , {$perpage} ";
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql = "SELECT * FROM package ORDER BY package_arrived DESC LIMIT {$start} , {$perpage} ";
+                        }else if($_SESSION["level"] == "guest"){
+                            $sql = "SELECT * FROM package WHERE member_id = ".$_SESSION["member_id"]." ORDER BY package_arrived DESC LIMIT {$start} , {$perpage} ";
+                        }
                     }
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
@@ -232,14 +264,30 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     </div>
                     <?php
                     ///////pagination
-                    if(isset($date) && !isset($check)){
-                        $sql2 = "SELECT * FROM package WHERE package_arrived = '$date'";
-                    }else if(!isset($date) && isset($check)){
-                        $sql2 = "SELECT * FROM package WHERE package_status = '$check'";
-                    }else if(isset($date) && isset($check)){
-                        $sql2 = "SELECT * FROM package WHERE package_arrived = '$date' AND package_status = '$check'";   
+                    if(isset($from) && isset($to) && !isset($check)){
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql2 = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to')";
+                        }else if($_SESSION["level"] == "guest"){
+                            $sql2 = "SELECT * FROM package WHERE member_id = ".$_SESSION["member_id"]." AND (package_arrived BETWEEN '$from' AND '$to')";
+                        }
+                    }else if(!isset($from) && !isset($to) && isset($check)){
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql2 = "SELECT * FROM package WHERE package_status = '$check'";
+                        }else if($_SESSION["level"] == "guest"){
+                            $sql2 = "SELECT * FROM package WHERE member_id = ".$_SESSION["member_id"]." AND package_status = '$check'";
+                        }
+                    }else if(isset($from) && isset($to) && isset($check)){
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql2 = "SELECT * FROM package WHERE (package_arrived BETWEEN '$from' AND '$to') AND package_status = '$check'";
+                        }else if($_SESSION["level"] == "guest"){  
+                            $sql2 = "SELECT * FROM package WHERE member_id = ".$_SESSION["member_id"]." AND (package_arrived BETWEEN '$from' AND '$to') AND package_status = '$check'";
+                        }
                     }else{
-                        $sql2 = "SELECT * FROM package";
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql2 = "SELECT * FROM package";
+                        }else if($_SESSION["level"] == "guest"){ 
+                            $sql2 = "SELECT * FROM package WHERE member_id = ".$_SESSION["member_id"];
+                        }
                     }
                     
                     $query2 = mysqli_query($conn, $sql2);
