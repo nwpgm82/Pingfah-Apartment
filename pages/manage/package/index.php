@@ -201,7 +201,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                 <th>เลขห้อง</th>
                                 <th>สถานะ</th>
                                 <th>ชื่อผู้รับพัสดุ</th>
+                                <?php
+                                if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                ?>
                                 <th>เพิ่มเติม</th>
+                                <?php } ?>
                             </tr>
                             <?php
                             while($row = $result->fetch_assoc()) {
@@ -230,15 +234,20 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                             }
                                         ?>
                                     </td>
-                                    <td>
+                                    <td <?php if($_SESSION["level"] == "guest"){ echo "style='text-align:left;'"; } ?>>
                                         <?php
                                         if(!isset($row["package_received"])){
-                                            echo "<input type='text' name='received' placeholder='ชื่อผู้รับ' required>";
+                                            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                                echo "<input type='text' name='received' placeholder='ชื่อผู้รับ' required>";
+                                            }
                                         }else{
                                             echo $row["package_received"];
                                         }
                                         ?>
                                     </td>
+                                    <?php
+                                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                    ?>
                                     <td>
                                         <div class="option">
                                             <?php
@@ -257,6 +266,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                             <button type="button" class="del-btn" id="<?php echo $row["package_id"]; ?>" title="ลบพัสดุ"></button>
                                         </div>
                                     </td>
+                                    <?php } ?>
                                 </tr>
                             </form>
                             <?php $num++; } ?>
