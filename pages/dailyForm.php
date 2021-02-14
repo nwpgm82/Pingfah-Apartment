@@ -34,7 +34,7 @@
     $_SESSION["vat"] = $getVAT_result["daily_vat"];
     $_SESSION["total_room_price"] = ((intval($_SESSION["air"]) * $getAir_result["daily_price"]) + (intval($_SESSION["fan"]) * $getFan_result["daily_price"])) * $_SESSION["night"];
     $cal_vat = ($_SESSION["total_room_price"] * $_SESSION["vat"])/100;
-    $_SESSION["total_price"] = $_SESSION["total_room_price"] + $cal_vat;
+    $_SESSION["total_price"] = ceil($_SESSION["total_room_price"] + $cal_vat);
     // $date1 = date_create($_SESSION["check_in"]);
     // $date2 = date_create($_SESSION["check_out"]);
     // $diff= date_diff($date1,$date2);
@@ -164,7 +164,7 @@
                             </div>
                         </div>
                         <div>
-                            <h3>2. เมื่อชำระเงินค่ามัดจำห้องพักแล้ว ให้อัปโหลดหลักฐานการชำระเงินด้านล่าง</h3>
+                            <h3>2. เมื่อชำระเงินค่ามัดจำค่าห้องพักแล้ว ให้อัปโหลดหลักฐานการชำระเงินด้านล่าง</h3>
                             <div class="qr-box2">
                                 <div class="img-box">
                                     <img src="" alt="" id="img_id" style="display:none;">

@@ -142,9 +142,9 @@ $(document).ready(function () {
             });
         }
         if (people.val() <= 0) {
-            people.css("border-color", "")
+            people.val(1)
         } else {
-            people.css("border-color", "red")
+            people.css("border-color", "")
         }
     })
     $("#checkRoom").click(function () {

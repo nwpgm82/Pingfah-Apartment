@@ -96,13 +96,13 @@ function DateThai($strDate)
                     <p>ห้องพัดลม(ห้อง)</p>
                     <input type="text" name="fan" id="fan" value="<?php echo $row["fan_room"]; ?>" disabled>
                 </div>
-                <div class="total_price">
-                    <p>ราคารวม (บาท)</p>
-                    <input type="text" value="<?php echo $row["total_price"]; ?>" disabled>
-                </div>
                 <div class="vat">
                     <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
                     <input type="text" name="total_price" id="total_price" value="<?php echo $row["vat"]."%"; ?>" disabled>
+                </div>
+                <div class="total_price">
+                    <p>จำนวนเงินรวมทั้งสิ้น (บาท)</p>
+                    <input type="text" value="<?php echo $row["total_price"]; ?>" disabled>
                 </div>
                 <div class="status">
                     <label>สถานะการจอง :</label>
