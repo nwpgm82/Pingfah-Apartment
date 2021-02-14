@@ -1,23 +1,27 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSION['level'] == 'guest'){
   include('../../../connection.php');
-  function BasicDate($tdate){
-    $search = ["มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
-    $replace = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    $edate = str_replace($search, $replace, $tdate);
-    $str_date = strtotime($edate);
-    $year =  date("Y",$str_date);
-    $month = date("m",$str_date);
-    $day = date("d",$str_date);
-    return "$year-$month-$day"; 
-  }
+  // function BasicDate($tdate){
+  //   $search = ["มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+  //   $replace = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  //   $edate = str_replace($search, $replace, $tdate);
+  //   $str_date = strtotime($edate);
+  //   $year =  date("Y",$str_date);
+  //   $month = date("m",$str_date);
+  //   $day = date("d",$str_date);
+  //   return "$year-$month-$day"; 
+  // }
   if(isset($_POST['repair_accept'])){
-      $room_id = $_POST['room_select'];
+      if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        $room_id = $_POST['room_select'];
+      }else if($_SESSION["level"] == "guest"){
+        $room_id = $_SESSION["name"];
+      }
       $app = $_POST['repair_appliance'];
       $cate = $_POST['repair_category'];
       $detail = $_POST['repair_detail'];
-      $date = BasicDate($_POST['repair_date']);
+      $date = date("Y-m-d");
       // $status = $_POST['repair_status'];
       // echo $room_id .$app .$cate .$detail .$date .$status;
       $get_member_id = mysqli_query($conn, "SELECT member_id FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'");

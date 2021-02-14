@@ -321,13 +321,29 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                         <?php
                         ///////pagination
                         if(isset($from) && isset($to) && !isset($check)){
-                            $sql2 ="SELECT * FROM cost WHERE date BETWEEN '$from' AND '$to'";
+                            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                $sql2 ="SELECT * FROM cost WHERE date BETWEEN '$from' AND '$to'";
+                            }else if($_SESSION["level"] == "guest"){
+                                $sql2 ="SELECT * FROM cost WHERE member_id = ".$_SESSION["member_id"]." AND date BETWEEN '$from' AND '$to'";
+                            }
                         }else if(!isset($from) && !isset($to) && isset($check)){
-                            $sql2 = "SELECT * FROM cost WHERE cost_status = '$check_s'";
+                            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                $sql2 = "SELECT * FROM cost WHERE cost_status = '$check_s'";
+                            }else if($_SESSION["level"] == "guest"){
+                                $sql2 = "SELECT * FROM cost WHERE member_id = ".$_SESSION["member_id"]." AND cost_status = '$check_s'";
+                            }
                         }else if(isset($from) && isset($to) && isset($check)){
-                            $sql2 = "SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') AND cost_status = '$check_s'";   
+                            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                $sql2 = "SELECT * FROM cost WHERE (date BETWEEN '$from' AND '$to') AND cost_status = '$check_s'";   
+                            }else if($_SESSION["level"] == "guest"){
+                                $sql2 = "SELECT * FROM cost WHERE member_id = ".$_SESSION["member_id"]." AND (date BETWEEN '$from' AND '$to') AND cost_status = '$check_s'";  
+                            }
                         }else{
-                            $sql2 = "SELECT * FROM cost";
+                            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                $sql2 = "SELECT * FROM cost";
+                            }else if($_SESSION["level"] == "guest"){
+                                $sql2 = "SELECT * FROM cost WHERE member_id = ".$_SESSION["member_id"];
+                            }
                         }
                         $query2 = mysqli_query($conn, $sql2);
                         $total_record = mysqli_num_rows($query2);

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSION['level'] == 'guest'){
     include('../../connection.php');
     $repair_id = $_REQUEST["repair_id"];
     function DateThai($strDate)
@@ -31,7 +31,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
 
 <body>
     <?php
-    $sql = "SELECT * FROM repair WHERE repair_id = $repair_id ";
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        $sql = "SELECT * FROM repair WHERE repair_id = $repair_id ";
+    }else if($_SESSION["level"] == "guest"){
+        $sql = "SELECT room_id, repair_appliance, repair_category, repair_detail, repair_date, repair_successdate, repair_status, repair_income FROM repair WHERE repair_id = $repair_id AND member_id = ".$_SESSION["member_id"];
+    }
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
@@ -50,19 +54,23 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                 </div>
                 <div class="flex-detail">
                     <div>
-                        <p>อุปกรณ์</p>
-                        <input type="text" value="<?php echo $row['repair_appliance']; ?>" disabled>
-                    </div>
-                    <div>
                         <p>ประเภท</p>
                         <input type="text" value="<?php echo $row['repair_category']; ?>" disabled>
+                    </div>
+                    <div>
+                        <p>อุปกรณ์</p>
+                        <input type="text" value="<?php echo $row['repair_appliance']; ?>" disabled>
                     </div>
                 </div>
                 <div style="margin-top: 32px;">
                     <p>รายละเอียด</p>
                     <textarea name="" id="" cols="30" rows="10" disabled><?php echo $row['repair_detail']; ?></textarea>
                 </div>
+                <?php
+                if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                ?>
                 <form action="function/repairChangeStatus.php?repair_id=<?php echo $repair_id; ?>" method="POST">
+                <?php } ?>
                     <div class="flex-detail">
                         <div>
                             <p>เวลาที่ลง</p>
@@ -71,7 +79,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         <div>
                             <p>สถานะ</p>
                             <select name="status" id="status"
-                                <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
+                                <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?> <?php if($_SESSION["level"] == "guest"){ echo "disabled"; } ?>>
                                 <option value="รอคิวซ่อม"
                                     <?php if($row['repair_status'] == 'รอคิวซ่อม'){ echo "selected";} ?>>รอคิวซ่อม
                                 </option>
@@ -90,14 +98,23 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         <?php if($row['repair_status'] != "ซ่อมเสร็จแล้ว"){ echo "style='display:none;'"; } ?>>
                         <div style="position:relative;">
                             <p>เวลาที่ซ่อมเสร็จ</p>
-                            <input type="text" id="success_date" value="<?php echo DateThai($row['repair_successdate']); ?>" name="success_date" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "style='background: #fafafa' disabled"; } ?>>
+                            <input type="text" id="success_date" value="<?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo DateThai($row['repair_successdate']); } ?>" name="success_date" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "style='background: #fafafa' disabled"; } ?>>
                             <h5 id="success_date_error" style="color:red;"></h5>
                         </div>
                         <div>
-                            <p>รายได้จากการซ่อม</p>
+                            <?php
+                            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                echo "<p>รายได้จากการซ่อม</p>";
+                            }else if($_SESSION["level"] == "guest"){
+                                echo "<p>รายจ่ายจากการซ่อม</p>";
+                            }
+                            ?>
                             <input type="text" name="income" id="income" value="<?php echo $row['repair_income']; ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
                             <h5 id="income_error" style="color:red;"></h5>
                         </div>
+                        <?php
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                        ?>
                         <div>
                             <p>รายจ่ายจากการซ่อม</p>
                             <input type="text" name="expenses" id="expenses" value="<?php echo $row['repair_expenses']; ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; } ?>>
@@ -107,16 +124,22 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <p>กำไรที่ได้</p>
                             <input type="text" name="profit" id="profit" value="<?php if(isset($row['repair_profit'])){ echo $row['repair_profit']; }else{ echo 0; } ?>" <?php if($row['repair_status'] == 'ซ่อมเสร็จแล้ว'){ echo "disabled"; }else{ echo "readonly"; } ?>>
                         </div>
+                        <?php } ?>
                     </div>
                     <div class="hr" style="margin:32px 0;"></div>
                     <?php
                     if($row['repair_status'] != 'ซ่อมเสร็จแล้ว'){
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                     ?>
                     <div style="display:flex;justify-content:center;align-items:center;">
                         <button type="submit" id="">ยืนยันการแก้ไข</button>
                     </div>
-                    <?php } ?>
+                    <?php }} ?>
+                <?php
+                if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                ?>
                 </form>
+                <?php } ?>
             </div>
         </div>
     </div>

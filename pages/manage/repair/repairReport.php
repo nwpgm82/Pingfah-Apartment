@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSION["level"] == "guest"){
     include("../../connection.php");
     $from = @$_REQUEST['from'];
     $to = @$_REQUEST['to'];
@@ -14,7 +14,11 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    $query_data = "SELECT repair_successdate, SUM(repair_profit) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' GROUP BY repair_successdate";
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        $query_data = "SELECT repair_successdate, SUM(repair_profit) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' GROUP BY repair_successdate";
+    }else if($_SESSION["level"] == "guest"){
+        $query_data = "SELECT repair_successdate, SUM(repair_profit) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." GROUP BY repair_successdate";
+    }
     $result = mysqli_query($conn, $query_data);
     $datax = array();
     foreach ($result as $k) {
@@ -88,9 +92,17 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                     $start = ($page - 1) * $perpage;
                     $num = $start + 1;
                     if(isset($from) && isset($to)){
-                        $sql = "SELECT * FROM repair WHERE (repair_successdate BETWEEN '$from' AND '$to') AND repair_status = 'ซ่อมเสร็จแล้ว' ORDER BY repair_date";
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql = "SELECT * FROM repair WHERE (repair_successdate BETWEEN '$from' AND '$to') AND repair_status = 'ซ่อมเสร็จแล้ว' ORDER BY repair_date DESC LIMIT {$start} , {$perpage} "; 
+                        }else if($_SESSION["level"] == "guest"){
+                            $sql = "SELECT * FROM repair WHERE (repair_successdate BETWEEN '$from' AND '$to') AND repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_date DESC LIMIT {$start} , {$perpage} "; 
+                        }  
                     }else{
-                        $sql = "SELECT * FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' ORDER BY repair_date LIMIT {$start} , {$perpage} ";
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                            $sql = "SELECT * FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' ORDER BY repair_date DESC LIMIT {$start} , {$perpage} ";
+                        }else if($_SESSION["level"] == "guest"){
+                            $sql = "SELECT * FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_date DESC LIMIT {$start} , {$perpage} ";
+                        }
                     }
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
@@ -138,7 +150,11 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                     </div>
                     <?php
                     ///////pagination
-                    $sql2 = "SELECT * FROM repair";
+                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                        $sql2 = "SELECT * FROM repair";
+                    }else if($_SESSION["level"] == "guest"){
+                        $sql2 = "SELECT * FROM repair WHERE member_id = ".$_SESSION["member_id"];
+                    }
                     $query2 = mysqli_query($conn, $sql2);
                     $total_record = mysqli_num_rows($query2);
                     $total_page = ceil($total_record / $perpage);

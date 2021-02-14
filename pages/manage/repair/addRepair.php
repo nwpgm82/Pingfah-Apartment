@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){ 
+if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSION['level'] == 'guest'){ 
     include('../../connection.php');
 ?>
 
@@ -30,6 +30,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                 <form action="../repair/function/repairAccept.php" method="POST">
                     <div style="margin-top: 32px;">
                         <p>เลขห้อง</p>
+                        <?php
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                        ?>
                         <select id="room_select" name="room_select">
                             <option value="">---</option>
                             <?php
@@ -47,6 +50,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         ?>
                         </select>
                         <h5 id="room_error" style="color:red;"></h5>
+                        <?php 
+                        }else if($_SESSION["level"] == "guest"){
+                        ?>
+                        <input type="text" value="<?php echo $_SESSION["name"]; ?>" disabled>
+                        <?php } ?>
                     </div>
                     <div class="flex-detail">
                         <div>
@@ -73,21 +81,21 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         <textarea name="repair_detail" id="repair_detail" cols="30" rows="10"></textarea>
                         <h5 id="detail_error" style="color:red"></h5>
                     </div>
-                    <div class="flex-detail">
+                    <!-- <div class="flex-detail">
                         <div>
                             <p>เวลาที่ลง</p>
                             <input type="text" id="repairDate" name="repair_date" readonly>
                             <h5 id="date_error" style="color:red"></h5>
                         </div>
-                        <!-- <div>
+                        <div>
                             <p>สถานะ</p>
                             <select name="repair_status" id="status">
                                 <option value="รอดำเนินการ">รอดำเนินการ</option>
                                 <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
                                 <option value="ดำเนินการเสร็จสิ้น">ดำเนินการเสร็จสิ้น</option>
                             </select>
-                        </div> -->
-                    </div>
+                        </div>
+                    </div> -->
                     <div class="hr"></div>
                     <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
                         <button type="submit" name="repair_accept">ยืนยัน</button>
