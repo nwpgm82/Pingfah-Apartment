@@ -25,6 +25,38 @@ include('pages/connection.php');
             <img src="img/tool/GOPR1556.jpg" alt="" id="banner">
         </div>
         <div class="reservation" id="re">
+            <div>
+                <p class="topic">RESERVATION</p>
+                <div class="re-flex">
+                    <div style="display:flex;align-items:center;" id="from">
+                        <label style="font-family: 'Playfair Display', serif;">Check In : </label>
+                        <div style="position:relative;padding-left:8px;height:40px;">
+                            <input id="check_in" class="roundtrip-input" type="text">
+                            <p id="check_in_date" class="dateText"></p>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;" id="to">
+                        <label style="font-family: 'Playfair Display', serif;">Check Out : </label>
+                        <div style="position:relative;padding-left:8px;height:40px;">
+                            <input id="check_out" class="roundtrip-input" type="text">
+                            <p id="check_out_date" class="dateText"></p>
+                        </div>
+                    </div>
+                    <div style="min-width:52px;display:flex;align-items:center;" id="night">
+                        <p id="summary">(1 คืน)</p>
+                    </div>
+                    <div style="display:flex;align-items:center;" id="p">
+                        <label>จำนวนผู้พัก : </label>
+                        <div style="position:relative;padding:0 8px;height:40px;">
+                            <input id="people" type="text" value="1" maxlength="2">
+                        </div>
+                        <label>ท่าน</label>
+                    </div>
+                    <button type="button" id="checkRoom">CHECK AVAILABILITY</button>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="reservation" id="re">
             <div class="card">
                 <strong><label class="topic">RESERVATION</label></strong>
                 <div style="padding-left:16px">
@@ -44,8 +76,8 @@ include('pages/connection.php');
                     </div>
                 </div>
                 <div style="min-width:52px;display:flex;align-items:center;">
-                        <p id="summary">(1 คืน)</p>
-                    </div>
+                    <p id="summary">(1 คืน)</p>
+                </div>
                 <div style="display:flex;align-items:center;">
                     <label>จำนวนผู้พัก : </label>
                     <div style="position:relative;padding:0 8px;height:40px;">
@@ -55,8 +87,7 @@ include('pages/connection.php');
                 </div>
                 <button type="button" id="checkRoom">CHECK AVAILABILITY</button>
             </div>
-        </div>
-    </div>
+        </div> -->
     </div>
     <div class="about" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
         <div class="about-detail">
@@ -93,19 +124,19 @@ include('pages/connection.php');
                     $resultImg = $conn->query($getImg);
                         while($row2 = $resultImg->fetch_assoc()) {
                     ?>
-                    <img src="<?php if(isset($row2['gal_name'])){ echo "pages/images/roomdetail/$type_show/" .$row2['gal_name'];}else{ echo 'img/tool/no-img.png'; } ?>" alt="">
+                    <img src="<?php if(isset($row2['gal_name'])){ echo "pages/images/roomdetail/$type_show/" .$row2['gal_name'];}else{ echo 'img/tool/no-img.png'; } ?>"
+                        alt="">
                     <?php } ?>
                     <div class="detail">
                         <div>
                             <h3>ห้อง<?php echo $row['type']?></h3>
-                            <p>- รายเดือน : <?php echo intval($row['price']); ?> บาท / เดือน</p>
-                            <p>- รายวัน : <?php echo intval($row['daily_price']); ?> บาท / คืน</p>
+                            <p>- รายเดือน : <?php echo number_format($row['price']); ?> บาท / เดือน</p>
+                            <p>- รายวัน : <?php echo number_format($row['daily_price']); ?> บาท / คืน</p>
                             <p></p>
                         </div>
                         <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, esse nulla aliquam reprehenderit dignissimos qui laudantium minus, blanditiis obcaecati tenetur sequi placeat impedit quis similique magnam pariatur voluptatum delectus aspernatur?</p> -->
                         <div style="display:flex;justify-content:flex-end">
-                            <a
-                                href="pages/roomList.php"><button>ดูเพิ่มเติม</button></a>
+                            <a href="pages/roomList.php"><button>ดูเพิ่มเติม</button></a>
                         </div>
                     </div>
                 </div>
