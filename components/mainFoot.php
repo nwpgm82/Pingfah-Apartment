@@ -66,10 +66,6 @@
                             <strong><p>เจ้าของหอพัก :</p></strong>
                             <p>098-9132002</p>
                         </div>
-                        <div style="padding-top:16px;">
-                            <strong><p>พนักงาน :</p></strong>
-                            <p>087-5777192</p>
-                        </div>
                     </div>
                 </div>
             </div>

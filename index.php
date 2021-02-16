@@ -9,16 +9,21 @@ include('pages/connection.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/my-style.css">
+    <link rel="stylesheet" href="css/mainTop.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="js/datedropper.pro.min.js"></script>
+    <script src="js/mainTop.js"></script>
     <title>Document</title>
 </head>
 
 <body>
+    <div id="l">
+       <div id="loader" class="center"></div> 
+    </div>
     <?php include('components/maintopbar.php') ?>
     <div style="position:relative;">
         <div class="banner">

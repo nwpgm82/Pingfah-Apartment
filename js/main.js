@@ -5,8 +5,6 @@ $(document).ready(function () {
     let check_out_date = $("#check_out_date")
     let people = $("#people")
     let banner = $("#banner")
-    banner.css("transform", "scale(1)")
-    banner.css("opacity", 1)
     let today_monthNames = [
         "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
     ];
@@ -37,7 +35,22 @@ $(document).ready(function () {
     check_out.val(next_day)
     check_in_date.html(current_dayShow)
     check_out_date.html(next_dayShow)
-
+    //////////////////////////
+    $(document).on('readystatechange', readyStateChanged); 
+    function readyStateChanged() {
+        if (document.readyState !== "complete") { 
+            console.log("xx")
+            $("body").css("visibility","hidden")
+            $("#l").show()
+        } else { 
+            console.log("yy")
+            $("#l").fadeOut(500)
+            $("body").css("visibility","visible")
+            banner.css("transform", "scale(1)")
+            banner.css("opacity", 1)
+        } 
+    }
+    ///////////////////////// 
     function formatDate(date) {
         var monthNames = [
             "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"

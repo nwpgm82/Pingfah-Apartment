@@ -71,3 +71,17 @@
     line-height: 40px;
 }
 
+@media screen and (max-width: 767px){
+    .foot{
+        height: 100%;
+    }
+    .foot .detail-box{
+        grid-template-columns: 100%;
+        row-gap: 32px;
+        padding: 32px 0px;
+    }
+    .foot .detail-box .flex{
+        padding: 0 16px;
+    }
+}
+
