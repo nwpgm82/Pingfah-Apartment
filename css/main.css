@@ -548,7 +548,7 @@ body::after{
 
 @media screen and (max-width:767px) {
     .banner{
-        height: auto;
+        height: 400px;
     }
     .reservation .re-flex{
         display: block;
@@ -569,6 +569,8 @@ body::after{
 
     #checkRoom{
         width: 100%;
+        height: 40px;
+        font-size: 20px;
     }
 
     .reservation .re-flex .roundtrip-input{
@@ -582,6 +584,10 @@ body::after{
     .about .about-detail{
         display: block;
         height: auto;
+    }
+
+    .about .about-detail > div{
+        padding: 32px 16px !important;
     }
 
     .room-box .room-detail .room-grid{

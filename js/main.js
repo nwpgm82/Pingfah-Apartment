@@ -48,7 +48,8 @@ $(document).ready(function () {
             $("body").css("visibility","visible")
             banner.css("transform", "scale(1)")
             banner.css("opacity", 1)
-        } 
+        }
+        console.log(document.readyState)
     }
     ///////////////////////// 
     function formatDate(date) {
