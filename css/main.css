@@ -559,7 +559,7 @@ body::after{
     }
 
     #night{
-        padding: 8px 0 16px 0;
+        padding: 8px 0;
         justify-content: flex-end;
     }
 
