@@ -73,3 +73,15 @@ body::before{
 .box .success-box a:hover{
     color:rgb(88, 81, 33);
 }
+
+@media screen and (max-width: 1199px){
+    .box{
+        padding: 0 16px;
+    }
+
+    .box .success-box{
+        width: 100%;
+        height: auto;
+        padding: 32px 16px;
+    }
+}
