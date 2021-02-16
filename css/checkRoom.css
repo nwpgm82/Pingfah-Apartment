@@ -455,6 +455,9 @@ body::before {
 }
 
 @media screen and (max-width: 767px) {
+    body::before {
+        background-image: none;
+    }
     .searchDate {
         display: block;
     }

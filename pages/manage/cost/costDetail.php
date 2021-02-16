@@ -135,11 +135,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                     <div class="costDetail-box" id="sub-pay">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
                             <h3>อัปโหลดรูปภาพหลักฐานการชำระเงิน</h3>
-                            <?php
-                            if($cost_status != "ชำระเงินแล้ว"){
-                            ?>
                             <button type="button" class="edit-btn" id="edit-btn2" title="แก้ไขข้อมูล"></button>
-                            <?php } ?>
                             <div class="edit-option" id="edit-option2" style="display:none;">
                                 <button type="submit" class="correct-btn" id="accept-edit2" name="accept-edit"
                                     title="ยืนยันการแก้ไข"></button>
