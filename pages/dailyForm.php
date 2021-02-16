@@ -1,7 +1,6 @@
 <?php
     session_start();
     include('connection.php');
-    include('../components/maintopbar.php');
     require_once("../lib/PromptPayQR.php");
     function DateThai($strDate)
     {
@@ -63,12 +62,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/dailyForm.css">
+    <link rel="stylesheet" href="../css/mainTop.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../js/dailyForm.js"></script>
+    <script src="../js/mainTop.js"></script>
     <title>Document</title>
 </head>
 
 <body>
+    <?php include('../components/maintopbar.php'); ?>
     <div class="box">
         <div class="dailyForm">
             <h2>แบบฟอร์มจองห้องพัก</h2>
@@ -85,27 +87,27 @@
                     </div>
                     <div class="firstname">
                         <p>ชื่อ</p>
-                        <input type="text" name="firstname" id="firstname" placeholder="ชื่อของท่าน">
+                        <input type="text" name="firstname" id="firstname" placeholder="ชื่อ">
                         <h5 id="fs_error" style="color:red;"></h5>
                     </div>
                     <div class="lastname">
                         <p>นามสกุล</p>
-                        <input type="text" name="lastname" id="lastname" placeholder="นามสกุลของท่าน">
+                        <input type="text" name="lastname" id="lastname" placeholder="นามสกุล">
                         <h5 id="ls_error" style="color:red;"></h5>
                     </div>
                     <div class="id_card">
                         <p>เลขบัตรประชาชน / Passport No.</p>
-                        <input type="text" name="id_card" id="id_card" placeholder="เลขบัตรประชาชน / Passport No. ของท่าน">
+                        <input type="text" name="id_card" id="id_card" placeholder="เลขบัตรประชาชน / Passport No.">
                         <h5 id="id_error" style="color:red;"></h5>
                     </div>
                     <div class="email">
                         <p>อีเมล</p>
-                        <input type="text" name="email" id="email" placeholder="อีเมลของท่าน">
+                        <input type="text" name="email" id="email" placeholder="อีเมล">
                         <h5 id="em_error" style="color:red;"></h5>
                     </div>
                     <div class="tel">
                         <p>เบอร์โทรศัพท์</p>
-                        <input type="text" name="tel" id="tel" placeholder="เบอร์โทรศัพท์ของท่าน">
+                        <input type="text" name="tel" id="tel" placeholder="เบอร์โทรศัพท์">
                         <h5 id="tel_error" style="color:red;"></h5>
                     </div>
                     <div class="check_in">
@@ -134,7 +136,7 @@
                     </div>
                     <div class="total_room">
                         <p>ราคาห้องพักรวม (บาท)</p>
-                        <input type="text" id="total_room_price" value="<?php echo $_SESSION["total_room_price"]; ?>" disabled>
+                        <input type="text" id="total_room_price" value="<?php echo number_format($_SESSION["total_room_price"],2); ?>" disabled>
                     </div>
                     <div class="vat">
                         <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
@@ -142,7 +144,7 @@
                     </div>
                     <div class="total_price">
                         <p>ราคารวม (บาท)</p>
-                        <input type="text" name="total_price" id="total_price" value="<?php echo $_SESSION["total_price"]; ?>" disabled>
+                        <input type="text" name="total_price" id="total_price" value="<?php echo number_format($_SESSION["total_price"],2); ?>" disabled>
                     </div>
                 </div>
                 <div style="padding-top:32px;">
@@ -150,7 +152,7 @@
                     <div class="hr"></div>
                     <div class="payment-grid">
                         <div>
-                            <h3>1. โปรดชำระเงินจำนวน <?php echo $_SESSION["total_room"]; ?> บาท เพื่อเป็นค่ามัดจำค่าห้องพักผ่าน QR Code ด้านล่าง</h3>
+                            <h4>1. โปรดชำระเงินจำนวน <?php echo $_SESSION["total_room"]; ?> บาท เป็นค่ามัดจำค่าห้องพักผ่าน QR Code ด้านล่าง</h4>
                             <div class="qr-box">
                                 <div>
                                   <?php
@@ -164,7 +166,7 @@
                             </div>
                         </div>
                         <div>
-                            <h3>2. เมื่อชำระเงินค่ามัดจำค่าห้องพักแล้ว ให้อัปโหลดหลักฐานการชำระเงินด้านล่าง</h3>
+                            <h4>2. เมื่อชำระเงินค่ามัดจำค่าห้องพักแล้ว ให้อัปโหลดหลักฐานการชำระเงินด้านล่าง</h4>
                             <div class="qr-box2">
                                 <div class="img-box">
                                     <img src="" alt="" id="img_id" style="display:none;">

@@ -15,7 +15,7 @@ body {
 }
 
 .box {
-    width: 1520px;
+    width: 1200px;
     margin: auto;
     padding: 32px;
 }
@@ -93,6 +93,13 @@ body {
         "id_card id_card email email email email tel tel"
         "check_in check_in check_out check_out night people air fan"
         "total_room vat total_price . . . . .";
+}
+
+p{
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;     
+    white-space: nowrap;
 }
 
 .name_title {
@@ -210,6 +217,8 @@ body {
 .box .dailyForm .payment-grid .qr-box img{
     display: block;
     margin: auto;
+    width: 100%;
+    height: 100%;
 }
 
 .box .dailyForm .payment-grid .qr-box2 input[type=file]{
@@ -221,3 +230,46 @@ body {
     height: 100%;
     object-fit: contain;
 }
+
+@media screen and (max-width: 1199px){
+    .box{
+        width: 100%;
+        padding: 112px 16px;
+    }
+    .box .dailyForm .payment-grid{
+        width: 100%;
+        row-gap: 16px;
+        grid-template-columns: 100%;
+    }
+
+    .grid-container{
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        "name_title firstname firstname firstname lastname lastname lastname"
+        "id_card id_card email email email tel tel"
+        "check_in check_in check_in check_out check_out check_out night"
+        "people air fan total_room vat total_price total_price";
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .grid-container{
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        "name_title firstname firstname lastname lastname"
+        "id_card id_card email email tel"
+        "check_in check_in check_out check_out night"
+        "people air fan total_room vat"
+        "total_price . . . .";
+    }
+}
+
+@media screen and (max-width: 767px){
+    .box .dailyForm{
+        padding: 32px 16px;
+    }
+    .grid-container{
+        display: block;
+    }
+}
+
