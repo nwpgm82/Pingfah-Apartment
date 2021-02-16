@@ -2,15 +2,15 @@ $(document).ready(function () {
     $(".burger").click(function () {
         if (window.matchMedia('(max-width: 767px)').matches) {
             if ($("ul").css("display") == "none") {
-                $("ul").fadeIn(400)
-                $(".topbar ul a").delay(400).animate({
+                $("ul").fadeIn(200)
+                $(".topbar ul a").animate({
                     opacity: 1
-                }, 400)
+                }, 200)
             } else {
-                $("ul").fadeOut(400)
+                $("ul").fadeOut(200)
                 $(".topbar ul a").animate({
                     opacity: 0
-                }, 400)
+                }, 200)
             }
         } else {
             if ($("ul").css("display") == "none") {

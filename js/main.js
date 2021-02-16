@@ -38,6 +38,7 @@ $(document).ready(function () {
     //////////////////////////
     $(document).on('readystatechange', readyStateChanged); 
     function readyStateChanged() {
+        console.log(document.readyState)
         if (document.readyState !== "complete") { 
             console.log("xx")
             $("body").css("visibility","hidden")
@@ -48,8 +49,7 @@ $(document).ready(function () {
             $("body").css("visibility","visible")
             banner.css("transform", "scale(1)")
             banner.css("opacity", 1)
-        }
-        console.log(document.readyState)
+        } 
     }
     ///////////////////////// 
     function formatDate(date) {
