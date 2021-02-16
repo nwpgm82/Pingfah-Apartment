@@ -16,20 +16,23 @@ body {
     background: url('../img/tool/bg.png');
 }
 
-body::before{
+body::before {
     content: '';
     position: absolute;
-    z-index: -1; /* push it to the background */
-    top: 0px; /* position it off the top background */
+    z-index: -1;
+    /* push it to the background */
+    top: 0px;
+    /* position it off the top background */
     right: 0px;
-    bottom: -340px; /* position it off the bottom background */
+    bottom: -340px;
+    /* position it off the bottom background */
     left: 0px;
-    background: url('../img/tool/flower.png') bottom left no-repeat,url('../img/tool/flower2.png') bottom right no-repeat;
+    background: url('../img/tool/flower.png') bottom left no-repeat, url('../img/tool/flower2.png') bottom right no-repeat;
     opacity: 0.2;
 }
 
 .box {
-    width: 1400px;
+    width: 1200px;
     margin: auto;
     padding: 32px;
 }
@@ -53,7 +56,7 @@ body::before{
     padding: 0 12px;
     border: 1px solid rgb(131, 120, 47, 0.7);
     border-radius: 4px;
-    font-size: 16px;   
+    font-size: 16px;
 }
 
 /* .box .checkRoom .searchDate input[type=date]{
@@ -69,13 +72,17 @@ body::before{
     cursor: pointer;
 }
 
-.box .checkRoom #people,.box .checkRoom #people1, .box .checkRoom #people2 {
+.box .checkRoom #people,
+.box .checkRoom #people1,
+.box .checkRoom #people2 {
     width: 70px;
 }
 
-.box .checkRoom input[type=number]#people1,.box .checkRoom input[type=number]#people2{
+.box .checkRoom input[type=number]#people1,
+.box .checkRoom input[type=number]#people2 {
     cursor: default;
 }
+
 /* .box .checkRoom .searchDate input[type=date]:before {
     top: 10px; left: 12px;
     display: inline-block;
@@ -138,11 +145,15 @@ body::before{
     border-radius: 4px;
     background: url("../img/tool/bg2.png");
     overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr; */
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.box .checkRoom .card .card-content {
+    padding: 32px;
 }
 
 .box .checkRoom .card h2 {
@@ -185,7 +196,7 @@ body::before{
     display: grid;
     grid-template-columns: 250px 1fr;
     line-height: 40px;
-    height: 480px;
+    height: 450px;
 }
 
 .box .checkRoom .card .detail .user-grid {
@@ -217,7 +228,7 @@ body::before{
     align-items: center;
 }
 
-.box .checkRoom .card .detail .convenient-grid .sub-grid img{
+.box .checkRoom .card .detail .convenient-grid .sub-grid img {
     width: 30px;
     object-fit: contain;
 }
@@ -293,9 +304,10 @@ body::before{
 .box .checkRoom .card .next {
     cursor: pointer;
     position: absolute;
-    top: 40%;
+    top: 43%;
+    transform: translateY(-50%);
     width: auto;
-    padding: 0 16px;
+    padding: 16px;
     /* margin-top: -50px; */
     color: white;
     font-weight: bold;
@@ -347,11 +359,11 @@ body::before{
 }
 
 .box .checkRoom .card .row::-webkit-scrollbar-thumb {
-    background:  rgb(131, 120, 47, 0.7);
+    background: rgb(131, 120, 47, 0.7);
 }
 
-.box .checkRoom .card .row::-webkit-scrollbar-thumb:hover{
-    background:  rgb(131, 120, 47, 1);
+.box .checkRoom .card .row::-webkit-scrollbar-thumb:hover {
+    background: rgb(131, 120, 47, 1);
 }
 
 .box .checkRoom .card .row:after {
@@ -377,4 +389,134 @@ body::before{
 .box .checkRoom .card .demo1:hover,
 .box .checkRoom .card .demo2:hover {
     opacity: 1;
+}
+
+#from,
+#to {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+}
+
+@media screen and (max-width: 1199px) {
+    .box {
+        width: 100%;
+        padding: 80px 16px 32px 16px;
+    }
+
+    .box .checkRoom .card .prev,
+    .box .checkRoom .card .next {
+        background-color: rgba(0, 0, 0, 0.8);
+        top: 42%;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .searchDate {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        grid-template-areas:
+            "from to night"
+            "p p p"
+            "search search search";
+        gap: 16px;
+    }
+
+    #from {
+        grid-area: from;
+    }
+
+    #to {
+        grid-area: to;
+        padding: 0 !important;
+    }
+
+    #night {
+        grid-area: night;
+    }
+
+    #p {
+        grid-area: p;
+        padding: 0 !important;
+    }
+
+    #search {
+        grid-area: search;
+    }
+
+    .box .checkRoom .roundtrip-input {
+        width: 100%;
+        background-position: 96% 50%;
+    }
+
+    .box .checkRoom .card .detail {
+        grid-template-columns: 200px 1fr;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .searchDate {
+        display: block;
+    }
+
+    #to {
+        padding-top: 16px !important;
+    }
+
+    #night {
+        padding: 8px 0;
+        justify-content: flex-end;
+    }
+
+    #p {
+        padding-bottom: 16px !important;
+    }
+
+    #search {
+        width: 100%;
+    }
+
+    .box .checkRoom .card .card-content {
+        padding: 32px 16px;
+    }
+
+    .box .checkRoom .card .mySlides1,
+    .box .checkRoom .card .mySlides2 {
+        height: 290px;
+    }
+
+    .box .checkRoom .card .column {
+        height: 50px;
+    }
+
+    .box .checkRoom .card .detail {
+        display: block;
+        height: auto;
+    }
+
+    .box .checkRoom .card .detail>div:last-child {
+        padding-top: 32px;
+    }
+
+    .box .checkRoom .card .detail .convenient-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .f {
+        display: block !important;
+        padding-top: 32px;
+    }
+
+    .f p {
+        text-align: right;
+    }
+
+    .f .subf {
+        padding-top: 32px;
+        justify-content: flex-end;
+    }
+
+    #r {
+        justify-content: center !important;
+    }
 }

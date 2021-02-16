@@ -16,9 +16,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/checkRoom.css">
     <link rel="stylesheet" href="../css/my-style.css">
+    <link rel="stylesheet" href="../css/mainTop.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../js/datedropper.pro.min.js"></script>
+    <script src="../js/mainTop.js"></script>
     <title>Pingfah Apartment</title>
 </head>
 
@@ -28,30 +30,26 @@
         <div class="checkRoom">
             <form action="dailyForm.php" method="POST">
                 <div class="searchDate">
-                    <div>
-                        <div style="display:flex;align-items:center;">
+                    <div id="from">
                             <label class="checkText">Check In : </label>
                             <div style="position:relative;padding-left:8px;height:40px;">
                                 <input id="check_in" class="roundtrip-input" name="check_in" type="text"
                                     value="<?php echo $check_in; ?>">
                                 <p id="check_in_date" class="dateText"></p>
                             </div>
-                        </div>
                     </div>
-                    <div style="padding:0 16px">
-                        <div style="display:flex;align-items:center;">
+                    <div id="to" style="padding:0 16px">
                             <label class="checkText">Check Out : </label>
                             <div style="position:relative;padding-left:8px;height:40px;">
                                 <input id="check_out" class="roundtrip-input" name="check_out" type="text"
                                     value="<?php echo $check_out; ?>">
                                 <p id="check_out_date" class="dateText"></p>
                             </div>
-                        </div>
                     </div>
-                    <div style="min-width:52px;display:flex;align-items:center;">
+                    <div id="night" style="min-width:52px;display:flex;align-items:center;">
                         <p id="summary"><?php echo "(".$_SESSION["night"]." คืน)"?></p>
                     </div>
-                    <div style="padding:0 16px">
+                    <div id="p" style="padding:0 16px">
                         <div style="display:flex;align-items:center;">
                             <label>จำนวนผู้พัก : </label>
                             <div style="position:relative;padding:0 8px;height:40px;">
@@ -124,7 +122,7 @@
                                 <?php $column1++; } } ?>
                             </div>
                         </div>
-                        <div style="padding: 32px 32px 16px 32px;width: 882px !important;">
+                        <div class="card-content">
                             <h2>ห้องแอร์</h2>
                             <div class="hr" style="margin:16px 0;"></div>
                             <div class="detail">
@@ -240,9 +238,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="display: flex;justify-content: space-between;align-items:center;">
+                            <div class="f" style="display: flex;justify-content: space-between;align-items:center;">
                                 <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int; ?> ห้อง</p>
-                                <div style="display: flex;align-items: center;gap: 8px;">
+                                <div class="subf" style="display: flex;align-items: center;gap: 8px;">
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
                                     <button type="button" id="DesAir">-</button>
                                     <input type="number" id="people1" min="0" max="<?php echo $total_int; ?>" value="0"
@@ -298,7 +296,7 @@
                                 <?php $column2++; } } ?>
                             </div>
                         </div>
-                        <div style="padding: 32px 32px 16px 32px;width: 882px !important;">
+                        <div class="card-content">
                             <h2>ห้องพัดลม</h2>
                             <div class="hr" style="margin:16px 0;"></div>
                             <div class="detail">
@@ -358,9 +356,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="display: flex;justify-content: space-between;align-items:center;">
+                            <div class="f" style="display: flex;justify-content: space-between;align-items:center;">
                                 <p>จำนวนห้องพักที่เหลือ : <?php echo $total_int2; ?> ห้อง</p>
-                                <div style="display: flex;align-items: center;gap: 8px;">
+                                <div class="subf" style="display: flex;align-items: center;gap: 8px;">
                                     <label>จำนวนห้องพักที่ต้องการ : </label>
                                     <button type="button" id="DesFan">-</button>
                                     <input type="number" id="people2" min="0" max="<?php echo $total_int2; ?>" value="0"
@@ -375,7 +373,7 @@
                     <div style="display:flex;justify-content:flex-end;align-items:center;">
                         <h2>ราคารวม : <label id="total_price">0</label> บาท</h2>
                     </div>
-                    <div style="padding-top:32px;display:flex;justify-content:flex-end;align-items:center">
+                    <div id="r" style="padding-top:32px;display:flex;justify-content:flex-end;align-items:center">
                         <button type="submit" class="rent">จองเลย</button>
                     </div>
                     <?php
