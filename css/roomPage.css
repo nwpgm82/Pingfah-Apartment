@@ -10,10 +10,41 @@
     font-family: Sarabun;
 }
 
+#l{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fff;
+    position: fixed;
+    z-index: 999;
+}
+
+#loader { 
+    border: 4px solid #e6e6e6; 
+    border-radius: 50%; 
+    border-top: 4px solid rgb(131, 120, 47, 0.7);
+    width: 70px; 
+    height: 70px; 
+    animation: spin 1s linear infinite; 
+} 
+  
+@keyframes spin { 
+    100% { 
+        transform: rotate(360deg); 
+    } 
+} 
+  
+.center { 
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    left: 0; 
+    right: 0; 
+    margin: auto; 
+} 
+
 body {
     width: 100%;
     min-height: 100vh;
-
     position: relative;
     background: url("../img/tool/bg.png");
 }
@@ -34,7 +65,7 @@ body::before {
 }
 
 .box {
-    width: 1400px;
+    width: 1200px;
     margin: auto;
     padding: 32px;
 }
@@ -52,12 +83,10 @@ body::before {
 .box .roomPage .card {
     margin: 32px 0;
     width: 100%;
-    height: auto;
+    min-height: 1112px;
     border-radius: 4px;
     background: url("../img/tool/bg2.png");
     overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
@@ -75,8 +104,9 @@ body::before {
 }
 
 .box .roomPage .card .detail {
-    padding: 16px;
     line-height: 40px;
+    display: grid;
+    grid-template-columns: 250px 1fr;
 }
 
 .box .roomPage .card .detail .user-grid {
@@ -91,23 +121,27 @@ body::before {
     object-fit: contain;
 }
 
-.box .roomPage .card .detail .detail-grid{
+.box .roomPage .card .detail .detail-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 850px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    line-height: 20px;
 }
 
-.box .roomPage .card .detail .detail-grid .sub-grid{
+.box .roomPage .card .detail .detail-grid .sub-grid {
     margin: 16px 0;
     display: grid;
-    grid-template-columns: 40px auto;
+    grid-template-columns: 30px auto;
     column-gap: 16px;
     width: 100%;
     align-items: center;
 }
 
-.box .roomPage .card .detail .detail-grid .sub-grid img{
-    width: 40px;
+.box .roomPage .card .detail .detail-grid .sub-grid img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
 }
 
 .box .roomPage .card button {
@@ -141,7 +175,7 @@ body::before {
 .box .roomPage .card .mySlides1,
 .box .roomPage .card .mySlides2 {
     display: none;
-    height: 441px;
+    height: 536px;
 }
 
 /* Add a pointer when hovering over the thumbnail images */
@@ -154,9 +188,10 @@ body::before {
 .box .roomPage .card .next {
     cursor: pointer;
     position: absolute;
-    top: 40%;
+    top: 43%;
+    transform: translateY(-50%);
     width: auto;
-    padding: 0 16px;
+    padding: 16px;
     /* margin-top: -50px; */
     color: white;
     font-weight: bold;
@@ -208,11 +243,11 @@ body::before {
 }
 
 .box .roomPage .card .row::-webkit-scrollbar-thumb {
-    background:  rgb(131, 120, 47, 0.7);
+    background: rgb(131, 120, 47, 0.7);
 }
 
-.box .roomPage .card .row::-webkit-scrollbar-thumb:hover{
-    background:  rgb(131, 120, 47, 1);
+.box .roomPage .card .row::-webkit-scrollbar-thumb:hover {
+    background: rgb(131, 120, 47, 1);
 }
 
 .box .roomPage .card .row:after {
@@ -224,7 +259,7 @@ body::before {
 /* Six columns side by side */
 .box .roomPage .card .column {
     width: 20%;
-    height: 70px;
+    height: 97px;
 }
 
 /* Add a transparency effect for thumnbail images */
@@ -238,4 +273,53 @@ body::before {
 .box .roomPage .card .demo1:hover,
 .box .roomPage .card .demo2:hover {
     opacity: 1;
+}
+
+@media screen and (max-width: 1199px) {
+    .box {
+        padding: 112px 16px;
+        width: 100%;
+    }
+
+    .box .roomPage .card .prev,
+    .box .roomPage .card .next {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .box .roomPage .card .detail {
+        grid-template-columns: 200px 1fr;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    body::before {
+        background-image: none;
+    }
+
+    .box .roomPage .card>div:last-child {
+        padding: 32px 16px !important;
+    }
+
+    .box .roomPage .card .detail {
+        display: block;
+    }
+
+    .box .roomPage .card .detail>div:last-child {
+        padding-top: 32px;
+    }
+
+    .box .roomPage .card .detail .detail-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .box .roomPage .card .mySlides1, .box .roomPage .card .mySlides2{
+        height: 290px;
+    }
+
+    .box .roomPage .card .column{
+        height: 50px;
+    }
+    
 }

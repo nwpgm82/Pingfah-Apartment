@@ -1,6 +1,5 @@
 <?php
 include('connection.php');
-include('../components/maintopbar.php');
 $num = 1;
 $column_num1 = 1;
 $column_num2 = 1;
@@ -12,10 +11,17 @@ $column_num2 = 1;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/roomPage.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="../css/mainTop.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../js/mainTop.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
+    <div id="l">
+       <div id="loader" class="center"></div> 
+    </div>
+    <?php include('../components/maintopbar.php'); ?>
     <div class="box">
         <div class="roomPage">
             <h2>ประเภทห้องพัก</h2>
@@ -68,64 +74,128 @@ $column_num2 = 1;
                         <?php ${'column_num'.$num}++; } } ?>
                     </div>
                 </div>
-                <div class="detail">
-                    <div>
-                        <h2>ห้อง<?php echo $row['type']; ?></h2>
-                        <div class="hr"></div>
-                        <h3>รายละเอียดห้องพัก</h3>
-                        <div class="user-grid">
-                            <img src="../img/tool/user.png" alt="">
-                            <label>2 คน</label>
+                <div style="padding: 32px;">
+                    <h2>ห้อง<?php echo $row['type']; ?></h2>
+                    <div class="hr"></div>
+                    <div class="detail">
+                        <div>
+
+                            <h3>รายละเอียดห้องพัก</h3>
+                            <div class="user-grid">
+                                <img src="../img/tool/user.png" alt="">
+                                <label>2 คน</label>
+                            </div>
+                            <p>รายเดือน : <label
+                                    style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['price']); ?></strong></label>
+                                บาท</p>
+                            <p>รายวัน : <label
+                                    style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['daily_price']); ?></strong></label>
+                                บาท</p>
                         </div>
-                        <p>รายเดือน : <label style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['price']); ?></strong></label> บาท</p>
-                        <p>รายวัน : <label style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['daily_price']); ?></strong></label> บาท</p>
-                    </div>
-                    <div style="padding-top: 30px;">
-                        <h3 style="color:#000">สิ่งอำนวยความสะดวก</h3>
-                        <div class="detail-grid">
-                            <?php
-                            if($row["sv_air"] == "on"){
-                            ?>
-                            <div class="sub-grid">
-                                <img src="../img/tool/air2.png">
-                                <label>เครื่องปรับอากาศ</label>
+                        <div>
+                            <h3 style="color:#000">สิ่งอำนวยความสะดวก</h3>
+                            <div class="detail-grid">
+                                <?php
+                                        if($row["sv_air"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/air2.png">
+                                    <label>เครื่องปรับอากาศ</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_fan"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/fan.png">
+                                    <label>พัดลม</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_wifi"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/wifi2.png">
+                                    <label>WI-FI</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_furniture"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/clothes.png">
+                                    <label>เฟอร์นิเจอร์ - ตู้เสื้อผ้า, เตียง</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_readtable"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/table.png">
+                                    <label>โต๊ะอ่านหนังสือ</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_telephone"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/telephone.png">
+                                    <label>โทรศัพท์</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_television"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/television.png">
+                                    <label>โทรทัศน์ดาวเทียม / เคเบิล</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_refrigerator"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/refrigerator.png">
+                                    <label>ตู้เย็น</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_waterbottle"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/waterbottle.png">
+                                    <label>น้ำบรรจุขวด</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_toilet"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/toilet-items.png">
+                                    <label>ของใช้ในห้องน้ำ</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_hairdryer"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/hairdryer.png">
+                                    <label>ไดร์เป่าผม</label>
+                                </div>
+                                <?php } ?>
+                                <?php
+                                        if($row["sv_towel"] == "on"){
+                                        ?>
+                                <div class="sub-grid">
+                                    <img src="../img/tool/towel.png">
+                                    <label>ผ้าเช็ดตัว</label>
+                                </div>
+                                <?php } ?>
                             </div>
-                            <?php } ?>
-                            <?php
-                            if($row["sv_fan"] == "on"){
-                            ?>
-                            <div class="sub-grid">
-                                <img src="../img/tool/fan.png">
-                                <label>พัดลม</label>
-                            </div>
-                            <?php } ?>
-                            <?php
-                            if($row["sv_wifi"] == "on"){
-                            ?>
-                            <div class="sub-grid">
-                                <img src="../img/tool/wifi2.png">
-                                <label>WI-FI</label>
-                            </div>
-                            <?php } ?>
-                            <?php
-                            if($row["sv_furniture"] == "on"){
-                            ?>
-                            <div class="sub-grid">
-                                <img src="../img/tool/clothes.png">
-                                <label>เฟอร์นิเจอร์ - ตู้เสื้อผ้า, เตียง</label>
-                            </div>
-                            <?php } ?>
-                            <?php
-                            if($row["sv_readtable"] == "on"){
-                            ?>
-                            <div class="sub-grid">
-                                <img src="../img/tool/table.png">
-                                <label>โต๊ะอ่านหนังสือ</label>
-                            </div>
-                            <?php } ?>
                         </div>
                     </div>
                 </div>
+
             </div>
             <?php
                   $num++;  }

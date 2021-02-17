@@ -74,3 +74,19 @@ function showSlides2(m) {
     dots[slideIndex2 - 1].className += " active";
     //   captionText.innerHTML = dots[slideIndex-1].alt;
 }
+
+$(document).ready(function(){
+    $(document).on('readystatechange', readyStateChanged); 
+    function readyStateChanged() {
+        console.log(document.readyState)
+        if (document.readyState !== "complete") { 
+            console.log("xx")
+            $("body").css("visibility","hidden")
+            $("#l").show()
+        } else { 
+            console.log("yy")
+            $("#l").fadeOut(500)
+            $("body").css("visibility","visible")
+        } 
+    }
+})
