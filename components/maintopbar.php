@@ -5,7 +5,7 @@
         <div></div>
         <div></div>
     </div>
-    <ul>
+    <ul id="menu">
         <a href="/Pingfah/index.php">
             <li>หน้าหลัก</li>
         </a>

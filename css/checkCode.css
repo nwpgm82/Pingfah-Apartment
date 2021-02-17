@@ -27,7 +27,7 @@ body::before{
 }
 
 .box {
-    width: 1520px;
+    width: 1200px;
     margin: auto;
     padding: 32px;
 }
@@ -62,6 +62,13 @@ body::before{
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+p{
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;     
+    white-space: nowrap;
 }
 
 .grid-container {
@@ -291,4 +298,58 @@ body::before{
 
 .box .checkCode-box .grid-box ul li .print:disabled:hover{
     background-color: #ddd;
+}
+
+@media screen and (max-width: 1199px){
+    .box{
+        padding: 112px 16px 24px 16px;
+        width: 100%;
+    }
+    .grid-container{
+        grid-template-areas: 
+        "name_title name_title firstname firstname firstname lastname lastname lastname"
+        "id_card id_card id_card email email email tel tel"
+        "check_in check_in check_in check_out check_out check_out night night"
+        "people people air air fan fan vat vat"
+        "total_price total_price total_price status status status . .";
+    }
+    #g{
+        height: auto !important;
+    }
+    .box .checkCode-box .grid-box{
+        grid-template-columns: 100%;
+        row-gap: 16px;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .box .search{
+        display: block;
+        height: auto;
+    }
+
+    .box .search > label{
+        padding: 0 !important;
+    }
+
+    .box .search > div{
+        padding: 8px 0 16px 0;
+    }
+
+    .box .search input{
+        width: 100%;
+    }
+
+    .box .search > button{
+        margin: 0 !important;
+        width: 100%;
+    }
+
+    .hr{
+        margin: 16px 0;
+    }
+    
+    .grid-container{
+        display: block;
+    }
 }

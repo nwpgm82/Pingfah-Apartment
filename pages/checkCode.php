@@ -17,8 +17,10 @@ function DateThai($strDate)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/checkCode.css">
+    <link rel="stylesheet" href="../css/mainTop.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <title>Document</title>
+    <script src="../js/mainTop.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
@@ -105,7 +107,7 @@ function DateThai($strDate)
                     <input type="text" value="<?php echo $row["total_price"]; ?>" disabled>
                 </div>
                 <div class="status">
-                    <label>สถานะการจอง :</label>
+                    <label>สถานะการจอง</label>
                     <input type="text" class="input-status" value="<?php echo $row['daily_status']; ?>" disabled>
                 </div>
             </div>
@@ -120,7 +122,7 @@ function DateThai($strDate)
                 </div>
             </div> -->
             <form action="mainpage_function/addPayment_image.php?daily_id=<?php echo $row['daily_id']; ?>" method="POST" enctype="multipart/form-data">
-                <div style="padding-top:32px;height:659px;">
+                <div id="g" style="padding-top:32px;height:659px;">
                     <div class="grid-box">
                         <div style="border:1px solid rgb(131, 120, 47, 0.7);border-radius:4px;padding:16px;">
                             <h3>หลักฐานการชำระเงินค่ามัดจำห้องพัก</h3>
