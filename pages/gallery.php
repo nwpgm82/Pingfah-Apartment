@@ -1,6 +1,5 @@
 <?php
     include('connection.php');
-    include('../components/maintopbar.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,13 +8,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/gallery.css">
+    <link rel="stylesheet" href="../css/mainTop.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <title>Document</title>
+    <script src="../js/mainTop.js"></script>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
+    <div id="l">
+       <div id="loader" class="center"></div> 
+    </div>
+    <?php include('../components/maintopbar.php'); ?>
     <div class="box">
         <div class="gallery">
             <h2>แกลเลอรี่</h2>

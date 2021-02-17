@@ -10,13 +10,45 @@
     font-family: Sarabun;
 }
 
+#l{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fff;
+    position: fixed;
+    z-index: 999;
+}
+
+#loader { 
+    border: 4px solid #e6e6e6; 
+    border-radius: 50%; 
+    border-top: 4px solid rgb(131, 120, 47, 0.7);
+    width: 70px; 
+    height: 70px; 
+    animation: spin 1s linear infinite; 
+} 
+  
+@keyframes spin { 
+    100% { 
+        transform: rotate(360deg); 
+    } 
+} 
+  
+.center { 
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    left: 0; 
+    right: 0; 
+    margin: auto; 
+} 
+
 body {
     background: url("../img/tool/bg.png");
     position: relative;
 }
 
 .box {
-    width: 1400px;
+    width: 1200px;
     margin: auto;
     padding: 32px;
 }
@@ -40,7 +72,7 @@ body {
 
 .box .gallery .grid .img-box {
     width: 100%;
-    height: 254px;
+    height: 100%;
     overflow: hidden;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
@@ -117,7 +149,8 @@ body {
 }
 
 .img-modal .card img {
-    height: 800px;
+    width: 800px;
+    height: 100%;
     object-fit: contain;
 }
 
@@ -148,4 +181,42 @@ body {
     border-right: 5px solid transparent;
 
     border-bottom: 5px solid #fff;
+}
+
+@media screen and (max-width: 1199px){
+    .box{
+        width: 100%;
+        padding: 112px 16px;
+    }
+    .box .gallery .grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .img-modal{
+        padding-top: 80px;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .img-modal .card img {
+       width: 600px;
+       height: 100%;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .box .gallery .grid{
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .img-modal .card img {
+        max-width: 767px;
+        width: 100%;
+        height: 100%;
+     }
+    /* .img-modal .card{
+        max-width: 500px;
+        max-height: 300px;
+        width: 80%;
+        height: 80%;
+    } */
 }
