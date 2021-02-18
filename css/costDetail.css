@@ -202,6 +202,16 @@
     }
 }
 
+@media screen and (max-width: 1200px){
+    #box-padding{
+        display: block !important;
+    }
+
+    .costDetail-box{
+        margin-top: 32px;
+    }
+}
+
 @media screen and (max-width: 767px) {
     #box-padding {
         padding: 0 !important;
