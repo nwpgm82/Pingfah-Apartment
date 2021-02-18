@@ -86,7 +86,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
 <body>
     <?php include('../../components/sidebar.php'); ?>
     <div class="box">
-        <div style="padding:24px;">
+        <div id="box-padding" style="padding:24px;">
             <div class="home-box">
                 <h3>Overview Dashboard</h3>
                 <div class="hr"></div>
@@ -445,6 +445,12 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
 
         chart.draw(data, options);
     }
+    $(window).resize(function(){
+        drawChart();
+        drawChart2();
+        drawChart3();
+        drawChart4();
+    });
     </script>
     <script src="../../js/home.js"></script>
     <!-- <script src="../../js/costGraph.js"></script> -->
