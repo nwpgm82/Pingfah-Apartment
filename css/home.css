@@ -98,7 +98,7 @@
 .home-box .grid .card .search-box .dateText2 {
     position: absolute;
     top: 3px;
-    right: 192px;
+    left: 114px;
     width: 120px;
 }
 
@@ -200,10 +200,6 @@
     }
     .home-box .grid{
         grid-template-columns: 1fr 1fr 1fr;
-    }
-    .home-box .grid .card .search-box .dateText2{
-        right: 0;
-        left: 114px;
     }
     .home-box .chart-grid .card2 .sub-grid{
         grid-template-columns: 100%;
