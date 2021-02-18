@@ -140,9 +140,7 @@
 }
 
 .roomDetail-box .card{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 300px;
+    height: 100%;
     border-radius: 4px;
     -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
@@ -155,6 +153,10 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+}
+
+.roomDetail-box .card .detail > div:first-child h3{
+    color: #b3994c;
 }
 
 .roomDetail-box button{
@@ -257,6 +259,15 @@
     .roomDetail-box .grid{
         grid-template-columns: 100%;
     }
+    .grid-box{
+        display: block;
+    }
+    #vat-box{
+        margin-top: 32px;
+    }
+    #vat-box .roomDetail-box{
+        min-height: auto;
+    }
 }
 
 @media screen and (max-width: 767px){
@@ -277,5 +288,13 @@
 
     .roomDetail-box .card .detail{
         row-gap: 16px;
+    }
+
+    .roomDetail-box .content .topic-box{
+        display: block;
+    }
+
+    .roomDetail-box .content .topic-box > div:first-child{
+        padding-bottom: 16px;
     }
 }
