@@ -10,7 +10,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    $sql = "SELECT * FROM employee WHERE email = '".$_SESSION['ID']."'";
+    $sql = "SELECT * FROM employee WHERE email = '".$_SESSION['ID']."' AND employee_status = 'กำลังทำงาน'";
     $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
     $row = mysqli_fetch_array($result);
     if($row != null){
@@ -30,7 +30,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     <script src="https://cdn.datedropper.com/get/f81yq0gdfse6par55j0enfmfmlk99n5y"></script>
     <script src="../../../js/datedropper.pro.min.js"></script>
     <script src="../../../js/sidebar.js"></script>
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>

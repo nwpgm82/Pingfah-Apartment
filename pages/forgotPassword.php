@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/forgotPass.css">
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
@@ -26,15 +26,28 @@
 <?php
 if (isset($_POST["confirm"])) {
     include "connection.php";
+    function createRandomPassword()
+    {
+        $chars = "abcdefghijkmnopqrstuvwxyz023456789";
+        srand((double) microtime() * 1000000);
+        $i = 0;
+        $pass = '';
+
+        while ($i <= 20) {
+            $num = rand() % 33;
+            $tmp = substr($chars, $num, 1);
+            $pass = $pass . $tmp;
+            $i++;
+        }
+        return $pass;
+    }
     $email = $_POST["email"];
     $searchEmail = "SELECT * FROM login WHERE email = '$email'";
     $result = $conn->query($searchEmail);
     if ($result->num_rows > 0) {
-        $expFormat = mktime(date("H"), date("i"), date("s"), date("m"), date("d") + 1, date("Y"));
+        $expFormat = mktime(date("H"), date("i") + 15, date("s"), date("m"), date("d"), date("Y"));
         $expDate = date("Y-m-d H:i:s", $expFormat);
-        $key = md5(2418 * 2 + $email);
-        $addKey = substr(md5(uniqid(rand(), 1)), 3, 10);
-        $key = $key . $addKey;
+        $key = createRandomPassword();
         $re = "INSERT INTO reset_password_temp (email, token, expDate) VALUES ('$email', '$key', '$expDate')";
         ///////////////////// อีเมล ////////////////////////
         require $_SERVER['DOCUMENT_ROOT'] . "/Pingfah/phpmailer/PHPMailerAutoload.php";
@@ -49,7 +62,7 @@ if (isset($_POST["confirm"])) {
         $mail->SMTPAuth = true;
 
         $gmail_username = "pingfah.apartment@gmail.com"; // gmail ที่ใช้ส่ง
-        $gmail_password = "Cresta82"; // รหัสผ่าน gmail
+        $gmail_password = "Cresta5182"; // รหัสผ่าน gmail
         // ตั้งค่าอนุญาตการใช้งานได้ที่นี่ https://myaccount.google.com/lesssecureapps?pli=1
 
         $sender = "Pingfah Apartment"; // ชื่อผู้ส่ง
@@ -77,13 +90,13 @@ if (isset($_POST["confirm"])) {
     			</div>
     			<div style='background-color: #f6f4ec;width:900px;margin:0 auto;padding:16px;line-height:40px;'>
                     <h3><strong>รีเซ็ตรหัสผ่าน</strong></h3>
-                    <p style='font-size:16px;'>คลิกที่ปุ่ม 'รีเซ็ตรหัสผ่าน' เพื่อตั้งค่ารหัสใหม่ของคุณ</p>
+                    <p style='font-size:16px;'>คลิกที่ปุ่ม 'รีเซ็ตรหัสผ่าน' เพื่อตั้งค่ารหัสใหม่ของคุณ (ลิ้งค์นี้มีอายุการใช้งาน 15 นาที)</p>
                     <div style='padding-top:32px;text-align:center;'>
                         <a href='localhost/Pingfah/pages/createNewPassword.php?key=$key' target='_blank'><button style='padding: 0 16px;width: auto;height: 40px;border-radius: 4px;border: none;background-color: rgb(131, 120, 47, 0.7);font-size: 16px;font-weight: 500;color: #fff;cursor:pointer;'>รีเซ็ตรหัสผ่าน</button><a>
                     </div>
     			</div>
     			<div style='background-color: #edeadb;width:900px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;'>
-    				<p style='color:#000'><strong>ติดต่อสอบถาม :</strong> 098-9132002 (เจ้าของหอพัก), 093-2266753 (แม่บ้าน)</p>
+    				<p style='color:#000'><strong>ติดต่อสอบถาม :</strong> 098-9132002 (เจ้าของหอพัก)</p>
     			</div>
     		</body>
     	</html>
@@ -92,7 +105,7 @@ if (isset($_POST["confirm"])) {
         //  ถ้ามี email ผู้รับ
         if ($email_receiver) {
             $mail->msgHTML($email_content);
-            if ($mail->send() && $conn->query($re) === TRUE) {
+            if ($mail->send() && $conn->query($re) === true) {
                 echo "<script>";
                 echo "alert('กรุณาตรวจสอบอีเมล์ของท่าน');";
                 echo "location.href = 'login.php';";
