@@ -111,7 +111,7 @@
             <div class="profile">
                 <?php
                 $user_email = $_SESSION["ID"];
-                $searchUser_img = mysqli_query($conn, "SELECT id_card, profile_img FROM employee WHERE email = '$user_email'");
+                $searchUser_img = mysqli_query($conn, "SELECT id_card, profile_img FROM employee WHERE email = '$user_email' AND employee_status = 'กำลังทำงาน'");
                 $searchUser_result = mysqli_fetch_assoc($searchUser_img);
                 ?>
                 <img src="<?php if($searchUser_result != null && $searchUser_result["profile_img"] != "" && $searchUser_result["profile_img"] != null){ echo "/Pingfah/pages/images/employee/".$searchUser_result["id_card"]."/".$searchUser_result["profile_img"]; }else{ echo "https://sites.google.com/site/rabbiteieicom/_/rsrc/1467891358746/home/image8.jpg"; }?>"
