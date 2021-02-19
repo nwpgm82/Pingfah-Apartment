@@ -13,8 +13,8 @@
         <a href="../index.php"><img src="../img/main_logo.png" alt=""></a>
         <form method="POST">
             <h3>ลืมรหัสผ่าน ?</h3>
-            <p>กรุณากรอกอีเมล์ของท่านที่ได้ทำการลงทะเบียน</p>
-            <input type="email" name="email" placeholder="อีเมล์ / Email">
+            <p>กรุณากรอกอีเมลของท่านที่ได้ทำการลงทะเบียน</p>
+            <input type="email" name="email" placeholder="อีเมล / Email">
             <div style="padding-top:32px;display:flex;justify-content:flex-end;align-items:flex-end;">
                 <button type="submit" name="confirm">ยืนยัน</button>
             </div>
@@ -24,44 +24,47 @@
 
 </html>
 <?php
-if(isset($_POST["confirm"])){
-    include("connection.php");
+if (isset($_POST["confirm"])) {
+    include "connection.php";
     $email = $_POST["email"];
     $searchEmail = "SELECT * FROM login WHERE email = '$email'";
     $result = $conn->query($searchEmail);
     if ($result->num_rows > 0) {
-         ///////////////////// อีเมล ////////////////////////
-    require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
-    header('Content-Type: text/html; charset=utf-8');
+        $expFormat = mktime(date("H"), date("i"), date("s"), date("m"), date("d") + 1, date("Y"));
+        $expDate = date("Y-m-d H:i:s", $expFormat);
+        $key = md5(2418 * 2 + $email);
+        $addKey = substr(md5(uniqid(rand(), 1)), 3, 10);
+        $key = $key . $addKey;
+        $re = "INSERT INTO reset_password_temp (email, token, expDate) VALUES ('$email', '$key', '$expDate')";
+        ///////////////////// อีเมล ////////////////////////
+        require $_SERVER['DOCUMENT_ROOT'] . "/Pingfah/phpmailer/PHPMailerAutoload.php";
+        header('Content-Type: text/html; charset=utf-8');
 
-    $mail = new PHPMailer;
-    $mail->CharSet = "utf-8";
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->Port = 587;
-    $mail->SMTPSecure = 'tls';
-    $mail->SMTPAuth = true;
+        $mail = new PHPMailer;
+        $mail->CharSet = "utf-8";
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;
 
+        $gmail_username = "pingfah.apartment@gmail.com"; // gmail ที่ใช้ส่ง
+        $gmail_password = "Cresta82"; // รหัสผ่าน gmail
+        // ตั้งค่าอนุญาตการใช้งานได้ที่นี่ https://myaccount.google.com/lesssecureapps?pli=1
 
-    $gmail_username = "pingfah.apartment@gmail.com"; // gmail ที่ใช้ส่ง
-    $gmail_password = "Cresta82"; // รหัสผ่าน gmail
-    // ตั้งค่าอนุญาตการใช้งานได้ที่นี่ https://myaccount.google.com/lesssecureapps?pli=1
+        $sender = "Pingfah Apartment"; // ชื่อผู้ส่ง
+        $email_sender = "noreply.pingfah@gmail.com"; // เมล์ผู้ส่ง
+        $email_receiver = "$email"; // เมล์ผู้รับ ***
 
+        $subject = "รีเซ็ตรหัสผ่าน"; // หัวข้อเมล์
 
-    $sender = "Pingfah Apartment"; // ชื่อผู้ส่ง
-    $email_sender = "noreply.pingfah@gmail.com"; // เมล์ผู้ส่ง 
-    $email_receiver = "$email"; // เมล์ผู้รับ ***
+        $mail->Username = $gmail_username;
+        $mail->Password = $gmail_password;
+        $mail->setFrom($email_sender, $sender);
+        $mail->addAddress($email_receiver);
+        $mail->Subject = $subject;
 
-    $subject = "รีเซ็ตรหัสผ่าน"; // หัวข้อเมล์
-
-
-    $mail->Username = $gmail_username;
-    $mail->Password = $gmail_password;
-    $mail->setFrom($email_sender, $sender);
-    $mail->addAddress($email_receiver);
-    $mail->Subject = $subject;
-
-    $email_content = "
+        $email_content = "
     	<!DOCTYPE html>
     	<html>
     		<head>
@@ -76,7 +79,7 @@ if(isset($_POST["confirm"])){
                     <h3><strong>รีเซ็ตรหัสผ่าน</strong></h3>
                     <p style='font-size:16px;'>คลิกที่ปุ่ม 'รีเซ็ตรหัสผ่าน' เพื่อตั้งค่ารหัสใหม่ของคุณ</p>
                     <div style='padding-top:32px;text-align:center;'>
-                        <a href='localhost/Pingfah/pages/createNewPassword.php?email=$email' target='_blank'><button style='padding: 0 16px;width: auto;height: 40px;border-radius: 4px;border: none;background-color: rgb(131, 120, 47, 0.7);font-size: 16px;font-weight: 500;color: #fff;cursor:pointer;'>รีเซ็ตรหัสผ่าน</button><a>
+                        <a href='localhost/Pingfah/pages/createNewPassword.php?key=$key' target='_blank'><button style='padding: 0 16px;width: auto;height: 40px;border-radius: 4px;border: none;background-color: rgb(131, 120, 47, 0.7);font-size: 16px;font-weight: 500;color: #fff;cursor:pointer;'>รีเซ็ตรหัสผ่าน</button><a>
                     </div>
     			</div>
     			<div style='background-color: #edeadb;width:900px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;'>
@@ -85,21 +88,21 @@ if(isset($_POST["confirm"])){
     		</body>
     	</html>
     ";
-    ///////////////////////////////////////////////////
-    //  ถ้ามี email ผู้รับ
-    if($email_receiver){
-        $mail->msgHTML($email_content);
-        if ($mail->send()) {
-            echo "<script>";
-            echo "alert('กรุณาตรวจสอบอีเมล์ของท่าน');";
-            echo "location.href = 'login.php';";
-            echo "</script>";
-        } else {
-            echo $mail->ErrorInfo; // ข้อความ รายละเอียดการ error
-            echo "Error: " . $sql . "<br>" . $conn->error;
+        ///////////////////////////////////////////////////
+        //  ถ้ามี email ผู้รับ
+        if ($email_receiver) {
+            $mail->msgHTML($email_content);
+            if ($mail->send() && $conn->query($re) === TRUE) {
+                echo "<script>";
+                echo "alert('กรุณาตรวจสอบอีเมล์ของท่าน');";
+                echo "location.href = 'login.php';";
+                echo "</script>";
+            } else {
+                echo $mail->ErrorInfo; // ข้อความ รายละเอียดการ error
+                echo "Error: " . $re . "<br>" . $conn->error;
+            }
         }
-    }
-    }else{
+    } else {
         echo "<script>";
         echo "alert('ไม่พบบัญชีผู้ใช้');";
         echo "</script>";

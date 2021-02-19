@@ -49,7 +49,7 @@ if($_SESSION['level'] == 'admin'){
         }
         mkdir($folder_target);
         $sql = "INSERT INTO employee (come_date, employee_status, title_name, firstname, lastname, nickname, position, id_card, tel, email, birthday, age, race, nationality, address, pic_idcard, pic_home, profile_img) VALUES ('$come','กำลังทำงาน','$title_name','$firstname','$lastname','$nickname','$position','$id_card','$tel','$email','$birthday','$age','$race','$nat','$add','$pic_idcard','$pic_home','$profile_img')";
-        $addUser = "INSERT INTO login (username, name, password, email, level) VALUES ('$username', '$firstname', MD5('$password'), '$email', 'employee')";
+        $addUser = "INSERT INTO login (username, name, password, email, level) VALUES ('$username', '$firstname', MD5('$password'), '$email', '$position')";
         $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน', 'เพิ่มข้อมูลพนักงาน (".$title_name.$firstname." ".$lastname.")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
         if(move_uploaded_file($_FILES['id_img']['tmp_name'], $target1) && move_uploaded_file($_FILES['home_img']['tmp_name'], $target2) && move_uploaded_file($_FILES['profile_img']['tmp_name'], $target3)){
             if ($conn->query($sql) === TRUE && $conn->query($addUser) === TRUE && $conn->query($addLogs)) {
