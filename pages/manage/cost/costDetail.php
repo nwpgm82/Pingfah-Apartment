@@ -63,9 +63,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                         if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                             if($cost_status != "ชำระเงินแล้ว"){
                         ?>
-                            <button type="button" class="edit-btn" title="แก้ไขข้อมูล"></button>
+                            <button type="button" class="edit-btn" id="edit-btn" title="แก้ไขข้อมูล"></button>
                             <?php } ?>
-                            <div class="edit-option" style="display:none;">
+                            <div class="edit-option" id="edit-option" style="display:none;">
                                 <button type="submit" class="correct-btn" id="accept-edit" name="accept-edit"
                                     title="ยืนยันการแก้ไข"></button>
                                 <button type="button" class="cancel-btn" id="cancel-edit"

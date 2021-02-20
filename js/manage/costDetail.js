@@ -20,9 +20,9 @@ $(document).ready(function () {
         }
         return false;
     }
-    $(document).on("click", ".edit-btn", function () {
-        $(".edit-btn").hide()
-        $(".edit-option").css("display", "grid")
+    $(document).on("click", "#edit-btn", function () {
+        $("#edit-btn").hide()
+        $("#edit-option").css("display", "grid")
         let inputs = $("input")
         inputs.each(function () {
             if ($(this).attr("id") != "room_id" && $(this).attr("id") != "room_type" && $(this).attr("id") != "cost_date" && $(this).attr("id") != "cost_status" && $(this).attr("id") != "pay_date") {
