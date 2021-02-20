@@ -88,7 +88,7 @@
             if($_SESSION["level"] == "admin"){
             ?>
             <a href="/Pingfah/pages/manage/logs.php">
-                <li id="logs">ประวัติการกระทำต่าง ๆ</li>
+                <li id="logs">ประวัติการใช้งาน</li>
             </a>
             <?php } ?>
             <a href="/Pingfah/pages/logout.php">

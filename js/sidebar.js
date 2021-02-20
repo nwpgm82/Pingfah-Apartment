@@ -138,7 +138,7 @@ $(document).ready(function () {
     }else if(localStorage.getItem("i") == "/Pingfah/pages/manage/logs.php"){
         logs.css("background-color", "rgba(131, 120, 47, 0.7)")
         logs.css("color", "#fff")
-        header.html("ประวัติการกระทำต่าง ๆ")
+        header.html("ประวัติการใช้งาน")
     } else if(localStorage.getItem("i") == "/Pingfah/pages/manage/myprofile/index.php") {
         $(".profile").css("background-color", "rgba(131, 120, 47, 0.7)")
         $(".profile").css("color", "#fff")

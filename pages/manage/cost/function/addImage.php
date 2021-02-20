@@ -33,7 +33,8 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
     }
     if(move_uploaded_file($_FILES["pay_img"]["tmp_name"], $target)){
         $sql = "UPDATE cost SET pay_img = '$pay_img' WHERE cost_id = $cost_id";
-        if($conn->query($sql) === TRUE){
+        $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ชำระเงิน(รายเดือน)', 'เพิ่มหลักฐานการชำระเงินค่าเช่าห้องพัก (ห้อง ".$result_search["room_id"].")(" .DateThai($result_search["date"]) .")', '" . $_SESSION["name"] . "', '" . $_SESSION["level"] . "')";
+        if($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE){
             $token = "kD2hurm9Ehfe3SPEWJ49oP5LZytJ2cV9ZoX4BF9Ga40";
             $str = "\n"."***มีการเพิ่มหลักฐานการชำระเงินค่าห้องพัก***" . "\n" . "เลขห้อง : ".$result_search["room_id"]."\n"."ประจำเดือน : ".DateThai($result_search["date"])."\n"."ยอดรวม : ".number_format($result_search["total"],2)." บาท";
             $curl = curl_init();
