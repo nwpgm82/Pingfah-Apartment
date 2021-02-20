@@ -124,7 +124,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     $start = ($page - 1) * $perpage;
                     $num = $start + 1;
                     if(isset($check_in) && isset($check_out) && !isset($check)){
-                        $sql = "SELECT * FROM daily WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) LIMIT {$start} , {$perpage}";
+                        $sql = "SELECT * FROM daily WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) ORDER BY daily_id DESC LIMIT {$start} , {$perpage}";
                     }else if(!isset($check_in) && !isset($check_out) && isset($check)){
                         if($check == "come"){
                             $check_s = "เข้าพักแล้ว";
@@ -137,7 +137,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         }else if($check == "cancel"){
                             $check_s = "ยกเลิกการจอง";
                         }
-                        $sql = "SELECT * FROM daily WHERE daily_status = '$check_s' LIMIT {$start} , {$perpage}";
+                        $sql = "SELECT * FROM daily WHERE daily_status = '$check_s' ORDER BY daily_id DESC LIMIT {$start} , {$perpage}";
                     }else if(isset($check_in) && isset($check_out) && isset($check)){
                         if($check == "come"){
                             $check_s = "เข้าพักแล้ว";
@@ -150,11 +150,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         }else if($check == "cancel"){
                             $check_s = "ยกเลิกการจอง";
                         }
-                        $sql = "SELECT * FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status = '$check_s' LIMIT {$start} , {$perpage}"; 
+                        $sql = "SELECT * FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status = '$check_s' ORDER BY daily_id DESC LIMIT {$start} , {$perpage}"; 
                     }else if(isset($code)){
-                        $sql = "SELECT * FROM daily WHERE code = '$code'";
+                        $sql = "SELECT * FROM daily WHERE code = '$code' ORDER BY daily_id DESC";
                     }else{
-                        $sql = "SELECT * FROM daily LIMIT {$start} , {$perpage}";
+                        $sql = "SELECT * FROM daily ORDER BY daily_id DESC LIMIT {$start} , {$perpage}";
                     }
                     $result = $conn->query($sql);
                     if(isset($code)){
