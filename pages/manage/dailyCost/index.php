@@ -109,11 +109,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                 $start = ($page - 1) * $perpage;
                 $num = $start + 1;
                 if(isset($check_in) && isset($check_out)){
-                    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) LIMIT {$start} , {$perpage}";
+                    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE (check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out ) ORDER BY dailycost_id DESC LIMIT {$start} , {$perpage}";
                 }else if(isset($code)){
-                    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE a.code = '$code'";
+                    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id WHERE a.code = '$code' ORDER BY dailycost_id DESC";
                 }else{
-                    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id LIMIT {$start} , {$perpage}";
+                    $sql = "SELECT a.*, b.* FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id ORDER BY dailycost_id DESC LIMIT {$start} , {$perpage}";
                 }
                 $result = $conn->query($sql);
                 if(isset($code)){

@@ -20,7 +20,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
     }
     if($conn->query($sql2) === TRUE && $conn->query($sql3) === TRUE && $conn->query($addLogs) === TRUE){
         echo "<script>";
-        echo "alert('เช็คเอ้าท์เรียบร้อยแล้ว');";
+        echo "alert('เช็คเอาท์เรียบร้อยแล้ว');";
         echo "location.href = '../index.php';";
         echo "</script>";
     }

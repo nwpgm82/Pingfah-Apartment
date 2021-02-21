@@ -143,7 +143,7 @@ if (isset($_POST['accept_daily'])) {
             $mail->msgHTML($email_content);
             if ($mail->send() && $conn->query($sql) === true && move_uploaded_file($_FILES["deposit_img"]["tmp_name"], $target_file)) {
                 $token = "kD2hurm9Ehfe3SPEWJ49oP5LZytJ2cV9ZoX4BF9Ga40";
-                $str = "\n" . "***มีรายการเช่ารายวัน (ใหม่)***" . "\n" . "ชื่อ : $name_title$firstname $lastname" . "\n" . "เลขบัตรประชาชน : $id_card" . "\n" . "เบอร์โทรศัพท์ : $tel" . "\n" . "จำนวนผู้พัก : " . $_SESSION["people"] . " ท่าน" . "\n" . "จำนวนห้องพัก : ห้องแอร์ " . $_SESSION["air"] . " ห้อง | ห้องพัดลม " . $_SESSION["fan"] . " ห้อง" . "\n" . "ราคารวม : " . $_SESSION["total_price"] . " บาท" . "\n" . "วันที่เข้าพัก : " . DateThai($_SESSION["check_in"]) . " ถึง " . DateThai($_SESSION["check_out"]) . "(" . $_SESSION["night"] . " คืน)" . "\n" . "***โปรดตรวจสอบหลักฐานชำระเงินค่ามัดจำห้องพัก***";
+                $str = "\n" . "***มีรายการเช่ารายวัน (ใหม่)***" . "\n" . "ชื่อ : $name_title$firstname $lastname" . "\n" . "เบอร์โทรศัพท์ : $tel" . "\n" . "จำนวนผู้พัก : " . $_SESSION["people"] . " ท่าน" . "\n" . "จำนวนห้องพัก : ห้องแอร์ " . $_SESSION["air"] . " ห้อง | ห้องพัดลม " . $_SESSION["fan"] . " ห้อง" . "\n" . "ราคารวม : " . number_format($_SESSION["total_price"],2) . " บาท" . "\n" . "วันที่เข้าพัก : " . DateThai($_SESSION["check_in"]) . " ถึง " . DateThai($_SESSION["check_out"]) . "(" . $_SESSION["night"] . " คืน)" . "\n" . "เลขที่ในการจอง : $code" . "\n" . "***โปรดตรวจสอบหลักฐานชำระเงินค่ามัดจำห้องพัก***";
                 $curl = curl_init();
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => "https://notify-api.line.me/api/notify",

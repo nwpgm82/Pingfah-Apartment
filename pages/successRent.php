@@ -7,6 +7,8 @@ function DateThai($strDate)
     $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
     $strMonthThai=$strMonthCut[$strMonth];
     return "$strDay $strMonthThai $strYear";
+    
+    
 }
 ?>
 <!DOCTYPE html>
@@ -20,9 +22,6 @@ function DateThai($strDate)
 </head>
 
 <body>
-    <?php
-    // include("../components/maintopbar.php")
-    ?>
     <div class="box">
         <div class="success-box">
             <div style="line-height:60px;">

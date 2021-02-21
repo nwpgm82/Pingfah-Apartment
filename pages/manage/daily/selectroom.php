@@ -169,7 +169,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                         </div>
                         <div class="hr"></div>
                         <div style="display:flex;justify-content:center;align-items:center;">
-                            <button type="submit" id="confirmRent">ยืนยันการจองห้องพัก</button>
+                            <button type="submit" id="confirmRent">ยืนยันการเข้าพัก</button>
                         </div>
                     </form>
                 </div>

@@ -53,7 +53,7 @@ if ($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSI
               echo "cURL Error #:".$err;
             }else{
               echo "<script>";
-              echo "alert('ลงรายการแจ้งซ่อมเรียบร้อย');";
+              echo "alert('เพิ่มข้อมูลการแจ้งซ่อมเรียบร้อย');";
               echo "location.href = '../index.php';";
               echo "</script>";
             }

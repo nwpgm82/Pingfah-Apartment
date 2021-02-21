@@ -93,6 +93,13 @@ $(document).ready(function () {
                 room.css("border-color", "red")
                 $("#room_error").html("โปรดระบุเลขห้อง")
             }
+            if (code.val() != "") {
+                let letter = /^[0-9a-zA-Z]+$/;
+                if (!$("#code").val().match(letter)) {
+                    $("#code").css("border-color", "red")
+                    $("#code_error").html("ระบุข้อความ a-z, A-Z หรือ 0-9 ได้เท่านั้น")
+                }
+            }
             event.preventDefault()
         }
     })

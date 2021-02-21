@@ -66,7 +66,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../js/dailyForm.js"></script>
     <script src="../js/mainTop.js"></script>
-    <title>Document</title>
+    <title>Pingfah Apartment</title>
 </head>
 
 <body>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="id_card">
                         <p>เลขบัตรประชาชน / Passport No.</p>
-                        <input type="text" name="id_card" id="id_card" placeholder="เลขบัตรประชาชน / Passport No.">
+                        <input type="text" name="id_card" id="id_card" maxlength="13" placeholder="เลขบัตรประชาชน / Passport No.">
                         <h5 id="id_error" style="color:red;"></h5>
                     </div>
                     <div class="email">
@@ -107,7 +107,7 @@
                     </div>
                     <div class="tel">
                         <p>เบอร์โทรศัพท์</p>
-                        <input type="text" name="tel" id="tel" placeholder="เบอร์โทรศัพท์">
+                        <input type="text" name="tel" id="tel" maxlength="10" placeholder="เบอร์โทรศัพท์">
                         <h5 id="tel_error" style="color:red;"></h5>
                     </div>
                     <div class="check_in">

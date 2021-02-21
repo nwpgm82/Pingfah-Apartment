@@ -129,10 +129,6 @@ function DateThai($strDate)
                             <div class="hr"></div>
                             <div class="img-box" id="id_box">
                                 <img id="img_id" <?php if(isset($row['payment_img'])){ echo "src='images/daily/".$row['code']."/deposit/".$row['payment_img']."'"; } ?> <?php if(!isset($row['payment_img'])){ echo "style='display:none;'"; }?> />
-                                <?php
-                                if(isset($row['payment_img']) && $row['daily_status'] == 'รอการยืนยัน'){ ?>
-                                <button class="del-btn" type="button" id="del-btn1" style="margin:0;" onclick="delImg('<?php echo $row['daily_id']; ?>','<?php echo $row['payment_img']; ?>')"></button>
-                                <?php } ?>
                             </div>
                             <h5 id="idimg_error" style="color:red;"></h5>
                             <?php

@@ -17,7 +17,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
     if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
         $query_data = "SELECT repair_successdate, SUM(repair_profit) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' GROUP BY repair_successdate";
     }else if($_SESSION["level"] == "guest"){
-        $query_data = "SELECT repair_successdate, SUM(repair_profit) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." GROUP BY repair_successdate";
+        $query_data = "SELECT repair_successdate, SUM(repair_income) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." GROUP BY repair_successdate";
     }
     $result = mysqli_query($conn, $query_data);
     $datax = array();
@@ -114,9 +114,17 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
                                 <th>เลขห้อง</th>
                                 <th>อุปกรณ์</th>
                                 <th>หมวดหมู่</th>
+                                <?php
+                                if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                ?>
                                 <th>รายได้</th>
-                                <th>รายจ่าย</th>
+                                <?php } ?>
+                                <th>ค่าใช้จ่าย</th>
+                                <?php
+                                if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                ?>
                                 <th>กำไร</th>
+                                <?php } ?>
                                 <th>วันที่แจ้งซ่อม</th>
                                 <th>วันที่ซ่อมเสร็จ</th>
                                 <th>สถานะ</th>
@@ -129,8 +137,12 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
                                 <td><?php echo $row['repair_appliance']; ?></td>
                                 <td><?php echo $row['repair_category']; ?></td>
                                 <td><?php echo $row['repair_income']; ?></td>
+                                <?php
+                                if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                ?>
                                 <td><?php echo $row['repair_expenses']; ?></td>
                                 <td><?php echo $row['repair_profit']; ?></td>
+                                <?php } ?>
                                 <td><?php echo DateThai($row['repair_date']); ?></td>
                                 <td><?php echo DateThai($row['repair_successdate']); ?></td>
                                 <td>
@@ -205,7 +217,15 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
+            <?php
+            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+            ?>
             ['วัน / เดือน / ปี', 'กำไรทั้งหมด (บาท)'],
+            <?php
+            }else if($_SESSION["level"] == "guest"){
+            ?>
+            ['วัน / เดือน / ปี', 'ค่าใช้จ่ายทั้งหมด (บาท)'],
+            <?php } ?>
             <?php echo $datax;?>
         ]);
 

@@ -155,5 +155,12 @@ $(document).ready(function () {
                 event.preventDefault()
             }
         }
+        if (id_card.val() != "") {
+            let letter = /^[0-9a-zA-Z]+$/;
+            if (!id_card.val().match(letter)) {
+                id_card.css("border-color", "red")
+                $("#id_error").html("ระบุข้อความ a-z, A-Z หรือ 0-9 ได้เท่านั้น")
+            }
+        }
     })
 })
