@@ -43,7 +43,7 @@ if (!empty($img)) {
                 echo "cURL Error #:" . $err;
             } else {
                 echo "<script>";
-                echo "alert('เพิ่มรูปภาพเรียบร้อยแล้ว');";
+                echo "alert('เพิ่มรูปภาพหลักฐานค่ามัดจำห้องพัก และแจ้งให้พนักงานทราบเรียบร้อยแล้ว');";
                 echo "location.href = '../checkCode.php?code=" . $row['code'] . "';";
                 echo "</script>";
             }

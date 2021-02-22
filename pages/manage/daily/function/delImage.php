@@ -83,7 +83,7 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
         $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'ลบหลักฐานค่ามัดจำห้องพัก (" . $result["name_title"] . $result["firstname"] . " " . $result["lastname"] . ")', '" . $_SESSION["name"] . "', '" . $_SESSION["level"] . "')";
         if ($mail->send() && $conn->query($del) === true && unlink($pic_location) && $conn->query($addLogs) === true) {
             echo "<script>";
-            echo "alert('ลบรูปภาพเรียบร้อยแล้ว');";
+            echo "alert('ลบรูปภาพหลักฐานค่ามัดจำห้องพัก และแจ้งให้ลูกค้าทราบเรียบร้อยแล้ว');";
             echo "location.href = '../dailyDetail.php?daily_id=$id';";
             echo "</script>";
         } else {
