@@ -28,7 +28,7 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
     $email_sender = "noreply.pingfah@gmail.com"; // เมล์ผู้ส่ง
     $email_receiver = $result_search['email']; // เมล์ผู้รับ ***
 
-    $subject = "ยืนยันหลักฐานการชำระเงินค่ามัดจำห้องพัก"; // หัวข้อเมล์
+    $subject = "ยืนยันการเข้าพัก"; // หัวข้อเมล์
 
     $mail->Username = $gmail_username;
     $mail->Password = $gmail_password;
@@ -41,7 +41,7 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
         <html>
             <head>
                 <meta charset='utf-8'/>
-                <title>ยืนยันหลักฐานการชำระเงินค่ามัดจำห้องพัก</title>
+                <title>ยืนยันการเข้าพัก</title>
             </head>
             <body>
                 <div style='background-color: #edeadb;width:900px;height:60px;margin:0 auto;padding:16px;display:flex;align-items:center;' >
