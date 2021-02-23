@@ -1,71 +1,74 @@
 <?php
-$conn= mysqli_connect("localhost","root","","Pingfah") or die("Error: " . mysqli_error($conn));
+$conn = mysqli_connect("localhost", "root", "", "Pingfah") or die("Error: " . mysqli_error($conn));
 mysqli_query($conn, "SET NAMES 'utf8' ");
 date_default_timezone_set('Asia/Bangkok');
-if(date("d") == "6"){
+//////////// กรณีไม่ได้ชำระเงินค่าห้องพักรายเดือน ///////////////////////
+if (date("d") == "6") {
     $get_cost = "SELECT fines, total FROM cost WHERE cost_status = 'รอการชำระเงิน'";
     $get_result = $conn->query($get_cost);
     if ($get_result->num_rows > 0) {
-        while($cost = $get_result->fetch_assoc()) {
-            if($cost["room_type"] == "แอร์"){
+        while ($cost = $get_result->fetch_assoc()) {
+            if ($cost["room_type"] == "แอร์") {
                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
-            }else if($cost["room_type"] == "พัดลม"){
+            } else if ($cost["room_type"] == "พัดลม") {
                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
             }
             $detail_result = mysqli_fetch_assoc($get_detail);
-            $updatefines = "UPDATE cost SET fines = ".$detail_result["fines"].", total = total + ".$detail_result["fines"].", cost_status = 'ยังไม่ได้ชำระเงิน' WHERE cost_status != 'ชำระเงินแล้ว' ";
-            $conn->query($updatefines) === TRUE;
+            $updatefines = "UPDATE cost SET fines = " . $detail_result["fines"] . ", total = total + " . $detail_result["fines"] . ", cost_status = 'ยังไม่ได้ชำระเงิน' WHERE cost_status != 'ชำระเงินแล้ว' ";
+            $conn->query($updatefines) === true;
         }
     }
-}else if(date("d") > "6"){
+} else if (date("d") > "6") {
     $get_cost = "SELECT fines, total FROM cost WHERE cost_status = 'ยังไม่ได้ชำระเงิน'";
     $get_result = $conn->query($get_cost);
     if ($get_result->num_rows > 0) {
-        while($cost = $get_result->fetch_assoc()) {
-            if($cost["room_type"] == "แอร์"){
+        while ($cost = $get_result->fetch_assoc()) {
+            if ($cost["room_type"] == "แอร์") {
                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
-            }else if($cost["room_type"] == "พัดลม"){
+            } else if ($cost["room_type"] == "พัดลม") {
                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
             }
             $detail_result = mysqli_fetch_assoc($get_detail);
-            $updatefines = "UPDATE cost SET fines = fines + ".$detail_result["fines"].", total = total + ".$detail_result["fines"]." WHERE cost_status != 'ชำระเงินแล้ว' ";
-            $conn->query($updatefines) === TRUE;
+            $updatefines = "UPDATE cost SET fines = fines + " . $detail_result["fines"] . ", total = total + " . $detail_result["fines"] . " WHERE cost_status != 'ชำระเงินแล้ว' ";
+            $conn->query($updatefines) === true;
         }
     }
 }
+///////////////////////////////////////////////////////////////////
+///////////// กรณียกเลิกการจองเนื่องจากไม่ได้เข้าพักในวันที่ที่กำหนด และยกเลิกการจองเนื่องจากไม่ได้ชำระเงินค่ามัดจำห้องพัก ///////////////////////////
 $sql = "SELECT * FROM daily";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-  while($row = $result->fetch_assoc()) {
-    if($row['daily_status'] == "รอการเข้าพัก"){
-        $date_paymentbefore = date("Y-m-d", strtotime($row['check_in']));
-        if(date("Y-m-d") > $date_paymentbefore){
-            $update = "UPDATE daily SET daily_status = 'ยกเลิกการจอง' WHERE daily_id = '".$row['daily_id']."'";
-            $conn->query($update);
-             ///////////////////// อีเมล ////////////////////////
-            require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
-            header('Content-Type: text/html; charset=utf-8');
-            $mail = new PHPMailer;
-            $mail->CharSet = "utf-8";
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->Port = 587;
-            $mail->SMTPSecure = 'tls';
-            $mail->SMTPAuth = true;
-            $gmail_username = "pingfah.apartment@gmail.com"; // gmail ที่ใช้ส่ง
-            $gmail_password = "Cresta5182"; // รหัสผ่าน gmail
-            // ตั้งค่าอนุญาตการใช้งานได้ที่นี่ https://myaccount.google.com/lesssecureapps?pli=1
-            $sender = "Pingfah Apartment"; // ชื่อผู้ส่ง
-            $email_sender = "noreply.pingfah@gmail.com"; // เมล์ผู้ส่ง 
-            $email_receiver = $row['email']; // เมล์ผู้รับ ***
-            $subject = "ยกเลิกคำสั่งการจองห้องพัก"; // หัวข้อเมล์
-            $mail->Username = $gmail_username;
-            $mail->Password = $gmail_password;
-            $mail->setFrom($email_sender, $sender);
-            $mail->addAddress($email_receiver);
-            $mail->Subject = $subject;
-            $email_content = "
+    while ($row = $result->fetch_assoc()) {
+        if ($row['daily_status'] == "รอการเข้าพัก") {
+            $date_paymentbefore = date("Y-m-d", strtotime($row['check_in']));
+            if (date("Y-m-d") > $date_paymentbefore) {
+                $update = "UPDATE daily SET daily_status = 'ยกเลิกการจอง' WHERE daily_id = '" . $row['daily_id'] . "'";
+                $conn->query($update);
+                ///////////////////// อีเมล ////////////////////////
+                require $_SERVER['DOCUMENT_ROOT'] . "/Pingfah/phpmailer/PHPMailerAutoload.php";
+                header('Content-Type: text/html; charset=utf-8');
+                $mail = new PHPMailer;
+                $mail->CharSet = "utf-8";
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = 587;
+                $mail->SMTPSecure = 'tls';
+                $mail->SMTPAuth = true;
+                $gmail_username = "pingfah.apartment@gmail.com"; // gmail ที่ใช้ส่ง
+                $gmail_password = "Cresta5182"; // รหัสผ่าน gmail
+                // ตั้งค่าอนุญาตการใช้งานได้ที่นี่ https://myaccount.google.com/lesssecureapps?pli=1
+                $sender = "Pingfah Apartment"; // ชื่อผู้ส่ง
+                $email_sender = "noreply.pingfah@gmail.com"; // เมล์ผู้ส่ง
+                $email_receiver = $row['email']; // เมล์ผู้รับ ***
+                $subject = "ยกเลิกคำสั่งการจองห้องพัก"; // หัวข้อเมล์
+                $mail->Username = $gmail_username;
+                $mail->Password = $gmail_password;
+                $mail->setFrom($email_sender, $sender);
+                $mail->addAddress($email_receiver);
+                $mail->Subject = $subject;
+                $email_content = "
                 <!DOCTYPE html>
                 <html>
                     <head>
@@ -85,48 +88,48 @@ if ($result->num_rows > 0) {
                     </body>
                 </html>
                 ";
-            //  ถ้ามี email ผู้รับ
-            if($email_receiver){
-                $mail->msgHTML($email_content);
-                if ($mail->send()) {
-                    // echo "<script>";
-                    // echo "alert('จองห้องเรียบร้อยแล้ว กรุณาดูคำสั่งในการจองได้ในอีเมล์');";
-                    // echo "location.href = '../dailyDetail.php?daily_id=$id'";
-                    // echo "</script>";
-                } else {
-                    echo $mail->ErrorInfo; // ข้อความ รายละเอียดการ error
+                //  ถ้ามี email ผู้รับ
+                if ($email_receiver) {
+                    $mail->msgHTML($email_content);
+                    if ($mail->send()) {
+                        // echo "<script>";
+                        // echo "alert('จองห้องเรียบร้อยแล้ว กรุณาดูคำสั่งในการจองได้ในอีเมล์');";
+                        // echo "location.href = '../dailyDetail.php?daily_id=$id'";
+                        // echo "</script>";
+                    } else {
+                        echo $mail->ErrorInfo; // ข้อความ รายละเอียดการ error
+                    }
                 }
             }
-        } 
-    }
-    if($row["daily_status"] == "รอการยืนยัน" && $row["warning_date"] != null){
-        $date_warning = date("Y-m-d", strtotime($row['warning_date']));
-        if(date("Y-m-d") > $date_warning){
-            $update = "UPDATE daily SET daily_status = 'ยกเลิกการจอง' WHERE daily_id = '".$row['daily_id']."'";
-            $conn->query($update);
-             ///////////////////// อีเมล ////////////////////////
-            require($_SERVER['DOCUMENT_ROOT']."/Pingfah/phpmailer/PHPMailerAutoload.php");
-            header('Content-Type: text/html; charset=utf-8');
-            $mail = new PHPMailer;
-            $mail->CharSet = "utf-8";
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->Port = 587;
-            $mail->SMTPSecure = 'tls';
-            $mail->SMTPAuth = true;
-            $gmail_username = "pingfah.apartment@gmail.com"; // gmail ที่ใช้ส่ง
-            $gmail_password = "Cresta5182"; // รหัสผ่าน gmail
-            // ตั้งค่าอนุญาตการใช้งานได้ที่นี่ https://myaccount.google.com/lesssecureapps?pli=1
-            $sender = "Pingfah Apartment"; // ชื่อผู้ส่ง
-            $email_sender = "noreply.pingfah@gmail.com"; // เมล์ผู้ส่ง 
-            $email_receiver = $row['email']; // เมล์ผู้รับ ***
-            $subject = "ยกเลิกคำสั่งการจองห้องพัก"; // หัวข้อเมล์
-            $mail->Username = $gmail_username;
-            $mail->Password = $gmail_password;
-            $mail->setFrom($email_sender, $sender);
-            $mail->addAddress($email_receiver);
-            $mail->Subject = $subject;
-            $email_content = "
+        }
+        if ($row["daily_status"] == "รอการยืนยัน" && $row["warning_date"] != null) {
+            $date_warning = date("Y-m-d", strtotime($row['warning_date']));
+            if (date("Y-m-d") > $date_warning) {
+                $update = "UPDATE daily SET daily_status = 'ยกเลิกการจอง' WHERE daily_id = '" . $row['daily_id'] . "'";
+                $conn->query($update);
+                ///////////////////// อีเมล ////////////////////////
+                require $_SERVER['DOCUMENT_ROOT'] . "/Pingfah/phpmailer/PHPMailerAutoload.php";
+                header('Content-Type: text/html; charset=utf-8');
+                $mail = new PHPMailer;
+                $mail->CharSet = "utf-8";
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = 587;
+                $mail->SMTPSecure = 'tls';
+                $mail->SMTPAuth = true;
+                $gmail_username = "pingfah.apartment@gmail.com"; // gmail ที่ใช้ส่ง
+                $gmail_password = "Cresta5182"; // รหัสผ่าน gmail
+                // ตั้งค่าอนุญาตการใช้งานได้ที่นี่ https://myaccount.google.com/lesssecureapps?pli=1
+                $sender = "Pingfah Apartment"; // ชื่อผู้ส่ง
+                $email_sender = "noreply.pingfah@gmail.com"; // เมล์ผู้ส่ง
+                $email_receiver = $row['email']; // เมล์ผู้รับ ***
+                $subject = "ยกเลิกคำสั่งการจองห้องพัก"; // หัวข้อเมล์
+                $mail->Username = $gmail_username;
+                $mail->Password = $gmail_password;
+                $mail->setFrom($email_sender, $sender);
+                $mail->addAddress($email_receiver);
+                $mail->Subject = $subject;
+                $email_content = "
                 <!DOCTYPE html>
                 <html>
                     <head>
@@ -146,19 +149,46 @@ if ($result->num_rows > 0) {
                     </body>
                 </html>
                 ";
-            if($email_receiver){
-                $mail->msgHTML($email_content);
-                if ($mail->send()) {
-                    // echo "<script>";
-                    // echo "alert('จองห้องเรียบร้อยแล้ว กรุณาดูคำสั่งในการจองได้ในอีเมล์');";
-                    // echo "location.href = '../dailyDetail.php?daily_id=$id'";
-                    // echo "</script>";
-                } else {
-                    echo $mail->ErrorInfo; // ข้อความ รายละเอียดการ error
+                if ($email_receiver) {
+                    $mail->msgHTML($email_content);
+                    if ($mail->send()) {
+                        // echo "<script>";
+                        // echo "alert('จองห้องเรียบร้อยแล้ว กรุณาดูคำสั่งในการจองได้ในอีเมล์');";
+                        // echo "location.href = '../dailyDetail.php?daily_id=$id'";
+                        // echo "</script>";
+                    } else {
+                        echo $mail->ErrorInfo; // ข้อความ รายละเอียดการ error
+                    }
                 }
             }
         }
     }
-  }
 }
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////// ปรับอายุพนักงานตามวันเกิด ////////////////////////////////
+$embirth = "SELECT employee_id, birthday FROM employee";
+$embirth_result = $conn->query($embirth);
+if ($embirth_result->num_rows > 0) {
+    while ($emB = $embirth_result->fetch_assoc()) {
+        $emBTime = strtotime($emB["birthday"]);
+        if(date("m",$emBTime) == date("m") && date("d",$emBTime) == date("d")){
+            $update_emB = "UPDATE employee SET age = age + 1 WHERE employee_id = ".$emB["employee_id"];
+            $conn->query($update_emB);
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////// ปรับอายุลูกค้าตามวันเกิด ////////////////////////////////
+$membirth = "SELECT member_id, birthday FROM roommember";
+$membirth_result = $conn->query($membirth);
+if ($membirth_result->num_rows > 0) {
+    while ($memB = $membirth_result->fetch_assoc()) {
+        $memBTime = strtotime($memB["birthday"]);
+        if(date("m",$memBTime) == date("m") && date("d",$memBTime) == date("d")){
+            $update_memB = "UPDATE roommember SET age = age + 1 WHERE member_id = ".$memB["member_id"];
+            $conn->query($update_memB);
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////////
 ?>
