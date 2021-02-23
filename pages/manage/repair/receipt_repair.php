@@ -100,7 +100,7 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                 </strong>
                 <div style="text-align:right;position:relative;">
                     <p>ประจำวันที่ : ..................................</p>
-                    <p class="code_text" style="right: 2px;"><?php echo DateThai(date("Y-m-d")); ?></p>
+                    <!-- <p class="code_text" style="right: 2px;"><?php echo DateThai(date("Y-m-d")); ?></p> -->
                 </div>
             </div>
             <div style="position:relative;padding-bottom:20px;line-height:30px;">
