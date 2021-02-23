@@ -133,7 +133,6 @@
     width: 40px;
     padding: 0;
     display: block;
-    margin: 0 8px;
     background-image: url(../img/tool/trash-icon.png);
     background-color: rgb(255, 70, 70);
     background-repeat: no-repeat;
@@ -227,7 +226,7 @@
 
 .repair-box table .flex-more {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     grid-gap: 8px;
     justify-content: center;
     padding: 8px;
@@ -272,6 +271,19 @@
     justify-content: center;
     align-items: center;
     margin: auto;
+    cursor: default;
+}
+
+.repair-box .print {
+    width: 40px;
+    height: 40px;
+    background-image: url("../img/tool/printer.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.repair-box .print:disabled{
+    background-color: #ddd;
     cursor: default;
 }
 

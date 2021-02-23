@@ -255,6 +255,19 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                 </td>
                                 <td>
                                     <div class="flex-more">
+                                        <?php
+                                        if($row["repair_income"] != 0){
+                                        ?>
+                                        <div>
+                                            <a href="receipt_repair.php?repair_id=<?php echo $row["repair_id"]; ?>" target="_blank"><button class="print"></button></a>
+                                        </div>
+                                        <?php
+                                        }else{
+                                        ?>
+                                        <div>
+                                            <button class="print" disabled></button>
+                                        </div>
+                                        <?php } ?>
                                         <div>
                                             <a href="repairDetail.php?repair_id=<?php echo $row['repair_id'];?>" title="ดูข้อมูลเพิ่มเติม"><button>ดูข้อมูลเพิ่มเติม</button></a>
                                         </div>
