@@ -73,10 +73,6 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
                             <input type="text" id="room_deposit" value="<?php echo $room_deposit; ?> (<?php echo $deposit;?>)" disabled>
                         </div>
                         <div>
-                            <p>ค่าห้องพัก</p>
-                            <input type="text" id="room_price" name="room_cost" value="<?php echo $member_result["price"]; ?>" readonly>
-                        </div>
-                        <div>
                             <p>ค่าเคเบิล</p>
                             <input type="text" id="cable_price" name="cable_charge" value="<?php echo $member_result["cable_charge"]; ?>" readonly>
                         </div>
@@ -128,7 +124,7 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
     <script>
     let elec = $("#elec_price")
     const deposit = $("#deposit").val()
-    $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) - parseFloat($("#deposit").val())).toFixed(2)))
+    $("total_price").val($("#total_price").val((parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) - parseFloat($("#deposit").val())).toFixed(2)))
     $("#elec_unit").keyup(function(event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -142,9 +138,9 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
             $("#elec_unit").css("border-color", "red")
         }
         if(parseFloat($("#deposit").val()) <= 0){
-            $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) + Math.abs($("#deposit").val())).toFixed(2)))
+            $("total_price").val($("#total_price").val((parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) + Math.abs($("#deposit").val())).toFixed(2)))
         }else{
-            $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) - parseFloat($("#deposit").val())).toFixed(2)))
+            $("total_price").val($("#total_price").val((parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) - parseFloat($("#deposit").val())).toFixed(2)))
         }
     })
     $("#fines").keyup(function(event) {
@@ -156,14 +152,14 @@ if ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee") {
             $("#fines").css("border-color", "")
             $("#deposit").val((parseFloat(deposit) - parseFloat($("#fines").val())).toFixed(2))
             if(parseFloat($("#deposit").val()) <= 0){
-                $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) + Math.abs($("#deposit").val())).toFixed(2)))
+                $("total_price").val($("#total_price").val((parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) + Math.abs($("#deposit").val())).toFixed(2)))
             }else{
-                $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) - parseFloat($("#deposit").val())).toFixed(2)))
+                $("total_price").val($("#total_price").val((parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) - parseFloat($("#deposit").val())).toFixed(2)))
             }
         }else{
             $("#fines").css("border-color", "red")
             $("#deposit").val(deposit)
-            $("total_price").val($("#total_price").val((parseFloat($("#room_price").val()) + parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) - parseFloat($("#deposit").val())).toFixed(2)))
+            $("total_price").val($("#total_price").val((parseFloat($("#cable_price").val()) + parseFloat($("#water_price").val()) + parseFloat(elec.val()) - parseFloat($("#deposit").val())).toFixed(2)))
         }
     })
     </script>

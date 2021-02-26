@@ -34,8 +34,9 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
     if(isset($_POST["addData-btn"])){
         $search_data = mysqli_query($conn,"SELECT COUNT(*) AS count_data FROM roommember WHERE room_id ='$room_id' AND member_status = 'กำลังเข้าพัก'");
         $result_data = mysqli_fetch_assoc($search_data);
-        $searchDetail = mysqli_query($conn, "SELECT a.deposit FROM roomdetail a INNER JOIN roomlist b ON a.type = b.room_type WHERE b.room_id = '$room_id'");
+        $searchDetail = mysqli_query($conn, "SELECT a.deposit, a.price FROM roomdetail a INNER JOIN roomlist b ON a.type = b.room_type WHERE b.room_id = '$room_id'");
         $result_detail = mysqli_fetch_assoc($searchDetail);
+        $total_price = $result_detail["price"] + $result_detail["deposit"];
         if(intval($result_data["count_data"]) <= 0){
             $come = BasicDate($_POST["come"]);
             $roommember_folder_path = "../../../images/roommember/";
@@ -58,10 +59,11 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                     $change_status = "UPDATE roomlist SET room_status = 'ไม่ว่าง' WHERE room_id = '$room_id' ";
                     $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'เพิ่มข้อมูลลูกค้า(ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
                     if($conn->query($addData) === TRUE && $conn->query($change_status) === TRUE && $conn->query($addLogs) === TRUE){
-                        $l = mysqli_query($conn, "SELECT member_id FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'");
+                        $l = mysqli_query($conn, "SELECT a.member_id, a.member_status, b.room_type FROM roommember a INNER JOIN roomlist b ON a.room_id = b.room_id WHERE a.room_id = '$room_id' AND a.member_status = 'กำลังเข้าพัก'");
                         $get_l = mysqli_fetch_assoc($l);
+                        $addcost = "INSERT INTO cost (member_id, room_id, room_type, member_status, cost_status, date, pay_date, room_cost, deposit, total) VALUES (".$get_l["member_id"].", '$room_id', '".$get_l["room_type"]."', '".$get_l["member_status"]."', 'ชำระเงินแล้ว', '".date("Y-m")."', '".date("Y-m-d")."', ".$result_detail["price"].",".$result_detail["deposit"].",$total_price)";
                         $addlogin = "INSERT INTO login (username, member_id, name, password, email, level) VALUES ('$room_id', ".$get_l["member_id"].", '$room_id', MD5('$id_card'), '$email', 'guest')";
-                        if($conn->query($addlogin) === TRUE){
+                        if( $conn->query($addcost) === TRUE && $conn->query($addlogin) === TRUE){
                             echo "<script>";
                             echo "alert('เพิ่มข้อมูลผู้พักห้อง $room_id เรียบร้อยแล้ว');";
                             echo "location.href = '../index.php';";
@@ -200,7 +202,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
     if(isset($_POST["quit"])){
         $out_date = date('Y-m-d');
         $current_date = date("Y-m");
-        $room_cost = $_POST["room_cost"];
+        // $room_cost = $_POST["room_cost"];
         $water = $_POST["water_price"];
         $elec = $_POST["elec_price"];
         $cable = $_POST["cable_charge"];
@@ -209,7 +211,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
         $total = $_POST["total_price"];
         $search_roomlist = mysqli_query($conn, "SELECT a.member_id ,b.room_type FROM roommember a INNER JOIN roomlist b ON a.room_id = b.room_id WHERE a.room_id = '$room_id' AND a.member_status = 'กำลังเข้าพัก'");
         $result_roomlist = mysqli_fetch_assoc($search_roomlist);
-        $cost = "INSERT INTO cost (member_id, room_id, room_type, cost_status, date, pay_date, room_cost, water_bill, elec_bill, cable_charge, deposit_after, total) VALUES (".$result_roomlist["member_id"].", '$room_id', '".$result_roomlist["room_type"]."', 'ชำระเงินแล้ว', '$current_date', '$out_date', $room_cost, $water, $elec, $cable, $deposit, $total)";
+        $cost = "INSERT INTO cost (member_id, room_id, room_type, member_status, cost_status, date, pay_date, water_bill, elec_bill, cable_charge, deposit_after, total) VALUES (".$result_roomlist["member_id"].", '$room_id', '".$result_roomlist["room_type"]."', 'แจ้งออกแล้ว', 'ชำระเงินแล้ว', '$current_date', '$out_date', $water, $elec, $cable, $deposit, $total)";
         $del_login = "DELETE FROM login WHERE username = '$room_id'";
         $update_status = "UPDATE roommember SET member_status = 'แจ้งออกแล้ว', out_date = '$out_date' WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
         $update_room_status = "UPDATE roomlist SET room_status = 'ว่าง' WHERE room_id = '$room_id' ";
