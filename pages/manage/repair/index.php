@@ -140,7 +140,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                         </div>
                     </div>
                     <?php
-                    $perpage = 5;
+                    $perpage = 10;
                     if(isset($_GET['page'])){
                         $page = $_GET['page'];
                     }else{
@@ -150,9 +150,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                     $num = $start + 1;
                     if(isset($from) && isset($to) && !isset($check)){
                         if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-                            $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') ORDER BY repair_date DESC LIMIT {$start} , {$perpage}";
+                            $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') ORDER BY repair_id DESC LIMIT {$start} , {$perpage}";
                         }else if($_SESSION["level"] == "guest"){
-                            $sql = "SELECT repair_id, room_id, repair_appliance, repair_category, repair_date, repair_successdate, repair_status, repair_income FROM repair WHERE member_id = ".$_SESSION["member_id"]." AND (repair_date BETWEEN '$from' AND '$to') ORDER BY repair_date DESC LIMIT {$start} , {$perpage}";
+                            $sql = "SELECT repair_id, room_id, repair_appliance, repair_category, repair_date, repair_successdate, repair_status, repair_income FROM repair WHERE member_id = ".$_SESSION["member_id"]." AND (repair_date BETWEEN '$from' AND '$to') ORDER BY repair_id DESC LIMIT {$start} , {$perpage}";
                         }
                     }else if(!isset($from) && !isset($to) && isset($check)){
                         if($check == "success"){
@@ -163,9 +163,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             $check_s = "รอคิวซ่อม";
                         }
                         if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-                            $sql = "SELECT * FROM repair WHERE repair_status = '$check_s' ORDER BY repair_date DESC LIMIT {$start} , {$perpage}";
+                            $sql = "SELECT * FROM repair WHERE repair_status = '$check_s' ORDER BY repair_id DESC LIMIT {$start} , {$perpage}";
                         }else if($_SESSION["level"] == "guest"){
-                            $sql = "SELECT repair_id, room_id, repair_appliance, repair_category, repair_date, repair_successdate, repair_status, repair_income FROM repair WHERE repair_status = '$check_s' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_date DESC LIMIT {$start} , {$perpage}";
+                            $sql = "SELECT repair_id, room_id, repair_appliance, repair_category, repair_date, repair_successdate, repair_status, repair_income FROM repair WHERE repair_status = '$check_s' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_id DESC LIMIT {$start} , {$perpage}";
                         }
                     }else if(isset($from) && isset($to) && isset($check)){
                         if($check == "success"){
@@ -176,15 +176,15 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             $check_s = "รอคิวซ่อม";
                         }
                         if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-                            $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') AND repair_status = '$check_s' ORDER BY repair_date DESC LIMIT {$start} , {$perpage}"; 
+                            $sql = "SELECT * FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') AND repair_status = '$check_s' ORDER BY repair_id DESC LIMIT {$start} , {$perpage}"; 
                         }else if($_SESSION["level"] == "guest"){
-                            $sql = "SELECT repair_id, room_id, repair_appliance, repair_category, repair_date, repair_successdate, repair_status, repair_income FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') AND repair_status = '$check_s' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_date DESC LIMIT {$start} , {$perpage}"; 
+                            $sql = "SELECT repair_id, room_id, repair_appliance, repair_category, repair_date, repair_successdate, repair_status, repair_income FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') AND repair_status = '$check_s' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_id DESC LIMIT {$start} , {$perpage}"; 
                         }  
                     }else{
                         if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-                            $sql = "SELECT * FROM repair ORDER BY repair_date DESC LIMIT {$start} , {$perpage} ";
+                            $sql = "SELECT * FROM repair ORDER BY repair_id DESC LIMIT {$start} , {$perpage} ";
                         }else if($_SESSION["level"] == "guest"){
-                            $sql = "SELECT repair_id, room_id, repair_appliance, repair_category, repair_date, repair_successdate, repair_status, repair_income FROM repair WHERE member_id = ".$_SESSION["member_id"]." ORDER BY repair_date DESC LIMIT {$start} , {$perpage} ";
+                            $sql = "SELECT repair_id, room_id, repair_appliance, repair_category, repair_date, repair_successdate, repair_status, repair_income FROM repair WHERE member_id = ".$_SESSION["member_id"]." ORDER BY repair_id DESC LIMIT {$start} , {$perpage} ";
                         }
                     }
                         $result = $conn->query($sql);

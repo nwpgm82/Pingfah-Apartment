@@ -137,7 +137,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                     }
                     ?>
                     <?php
-                    $perpage = 5;
+                    $perpage = 10;
                     if(isset($_GET['page'])){
                         $page = $_GET['page'];
                     }else{

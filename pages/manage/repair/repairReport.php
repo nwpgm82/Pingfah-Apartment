@@ -83,7 +83,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
                     <div class="hr"></div>
                     <h3>รายการแจ้งซ่อมที่ซ่อมเสร็จแล้วทั้งหมด</h3>
                     <?php
-                    $perpage = 5;
+                    $perpage = 10;
                     if(isset($_GET['page'])){
                         $page = $_GET['page'];
                     }else{
@@ -93,15 +93,15 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
                     $num = $start + 1;
                     if(isset($from) && isset($to)){
                         if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-                            $sql = "SELECT * FROM repair WHERE (repair_successdate BETWEEN '$from' AND '$to') AND repair_status = 'ซ่อมเสร็จแล้ว' ORDER BY repair_date DESC LIMIT {$start} , {$perpage} "; 
+                            $sql = "SELECT * FROM repair WHERE (repair_successdate BETWEEN '$from' AND '$to') AND repair_status = 'ซ่อมเสร็จแล้ว' ORDER BY repair_id DESC LIMIT {$start} , {$perpage} "; 
                         }else if($_SESSION["level"] == "guest"){
-                            $sql = "SELECT * FROM repair WHERE (repair_successdate BETWEEN '$from' AND '$to') AND repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_date DESC LIMIT {$start} , {$perpage} "; 
+                            $sql = "SELECT * FROM repair WHERE (repair_successdate BETWEEN '$from' AND '$to') AND repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_id DESC LIMIT {$start} , {$perpage} "; 
                         }  
                     }else{
                         if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-                            $sql = "SELECT * FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' ORDER BY repair_date DESC LIMIT {$start} , {$perpage} ";
+                            $sql = "SELECT * FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' ORDER BY repair_id DESC LIMIT {$start} , {$perpage} ";
                         }else if($_SESSION["level"] == "guest"){
-                            $sql = "SELECT * FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_date DESC LIMIT {$start} , {$perpage} ";
+                            $sql = "SELECT * FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." ORDER BY repair_id DESC LIMIT {$start} , {$perpage} ";
                         }
                     }
                         $result = $conn->query($sql);
