@@ -3,111 +3,48 @@ $conn = mysqli_connect("localhost", "root", "", "Pingfah") or die("Error: " . my
 mysqli_query($conn, "SET NAMES 'utf8' ");
 date_default_timezone_set('Asia/Bangkok');
 //////////// กรณีไม่ได้ชำระเงินค่าห้องพักรายเดือน ///////////////////////
-$get_cost = "SELECT * FROM cost";
+$get_cost = "SELECT * FROM cost WHERE cost_status != 'ชำระเงินแล้ว'";
 $get_result = $conn->query($get_cost);
 if ($get_result->num_rows > 0) {
     while ($cost = $get_result->fetch_assoc()) {
         $cost_date = strtotime($cost["date"]);
-        $month = date("m",$cost_date);
-        $inc_month = sprintf("%02d", intval($month+1));
-        $current_date = date("Y",$cost_date)."-".$inc_month."-06";
-        $cur_dateCheck = strtotime($current_date);
-        if($cost_date >= $cur_dateCheck){
-            // echo "true";
+        $month = date("m", $cost_date);
+        $inc_month = sprintf("%02d", intval($month + 1));
+        $current_date = date("Y", $cost_date) . "-" . $inc_month . "-06";
+        $deadline_dateCheck = strtotime($current_date);
+        $diff = abs($deadline_dateCheck - $cost_date);
+        $years = floor($diff / (365 * 60 * 60 * 24));
+        $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+        $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
+        if ($cost_date > $deadline_dateCheck) {
+            if ($cost["room_type"] == "แอร์") {
+                $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
+            } else if ($cost["room_type"] == "พัดลม") {
+                $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
+            }
+            $detail_result = mysqli_fetch_assoc($get_detail);
+            $total_fines = floatval($detail_result["fines"] * $days);
+            $cost_totalprice = $cost["room_cost"] + $cost["water_bill"] + $cost["elec_bill"] + $cost["cable_charge"] + floatval($total_fines);
+            $update_cost = "UPDATE cost SET fines = $total_fines, total = $cost_totalprice WHERE cost_id = " . $cost["cost_id"];
+            if ($conn->query($update_cost) === true) {
+                require_once "../lib/PromptPayQR.php";
+                $date = date("Y-m");
+                $folder_prompt = "images/cost/$date/" . $cost["room_id"] . "/promptpay/qr-code.png";
+                $promptData = mysqli_query($conn, "SELECT prompt_num FROM promptpay");
+                $promptData_result = mysqli_fetch_assoc($promptData);
+                $PromptPayQR = new PromptPayQR(); // new object
+                $PromptPayQR->size = 6;
+                $PromptPayQR->id = $promptData_result["prompt_num"]; // PromptPay ID
+                $PromptPayQR->amount = $cost_totalprice; // Set amount (not necessary)
+                $data = $PromptPayQR->generate();
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
+                file_put_contents($folder_prompt, $data);
+            }
         }
-        // $current_date = date("Y",$cost_date)."-".(date("m",$cost_date)+1)."-".date("d",$cost_date);
-        // if()
-        // echo $current_date;
-        // echo "<script>console.log('".date("Y-m-d",$cost_date)."');</script>";
-        // if()
-        // if ($cost["room_type"] == "แอร์") {
-        //     $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
-        // } else if ($cost["room_type"] == "พัดลม") {
-        //     $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
-        // }
-        // $detail_result = mysqli_fetch_assoc($get_detail);
-        // $cost_fines = $cost["fines"] + $detail_result["fines"];
-        // $cost_total = $cost["total"] + $detail_result["fines"];
-        // $updatefines = "UPDATE cost SET fines = $cost_fines, total = $cost_total WHERE cost_id = " . $cost["cost_id"];
-        // if ($conn->query($updatefines) === true) {
-        //     require_once "../lib/PromptPayQR.php";
-        //     $date = date("Y-m");
-        //     $folder_prompt = "images/cost/$date/$room_id/promptpay/qr-code.png";
-        //     $promptData = mysqli_query($conn, "SELECT prompt_num FROM promptpay");
-        //     $promptData_result = mysqli_fetch_assoc($promptData);
-        //     $PromptPayQR = new PromptPayQR(); // new object
-        //     $PromptPayQR->size = 6;
-        //     $PromptPayQR->id = $promptData_result["prompt_num"]; // PromptPay ID
-        //     $PromptPayQR->amount = $cost["fines"]; // Set amount (not necessary)
-        //     $data = $PromptPayQR->generate();
-        //     list($type, $data) = explode(';', $data);
-        //     list(, $data) = explode(',', $data);
-        //     $data = base64_decode($data);
-        //     file_put_contents($folder_prompt, $data);
-        // }
     }
 }
-// if (date("d") == "6") {
-//     $get_cost = "SELECT fines, room_type, total FROM cost WHERE cost_status = 'รอการชำระเงิน'";
-//     $get_result = $conn->query($get_cost);
-//     if ($get_result->num_rows > 0) {
-//         while ($cost = $get_result->fetch_assoc()) {
-//             if ($cost["room_type"] == "แอร์") {
-//                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
-//             } else if ($cost["room_type"] == "พัดลม") {
-//                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
-//             }
-//             $detail_result = mysqli_fetch_assoc($get_detail);
-//             $updatefines = "UPDATE cost SET fines = " . $detail_result["fines"] . ", total = total + " . $detail_result["fines"] . ", cost_status = 'ยังไม่ได้ชำระเงิน' WHERE cost_status != 'ชำระเงินแล้ว' ";
-//             if ($conn->query($updatefines) === true) {
-//                 require_once "../lib/PromptPayQR.php";
-//                 $date = date("Y-m");
-//                 $folder_prompt = "images/cost/$date/$room_id/promptpay/qr-code.png";
-//                 $promptData = mysqli_query($conn, "SELECT prompt_num FROM promptpay");
-//                 $promptData_result = mysqli_fetch_assoc($promptData);
-//                 $PromptPayQR = new PromptPayQR(); // new object
-//                 $PromptPayQR->size = 6;
-//                 $PromptPayQR->id = $promptData_result["prompt_num"]; // PromptPay ID
-//                 $PromptPayQR->amount = $cost["fines"]; // Set amount (not necessary)
-//                 $data = $PromptPayQR->generate();
-//                 list($type, $data) = explode(';', $data);
-//                 list(, $data) = explode(',', $data);
-//                 $data = base64_decode($data);
-//                 file_put_contents($folder_prompt, $data);
-//             }
-//         }
-//     }
-// } else if (date("d") > "6") {
-//     $get_cost = "SELECT fines, total FROM cost WHERE cost_status = 'ยังไม่ได้ชำระเงิน'";
-//     $get_result = $conn->query($get_cost);
-//     if ($get_result->num_rows > 0) {
-//         while ($cost = $get_result->fetch_assoc()) {
-//             if ($cost["room_type"] == "แอร์") {
-//                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
-//             } else if ($cost["room_type"] == "พัดลม") {
-//                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
-//             }
-//             $detail_result = mysqli_fetch_assoc($get_detail);
-//             $updatefines = "UPDATE cost SET fines = fines + " . $detail_result["fines"] . ", total = total + " . $detail_result["fines"] . " WHERE cost_status != 'ชำระเงินแล้ว' ";
-//             if ($conn->query($updatefines) === true) {
-//                 require_once "../lib/PromptPayQR.php";
-//                 $date = date("Y-m");
-//                 $folder_prompt = "images/cost/$date/$room_id/promptpay/qr-code.png";
-//                 $promptData = mysqli_query($conn, "SELECT prompt_num FROM promptpay");
-//                 $promptData_result = mysqli_fetch_assoc($promptData);
-//                 $PromptPayQR = new PromptPayQR(); // new object
-//                 $PromptPayQR->size = 6;
-//                 $PromptPayQR->id = $promptData_result["prompt_num"]; // PromptPay ID
-//                 $PromptPayQR->amount = $total_price; // Set amount (not necessary)
-//                 $data = $PromptPayQR->generate();
-//                 list($type, $data) = explode(';', $data);
-//                 list(, $data) = explode(',', $data);
-//                 $data = base64_decode($data);
-//                 file_put_contents($folder_prompt, $data);
-//             }
-//         }
-//     }
-// }
 ///////////////////////////////////////////////////////////////////
 ///////////// กรณียกเลิกการจองเนื่องจากไม่ได้เข้าพักในวันที่ที่กำหนด และยกเลิกการจองเนื่องจากไม่ได้ชำระเงินค่ามัดจำห้องพัก ///////////////////////////
 $sql = "SELECT * FROM daily";
@@ -244,11 +181,11 @@ $embirth = "SELECT employee_id, birthday FROM employee";
 $embirth_result = $conn->query($embirth);
 if ($embirth_result->num_rows > 0) {
     while ($emB = $embirth_result->fetch_assoc()) {
-        $emBTime = strtotime($emB["birthday"]);
-        if (date("m", $emBTime) == date("m") && date("d", $emBTime) == date("d")) {
-            $update_emB = "UPDATE employee SET age = age + 1 WHERE employee_id = " . $emB["employee_id"];
-            $conn->query($update_emB);
-        }
+        $Emtoday = date("Y-m-d");
+        $birthEm_diff = date_diff(date_create($emB["birthday"]), date_create($Emtoday));
+        $currentEm_age = $birthEm_diff->format("%y");
+        $updateEm_age = "UPDATE employee SET age = $currentEm_age WHERE employee_id = ".$emB["employee_id"];
+        $conn->query($updateEm_age);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -257,11 +194,11 @@ $membirth = "SELECT member_id, birthday FROM roommember";
 $membirth_result = $conn->query($membirth);
 if ($membirth_result->num_rows > 0) {
     while ($memB = $membirth_result->fetch_assoc()) {
-        $memBTime = strtotime($memB["birthday"]);
-        if (date("m", $memBTime) == date("m") && date("d", $memBTime) == date("d")) {
-            $update_memB = "UPDATE roommember SET age = age + 1 WHERE member_id = " . $memB["member_id"];
-            $conn->query($update_memB);
-        }
+        $Mem_today = date("Y-m-d");
+        $birthMem_diff = date_diff(date_create($memB["birthday"]), date_create($Mem_today));
+        $currentMem_age = $birthMem_diff->format("%y");
+        $updateMem_age = "UPDATE employee SET age = $currentMem_age WHERE member_id = ".$memB["member_id"];
+        $conn->query($updateMem_age);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
