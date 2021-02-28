@@ -123,7 +123,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                     ?>
                     <div style="padding-top:32px;">
                         <div style="line-height:40px;">
-                            <h3 style="color: rgb(131, 120, 47, 0.7);">รายได้ทั้งหมด : <?php echo number_format($totalresult["total_price"],2); ?> บาท</h3>
+                            <h3 style="color: rgb(131, 120, 47, 0.7);">ยอดรวมทั้งหมด : <?php echo number_format($totalresult["total_price"],2); ?> บาท</h3>
                             <h3 style="color: #B1D78A;">ชำระเงินแล้ว : <?php echo number_format($totalresult["successtotal_cost"],2); ?> บาท</h3>
                             <h3 style="color: rgb(170, 170, 170);">รอการชำระเงิน : <?php echo number_format($totalresult["pendingtotal_price"],2); ?> บาท</h3>
                             <h3 style="color: #D68B8B;">ยังไม่ได้ชำระเงิน : <?php echo number_format($totalresult["untotal_cost"],2); ?> บาท</h3>

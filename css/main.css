@@ -168,7 +168,7 @@ body::after{
     position: absolute;
     top: 10px;
     left: 20px;
-    width: 134px;
+    min-width: 134px;
     background-color: #fff;
     cursor: pointer;
 }

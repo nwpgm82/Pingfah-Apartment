@@ -107,7 +107,7 @@
                 <h3 id="topbar-page"></h3>
             </div>
         </div>
-        <a href="/Pingfah/pages/manage/myprofile/index.php">
+        <a <?php if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){ echo "href='/Pingfah/pages/manage/myprofile/index.php'"; }else{ echo "href='/Pingfah/pages/manage/roomList/room_id.php?ID=".$_SESSION["name"]."'"; } ?>>
             <div class="profile">
                 <?php
                 $user_email = $_SESSION["ID"];

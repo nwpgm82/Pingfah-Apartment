@@ -12,7 +12,9 @@ if($_SESSION['level'] == 'admin'){
     if(!is_dir($main_target)){
         mkdir($main_target);
     }
-    mkdir($create);
+    if(!is_dir($create)){
+        mkdir($create);
+    }
     if ($conn->query($sql) === TRUE && $conn->query($addLogs) === TRUE) {
         echo "<script>";
         echo "alert('เพิ่มห้อง $room เรียบร้อยแล้ว');";

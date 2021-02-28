@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSION["level"] == "guest"){
     include("../../connection.php");
     $room_id = $_REQUEST["ID"];
     @$get_people = $_REQUEST["people"];
@@ -12,10 +12,18 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    if(intval($get_people) == 1 || $get_people == ""){
-        $sql = "SELECT room_id, come_date, member_status, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
-    }else if(intval($get_people) == 2 ){
-        $sql = "SELECT room_id, come_date, member_status, name_title2, firstname2, lastname2, nickname2, id_card2, phone2, email2, birthday2, age2, race2, nationality2, job2, address2, pic_idcard2, pic_home2, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
+    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+        if(intval($get_people) == 1 || $get_people == ""){
+            $sql = "SELECT room_id, come_date, member_status, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
+        }else if(intval($get_people) == 2 ){
+            $sql = "SELECT room_id, come_date, member_status, name_title2, firstname2, lastname2, nickname2, id_card2, phone2, email2, birthday2, age2, race2, nationality2, job2, address2, pic_idcard2, pic_home2, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
+        }
+    }else if($_SESSION["level"] == "guest"){
+        if(intval($get_people) == 1 || $get_people == ""){
+            $sql = "SELECT room_id, come_date, member_status, name_title, firstname, lastname, nickname, id_card, phone, email, birthday, age, race, nationality, job, address, pic_idcard, pic_home, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' AND member_id = ".$_SESSION["member_id"];
+        }else if(intval($get_people) == 2 ){
+            $sql = "SELECT room_id, come_date, member_status, name_title2, firstname2, lastname2, nickname2, id_card2, phone2, email2, birthday2, age2, race2, nationality2, job2, address2, pic_idcard2, pic_home2, people FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' AND member_id = ".$_SESSION["member_id"];
+        }
     }
     $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
     $row = mysqli_fetch_array($result);
@@ -61,7 +69,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                         enctype="multipart/form-data">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
                            <h3>ห้อง <?php echo $room_id; ?></h3>
-                           <?php if($row != null){ ?>
+                           <?php if($row != null && ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee")){ ?>
                            <div id="option-btn" class="option-grid" <?php if($_SESSION["level"] == "employee"){ echo 'style="grid-template-columns: auto 40px 40px;grid-template-areas:'."'plus quit edit';".'"'; } ?>>
                                 <?php if($people == 1){ ?>
                                 <a href="addmember.php?ID=<?php echo $room_id; ?>" class="plus"><button type="button" class="plus-btn" title="เพิ่มข้อมูล (คนที่ 2)"></button></a>

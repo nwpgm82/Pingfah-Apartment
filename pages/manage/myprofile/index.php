@@ -41,6 +41,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                 <form action="function/editEm.php" method='POST' enctype="multipart/form-data">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <h3>ข้อมูลพนักงาน</h3>
+                        <?php
+                        if($_SESSION["level"] == "guest"){
+                        ?>
                         <div class="option-grid" id="option-btn" style="display:flex;">
                             <button type="button" class="edit edit-btn" id="edit" title="แก้ไข"></button>
                         </div>
@@ -48,6 +51,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <button type="submit" class="correct-btn" id="accept-edit" name="accept-edit" title="ยืนยันการแก้ไข"></button>
                             <button type="button" class="cancel-btn" id="cancel-edit" title="ยกเลิกการแก้ไข"></button>
                         </div>
+                        <?php } ?>
                     </div>
                     <div class="hr"></div>
                     <div class="form-grid">

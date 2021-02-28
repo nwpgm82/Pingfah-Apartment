@@ -98,23 +98,23 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                         $start = ($page - 1) * $perpage;
                         $num = $start + 1;
                         if(isset($from) && isset($to) && !isset($check)){
-                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to' ORDER BY come_date DESC";
+                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to' ORDER BY member_id DESC";
                         }else if(!isset($from) && !isset($to) && isset($check)){
                             if($check == "daily"){
                                 $check_s = "รายวัน";
                             }else if($check == "month"){
                                 $check_s = "รายเดือน";
                             }
-                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE member_cat = '$check_s' ORDER BY come_date DESC";
+                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE member_cat = '$check_s' ORDER BY member_id DESC";
                         }else if(isset($from) && isset($to) && isset($check)){
                             if($check == "daily"){
                                 $check_s = "รายวัน";
                             }else if($check == "month"){
                                 $check_s = "รายเดือน";
                             }
-                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to' AND member_cat = '$check_s' ORDER BY come_date DESC";
+                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember WHERE come_date BETWEEN '$from' AND '$to' AND member_cat = '$check_s' ORDER BY member_id DESC";
                         }else{
-                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember ORDER BY come_date DESC";
+                            $sql = "SELECT member_id, room_id, come_date, out_date, member_cat, member_status, name_title, firstname, lastname FROM roommember ORDER BY member_id DESC";
                         }
                         $result = $conn->query($sql);
                         ?>
