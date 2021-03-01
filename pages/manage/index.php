@@ -192,7 +192,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             <div>
                                 <h4>จำนวนที่ค้างชำระ</h4>
                                 <?php
-                                    $overdue_cost = mysqli_query($conn,"SELECT COUNT(*) as total_overdue FROM cost WHERE cost_status = 'ยังไม่ได้ชำระ'");
+                                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                        $overdue_cost = mysqli_query($conn,"SELECT COUNT(*) as total_overdue FROM cost WHERE cost_status != 'ชำระเงินแล้ว'");
+                                    }else if($_SESSION["level"] == "guest"){
+                                        $overdue_cost = mysqli_query($conn,"SELECT COUNT(*) as total_overdue FROM cost WHERE cost_status != 'ชำระเงินแล้ว' AND member_id = ".$_SESSION["member_id"]);
+                                    }
                                     $overdue = mysqli_fetch_assoc($overdue_cost);  
                                     ?>
                                 <p><?php echo $overdue['total_overdue']; ?> รายการ</p>
@@ -212,7 +216,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             <div>
                                 <h4>พัสดุที่ยังไม่ได้รับ</h4>
                                 <?php
-                                    $package_cost = mysqli_query($conn,"SELECT COUNT(*) as total_package FROM package WHERE package_status = 'ยังไม่ได้รับพัสดุ'");
+                                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                        $package_cost = mysqli_query($conn,"SELECT COUNT(*) as total_package FROM package WHERE package_status = 'ยังไม่ได้รับพัสดุ'");
+                                    }else if($_SESSION["level"] == "guest"){
+                                        $package_cost = mysqli_query($conn,"SELECT COUNT(*) as total_package FROM package WHERE package_status = 'ยังไม่ได้รับพัสดุ' AND member_id = ".$_SESSION["member_id"]);
+                                    }
                                     $package = mysqli_fetch_assoc($package_cost);  
                                     ?>
                                 <p><?php echo $package['total_package']; ?> ชิ้น</p>
@@ -230,9 +238,13 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                     <div class="card">
                         <div class="detail">
                             <div>
-                                <h4>รายการแจ้งซ่อม</h4>
+                                <h4>รายการแจ้งซ่อมที่รอการซ่อม</h4>
                                 <?php
-                                    $repair = mysqli_query($conn,"SELECT COUNT(*) as total_repair FROM repair");
+                                    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                                        $repair = mysqli_query($conn,"SELECT COUNT(*) as total_repair FROM repair WHERE repair_status != 'ซ่อมเสร็จแล้ว'");
+                                    }else if($_SESSION["level"] == "guest"){
+                                        $repair = mysqli_query($conn,"SELECT COUNT(*) as total_repair FROM repair WHERE repair_status != 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]);
+                                    }
                                     $repair_total = mysqli_fetch_assoc($repair);  
                                     ?>
                                 <p><?php echo $repair_total['total_repair']; ?> รายการ</p>
