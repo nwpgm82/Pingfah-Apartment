@@ -3,6 +3,7 @@ $(document).ready(function () {
     let cable = $("#cable_price").val()
     let water = $("#water_price").val()
     let elec = $("#elec_price").val()
+    let fines = $("#fines_price").val()
 
     function getExtension(filename) {
         var parts = filename.split('.');
@@ -79,7 +80,7 @@ $(document).ready(function () {
             $("#room_price").css("border-color", "red")
             $("#room_error").html("โปรดระบุค่าห้องพัก")
         }
-        $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec)).toFixed(2))
+        $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec) + parseFloat(fines)).toFixed(2))
     })
     $(document).on("keyup", "#cable_price", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
@@ -95,7 +96,7 @@ $(document).ready(function () {
             $("#cable_price").css("border-color", "red")
             $("#cable_error").html("โปรดระบุค่าเคเบิล")
         }
-        $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec)).toFixed(2))
+        $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec) + parseFloat(fines)).toFixed(2))
     })
     $(document).on("keyup", "#water_price", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
@@ -111,7 +112,7 @@ $(document).ready(function () {
             $("#water_price").css("border-color", "red")
             $("#water_error").html("โปรดระบุค่าน้ำ")
         }
-        $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec)).toFixed(2))
+        $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec) + parseFloat(fines)).toFixed(2))
     })
     $(document).on("keyup", "#elec_price", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
@@ -127,7 +128,23 @@ $(document).ready(function () {
             $("#elec_price").css("border-color", "red")
             $("#elec_error").html("โปรดระบุค่าไฟ")
         }
-        $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec)).toFixed(2))
+        $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec) + parseFloat(fines)).toFixed(2))
+    })
+    $(document).on("keyup", "#fines_price", function (event) {
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+        if ($("#fines_price").val() != "") {
+            fines = $("#fines_price").val()
+            $("#fines_price").css("border-color", "")
+            $("#fines_error").html("")
+        } else {
+            fines = 0
+            $("#fines_price").css("border-color", "red")
+            $("#fines_error").html("โปรดระบุค่าปรับ")
+        }
+        $("#total_price").val((parseFloat(room) + parseFloat(cable) + parseFloat(water) + parseFloat(elec) + parseFloat(fines)).toFixed(2))
     })
     $(document).on("change", "#pay_img", function () {
         if (isImage($("#pay_img").val()) == false) {

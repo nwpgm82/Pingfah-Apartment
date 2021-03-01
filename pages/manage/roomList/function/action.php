@@ -206,12 +206,12 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
         $water = $_POST["water_price"];
         $elec = $_POST["elec_price"];
         $cable = $_POST["cable_charge"];
-        // $fines = $_POST["fines"];
+        $fines = $_POST["fines"];
         $deposit = $_POST["deposit"];
         $total = $_POST["total_price"];
         $search_roomlist = mysqli_query($conn, "SELECT a.member_id ,b.room_type FROM roommember a INNER JOIN roomlist b ON a.room_id = b.room_id WHERE a.room_id = '$room_id' AND a.member_status = 'กำลังเข้าพัก'");
         $result_roomlist = mysqli_fetch_assoc($search_roomlist);
-        $cost = "INSERT INTO cost (member_id, room_id, room_type, member_status, cost_status, date, pay_date, water_bill, elec_bill, cable_charge, deposit_after, total) VALUES (".$result_roomlist["member_id"].", '$room_id', '".$result_roomlist["room_type"]."', 'แจ้งออกแล้ว', 'ชำระเงินแล้ว', '$current_date', '$out_date', $water, $elec, $cable, $deposit, $total)";
+        $cost = "INSERT INTO cost (member_id, room_id, room_type, member_status, cost_status, date, pay_date, water_bill, elec_bill, cable_charge, deposit_after, total, fines) VALUES (".$result_roomlist["member_id"].", '$room_id', '".$result_roomlist["room_type"]."', 'แจ้งออกแล้ว', 'ชำระเงินแล้ว', '$current_date', '$out_date', $water, $elec, $cable, $deposit, $total, $fines)";
         $del_login = "DELETE FROM login WHERE username = '$room_id'";
         $update_status = "UPDATE roommember SET member_status = 'แจ้งออกแล้ว', out_date = '$out_date' WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก' ";
         $update_room_status = "UPDATE roomlist SET room_status = 'ว่าง' WHERE room_id = '$room_id' ";

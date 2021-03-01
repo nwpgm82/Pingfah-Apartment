@@ -74,6 +74,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             <?php } ?>
                         </div>
                         <div class="hr"></div>
+                        <?php
+                        if($deposit == 0 && $deposit_after == null){
+                        ?>
                         <div class="grid-container">
                             <div class="room_id">
                                 <p>เลขห้อง</p>
@@ -111,6 +114,11 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                     disabled>
                                 <h5 id="elec_error" style="color:red;"></h5>
                             </div>
+                            <div class="fines">
+                                <p>ค่าปรับ (บาท)</p>
+                                <input type="text" id="fines_price" value="<?php if($fines != null){ echo $fines; }else{ echo number_format(0,2); } ?>" disabled>
+                                <h5 id="fines_error" style="color:red;"></h5>
+                            </div>
                             <div class="total">
                                 <p>ยอดรวม (บาท)</p>
                                 <input type="text" id="total_price" name="total_price" value="<?php echo $total; ?>"
@@ -126,6 +134,94 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                     value="<?php if(isset($pay_date)){ echo DateThai2($pay_date); } ?>" disabled>
                             </div>
                         </div>
+                        <?php 
+                        }else if($deposit != 0 && $deposit_after == null){
+                        ?>
+                        <div class="grid-container2">
+                            <div class="room_id">
+                                <p>เลขห้อง</p>
+                                <input type="text" value="<?php echo $room_id; ?>" disabled>
+                            </div>
+                            <div class="room_type">
+                                <p>ประเภทห้องพัก</p>
+                                <input type="text" value="<?php echo $room_type; ?>" disabled>
+                            </div>
+                            <div class="date">
+                                <p>ประจำเดือน</p>
+                                <input type="text" value="<?php echo DateThai($date); ?>" disabled>
+                            </div>
+                            <div class="room_cost">
+                                <p>ค่าห้องพัก (บาท)</p>
+                                <input type="text" value="<?php echo $room_cost; ?>" disabled>
+                            </div>
+                            <div class="deposit">
+                                <p>ค่าประกันหอพัก (บาท)</p>
+                                <input type="text" value="<?php echo $deposit; ?>" disabled>
+                            </div>
+                            <div class="total">
+                                <p>ยอดรวม (บาท)</p>
+                                <input type="text" value="<?php echo $total; ?>" disabled>
+                            </div>
+                            <div class="cost_status">
+                                <p>สถานะการชำระเงิน</p>
+                                <input type="text" value="<?php echo $cost_status; ?>" disabled>
+                            </div>
+                            <div class="pay_date">
+                                <p>วันที่ชำระเงิน</p>
+                                <input type="text" value="<?php if(isset($pay_date)){ echo DateThai2($pay_date); } ?>" disabled>
+                            </div>
+                        </div>
+                        <?php 
+                        }else if($deposit == 0 && $deposit_after != null){
+                        ?>
+                        <div class="grid-container3">
+                            <div class="room_id">
+                                <p>เลขห้อง</p>
+                                <input type="text" value="<?php echo $room_id; ?>" disabled>
+                            </div>
+                            <div class="room_type">
+                                <p>ประเภทห้องพัก</p>
+                                <input type="text" value="<?php echo $room_type; ?>" disabled>
+                            </div>
+                            <div class="date">
+                                <p>ประจำเดือน</p>
+                                <input type="text" value="<?php echo DateThai($date); ?>" disabled>
+                            </div>
+                            <div class="deposit_after">
+                                <p>ค่าประกันหอพักหลังจากหักค่าเสียหายแล้ว (บาท)</p>
+                                <input type="text" value="<?php echo $deposit_after; ?>" disabled>
+                            </div>
+                            <div class="cable_charge">
+                                <p>ค่าเคเบิล (บาท)</p>
+                                <input type="text" value="<?php echo $cable_charge; ?>" disabled>
+                            </div>
+                            <div class="water_bill">
+                                <p>ค่าน้ำ (บาท)</p>
+                                <input type="text" value="<?php echo $water_bill; ?>" disabled>
+                            </div>
+                            <div class="elec_bill">
+                                <p>ค่าไฟ (บาท)</p>
+                                <input type="text" value="<?php echo $elec_bill; ?>" disabled>
+                            </div>
+                            <div class="fines">
+                                <p>ค่าปรับ (บาท)</p>
+                                <input type="text" id="fines_price" value="<?php if($fines != null){ echo $fines; }else{ echo number_format(0,2); } ?>" disabled>
+                                <h5 id="fines_error" style="color:red;"></h5>
+                            </div>
+                            <div class="total">
+                                <p>ยอดรวม (บาท)</p>
+                                <input type="text" value="<?php echo $total; ?>" disabled>
+                            </div>
+                            <div class="cost_status">
+                                <p>สถานะการชำระเงิน</p>
+                                <input type="text" value="<?php echo $cost_status; ?>" disabled>
+                            </div>
+                            <div class="pay_date">
+                                <p>วันที่ชำระเงิน</p>
+                                <input type="text" value="<?php if(isset($pay_date)){ echo DateThai2($pay_date); } ?>" disabled>
+                            </div>
+                        </div>
+                        <?php } ?>
                     </form>
                 </div>
             </div>

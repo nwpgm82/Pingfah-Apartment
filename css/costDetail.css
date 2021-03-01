@@ -97,7 +97,33 @@
         "room_id room_type date date"
         "room_cost room_cost cable_charge cable_charge"
         "water_bill water_bill elec_bill elec_bill"
-        "total cost_status pay_date pay_date";
+        "fines fines total total"
+        "cost_status cost_status pay_date pay_date";
+}
+
+.grid-container2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 16px 8px;
+    grid-template-areas:
+        "room_id room_type date date"
+        "room_cost room_cost deposit deposit"
+        "total total cost_status cost_status"
+        "pay_date pay_date pay_date pay_date";
+}
+
+.grid-container3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 16px 8px;
+    grid-template-areas:
+        "room_id room_type date date"
+        "deposit_after deposit_after cable_charge cable_charge"
+        "water_bill water_bill elec_bill elec_bill"
+        "fines fines total total"
+        "cost_status cost_status pay_date pay_date";
 }
 
 .room_id {
@@ -135,6 +161,11 @@
     height: 86px;
 }
 
+.fines{
+    grid-area: fines;
+    height: 86px;
+}
+
 .total {
     grid-area: total;
     height: 86px;
@@ -147,6 +178,16 @@
 
 .pay_date {
     grid-area: pay_date;
+    height: 86px;
+}
+
+.deposit{
+    grid-area: deposit;
+    height: 86px;
+}
+
+.deposit_after{
+    grid-area: deposit_after;
     height: 86px;
 }
 
@@ -226,11 +267,45 @@
     .grid-container{
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
-        "room_id room_type"
+        "room_id room_id"
+        "room_type room_type"
         "date date"
-        "room_cost cable_charge"
-        "water_bill elec_bill"
-        "total cost_status"
+        "room_cost room_cost"
+        "cable_charge cable_charge"
+        "water_bill water_bill"
+        "elec_bill elec_bill"
+        "fines fines"
+        "total total"
+        "cost_status cost_status"
+        "pay_date pay_date";
+    }
+
+    .grid-container2{
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+        "room_id room_id"
+        "room_type room_type"
+        "date date"
+        "room_cost room_cost"
+        "deposit deposit"
+        "total total"
+        "cost_status cost_status"
+        "pay_date pay_date";
+    }
+
+    .grid-container3{
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+        "room_id room_id"
+        "room_type room_type"
+        "date date"
+        "deposit_after deposit_after"
+        "cable_charge cable_charge"
+        "water_bill water_bill"
+        "elec_bill elec_bill"
+        "fines fines"
+        "total total"
+        "cost_status cost_status"
         "pay_date pay_date";
     }
 }
