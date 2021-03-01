@@ -409,17 +409,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            <?php
-            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-            ?>
-            ['เดือน / ปี', 'รายได้ทั้งหมด (บาท)'],
-            <?php
-            }else{
-            ?>
-            ['เดือน / ปี', 'รายจ่ายทั้งหมด (บาท)'],
-            <?php
-            }
-            ?>
+            ['เดือน / ปี', 'ยอดรวมทั้งหมด (บาท)'],
             <?php echo $datax;?>
         ]);
         var options = {

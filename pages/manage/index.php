@@ -20,12 +20,12 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
         return "$strDay $strMonthThai $strYear";
     }
     if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date ORDER BY date ASC";
+        $query = "SELECT date, SUM(total) as totalPrice FROM cost GROUP BY date ORDER BY date";
         $query2 = "SELECT b.check_in ,SUM(a.total_allprice) as daily_price FROM dailycost a INNER JOIN daily b ON a.dailycost_id = b.daily_id GROUP BY b.check_in";
         $query3 = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
         $query4 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
     }else if($_SESSION["level"] == "guest"){
-        $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost WHERE member_id = ".$_SESSION["member_id"]." GROUP BY date ORDER BY date ASC";
+        $query = "SELECT date, SUM(total) as totalPrice FROM cost WHERE member_id = ".$_SESSION["member_id"]." GROUP BY date ORDER BY date";
         $query3 = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair WHERE member_id = ".$_SESSION["member_id"]." GROUP BY repair_category";
         $query4 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair WHERE member_id = ".$_SESSION["member_id"]." GROUP BY repair_status";
     }
@@ -43,7 +43,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
     $datax3 = array();
     $datax4 = array();
     foreach ($result as $k) {
-        $datax[] = "['".DateThai($k['date'])."'".", ".$k['successtotal_price'] .",".$k['pendingtotal_price'].",".$k['untotal_price']."]";
+        $datax[] = "['".DateThai($k['date'])."'".", ".$k['totalPrice']."]";
     }
     if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
         foreach ($result2 as $j) {
@@ -349,7 +349,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['เดือน / ปี', 'ชำระเงินแล้ว (บาท)', 'รอการชำระเงิน (บาท)', 'ยังไม่ได้ชำระเงิน (บาท)'],
+            ['เดือน / ปี', 'ยอดรวมทั้งหมด (บาท)'],
             <?php echo $datax;?>
         ]);
         var options = {
@@ -360,9 +360,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                 format: "decimal"
             }
         };
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
+        var chart = new google.charts.Line(document.getElementById('columnchart_material1'));
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
+        chart.draw(data, google.charts.Line.convertOptions(options));
     }
     <?php
     if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
