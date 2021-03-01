@@ -24,21 +24,21 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
     }
     if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
         if(isset($from) && isset($to)){
-            $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost WHERE (date BETWEEN '$from' AND '$to') GROUP BY date";
+            $query = "SELECT date ,SUM(total) as totalPrice FROM cost WHERE (date BETWEEN '$from' AND '$to') GROUP BY date";
             $total_cost = mysqli_query($conn,"SELECT SUM(total) as total_price, SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_cost, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_cost FROM cost WHERE (date BETWEEN '$from' AND '$to')");
             $totalresult = mysqli_fetch_assoc($total_cost);
         }else{
-            $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost GROUP BY date ORDER BY date ASC LIMIT 5";
+            $query = "SELECT date ,SUM(total) as totalPrice FROM cost GROUP BY date ORDER BY date";
             $total_cost = mysqli_query($conn,"SELECT SUM(total) as total_price, SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_cost, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_cost FROM cost ");
             $totalresult = mysqli_fetch_assoc($total_cost);
         }
     }else if($_SESSION["level"] == "guest"){
         if(isset($from) && isset($to)){
-            $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost WHERE member_id = ".$_SESSION["member_id"]." AND (date BETWEEN '$from' AND '$to') GROUP BY date";
+            $query = "SELECT date ,SUM(total) as totalPrice FROM cost WHERE member_id = ".$_SESSION["member_id"]." AND (date BETWEEN '$from' AND '$to') GROUP BY date";
             $total_cost = mysqli_query($conn,"SELECT SUM(total) as total_price, SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_cost, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_cost FROM cost WHERE member_id = ".$_SESSION["member_id"]." AND (date BETWEEN '$from' AND '$to')");
             $totalresult = mysqli_fetch_assoc($total_cost);
         }else{
-            $query = "SELECT date ,SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_price, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_price FROM cost WHERE member_id = ".$_SESSION["member_id"]." GROUP BY date ORDER BY date ASC LIMIT 5";
+            $query = "SELECT date ,SUM(total) as totalPrice FROM cost WHERE member_id = ".$_SESSION["member_id"]." GROUP BY date ORDER BY date";
             $total_cost = mysqli_query($conn,"SELECT SUM(total) as total_price, SUM(case WHEN cost_status = 'ชำระเงินแล้ว' THEN total ELSE 0 END) as successtotal_cost, SUM(case WHEN cost_status = 'รอการชำระเงิน' THEN total ELSE 0 END) as pendingtotal_price, SUM(case WHEN cost_status = 'ยังไม่ได้ชำระเงิน' THEN total ELSE 0 END) as untotal_cost FROM cost WHERE member_id = ".$_SESSION["member_id"]);
             $totalresult = mysqli_fetch_assoc($total_cost);
         }
@@ -46,7 +46,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
     $result = mysqli_query($conn, $query);
     $datax = array();
     foreach ($result as $k) {
-        $datax[] = "['".DateThai($k['date'])."'".", ".$k['successtotal_price'] .",".$k['pendingtotal_price'].",".$k['untotal_price']."]";
+        $datax[] = "['".DateThai($k['date'])."'".", ".$k['totalPrice']."]";
     }
     $datax = implode(",", $datax);
 ?>
@@ -230,7 +230,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                         if($row['member_status'] == 'กำลังเข้าพัก'){
                                         ?>
                                         <td>
-                                            <div class="status-success">
+                                            <div class="status-come">
                                                 <p><?php echo $row["member_status"]; ?></p>
                                             </div>    
                                         </td>
@@ -301,7 +301,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                         ?>
                                         <td>
                                             <div class="option">
-                                                <a href="receipt_month.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="print" title="ใบเสร็จค่าเช่าห้องพัก"></button></a>
+                                                <a href="receipt_month.php?cost_id=<?php echo $row["cost_id"]; ?>" target="_blank"><button type="button" class="print" title="ใบเสร็จค่าเช่าห้องพัก"></button></a>
                                                 <button type="button" class="qr" disabled></button>
                                                 <button type="button" class="confirmed-status">ชำระเงินแล้ว</button>
                                                 <a href="costDetail.php?cost_id=<?php echo $row["cost_id"]; ?>"><button type="button" class="more" title="ดูข้อมูลเพิ่มเติม">ดูข้อมูลเพิ่มเติม</button></a>
@@ -400,9 +400,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
         </div>
     </div>
     <script>
-    google.charts.load('current', {
-        'packages': ['bar']
-    });
+    google.charts.load('current', {'packages':['line']});
     <?php
     if(strlen($datax) != 0){
     ?>
@@ -411,7 +409,17 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['เดือน / ปี', 'ชำระเงินแล้ว (บาท)', 'รอการชำระเงิน (บาท)', 'ยังไม่ได้ชำระเงิน (บาท)'],
+            <?php
+            if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+            ?>
+            ['เดือน / ปี', 'รายได้ทั้งหมด (บาท)'],
+            <?php
+            }else{
+            ?>
+            ['เดือน / ปี', 'รายจ่ายทั้งหมด (บาท)'],
+            <?php
+            }
+            ?>
             <?php echo $datax;?>
         ]);
         var options = {
@@ -422,9 +430,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                 format: "decimal"
             }
         };
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
+        var chart = new google.charts.Line(document.getElementById('columnchart_material1'));
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
+        chart.draw(data, google.charts.Line.convertOptions(options));
     }
     $(window).resize(function(){
         drawChart();

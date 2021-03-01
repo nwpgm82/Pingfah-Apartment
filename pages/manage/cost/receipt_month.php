@@ -1,7 +1,7 @@
 <?php
 include("../../connection.php");
 $id = $_REQUEST["cost_id"];
-$sql = "SELECT a.*, b.* FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE a.cost_id = $id";
+$sql = "SELECT a.*, b.name_title, b.firstname, b.lastname, b.phone FROM cost a INNER JOIN roommember b ON a.member_id = b.member_id WHERE a.cost_id = $id";
 $result = mysqli_query($conn, $sql)or die ("Error in query: $sql " . mysqli_error());
 $row = mysqli_fetch_array($result);
 if($row != null){
@@ -117,11 +117,27 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                     <th colspan="3">รายการ</th>
                     <th>จำนวนเงิน</th>
                 </tr>
+                <?php
+                if($member_status == "กำลังเข้าพัก"){
+                ?>
                 <tr>
                     <td>1</td>
                     <td colspan="3">ค่าเช่าห้องพัก</td>
                     <td><?php echo number_format($room_cost,2); ?></td>
                 </tr>
+                <?php } ?>
+                <?php
+                if($deposit != null){
+                ?>
+                <tr>
+                    <td>2</td>
+                    <td colspan="3">ค่าประกันหอพัก</td>
+                    <td><?php echo number_format($deposit,2); ?></td>
+                </tr>
+                <?php
+                }else{
+                    if($member_status == "กำลังเข้าพัก"){
+                ?>
                 <tr>
                     <td>2</td>
                     <td colspan="3">ค่าน้ำ</td>
@@ -137,8 +153,27 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                     <td colspan="3">ค่าเคเบิล</td>
                     <td><?php echo number_format($cable_charge,2); ?></td>
                 </tr>
+                <?php 
+                    }else if($member_status == "แจ้งออกแล้ว"){
+                ?>
+                <tr>
+                    <td>1</td>
+                    <td colspan="3">ค่าน้ำ</td>
+                    <td><?php echo number_format($water_bill,2); ?></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td colspan="3">ค่าไฟ</td>
+                    <td><?php echo number_format($elec_bill,2); ?></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td colspan="3">ค่าเคเบิล</td>
+                    <td><?php echo number_format($cable_charge,2); ?></td>
+                </tr>
+                <?php }} ?>
                 <?php
-                if($member_status = "แจ้งออกแล้ว" && $deposit_after != 0){
+                if($member_status == "แจ้งออกแล้ว" && $deposit_after != 0){
                 ?>
                 <tr>
                     <td>5</td>
@@ -160,7 +195,7 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                             <p style="text-align:center;">............................................................
                             </p>
                             <p style="text-align:center;">(.....................................................)</p>
-                            <p style="width:max-content;position:absolute;bottom:30px;left:50%;transform: translateX(-50%);">นายนวพล นรเดชานันท์</p>
+                            <p style="width:max-content;position:absolute;bottom:31px;left:50%;transform: translateX(-50%);">นายพิชัย นรเดชานันท์</p>
                         </div>
                     </div>
                     <div class="sub-sig">

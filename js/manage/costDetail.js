@@ -39,6 +39,8 @@ $(document).ready(function () {
     $(document).on("click", "#accept-edit", function (event) {
         if ($("#room_price").val() == "" || $("#cable_price").val() == "" || $("#water_price").val() == "" || $("#elec_price").val() == "") {
             event.preventDefault()
+        }else{
+            return confirm("คุณต้องการแก้ไข้รายการชำระเงินใช่หรือไม่")
         }
     })
     $(document).on("click", "#edit-btn2", function () {

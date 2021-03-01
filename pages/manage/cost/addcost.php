@@ -24,7 +24,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
             <div class="addcost-box">
                 <h3>รายละเอียดการชำระเงิน</h3>
                 <div id="hr" class="hr"></div>
-                <form action="function/addcostData.php" method="POST">
+                <form action="function/addcostData.php" method="POST" onsubmit="return confirm('คุณต้องการบันทึกรายการชำระเงินใช่หรือไม่ ?'); ">
                     <div class="grid">
                         <div>
                             <p>เลขห้อง</p>

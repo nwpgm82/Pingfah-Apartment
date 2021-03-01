@@ -258,7 +258,7 @@
     color: rgb(131, 120, 47, 0.7);
 }
 
-.cost-box table .status-success {
+.cost-box table .status-come {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -268,6 +268,18 @@
     border-radius: 4px;
     border: none;
     background-color: #B1D78A;
+}
+
+.cost-box table .status-success {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 40px;
+    padding: 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: #7be7ba;
 }
 
 .cost-box table .status-pending {
@@ -303,7 +315,7 @@
     border: none;
     background-color: rgb(255, 199, 95);
 }
-
+.cost-box table .status-come p,
 .cost-box table .status-success p,
 .cost-box table .status-nosuccess p,
 .cost-box table .status-pending p,
