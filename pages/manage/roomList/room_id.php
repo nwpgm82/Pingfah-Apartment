@@ -66,7 +66,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
                 <?php } ?>
                 <div id="form-box" <?php if($row == null){ echo "style='display:none;'"; }?> >
                     <form action="function/action.php?ID=<?php echo $room_id; ?>&people=<?php if($get_people != ""){ echo $get_people; }else{ echo "1"; } ?>" method="POST"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data" <?php if($row == null){ ?> onsubmit="return confirm('คุณต้องการเพิ่มข้อมูลผู้พักใช่หรือไม่ ?'); " <?php } ?>>
                         <div style="display:flex;justify-content:space-between;align-items:center;">
                            <h3>ห้อง <?php echo $room_id; ?></h3>
                            <?php if($row != null && ($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee")){ ?>

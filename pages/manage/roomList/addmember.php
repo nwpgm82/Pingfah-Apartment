@@ -40,7 +40,7 @@ if($_SESSION["level"] == "admin"){
             <div class="roomform-box">
                 <div id="form-box" >
                     <form action="function/action.php?ID=<?php echo $room_id; ?>" method="POST"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data" onsubmit="return confirm('คุณต้องการเพิ่มข้อมูลผู้พัก (คนที่ 2) ใช่หรือไม่ ?'); ">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
                            <h3>ห้อง <?php echo $room_id; ?></h3>
                         </div>
