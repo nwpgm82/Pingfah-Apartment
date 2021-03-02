@@ -189,7 +189,7 @@ if ($embirth_result->num_rows > 0) {
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
-/////////////////////////// ปรับอายุลูกค้าตามวันเกิด ////////////////////////////////
+/////////////////////////// ปรับอายุลูกค้าตามวันเกิด **ติดบัคอยู่** ////////////////////////////////
 $membirth = "SELECT member_id, birthday FROM roommember";
 $membirth_result = $conn->query($membirth);
 if ($membirth_result->num_rows > 0) {
@@ -197,7 +197,7 @@ if ($membirth_result->num_rows > 0) {
         $Mem_today = date("Y-m-d");
         $birthMem_diff = date_diff(date_create($memB["birthday"]), date_create($Mem_today));
         $currentMem_age = $birthMem_diff->format("%y");
-        $updateMem_age = "UPDATE employee SET age = $currentMem_age WHERE member_id = ".$memB["member_id"];
+        $updateMem_age = "UPDATE roommember SET age = $currentMem_age WHERE member_id = ".$memB["member_id"];
         $conn->query($updateMem_age);
     }
 }
