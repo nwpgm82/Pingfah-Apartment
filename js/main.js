@@ -15,8 +15,6 @@ $(document).ready(function () {
     let tomorrow_day = today.getDate() + 1
     let tomorrow_month = today.getMonth() + 1
     let tomorrow_year = today.getFullYear()
-    let current_dayShow = today_day + ' ' + today_monthNames[today_month - 1] + ' ' + today_year
-    let next_dayShow = tomorrow_day + ' ' + today_monthNames[tomorrow_month - 1] + ' ' + tomorrow_year
     if (today_day < 10) {
         today_day = '0' + today_day.toString()
     }
@@ -29,6 +27,8 @@ $(document).ready(function () {
     if (tomorrow_month < 10) {
         tomorrow_month = '0' + tomorrow_month.toString()
     }
+    let current_dayShow = today_day + ' ' + today_monthNames[today_month - 1] + ' ' + today_year
+    let next_dayShow = tomorrow_day + ' ' + today_monthNames[tomorrow_month - 1] + ' ' + tomorrow_year
     let current_day = today_year + '-' + today_month + '-' + today_day
     let next_day = tomorrow_year + '-' + tomorrow_month + '-' + tomorrow_day
     check_in.val(current_day)
