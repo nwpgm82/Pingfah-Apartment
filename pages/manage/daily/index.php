@@ -17,24 +17,20 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         return "$strDay $strMonthThai $strYear";
     }
     if($check_in != "" && $check_out != ""){
-        $query = "SELECT check_in, SUM(people) as total_people FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
-        $query2 = "SELECT check_in, SUM(air_room) as total_air, SUM(fan_room) as total_fan FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
+        $query = "SELECT check_in, SUM(people) as total_people FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง' GROUP BY check_in";
+        $query2 = "SELECT SUM(people) as total_people, SUM(air_room) as total_air, SUM(fan_room) as total_fan FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง'";
     }else{
-        $query = "SELECT check_in, SUM(people) as total_people FROM daily WHERE daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
-        $query2 = "SELECT check_in, SUM(air_room) as total_air, SUM(fan_room) as total_fan FROM daily WHERE daily_status != 'ยกเลิกการจอง' GROUP BY check_in ORDER BY check_in ASC";
+        $query = "SELECT check_in, SUM(people) as total_people FROM daily WHERE daily_status != 'ยกเลิกการจอง' GROUP BY check_in";
+        $query2 = "SELECT SUM(people) as total_people, SUM(air_room) as total_air, SUM(fan_room) as total_fan FROM daily WHERE daily_status != 'ยกเลิกการจอง'";
     }
     $query_result = mysqli_query($conn, $query);
-    $query_result2 = mysqli_query($conn, $query2);
+    $query2_result = mysqli_query($conn, $query2);
+    $q2 = mysqli_fetch_assoc($query2_result);
     $datax = array();
-    $datax2 = array();
     foreach ($query_result as $k) {
         $datax[] = "['".DateThai($k['check_in'])."'".",".$k['total_people']."]";
     }
-    foreach ($query_result2 as $l) {
-        $datax2[] = "['".DateThai($l['check_in'])."'".",".$l['total_air'] ."," .$l['total_fan'] ."]";
-    }
     $datax = implode(",", $datax);
-    $datax2 = implode(",", $datax2);
     // echo $datax;
 ?>
 <!DOCTYPE html>
@@ -88,7 +84,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     </div>
                     <?php } ?>
                 </div>
-                <div class="hr"></div>
+                <div class="hr" style="margin-top:16px;"></div>
                 <div>
                     <div class="card">
                         <div class="sub-grid">
@@ -101,16 +97,14 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                                 echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>";
                             } 
                             ?>
-                            <?php
-                            if(strlen($datax2) != 0){
-                            ?>
-                            <div id="columnchart_material2" class="chart"></div>
-                            <?php
-                            }else{
-                                echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>";
-                            }
-                            ?>
                         </div>
+                    </div>
+                    <div style="padding-top:32px;">
+                        <div style="line-height:40px;">
+                            <h3 style="color: rgb(131, 120, 47, 0.7);">ยอดรวมผู้เข้าพักทั้งหมด : <?php echo $q2["total_people"]; ?> ท่าน</h3>
+                            <h3 style="color: darkturquoise;">ยอดรวมผู้เข้าพักห้องแอร์ : <?php echo $q2["total_air"] ?> ห้อง</h3>
+                            <h3 style="color: #B1D78A;">ยอดรวมผู้เข้าพักห้องพัดลม : <?php echo $q2["total_fan"]; ?> ห้อง</h3>
+                        </div>   
                     </div>
                     <div class="hr"></div>
                     <div>
@@ -351,17 +345,10 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
     ?>
     google.charts.setOnLoadCallback(drawChart);
     <?php } ?>
-    <?php
-    if(strlen($datax2) != 0){
-    ?>
-    google.charts.setOnLoadCallback(drawChart2);
-    <?php } ?>
-
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี', 'จำนวนผู้พัก'],
-            ['',0],
+            ['วัน / เดือน / ปี', 'จำนวนผู้พัก (ท่าน)'],
             <?php echo $datax;?>
         ]);
 
@@ -374,28 +361,8 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
         var chart = new google.charts.Line(document.getElementById('curve_chart'));
         chart.draw(data, google.charts.Line.convertOptions(options));
     }
-
-    function drawChart2() {
-
-        var data = google.visualization.arrayToDataTable([
-            ['วัน / เดือน / ปี','แอร์ (ห้อง)', 'พัดลม (ห้อง)'],
-            <?php echo $datax2;?>
-        ]);
-
-        var options = {
-            title: 'จำนวนผู้เช่าห้องพักรายวันในแต่ละประเภท',
-            colors: ['rgb(131, 120, 47)', '#c6b66b'],
-            fontName: "Sarabun",
-            vAxis: { ticks: [5,10,15,20] }
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-    }
     $(window).resize(function(){
         drawChart();
-        drawChart2();
     });
     </script>
 </body>
