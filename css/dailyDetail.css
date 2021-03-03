@@ -125,8 +125,8 @@
     grid-template-areas:
         "room_select room_select room_select name_title firstname firstname firstname lastname lastname lastname"
         "id_card id_card id_card email email email email tel tel tel"
-        "check_in check_in check_out check_out night people air fan . ."
-        "total_room_price total_room_price vat vat total_price total_price room_status room_status . .";
+        "check_in check_in check_out check_out night people air fan total_price total_price"
+        "room_status room_status . . . . . . . .";
 }
 
 .room_select {

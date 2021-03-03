@@ -15,11 +15,9 @@
     $getAir_result = mysqli_fetch_assoc($getAir_price); 
     $getFan_price = mysqli_query($conn,"SELECT daily_price, daily_deposit FROM roomdetail WHERE type='พัดลม'");
     $getFan_result = mysqli_fetch_assoc($getFan_price);
-    $getVAT = mysqli_query($conn, "SELECT daily_vat FROM roomdetail WHERE type = 'แอร์' OR type = 'พัดลม'");
-    $getVAT_result = mysqli_fetch_assoc($getVAT);
     $_SESSION["check_in"] = @$_POST['check_in'];
     $_SESSION["check_out"] = @$_POST['check_out'];
-    $_SESSION["people"] = @$_POST['people'];
+    // $_SESSION["people"] = @$_POST['people'];
     if(isset($_POST["air"])){
         $_SESSION["air"] = $_POST['air'];
     }else{
@@ -30,22 +28,7 @@
     }else{
         $_SESSION["fan"] = 0;
     }
-    $_SESSION["vat"] = $getVAT_result["daily_vat"];
-    $_SESSION["total_room_price"] = ((intval($_SESSION["air"]) * $getAir_result["daily_price"]) + (intval($_SESSION["fan"]) * $getFan_result["daily_price"])) * $_SESSION["night"];
-    $cal_vat = ($_SESSION["total_room_price"] * $_SESSION["vat"])/100;
-    $_SESSION["total_price"] = ceil($_SESSION["total_room_price"] + $cal_vat);
-    // $date1 = date_create($_SESSION["check_in"]);
-    // $date2 = date_create($_SESSION["check_out"]);
-    // $diff= date_diff($date1,$date2);
-    // $checkdate_result = $diff->format("%R%a days");
-    // if(date("Y-m-d") == $_SESSION["check_in"]){
-    //     $_SESSION["payment_datebefore"] = $_SESSION["check_in"];
-    //     $datetime_result = DateThai($_SESSION["check_in"]);
-    // }else{
-    //     $datetime = new DateTime('tomorrow');
-    //     $_SESSION["payment_datebefore"] = $datetime->format('Y-m-d');
-    //     $datetime_result = DateThai($datetime->format('Y-m-d'));
-    // }
+    $_SESSION["total_price"] = ((intval($_SESSION["air"]) * $getAir_result["daily_price"]) + (intval($_SESSION["fan"]) * $getFan_result["daily_price"])) * $_SESSION["night"];
     $_SESSION["total_room"] = (intval($_SESSION["air"]) * $getAir_result["daily_deposit"]) + (intval($_SESSION["fan"]) * $getFan_result["daily_deposit"]);
     $getPrompt = mysqli_query($conn, "SELECT * FROM promptpay");
     $getPrompt_result = mysqli_fetch_assoc($getPrompt);
@@ -75,7 +58,7 @@
         <div class="dailyForm">
             <h2>แบบฟอร์มจองห้องพัก</h2>
             <div class="hr"></div>
-            <form action="mainpage_function/addDailyForm.php" method="POST" enctype="multipart/form-data">
+            <form action="mainpage_function/addDailyForm.php" method="POST" enctype="multipart/form-data" onsubmit="return confirm('คุณต้องการจองห้องพักใช่หรือไม่ ?'); ">
                 <div class="grid-container">
                     <div class="name_title">
                         <p>คำนำหน้าชื่อ</p>
@@ -87,12 +70,12 @@
                     </div>
                     <div class="firstname">
                         <p>ชื่อ</p>
-                        <input type="text" name="firstname" id="firstname" placeholder="ชื่อ">
+                        <input type="text" name="firstname" id="firstname" maxlength="50" placeholder="ชื่อ">
                         <h5 id="fs_error" style="color:red;"></h5>
                     </div>
                     <div class="lastname">
                         <p>นามสกุล</p>
-                        <input type="text" name="lastname" id="lastname" placeholder="นามสกุล">
+                        <input type="text" name="lastname" id="lastname" maxlength="50" placeholder="นามสกุล">
                         <h5 id="ls_error" style="color:red;"></h5>
                     </div>
                     <div class="id_card">
@@ -102,7 +85,7 @@
                     </div>
                     <div class="email">
                         <p>อีเมล</p>
-                        <input type="text" name="email" id="email" placeholder="อีเมล">
+                        <input type="text" name="email" id="email" maxlength="100" placeholder="อีเมล">
                         <h5 id="em_error" style="color:red;"></h5>
                     </div>
                     <div class="tel">
@@ -123,7 +106,7 @@
                         <input type="text" name="night" id="night" value="<?php echo $_SESSION["night"]; ?>" disabled>
                     </div>
                     <div class="people">
-                        <p>จำนวนผู้พัก(คน)</p>
+                        <p>จำนวนผู้พัก(ท่าน)</p>
                         <input type="text" name="people" id="people" value="<?php echo $_SESSION["people"]; ?>" disabled>
                     </div>
                     <div class="air">
@@ -134,16 +117,8 @@
                         <p>ห้องพัดลม(ห้อง)</p>
                         <input type="text" name="fan" id="fan" value="<?php echo $_SESSION["fan"]; ?>" disabled>
                     </div>
-                    <div class="total_room">
-                        <p>ราคาห้องพักรวม (บาท)</p>
-                        <input type="text" id="total_room_price" value="<?php echo number_format($_SESSION["total_room_price"],2); ?>" disabled>
-                    </div>
-                    <div class="vat">
-                        <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
-                        <input type="text" name="vat" id="vat" value="<?php echo $_SESSION["vat"]."%"; ?>" disabled>
-                    </div>
                     <div class="total_price">
-                        <p>ราคารวม (บาท)</p>
+                        <p>จำนวนเงินรวมทั้งสิ้น (บาท)</p>
                         <input type="text" name="total_price" id="total_price" value="<?php echo number_format($_SESSION["total_price"],2); ?>" disabled>
                     </div>
                 </div>
@@ -186,11 +161,7 @@
                     </div> -->
                 </div>
                 <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
-                    <input type="checkbox" name="" id="confirm_check">
-                    <label>ท่านได้กรอกข้อมูลถูกต้อง และครบถ้วนแล้ว</label>
-                </div>
-                <div style="padding-top:32px;display:flex;justify-content:center;align-items:center;">
-                    <button type="submit" id="confirm" name="accept_daily" disabled>ยืนยันการจองห้องพัก</button>
+                    <button type="submit" id="confirm_daily" name="accept_daily">ยืนยันการจองห้องพัก</button>
                 </div>
             </form>
         </div>

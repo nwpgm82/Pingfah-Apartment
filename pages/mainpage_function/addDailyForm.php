@@ -64,7 +64,7 @@ if (isset($_POST['accept_daily'])) {
     $airTotal = intval($roomData["airTotal"]) - intval($dailyData["daily_airTotal"]);
     $fanTotal = intval($roomData["fanTotal"]) - intval($dailyData["daily_fanTotal"]);
     if (intval($_SESSION["air"]) <= $airTotal && intval($_SESSION["fan"]) <= $fanTotal) {
-        $sql = "INSERT INTO daily (name_title, firstname, lastname, id_card, email, tel, code, check_in, check_out, night, people, air_room, fan_room, daily_status, total_room_price, vat, total_price, payment_price, payment_img) VALUES ('$name_title', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '" . $_SESSION["check_in"] . "', '" . $_SESSION["check_out"] . "'," . $_SESSION["night"] . "," . $_SESSION["people"] . "," . $_SESSION["air"] . "," . $_SESSION["fan"] . ", 'รอการยืนยัน'," . $_SESSION["total_room_price"] . "," . $_SESSION["vat"] . "," . $_SESSION["total_price"] . "," . $_SESSION["total_room"] . ", '$deposit')";
+        $sql = "INSERT INTO daily (name_title, firstname, lastname, id_card, email, tel, code, check_in, check_out, night, people, air_room, fan_room, daily_status, total_price, payment_price, payment_img) VALUES ('$name_title', '$firstname', '$lastname', '$id_card', '$email', '$tel', '$code', '" . $_SESSION["check_in"] . "', '" . $_SESSION["check_out"] . "'," . $_SESSION["night"] . "," . $_SESSION["people"] . "," . $_SESSION["air"] . "," . $_SESSION["fan"] . ", 'รอการยืนยัน'," . $_SESSION["total_price"] . "," . $_SESSION["total_room"] . ", '$deposit')";
         ///////////////////// อีเมล ////////////////////////
         require $_SERVER['DOCUMENT_ROOT'] . "/Pingfah/phpmailer/PHPMailerAutoload.php";
         header('Content-Type: text/html; charset=utf-8');
@@ -122,9 +122,7 @@ if (isset($_POST['accept_daily'])) {
                             <p style='font-size:16px;color:#000'><strong>เบอร์โทรศัพท์ :</strong> $tel</p>
                             <p style='font-size:16px;color:#000'><strong>จำนวนผู้พัก :</strong> " . $_SESSION["people"] . " ท่าน</p>
                             <p style='font-size:16px;color:#000'><strong>จำนวนห้องพัก : ห้องแอร์ </strong>" . $_SESSION["air"] . " ห้อง <strong>| ห้องพัดลม : </strong>" . $_SESSION["fan"] . " ห้อง</p>
-                            <p style='font-size:16px;color:#000'><strong>ราคาห้องพักรวม :</strong> " . $_SESSION["total_room_price"] . " บาท</p>
-                            <p style='font-size:16px;color:#000'><strong>ภาษีมูลค่าเพิ่ม (VAT) :</strong> " . $_SESSION["vat"] . "%</p>
-                            <p style='font-size:16px;color:#000'><strong>ราคารวม :</strong> " . $_SESSION["total_price"] . " บาท</p>
+                            <p style='font-size:16px;color:#000'><strong>ยอดรวม :</strong> " . $_SESSION["total_price"] . " บาท</p>
                             <p style='font-size:16px;color:#000'><strong>วันที่เข้าพัก :</strong> " . DateThai($_SESSION["check_in"]) . " <strong>ถึง</strong> " . DateThai($_SESSION["check_out"]) . " (" . $_SESSION["night"] . " คืน)</p>
                         </div>
                         <div style='padding-top:32px;'>
@@ -143,7 +141,7 @@ if (isset($_POST['accept_daily'])) {
             $mail->msgHTML($email_content);
             if ($mail->send() && $conn->query($sql) === true && move_uploaded_file($_FILES["deposit_img"]["tmp_name"], $target_file)) {
                 $token = "kD2hurm9Ehfe3SPEWJ49oP5LZytJ2cV9ZoX4BF9Ga40";
-                $str = "\n" . "***มีรายการเช่ารายวัน (ใหม่)***" . "\n" . "ชื่อ : $name_title$firstname $lastname" . "\n" . "เบอร์โทรศัพท์ : $tel" . "\n" . "จำนวนผู้พัก : " . $_SESSION["people"] . " ท่าน" . "\n" . "จำนวนห้องพัก : ห้องแอร์ " . $_SESSION["air"] . " ห้อง | ห้องพัดลม " . $_SESSION["fan"] . " ห้อง" . "\n" . "ราคารวม : " . number_format($_SESSION["total_price"],2) . " บาท" . "\n" . "วันที่เข้าพัก : " . DateThai($_SESSION["check_in"]) . " ถึง " . DateThai($_SESSION["check_out"]) . "(" . $_SESSION["night"] . " คืน)" . "\n" . "เลขที่ในการจอง : $code" . "\n" . "***โปรดตรวจสอบหลักฐานชำระเงินค่ามัดจำห้องพัก***";
+                $str = "\n" . "***มีรายการเช่ารายวัน (ใหม่)***" . "\n" . "ชื่อ : $name_title$firstname $lastname" . "\n" . "เบอร์โทรศัพท์ : $tel" . "\n" . "จำนวนผู้พัก : " . $_SESSION["people"] . " ท่าน" . "\n" . "จำนวนห้องพัก : ห้องแอร์ " . $_SESSION["air"] . " ห้อง | ห้องพัดลม " . $_SESSION["fan"] . " ห้อง" . "\n" . "ยอดรวม : " . number_format($_SESSION["total_price"],2) . " บาท" . "\n" . "วันที่เข้าพัก : " . DateThai($_SESSION["check_in"]) . " ถึง " . DateThai($_SESSION["check_out"]) . "(" . $_SESSION["night"] . " คืน)" . "\n" . "เลขที่ในการจอง : $code" . "\n" . "***โปรดตรวจสอบหลักฐานชำระเงินค่ามัดจำห้องพัก***";
                 $curl = curl_init();
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => "https://notify-api.line.me/api/notify",

@@ -6,7 +6,7 @@
     $calculate = strtotime($check_out) - strtotime($check_in);
     $summary = floor($calculate / 86400);
     $_SESSION["night"] = $summary;
-    $people = $_REQUEST['people'];
+    $_SESSION["people"] = $_REQUEST['people'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +53,7 @@
                         <div style="display:flex;align-items:center;">
                             <label>จำนวนผู้พัก : </label>
                             <div style="position:relative;padding:0 8px;height:40px;">
-                                <input type="text" id="people" name="people" value="<?php echo $people; ?>" maxlength="2">
+                                <input type="text" id="people" name="people" value="<?php echo $_SESSION["people"]; ?>" maxlength="2">
                             </div>
                             <label>ท่าน</label>
                         </div>
@@ -78,7 +78,7 @@
                 $roomAlltotal_int = intval($roomAlldata['roomtotal']);
                 $totalAll_int = $roomAlltotal_int - $roomDailyAlltotal_int;
 
-                if($people <= ($totalAll_int * 2)){
+                if($_SESSION["people"] <= ($totalAll_int * 2)){
                     if(isset($check_in) || isset($check_out)){
                         $countAir = mysqli_query($conn,"SELECT SUM(air_room) AS airTotal FROM daily WHERE ((check_in BETWEEN '$check_in' AND '$check_out') OR (check_out BETWEEN '$check_in' AND '$check_out') OR ('$check_in' BETWEEN check_in AND check_out) OR ('$check_out' BETWEEN check_in AND check_out )) AND daily_status != 'ยกเลิกการจอง'");
                         $roomDailyAirdata= mysqli_fetch_assoc($countAir);  
@@ -133,7 +133,7 @@
                                         <label>2 คน</label>
                                     </div>
                                     <label>รายวัน : <label
-                                            style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['daily_price']); ?></strong></label>
+                                            style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row['daily_price'],2); ?></strong></label>
                                         บาท</label>
                                 </div>
                                 <div>
@@ -307,7 +307,7 @@
                                         <label>2 คน</label>
                                     </div>
                                     <label>รายวัน : <label
-                                            style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['daily_price']); ?></strong></label>
+                                            style="font-size:24px;color: rgb(131, 120, 47, 1);"><strong><?php echo number_format($row2['daily_price'],2); ?></strong></label>
                                         บาท</label>
                                 </div>
                                 <div>
@@ -395,10 +395,10 @@
     function formatNumber(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
-    let people = <?php echo $people; ?>;
+    let people = <?php echo $_SESSION["people"]; ?>;
     let total_price = 0
     $("#InsAir").click(function(){
-        if(people != 0){
+        if(people != 0 && parseInt($("#people1").val()) < <?php echo $total_int; ?>){
             $("#people1").val(parseInt($("#people1").val()) + 1)
             people = people - 1
             total_price = total_price + <?php echo intval($getAir_result["daily_price"]) * $_SESSION["night"]; ?>;
@@ -414,7 +414,7 @@
         $("#total_price").html(formatNumber(total_price))
     })
     $("#InsFan").click(function(){
-        if(people != 0){
+        if(people != 0 && parseInt($("#people2").val()) < <?php echo $total_int2; ?>){
             $("#people2").val(parseInt($("#people2").val()) + 1)
             people = people - 1
             total_price = total_price + <?php echo intval($getFan_result["daily_price"]) * $_SESSION["night"]; ?>;

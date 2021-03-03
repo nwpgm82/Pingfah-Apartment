@@ -108,14 +108,6 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <p>ห้องพัดลม (ห้อง)</p>
                             <input type="number" id="fan" name="fan" value="<?php echo $fan_room; ?>" disabled>
                         </div>
-                        <div class="total_room_price">
-                            <p>ค่าเช่าห้องพัก (บาท)</p>
-                            <input type="number" id="total_room_price" name="total_room_price" value="<?php echo $total_room_price; ?>" disabled>
-                        </div>
-                        <div class="vat">
-                            <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
-                            <input type="text" id="vat" name="vat" value="<?php echo $vat."%"; ?>" disabled>
-                        </div>
                         <div class="total_price">
                             <p>จำนวนเงินรวมทั้งสิ้น (บาท)</p>
                             <input type="number" name="total_price" value="<?php echo $total_price; ?>" disabled>

@@ -5,6 +5,7 @@ $(document).ready(function () {
     let email = $("#email")
     let tel = $("#tel")
     let deposit_img = $("#deposit_img")
+
     function getExtension(filename) {
         var parts = filename.split('.');
         return parts[parts.length - 1];
@@ -14,7 +15,7 @@ $(document).ready(function () {
         var ext = getExtension(filename);
         switch (ext.toLowerCase()) {
             case 'jpg':
-            // case 'pdf':
+                // case 'pdf':
             case 'png':
                 //etc
                 return true;
@@ -72,10 +73,15 @@ $(document).ready(function () {
         }
     })
     id_card.keyup(function () {
+        $(this).val($(this).val().replace(/[^\w\s]+/g, ''));
         if (id_card.val() == "") {
             id_card.css("border-color", "red")
             id_card.addClass("placeholder-error")
             $("#id_error").html("โปรดระบุเลขบัตรประชาชน หรือ Passport No. ของท่าน")
+        } else if (id_card.val().length != 7 && id_card.val().length != 8 && id_card.val().length != 9 && id_card.val().length != 13) {
+            id_card.css("border-color", "red")
+            id_card.addClass("placeholder-error")
+            $("#id_error").html("รูปแบบเลขบัตรประชาชน หรือ Passport No. ไม่ตรงกัน")
         } else {
             id_card.css("border-color", "")
             id_card.removeClass("placeholder-error")
@@ -96,7 +102,7 @@ $(document).ready(function () {
             } else {
                 email.css("border-color", "red")
                 email.addClass("placeholder-error")
-                $("#em_error").html("รูปแบบไม่ตรงกัน")
+                $("#em_error").html("รูปแบบอีเมลไม่ตรงกัน")
             }
         }
     })
@@ -110,24 +116,21 @@ $(document).ready(function () {
             tel.css("border-color", "red")
             tel.addClass("placeholder-error")
             $("#tel_error").html("โปรดระบุเบอร์โทรศัพท์ของท่าน")
+        } else if (tel.val().length != 10) {
+            tel.css("border-color", "red")
+            tel.addClass("placeholder-error")
+            $("#tel_error").html("รูปแบบเบอร์โทรศัพท์ของท่าน")
         } else {
             tel.css("border-color", "")
             tel.removeClass("placeholder-error")
             $("#tel_error").html("")
         }
     })
-    $("#confirm_check").change(function(){
-        if(this.checked){
-            $("#confirm").prop("disabled",false)
-        }else{
-            $("#confirm").prop("disabled",true)
-        }
-    })
-    $("#confirm").click(function (event) {
+    $("#confirm_daily").click(function (event) {
         let inputs = $("input");
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         inputs.each(function () {
-            if($(this).attr("id") != "check_in" && $(this).attr("id") != "check_out" && $(this).attr("id") != "people" && $(this).attr("id") != "air" && $(this).attr("id") != "fan"){
+            if ($(this).attr("id") != "check_in" && $(this).attr("id") != "check_out" && $(this).attr("id") != "people" && $(this).attr("id") != "air" && $(this).attr("id") != "fan") {
                 if ($(this).val() == "" || $(this).val() == 0) {
                     $(this).css("border-color", "red")
                     $(this).addClass("placeholder-error")
@@ -141,26 +144,32 @@ $(document).ready(function () {
                         $("#tel_error").html("โปรดระบุเบอร์โทรศัพท์ของท่าน")
                     } else if ($(this).attr("id") == "email") {
                         $("#em_error").html("โปรดระบุอีเมลของท่าน")
-                    }else if($(this).attr("id") == "deposit_img"){
+                    } else if ($(this).attr("id") == "deposit_img") {
                         $(".img-box").css("border-color", "red")
                         $("#qr_error").html("โปรดเพิ่มรูปภาพหลักฐานการมัดจำค่าห้องพัก")
                     }
                     event.preventDefault()
                 }
-            }  
+            }
         })
+        if (id_card.val().length != 7 && id_card.val().length != 8 && id_card.val().length != 9 && id_card.val().length != 13) {
+            id_card.css("border-color", "red")
+            id_card.addClass("placeholder-error")
+            $("#id_error").html("รูปแบบเลขบัตรประชาชน หรือ Passport No. ไม่ตรงกัน")
+            event.preventDefault()
+        }
         if (email.val() != "") {
             if (!re.test(String(email.val()))) {
                 $("#em_error").html("รูปแบบไม่ตรงกัน")
                 event.preventDefault()
             }
         }
-        if (id_card.val() != "") {
-            let letter = /^[0-9a-zA-Z]+$/;
-            if (!id_card.val().match(letter)) {
-                id_card.css("border-color", "red")
-                $("#id_error").html("ระบุข้อความ a-z, A-Z หรือ 0-9 ได้เท่านั้น")
-            }
+        if (tel.val().length != 10) {
+            tel.css("border-color", "red")
+            tel.addClass("placeholder-error")
+            $("#tel_error").html("รูปแบบเบอร์โทรศัพท์ของท่าน")
+            event.preventDefault()
         }
+        
     })
 })
