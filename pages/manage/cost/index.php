@@ -221,7 +221,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                 <?php } ?>
                                     <tr>
                                         <td><?php echo $num; ?></td>
-                                        <td><?php echo $row["room_id"];?></td>
+                                        <td><?php echo $row["room_id"];?> <?php if($row["deposit"] != null){ echo "<label style='color: rgb(82, 185, 82);'>(ใหม่)</label>"; }?></td>
                                         <td><?php echo DateThai($row["date"]);?></td>
                                         <td><?php if(isset($row["pay_date"])){ echo DateThai2($row["pay_date"]); }?></td>
                                         <td><?php echo $row["total"];?></td>
