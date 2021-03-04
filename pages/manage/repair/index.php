@@ -18,22 +18,32 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
         if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
             $query_data = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') GROUP BY repair_category";
             $query_data2 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair WHERE (repair_date BETWEEN '$from' AND '$to') GROUP BY repair_status";
+            $query_detail = mysqli_query($conn, "SELECT SUM(repair_category = 'เครื่องใช้ไฟฟ้า') as total_elec, SUM(repair_category = 'เฟอร์นิเจอร์') as total_fur, SUM(repair_category = 'สุขภัณฑ์') as total_suk FROM repair WHERE (repair_date BETWEEN '$from' AND '$to')");
+            $query_detail2 = mysqli_query($conn, "SELECT SUM(repair_status = 'รอคิวซ่อม') as pending_s, SUM(repair_status = 'กำลังซ่อม') as inprogress_s, SUM(repair_status = 'ซ่อมเสร็จแล้ว') as success_s FROM repair WHERE (repair_date BETWEEN '$from' AND '$to')");
         }else if($_SESSION["level"] == "guest"){
             $query_data = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair WHERE member_id = ".$_SESSION["member_id"]." AND (repair_date BETWEEN '$from' AND '$to') GROUP BY repair_category";
             $query_data2 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair WHERE member_id = ".$_SESSION["member_id"]." AND (repair_date BETWEEN '$from' AND '$to') GROUP BY repair_status";
+            $query_detail = mysqli_query($conn, "SELECT SUM(repair_category = 'เครื่องใช้ไฟฟ้า') as total_elec, SUM(repair_category = 'เฟอร์นิเจอร์') as total_fur, SUM(repair_category = 'สุขภัณฑ์') as total_suk FROM repair WHERE member_id = ".$_SESSION["member_id"]." AND (repair_date BETWEEN '$from' AND '$to')");
+            $query_detail2 = mysqli_query($conn, "SELECT SUM(repair_status = 'รอคิวซ่อม') as pending_s, SUM(repair_status = 'กำลังซ่อม') as inprogress_s, SUM(repair_status = 'ซ่อมเสร็จแล้ว') as success_s FROM repair WHERE member_id = ".$_SESSION["member_id"]." AND (repair_date BETWEEN '$from' AND '$to')");
         }
     }else{
         if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
             $query_data = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair GROUP BY repair_category";
             $query_data2 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair GROUP BY repair_status";
+            $query_detail = mysqli_query($conn, "SELECT SUM(repair_category = 'เครื่องใช้ไฟฟ้า') as total_elec, SUM(repair_category = 'เฟอร์นิเจอร์') as total_fur, SUM(repair_category = 'สุขภัณฑ์') as total_suk FROM repair");
+            $query_detail2 = mysqli_query($conn, "SELECT SUM(repair_status = 'รอคิวซ่อม') as pending_s, SUM(repair_status = 'กำลังซ่อม') as inprogress_s, SUM(repair_status = 'ซ่อมเสร็จแล้ว') as success_s FROM repair");
         }else if($_SESSION["level"] == "guest"){
             $query_data = "SELECT repair_category, COUNT(repair_category) as total_cate FROM repair WHERE member_id = ".$_SESSION["member_id"]." GROUP BY repair_category";
             $query_data2 = "SELECT repair_status, COUNT(repair_status) as total_cate_status FROM repair WHERE member_id = ".$_SESSION["member_id"]." GROUP BY repair_status";
+            $query_detail = mysqli_query($conn, "SELECT SUM(repair_category = 'เครื่องใช้ไฟฟ้า') as total_elec, SUM(repair_category = 'เฟอร์นิเจอร์') as total_fur, SUM(repair_category = 'สุขภัณฑ์') as total_suk FROM repair WHERE member_id = ".$_SESSION["member_id"]);
+            $query_detail2 = mysqli_query($conn, "SELECT SUM(repair_status = 'รอคิวซ่อม') as pending_s, SUM(repair_status = 'กำลังซ่อม') as inprogress_s, SUM(repair_status = 'ซ่อมเสร็จแล้ว') as success_s FROM repair WHERE member_id = ".$_SESSION["member_id"]);
         }
     }
    
     $result = mysqli_query($conn, $query_data);
     $result2 = mysqli_query($conn, $query_data2);
+    $result_d = mysqli_fetch_assoc($query_detail);
+    $result_d2 = mysqli_fetch_assoc($query_detail2);
     $datax = array();
     $datax2 = array();
     foreach ($result as $k) {
@@ -119,6 +129,22 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             ?>
                         </div>
                     </div>
+                    <div class="detail-grid">
+                        <div>
+                            <h3 style="color: rgb(131, 120, 47, 0.7);">รายการแจ้งซ่อมแยกตามประเภท</h3>
+                            <div class="hr" style="margin:8px 0 16px 0;"></div>
+                            <h3 style="color: rgb(255, 166, 0);">เครื่องใช้ไฟฟ้า : <?php echo $result_d["total_elec"]; ?> รายการ</h3>
+                            <h3 style="color: #966F33;">เฟอร์นิเจอร์ : <?php echo $result_d["total_fur"]; ?> รายการ</h3>
+                            <h3 style="color: darkturquoise;">สุขภัณฑ์ : <?php echo $result_d["total_suk"]; ?> รายการ</h3>
+                        </div>
+                        <div>
+                            <h3 style="color: rgb(131, 120, 47, 0.7);">รายการแจ้งซ่อมแยกตามสถานะ</h3>
+                            <div class="hr" style="margin:8px 0 16px 0;"></div>
+                            <h3 style="color: #B1D78A;">ซ่อมเสร็จแล้ว : <?php echo $result_d2["success_s"]; ?> รายการ</h3>
+                            <h3 style="color: #8ac5d7;">กำลังซ่อม : <?php echo $result_d2["inprogress_s"]; ?> รายการ</h3>
+                            <h3 style="color: rgb(170, 170, 170);">รอคิวซ่อม : <?php echo $result_d2["pending_s"]; ?> รายการ</h3>
+                        </div>
+                    </div>
                     <div class="hr"></div>
                     <h3>รายการแจ้งซ่อมทั้งหมด</h3>
                     <div id="checkbox-grid" style="display:flex;align-items:center;">
@@ -200,7 +226,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                                 <?php
                                 if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                                 ?>
-                                <th>รายได้</th>
+                                <th>รายรับ</th>
                                 <?php } ?>
                                 <th>ค่าใช้จ่าย</th>
                                 <?php
