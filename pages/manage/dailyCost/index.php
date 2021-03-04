@@ -96,7 +96,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     $search_totalprice = mysqli_query($conn, "SELECT SUM(total_allprice) as allprice FROM dailycost");
                     $result_totalprice = mysqli_fetch_assoc($search_totalprice);
                     ?>
-                    <h3>รายได้รวมทั้งหมด : <?php echo number_format($result_totalprice["allprice"], 2); ?> บาท</h3>
+                    <h3 style="color: rgb(131, 120, 47, 0.7);">ยอดรวมทั้งหมด : <?php echo number_format($result_totalprice["allprice"], 2); ?> บาท</h3>
                 </div>
                 <div class="hr"></div>
                 <?php

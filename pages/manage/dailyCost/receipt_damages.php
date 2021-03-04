@@ -148,7 +148,7 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                             <p style="text-align:center;">............................................................
                             </p>
                             <p style="text-align:center;">(.....................................................)</p>
-                            <p style="width:max-content;position:absolute;bottom:30px;left:50%;transform: translateX(-50%);">นายนวพล นรเดชานันท์</p>
+                            <p style="width:max-content;position:absolute;bottom:31px;left:50%;transform: translateX(-50%);">นายพิชัย นรเดชานันท์</p>
                         </div>
                     </div>
                     <div class="sub-sig">

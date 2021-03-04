@@ -9,6 +9,7 @@ extract($row);
 $total_room = sizeof(explode(", ",$room_select));
 $calculate = strtotime($check_out) - strtotime($check_in);
 $night = floor($calculate / 86400);
+$price_beforeVAT = number_format(ceil($total_price - (($total_price * 7)/100)),2);
 }
 function DateThai($strDate){
     $strYear = date("Y",strtotime($strDate));
@@ -131,7 +132,7 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                     <td>ค่าเช่าห้องพัก</td>
                     <td><?php echo $total_room; ?></td>
                     <td><?php echo $night; ?></td>
-                    <td><?php echo number_format($total_room_price,2); ?></td>
+                    <td><?php echo $price_beforeVAT; ?></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -142,9 +143,8 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                 </tr>
                 <tr>
                     <td colspan="2"><strong><?php echo bathformat($total_allprice) ?></strong></td>
-                    <td colspan="2" style="text-align:center;"><strong>จำนวนภาษีมูลค่าเพิ่ม
-                            <?php echo number_format($vat)."%"; ?></strong></td>
-                    <td><?php echo number_format(($total_room_price * $vat)/100,2); ?></td>
+                    <td colspan="2" style="text-align:center;"><strong>จำนวนภาษีมูลค่าเพิ่ม 7%</strong></td>
+                    <td><?php echo number_format(ceil(($total_price * 7)/100),2); ?></td>
                 </tr>
                 <tr>
                     <td colspan="2"></td>
@@ -160,7 +160,7 @@ function textFormat( $text = '', $pattern = '', $ex = '' ) {
                             <p style="text-align:center;">............................................................
                             </p>
                             <p style="text-align:center;">(.....................................................)</p>
-                            <p style="width:max-content;position:absolute;bottom:30px;left:50%;transform: translateX(-50%);">นายนวพล นรเดชานันท์</p>
+                            <p style="width:max-content;position:absolute;bottom:30px;left:50%;transform: translateX(-50%);">นายพิชัย นรเดชานันท์</p>
                         </div>
                     </div>
                     <div class="sub-sig">

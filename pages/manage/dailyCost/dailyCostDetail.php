@@ -83,17 +83,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                             <p>สถานะการเข้าพัก</p>
                             <input type="text" value="<?php echo $daily_status; ?>" disabled>
                         </div>
-                        <div class="total_room_price">
-                            <p>ค่าเช่าห้องพัก (บาท)</p>
-                            <input type="text" value="<?php echo number_format($total_room_price,2); ?>" disabled>
-                        </div>
                         <div class="vat">
-                            <p>ภาษีมูลค่าเพิ่ม (VAT)</p>
-                            <input type="text" value="<?php echo number_format($vat,2)."%"; ?>" disabled>
-                        </div>
-                        <div class="total_price">
-                            <p>ยอดรวมหลังเพิ่มภาษีมูลค่าเพิ่ม (บาท)</p>
-                            <input type="text" value="<?php echo number_format($total_price,2); ?>" disabled>
+                            <p>ภาษีมูลค่าเพิ่ม (VAT 7%)</p>
+                            <input type="text" value="<?php echo number_format(ceil((($total_allprice * 7) / 100)),2); ?>" disabled>
                         </div>
                         <div class="damages">
                             <p>ค่าปรับ (ค่าเสียหาย) (บาท)</p>
