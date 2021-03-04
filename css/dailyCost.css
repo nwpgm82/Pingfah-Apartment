@@ -289,22 +289,24 @@
 }
 
 .pagination a {
-    color: black;
+    color: #fff;
     float: left;
     padding: 8px 16px;
     text-decoration: none;
     transition: background-color .3s;
-    border: 1px solid #ddd;
+    border: 1px solid rgb(131, 120, 47, 0.5);
+    background-color: rgb(131, 120, 47, 0.5);
 }
 
 .pagination a.active {
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
+    background-color: rgb(131, 120, 47, 1);
+    color: #fff;
+    border: 1px solid rgb(131, 120, 47, 1);
 }
 
 .pagination a:hover:not(.active) {
-    background-color: #ddd;
+    background-color: rgb(131, 120, 47, 0.7);
+    border: 1px solid rgb(131, 120, 47, 0.7);
 }
 
 @media screen and (max-width: 1623px) {

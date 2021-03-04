@@ -175,9 +175,9 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee'){
                     <div class="pagination">
                         <a href="index.php?page=1">&laquo;</a>
                         <?php for($i=1;$i<=$total_page;$i++){ ?>
-                        <a href="index.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        <a href="index.php?page=<?php echo $i; ?>"  <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>><?php echo $i; ?></a>
                         <?php } ?>
-                        <a href="index.php?page=<?php echo $total_page; ?>">&raquo;</a>
+                        <a href="index.php?page=<?php echo $total_page; ?>"  <?php if($page == $i){ echo "style='background-color: rgb(131, 120, 47, 1);color:#fff;'"; }?>>&raquo;</a>
                     </div>
                 </div>
                 <?php 
