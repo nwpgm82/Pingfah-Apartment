@@ -14,12 +14,25 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
         $strMonthThai=$strMonthCut[$strMonth];
         return "$strDay $strMonthThai $strYear";
     }
-    if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
-        $query_data = "SELECT repair_successdate, SUM(repair_profit) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' GROUP BY repair_successdate";
-    }else if($_SESSION["level"] == "guest"){
-        $query_data = "SELECT repair_successdate, SUM(repair_income) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." GROUP BY repair_successdate";
+    if(isset($from) && isset($to)){
+        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+            $query_data = "SELECT repair_successdate, SUM(repair_profit) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND (repair_successdate BETWEEN '$from' AND '$to') GROUP BY repair_successdate";
+            $query_detail = mysqli_query($conn, "SELECT SUM(repair_income) as income_d, SUM(repair_expenses) as ex_d, SUM(repair_profit) as pro_d FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND (repair_successdate BETWEEN '$from' AND '$to')");
+        }else if($_SESSION["level"] == "guest"){
+            $query_data = "SELECT repair_successdate, SUM(repair_income) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND (repair_successdate BETWEEN '$from' AND '$to') AND member_id = ".$_SESSION["member_id"]." GROUP BY repair_successdate";
+            $query_detail = mysqli_query($conn, "SELECT SUM(repair_income) as ex_d FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND (repair_successdate BETWEEN '$from' AND '$to') AND member_id = ".$_SESSION["member_id"]);
+        }
+    }else{
+        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+            $query_data = "SELECT repair_successdate, SUM(repair_profit) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' GROUP BY repair_successdate";
+            $query_detail = mysqli_query($conn, "SELECT SUM(repair_income) as income_d, SUM(repair_expenses) as ex_d, SUM(repair_profit) as pro_d FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว'");
+        }else if($_SESSION["level"] == "guest"){
+            $query_data = "SELECT repair_successdate, SUM(repair_income) as profit FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]." GROUP BY repair_successdate";
+            $query_detail = mysqli_query($conn, "SELECT SUM(repair_income) as ex_d FROM repair WHERE repair_status = 'ซ่อมเสร็จแล้ว' AND member_id = ".$_SESSION["member_id"]);
+        }
     }
     $result = mysqli_query($conn, $query_data);
+    $result_d = mysqli_fetch_assoc($query_detail);
     $datax = array();
     foreach ($result as $k) {
         $datax[] = "['".DateThai($k['repair_successdate'])."'".", ".$k['profit'] ."]";
@@ -80,6 +93,19 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
                         <div id="curve_chart" class="chart"></div>
                         <?php }else{  echo "<p style='margin:auto;'>ไม่มีข้อมูล</p>"; } ?>
                     </div>
+                    <div style="padding-top:32px;line-height:40px;">
+                        <?php
+                        if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
+                        ?>
+                        <h3 style="color: rgb(131, 120, 47, 0.7);">รายรับทั้งหมด : <?php echo number_format($result_d["income_d"], 2); ?> บาท</h3>
+                        <h3 style="color: #D68B8B;">ค่าใช้จ่ายทั้งหมด : <?php echo number_format($result_d["ex_d"], 2); ?> บาท</h3>
+                        <h3 style="color: #B1D78A;">กำไรทั้งหมด : <?php echo number_format($result_d["pro_d"], 2); ?> บาท</h3>
+                        <?php
+                        }else if($_SESSION["level"] == "guest"){
+                        ?>
+                        <h3 style="color: rgb(131, 120, 47, 0.7);">ค่าใช้จ่ายทั้งหมด : <?php echo number_format($result_d["ex_d"], 2); ?> บาท</h3>
+                        <?php } ?>
+                    </div>
                     <div class="hr"></div>
                     <h3>รายการแจ้งซ่อมที่ซ่อมเสร็จแล้วทั้งหมด</h3>
                     <?php
@@ -117,7 +143,7 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee" || $_SESSIO
                                 <?php
                                 if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
                                 ?>
-                                <th>รายได้</th>
+                                <th>รายรับ</th>
                                 <?php } ?>
                                 <th>ค่าใช้จ่าย</th>
                                 <?php
