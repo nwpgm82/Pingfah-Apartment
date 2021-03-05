@@ -7,7 +7,7 @@ if($_SESSION["level"] == "admin"){
         function DateThai($strDate){
             $strYear = date("Y",strtotime($strDate));
             $strMonth= date("n",strtotime($strDate));
-            $strDay= date("j",strtotime($strDate));
+            $strDay= date("d",strtotime($strDate));
             $strMonthCut = Array("","มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม","สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
             $strMonthThai=$strMonthCut[$strMonth];
             return "$strDay $strMonthThai $strYear";

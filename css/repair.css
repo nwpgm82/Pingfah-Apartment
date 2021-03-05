@@ -465,4 +465,9 @@
     #checkbox-grid div{
         padding: 0 !important;
     }
+
+    .detail-grid{
+        grid-template-columns: 100%;
+        row-gap: 16px;
+    }
 }
