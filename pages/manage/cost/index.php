@@ -149,7 +149,6 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                             <input type="checkbox" id="success" <?php if(isset($check)){ if($check == "success"){ echo "checked";}} ?>>
                             <label for="scales">ชำระเงินแล้ว</label>
                         </div>
-                        
                     </div>
                     <?php
                         $perpage = 10;

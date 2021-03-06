@@ -20,6 +20,7 @@ if($_SESSION['level'] == 'admin'){
      }
      $firstname = @$_REQUEST["firstname"];
      $lastname = @$_REQUEST["lastname"];
+     $check = @$_REQUEST["position"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,6 +73,20 @@ if($_SESSION['level'] == 'admin'){
                     </div>
                     <h5 id="input_error" style="color:red;"></h5>
                 </div>
+                <div class="checkbox-flex">
+                    <div>
+                        <input type="checkbox" id="all" <?php if(!isset($check)){ echo "checked"; } ?>>
+                        <label>ทั้งหมด</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="c_admin" <?php if($check == "admin"){ echo "checked"; } ?>>
+                        <label>admin</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="c_employee" <?php if($check == "employee"){ echo "checked"; } ?>>
+                        <label>พนักงาน</label>
+                    </div>
+                </div>
                 <div style="padding-top:32px;">
                     <?php
                     if(isset($firstname) && !isset($lastname)){
@@ -89,15 +104,22 @@ if($_SESSION['level'] == 'admin'){
                     } else {
                     $page = 1;
                     }
-
                     $start = ($page - 1) * $perpage;
                     $num = $start + 1;
-                    if(isset($firstname) && !isset($lastname)){
+                    if(isset($firstname) && !isset($lastname) && !isset($check)){
                         $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee WHERE firstname = '$firstname' AND employee_status = 'กำลังทำงาน' limit {$start} , {$perpage}";
-                    }else if(!isset($firstname) && isset($lastname)){
+                    }else if(!isset($firstname) && isset($lastname) && !isset($check)){
                         $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee WHERE lastname = '$lastname' AND employee_status = 'กำลังทำงาน' limit {$start} , {$perpage}";
-                    }else if(isset($firstname) && isset($lastname)){
+                    }else if(isset($firstname) && isset($lastname) && !isset($check)){
                         $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee WHERE firstname = '$firstname' AND lastname = '$lastname' AND employee_status = 'กำลังทำงาน' limit {$start} , {$perpage}";
+                    }else if(isset($firstname) && !isset($lastname) && isset($check)){
+                        $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee WHERE firstname = '$firstname' AND employee_status = 'กำลังทำงาน' AND position = '$check' limit {$start} , {$perpage}";
+                    }else if(!isset($firstname) && isset($lastname) && isset($check)){
+                        $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee WHERE lastname = '$lastname' AND employee_status = 'กำลังทำงาน' AND position = '$check' limit {$start} , {$perpage}";
+                    }else if(isset($firstname) && isset($lastname) && isset($check)){
+                        $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee WHERE firstname = '$firstname' AND lastname = '$lastname' AND employee_status = 'กำลังทำงาน' AND position = '$check' limit {$start} , {$perpage}";
+                    }else if(!isset($firstname) && !isset($lastname) && isset($check)){
+                        $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee WHERE employee_status = 'กำลังทำงาน' AND position = '$check' limit {$start} , {$perpage}";
                     }else{
                         $sql = "SELECT employee_id, title_name, firstname, lastname, position, id_card, tel, email, profile_img FROM employee WHERE employee_status = 'กำลังทำงาน' limit {$start} , {$perpage}";
                     }

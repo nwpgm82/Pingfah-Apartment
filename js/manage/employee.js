@@ -37,4 +37,37 @@ $(document).ready(function(){
         }
         
     })
+    $("#all").click(function(){
+        if($("#firstname").val() != "" && $("#lastname").val() == ""){
+            location.href = `index.php?firstname=${$("#firstname").val()}`
+        }else if($("#firstname").val() == "" && $("#lastname").val() != ""){
+            location.href = `index.php?lastname=${$("#lastname").val()}`
+        }else if($("#firstname").val() != "" && $("#lastname").val() != ""){
+            location.href = `index.php?firstname=${$("#firstname").val()}&lastname=${$("#lastname").val()}`
+        }else{
+            location.href = "index.php"
+        }
+    })
+    $("#c_admin").click(function(){
+        if($("#firstname").val() != "" && $("#lastname").val() == ""){
+            location.href = `index.php?firstname=${$("#firstname").val()}&position=admin`
+        }else if($("#firstname").val() == "" && $("#lastname").val() != ""){
+            location.href = `index.php?lastname=${$("#lastname").val()}&position=admin`
+        }else if($("#firstname").val() != "" && $("#lastname").val() != ""){
+            location.href = `index.php?firstname=${$("#firstname").val()}&lastname=${$("#lastname").val()}&position=admin`
+        }else{
+            location.href = "index.php?position=admin"
+        }
+    })
+    $("#c_employee").click(function(){
+        if($("#firstname").val() != "" && $("#lastname").val() == ""){
+            location.href = `index.php?firstname=${$("#firstname").val()}&position=employee`
+        }else if($("#firstname").val() == "" && $("#lastname").val() != ""){
+            location.href = `index.php?lastname=${$("#lastname").val()}&position=employee`
+        }else if($("#firstname").val() != "" && $("#lastname").val() != ""){
+            location.href = `index.php?firstname=${$("#firstname").val()}&lastname=${$("#lastname").val()}&position=employee`
+        }else{
+            location.href = "index.php?position=employee"
+        }
+    })
 })
