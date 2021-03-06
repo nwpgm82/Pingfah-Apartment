@@ -27,7 +27,7 @@ if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'employee' || $_SESSIO
                 $detail_result = mysqli_fetch_assoc($get_detail);
                 $total_fines = floatval($detail_result["fines"] * $days);
                 $cost_totalprice = $cost["room_cost"] + $cost["water_bill"] + $cost["elec_bill"] + $cost["cable_charge"] + floatval($total_fines);
-                $update_cost = "UPDATE cost SET fines = $total_fines, total = $cost_totalprice WHERE cost_id = " . $cost["cost_id"];
+                $update_cost = "UPDATE cost SET fines = $total_fines, total = $cost_totalprice, cost_status = 'ยังไม่ได้ชำระเงิน' WHERE cost_id = " . $cost["cost_id"];
                 if ($conn->query($update_cost) === true) {
                     require_once "../../../lib/PromptPayQR.php";
                     $date = date("Y-m");
