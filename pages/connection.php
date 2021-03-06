@@ -2,50 +2,51 @@
 $conn = mysqli_connect("localhost", "root", "", "Pingfah") or die("Error: " . mysqli_error($conn));
 mysqli_query($conn, "SET NAMES 'utf8' ");
 date_default_timezone_set('Asia/Bangkok');
-//////////// กรณีไม่ได้ชำระเงินค่าห้องพักรายเดือน ///////////////////////
-$get_cost = "SELECT * FROM cost WHERE cost_status != 'ชำระเงินแล้ว'";
-$get_result = $conn->query($get_cost);
-if ($get_result->num_rows > 0) {
-    while ($cost = $get_result->fetch_assoc()) {
-        $cost_date = strtotime($cost["date"]);
-        $month = date("m", $cost_date);
-        $inc_month = sprintf("%02d", intval($month + 1));
-        $current_date = date("Y", $cost_date) . "-" . $inc_month . "-06";
-        $deadline_dateCheck = strtotime($current_date);
-        $diff = abs($deadline_dateCheck - $cost_date);
-        $years = floor($diff / (365 * 60 * 60 * 24));
-        $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-        $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
-        if ($cost_date > $deadline_dateCheck) {
-            if ($cost["room_type"] == "แอร์") {
-                $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
-            } else if ($cost["room_type"] == "พัดลม") {
-                $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
-            }
-            $detail_result = mysqli_fetch_assoc($get_detail);
-            $total_fines = floatval($detail_result["fines"] * $days);
-            $cost_totalprice = $cost["room_cost"] + $cost["water_bill"] + $cost["elec_bill"] + $cost["cable_charge"] + floatval($total_fines);
-            $update_cost = "UPDATE cost SET fines = $total_fines, total = $cost_totalprice WHERE cost_id = " . $cost["cost_id"];
-            if ($conn->query($update_cost) === true) {
-                require_once "../lib/PromptPayQR.php";
-                $date = date("Y-m");
-                $folder_prompt = "images/cost/$date/" . $cost["room_id"] . "/promptpay/qr-code.png";
-                $promptData = mysqli_query($conn, "SELECT prompt_num FROM promptpay");
-                $promptData_result = mysqli_fetch_assoc($promptData);
-                $PromptPayQR = new PromptPayQR(); // new object
-                $PromptPayQR->size = 6;
-                $PromptPayQR->id = $promptData_result["prompt_num"]; // PromptPay ID
-                $PromptPayQR->amount = $cost_totalprice; // Set amount (not necessary)
-                $data = $PromptPayQR->generate();
-                list($type, $data) = explode(';', $data);
-                list(, $data) = explode(',', $data);
-                $data = base64_decode($data);
-                file_put_contents($folder_prompt, $data);
-            }
-        }
-    }
-}
-///////////////////////////////////////////////////////////////////
+// //////////// กรณีไม่ได้ชำระเงินค่าห้องพักรายเดือน ///////////////////////
+// $get_cost = "SELECT * FROM cost WHERE cost_status != 'ชำระเงินแล้ว'";
+// $get_result = $conn->query($get_cost);
+// if ($get_result->num_rows > 0) {
+//     while ($cost = $get_result->fetch_assoc()) {
+//         $cost_date = strtotime($cost["date"]);
+//         $month = date("m", $cost_date);
+//         $inc_month = sprintf("%02d", intval($month + 1));
+//         $current_date = date("Y", $cost_date) . "-" . $inc_month . "-05";
+//         $deadline_dateCheck = strtotime($current_date);
+//         $diff = abs($deadline_dateCheck - strtotime(date("Y-m-d")));
+//         $years = floor($diff / (365 * 60 * 60 * 24));
+//         $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+//         $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
+//         // echo date("Y-m-d",$cost_date)."/".date("Y-m-d",$deadline_dateCheck);     
+//         if (strtotime(date("Y-m-d")) > $deadline_dateCheck) {
+//             if ($cost["room_type"] == "แอร์") {
+//                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'แอร์'");
+//             } else if ($cost["room_type"] == "พัดลม") {
+//                 $get_detail = mysqli_query($conn, "SELECT fines FROM roomdetail WHERE type = 'พัดลม'");
+//             }
+//             $detail_result = mysqli_fetch_assoc($get_detail);
+//             $total_fines = floatval($detail_result["fines"] * $days);
+//             $cost_totalprice = $cost["room_cost"] + $cost["water_bill"] + $cost["elec_bill"] + $cost["cable_charge"] + floatval($total_fines);
+//             $update_cost = "UPDATE cost SET fines = $total_fines, total = $cost_totalprice WHERE cost_id = " . $cost["cost_id"];
+//             if ($conn->query($update_cost) === true) {
+//                 require_once "../../../lib/PromptPayQR.php";
+//                 $date = date("Y-m");
+//                 $folder_prompt = "../../images/cost/".$cost["date"]."/" . $cost["room_id"] . "/promptpay/qr-code.png";
+//                 $promptData = mysqli_query($conn, "SELECT prompt_num FROM promptpay");
+//                 $promptData_result = mysqli_fetch_assoc($promptData);
+//                 $PromptPayQR = new PromptPayQR(); // new object
+//                 $PromptPayQR->size = 6;
+//                 $PromptPayQR->id = $promptData_result["prompt_num"]; // PromptPay ID
+//                 $PromptPayQR->amount = $cost_totalprice; // Set amount (not necessary)
+//                 $data = $PromptPayQR->generate();
+//                 list($type, $data) = explode(';', $data);
+//                 list(, $data) = explode(',', $data);
+//                 $data = base64_decode($data);
+//                 file_put_contents($folder_prompt, $data);
+//             }
+//         }
+//     }
+// }
+// ///////////////////////////////////////////////////////////////////
 ///////////// กรณียกเลิกการจองเนื่องจากไม่ได้เข้าพักในวันที่ที่กำหนด และยกเลิกการจองเนื่องจากไม่ได้ชำระเงินค่ามัดจำห้องพัก ///////////////////////////
 $sql = "SELECT * FROM daily";
 $result = $conn->query($sql);
