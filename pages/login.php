@@ -10,7 +10,7 @@
 
 <body>
     <div class="login">
-        <a href="../index.php"><img src="../img/main_logo.png" alt=""></a>
+        <a href="../index.php" style="display:block;width:60px;margin:auto;"><img src="../img/main_logo.png" alt=""></a>
         <form action="checklogin.php" method="POST">
             <div>
                 <p>บัญชีผู้ใช้ / Username</p>
