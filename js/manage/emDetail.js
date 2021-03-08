@@ -120,11 +120,16 @@ $(document).ready(function () {
         }
     })
     id_card.keyup(function () {
+        $(this).val($(this).val().replace(/[^\w\s]+/g, ''));
         if (id_card.val() == "") {
             id_card.css("border-color", "red")
             id_card.addClass("placeholder-error")
             $("#id_error").html("โปรดระบุเลขบัตรประชาชน หรือ Passport No.")
-        } else {
+        } else if(id_card.val().length != 7 && id_card.val().length != 8 && id_card.val().length != 9 && id_card.val().length != 13){
+            id_card.css("border-color", "red")
+            id_card.addClass("placeholder-error")
+            $("#id_error").html("รูปแบบเลขบัตรประชาชน หรือ Passport No. ไม่ตรงกัน")
+        }else {
             id_card.css("border-color", "")
             id_card.removeClass("placeholder-error")
             $("#id_error").html("")
@@ -388,6 +393,12 @@ $(document).ready(function () {
                     $("#em_error").html("รูปแบบไม่ตรงกัน")
                     event.preventDefault()
                 }
+            }
+            if (id_card.val().length != 7 && id_card.val().length != 8 && id_card.val().length != 9 && id_card.val().length != 13) {
+                id_card.css("border-color", "red")
+                id_card.addClass("placeholder-error")
+                $("#id_error").html("รูปแบบเลขบัตรประชาชน หรือ Passport No. ไม่ตรงกัน")
+                event.preventDefault()
             }
             if (address.val() == "") {
                 address.css("border-color", "red")
