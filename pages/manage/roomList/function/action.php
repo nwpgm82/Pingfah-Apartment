@@ -180,17 +180,11 @@ if($_SESSION["level"] == "admin" || $_SESSION["level"] == "employee"){
         }
     }
     if(isset($_POST["del_data"]) && $_SESSION["level"] == "admin"){
-        $folder_path = glob("../../../images/roommember/$room_id/".$result_search["come_date"]."/*");
-        foreach($folder_path as $data){
-            if(is_file($data)){
-                unlink($data);
-            }
-        }
         $del_data = "DELETE FROM roommember WHERE room_id = '$room_id' AND member_status = 'กำลังเข้าพัก'";
         $del_login = "DELETE FROM login WHERE username = '$room_id'";
         $roomlist = "UPDATE roomlist SET room_status = 'ว่าง' WHERE room_id = '$room_id'";
         $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('ข้อมูลลูกค้า', 'ลบข้อมูลลูกค้า(ห้อง $room_id)', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
-        if($conn->query($del_data) === TRUE && $conn->query($del_login) === TRUE && $conn->query($roomlist) === TRUE && rmdir("../../../images/roommember/$room_id/".$result_search["come_date"]."/") && $conn->query($addLogs) === TRUE){
+        if($conn->query($del_data) === TRUE && $conn->query($del_login) === TRUE && $conn->query($roomlist) === TRUE && $conn->query($addLogs) === TRUE){
             echo "<script>";
             echo "alert('ลบข้อมูลเรียบร้อยแล้ว');";
             echo "location.href = '../room_id.php?ID=$room_id';";

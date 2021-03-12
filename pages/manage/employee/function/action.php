@@ -91,16 +91,10 @@ if($_SESSION["level"] == "admin"){
     if(isset($_POST["del_data"])){
         $get_data = mysqli_query($conn,"SELECT * FROM employee WHERE employee_id = $id");
         $result_get = mysqli_fetch_assoc($get_data);
-        $folder_path = glob("../../../images/employee/".$result_get["id_card"]."/*");
-        foreach($folder_path as $data){
-            if(is_file($data)){
-                unlink($data);
-            }
-        }
         $login = "DELETE FROM login WHERE username = '".$result_get["email"]."'";
         $del_data = "DELETE FROM employee WHERE employee_id = $id";
         $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน', 'ลบข้อมูลพนักงาน (".$result_get["title_name"].$result_get["firstname"]." ".$result_get["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
-        if($conn->query($del_data) === TRUE && $conn->query($login) === TRUE && $conn->query($addLogs) === TRUE && rmdir("../../../images/employee/".$result_get["id_card"]."/")){
+        if($conn->query($del_data) === TRUE && $conn->query($login) === TRUE && $conn->query($addLogs) === TRUE){
             echo "<script>";
             echo "alert('ลบข้อมูลเรียบร้อยแล้ว');";
             echo "location.href = '../index.php';";

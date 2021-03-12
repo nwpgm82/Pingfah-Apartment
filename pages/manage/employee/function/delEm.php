@@ -8,13 +8,7 @@ if($_SESSION['level'] == 'admin'){
   $sql = "DELETE FROM employee WHERE employee_id = $employee_id";
   $login = "DELETE FROM login WHERE username = '".$result_get["email"]."'";
   $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน', 'ลบข้อมูลพนักงาน (".$result_get["title_name"].$result_get["firstname"]." ".$result_get["lastname"].")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
-  $file = glob("../../../images/employee/".$result_get["id_card"]."/*");
-  foreach($file as $data){
-    if(is_file($data)){
-        unlink($data);
-    }
-  }
-  if ($conn->query($sql) === TRUE && $conn->query($login) === TRUE && $conn->query($addLogs) === TRUE && rmdir("../../../images/employee/".$result_get["id_card"]."/")) {
+  if ($conn->query($sql) === TRUE && $conn->query($login) === TRUE && $conn->query($addLogs) === TRUE) {
       echo "<script>";
       echo "alert('ลบข้อมูลเรียบร้อยแล้ว');";
       echo "location.href = '../index.php';";

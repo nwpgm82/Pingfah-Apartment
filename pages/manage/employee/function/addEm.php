@@ -47,7 +47,9 @@ if($_SESSION['level'] == 'admin'){
         if(!is_dir($main_target)){
             mkdir($main_target);
         }
-        mkdir($folder_target);
+        if(!is_dir($folder_target)){
+            mkdir($folder_target);
+        }
         $sql = "INSERT INTO employee (come_date, employee_status, title_name, firstname, lastname, nickname, position, id_card, tel, email, birthday, age, race, nationality, address, pic_idcard, pic_home, profile_img) VALUES ('$come','กำลังทำงาน','$title_name','$firstname','$lastname','$nickname','$position','$id_card','$tel','$email','$birthday','$age','$race','$nat','$add','$pic_idcard','$pic_home','$profile_img')";
         $addUser = "INSERT INTO login (username, name, password, email, level) VALUES ('$username', '$firstname', MD5('$password'), '$email', '$position')";
         $addLogs = "INSERT INTO logs (log_topic, log_detail, log_name, log_position) VALUES ('พนักงาน', 'เพิ่มข้อมูลพนักงาน (".$title_name.$firstname." ".$lastname.")', '".$_SESSION["name"]."', '".$_SESSION["level"]."')";
